@@ -1,0 +1,28 @@
+{
+  "name": "Development",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "./.devcontainer/postCreate.sh",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/sshd:1": {},
+    "ghcr.io/meaningful-ooo/devcontainer-features/fish:1": {},
+    "ghcr.io/guiyomh/features/vim:0": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers-contrib/features/pre-commit:1": {},
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "settings": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "earthly.earthfile-syntax-highlighting",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}
