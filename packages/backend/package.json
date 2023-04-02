@@ -1,0 +1,17 @@
+{
+  "name": "@glitter-boys/backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "eslint:check": "eslint .",
+    "prettier:check": "prettier --check .",
+    "lint:check": "npm run eslint:check && npm run prettier:check",
+    "prettier:fix": "prettier --write ."
+  },
+  "type": "module",
+  "dependencies": {
+    "discord.js": "^14.9.0"
+  },
+  "devDependencies": {}
+}
