@@ -10,3 +10,13 @@ updates:
     schedule:
       interval: "weekly"
       day: "sunday"
+  - package-ecosystem: "npm"
+    directory: "/packages/backend"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+  - package-ecosystem: "npm"
+    directory: "/packages/frontend"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
