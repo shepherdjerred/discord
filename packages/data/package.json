@@ -1,9 +1,8 @@
 {
-  "name": "@glitter-boys/backend",
+  "name": "@glitter-boys/data",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "run": "node dist/index.js",
     "build": "tsc",
     "eslint:check": "eslint .",
     "prettier:check": "prettier --check .",
@@ -12,11 +11,6 @@
   },
   "type": "module",
   "dependencies": {
-    "@glitter-boys/data": "*",
-    "discord.js": "^14.9.0",
-    "dotenv": "^16.0.3",
-    "env-var": "^7.3.0",
-    "fp-ts": "^2.13.1",
     "reflect-metadata": "^0.1.13",
     "sql.js": "^1.8.0",
     "typeorm": "^0.3.13"
