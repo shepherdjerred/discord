@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, type Relation } from "typeorm";
 import { Person } from "./Person.js";
 
 @Entity()
@@ -7,10 +7,10 @@ export class Karma {
   id!: number;
 
   @ManyToOne(() => Person, (person: Person) => person.received)
-  receiver!: number;
+  receiver!: Relation<Person>;
 
   @ManyToOne(() => Person, (person: Person) => person.given)
-  giver!: number;
+  giver!: Relation<Person>;
 
   @Column("int")
   amount!: number;
@@ -18,6 +18,6 @@ export class Karma {
   @Column("datetime")
   datetime!: Date;
 
-  @Column()
-  reason!: string;
+  @Column({ type: "text", nullable: true })
+  reason!: string | undefined;
 }

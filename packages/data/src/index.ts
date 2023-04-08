@@ -1,4 +1,7 @@
-import type { Karma } from "./Karma.js";
-import type { Person } from "./Person.js";
+import { Karma } from "./Karma.js";
+import { Person } from "./Person.js";
+import { KarmaGiven } from "./KarmaGiven.js";
+import { KarmaReceived } from "./KarmaReceived.js";
+import { KarmaCounts } from "./KarmaCounts.js";
 
-export { type Karma, type Person };
+export { Karma, Person, KarmaGiven, KarmaReceived, KarmaCounts };

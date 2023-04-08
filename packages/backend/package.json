@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "run": "node dist/index.js",
+    "start": "node dist/index.js",
     "build": "tsc",
     "eslint:check": "eslint .",
     "prettier:check": "prettier --check .",
@@ -16,12 +16,13 @@
     "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",
     "env-var": "^7.3.0",
-    "fp-ts": "^2.13.1",
+    "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
-    "sql.js": "^1.8.0",
+    "sqlite3": "^5.1.6",
     "typeorm": "^0.3.13"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.192",
     "@types/node": "^18.15.11"
   }
 }

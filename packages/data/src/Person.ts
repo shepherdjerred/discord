@@ -1,17 +1,14 @@
-import { Entity, Column, PrimaryColumn, OneToMany } from "typeorm";
+import { Entity, PrimaryColumn, OneToMany, type Relation } from "typeorm";
 import { Karma } from "./Karma.js";
 
 @Entity()
 export class Person {
-  @PrimaryColumn("int")
-  id!: number;
-
-  @Column("int")
-  karma!: number;
+  @PrimaryColumn()
+  id!: string;
 
   @OneToMany(() => Karma, (karma: Karma) => karma.giver)
-  given!: Karma[];
+  given!: Relation<Karma[]>;
 
   @OneToMany(() => Karma, (karma: Karma) => karma.receiver)
-  received!: Karma[];
+  received!: Relation<Karma[]>;
 }
