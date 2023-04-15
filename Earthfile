@@ -34,13 +34,14 @@ build.data:
   SAVE ARTIFACT packages/data/dist AS LOCAL packages/data/dist
 
 image.backend:
+  ARG --required stage
   FROM +build.backend
   ENTRYPOINT node packages/backend/dist/index.js
-  SAVE IMAGE glitter/backend
+  SAVE IMAGE glitter/backend:$stage
 
 deploy.backend:
   LOCALLY
   ARG --required stage
   WITH DOCKER --load=+image.backend
-    RUN flyctl deploy --local-only -f fly.$stage.yml
+    RUN flyctl deploy --local-only --config fly.$stage.toml
   END

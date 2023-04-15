@@ -2,7 +2,18 @@ app = "glitter-boys-prod"
 primary_region = "sea"
 
 [build]
-  image = "glitter/backend"
+  image = "glitter/backend:prod"
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = "80"
+
+[env]
+  DATA_DIR="/data"
 
 [mounts]
   source="data"

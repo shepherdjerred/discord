@@ -5,5 +5,5 @@
 ## Deploy
 
 ```bash
-fly auth login
+earthly +deploy.backend --stage=beta
 ```

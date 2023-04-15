@@ -2,11 +2,28 @@ app = "glitter-boys-beta"
 primary_region = "sea"
 
 [build]
-  image = "glitter/backend"
+  image = "glitter/backend:beta"
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+  [[services.ports]]
+    handlers = ["http"]
+    port = "80"
+  [[services.http_checks]]
+    interval = 10000
+    grace_period = "5s"
+    method = "get"
+    path = "/"
+    protocol = "http"
+    restart_limit = 0
+    timeout = 2000
+    tls_skip_verify = false
+    [services.http_checks.headers]
+
+[env]
+  DATA_DIR="/data"
 
 [mounts]
   source="data"
   destination="/data"
-
-[experimental]
-  auto_rollback = true
