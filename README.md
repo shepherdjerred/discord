@@ -5,5 +5,5 @@
 ## Deploy
 
 ```bash
-earthly +deploy.backend --stage=beta
+earthly -P +deploy.backend --stage=beta
 ```

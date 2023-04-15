@@ -18,6 +18,12 @@ prepare:
   COPY packages packages
   COPY tsconfig.json .
 
+lint:
+  FROM +prepare
+  RUN npm run lint --workspace packages/backend
+  RUN npm run lint --workspace packages/lint
+  RUN npm run lint --workspace packages/data
+
 build.backend:
   FROM +prepare
   RUN npm run build --workspace packages/backend
@@ -40,8 +46,10 @@ image.backend:
   SAVE IMAGE glitter/backend:$stage
 
 deploy.backend:
-  LOCALLY
   ARG --required stage
+  FROM earthly/dind:ubuntu
+  RUN curl -L https://fly.io/install.sh | sh
+  ENV PATH=$PATH:/root/.fly/bin
   WITH DOCKER --load=+image.backend
-    RUN flyctl deploy --local-only --config fly.$stage.toml
+    RUN --secret FLY_API_TOKEN fly deploy --local-only --config fly.$stage.toml
   END
