@@ -5,7 +5,7 @@ import { Karma, KarmaCounts, KarmaGiven, KarmaReceived, Person } from "@glitter-
 
 export const dataSource = new DataSource({
   type: "sqlite",
-  database: "glitter.sqlite",
+  database: "/data/glitter.sqlite",
   synchronize: true,
   logging: true,
   entities: [Karma, Person, KarmaGiven, KarmaReceived, KarmaCounts],

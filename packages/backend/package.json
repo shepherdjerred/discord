@@ -12,6 +12,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@tsconfig/strictest": "^2.0.0",
     "@glitter-boys/data": "*",
     "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",

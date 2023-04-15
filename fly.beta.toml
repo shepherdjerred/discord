@@ -1,0 +1,12 @@
+app = "glitter-boys-beta"
+primary_region = "sea"
+
+[build]
+  image = "glitter/backend"
+
+[mounts]
+  source="data"
+  destination="/data"
+
+[experimental]
+  auto_rollback = true
