@@ -1,4 +1,4 @@
-name: GitHub Actions CI
+name: CI
 
 on:
   push:
@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: beta
     steps:
-      - uses: earthly/actions-setup@v1
+      - uses: earthly/actions-setup@v1.0.7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v3
       - name: deploy to beta
         run: earthly --secret FLY_API_TOKEN +deploy --stage=beta
