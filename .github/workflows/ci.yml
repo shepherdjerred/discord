@@ -8,7 +8,9 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: beta
+    environment:
+      name: beta
+      url: https://glitter-boys-beta.fly.dev/
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
     steps:
