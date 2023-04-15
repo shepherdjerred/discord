@@ -25,7 +25,7 @@ lint:
   RUN npm run lint --workspace packages/data
 
 build.backend:
-  FROM +prepare
+  FROM +build.data
   RUN npm run build --workspace packages/backend
   SAVE ARTIFACT packages/backend/dist AS LOCAL packages/backend/dist
 
