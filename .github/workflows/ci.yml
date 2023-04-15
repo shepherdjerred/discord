@@ -9,6 +9,8 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     environment: beta
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
     steps:
       - uses: earthly/actions-setup@v1.0.7
         with:
