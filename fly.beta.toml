@@ -6,7 +6,7 @@ primary_region = "sea"
 
 [[services]]
   internal_port = 8080
-  protocol = "tcp"
+  protocol = "http"
   [[services.ports]]
     handlers = ["http"]
     port = "80"
@@ -18,7 +18,6 @@ primary_region = "sea"
     protocol = "http"
     restart_limit = 0
     timeout = 2000
-    tls_skip_verify = false
     [services.http_checks.headers]
 
 [env]
