@@ -17,4 +17,4 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v3
       - name: deploy to beta
-        run: earthly --secret FLY_API_TOKEN +deploy.backend --stage=beta
+        run: earthly --secret FLY_API_TOKEN -P +deploy.backend --stage=beta
