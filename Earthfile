@@ -50,6 +50,7 @@ deploy.backend:
   FROM earthly/dind:ubuntu
   RUN curl -L https://fly.io/install.sh | sh
   ENV PATH=$PATH:/root/.fly/bin
+  COPY fly.$stage.toml .
   WITH DOCKER --load=+image.backend
     RUN --secret FLY_API_TOKEN fly deploy --local-only --config fly.$stage.toml
   END
