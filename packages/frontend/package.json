@@ -16,7 +16,7 @@
     "@glitter-boys/data": "*",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/adapter-netlify": "^2.0.6",
-    "@sveltejs/kit": "^1.15.2",
+    "@sveltejs/kit": "^1.15.5",
     "@tsconfig/strictest": "^2.0.0",
     "@tsconfig/svelte": "^4.0.1",
     "autoprefixer": "^10.4.14",
