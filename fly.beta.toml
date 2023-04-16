@@ -18,7 +18,6 @@ primary_region = "sea"
   protocol = "http"
   restart_limit = 0
   timeout = 2000
-[services.http_checks.headers]
 
 [env]
   DATA_DIR="/data"

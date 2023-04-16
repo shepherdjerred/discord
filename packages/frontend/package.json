@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite dev",
+    "dev": "vite dev --host",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -13,20 +13,23 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "devDependencies": {
+    "@glitter-boys/data": "*",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/adapter-netlify": "^2.0.6",
     "@sveltejs/kit": "^1.15.2",
+    "@tsconfig/strictest": "^2.0.0",
+    "@tsconfig/svelte": "^4.0.1",
     "autoprefixer": "^10.4.14",
     "eslint-plugin-svelte3": "^4.0.0",
-    "postcss": "^8.4.20",
     "prettier-plugin-svelte": "^2.10.0",
-    "svelte": "^3.58.0",
-    "svelte-check": "^3.2.0",
-    "tailwindcss": "^3.2.7",
-    "vite": "^4.2.1"
+    "svelte-check": "^3.2.0"
   },
   "type": "module",
   "dependencies": {
+    "postcss": "^8.4.20",
+    "svelte": "^3.58.0",
+    "tailwindcss": "^3.2.7",
+    "vite": "^4.2.1",
     "sql.js": "^1.8.0"
   }
 }

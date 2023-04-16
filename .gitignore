@@ -10,5 +10,4 @@ vite.config.ts.timestamp-*
 .vscode
 .netlify
 dist
-*.sqlite
 packages/frontend/.svelte-kit/
