@@ -23,7 +23,7 @@
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^5.1.6",
-    "typeorm": "^0.3.13"
+    "typeorm": "^0.3.15"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.194",
