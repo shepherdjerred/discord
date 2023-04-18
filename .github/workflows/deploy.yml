@@ -1,0 +1,21 @@
+name: Deploy to Production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+      url: https://glitter-boys-prod.fly.dev/
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    steps:
+      - uses: earthly/actions-setup@v1.0.7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v3
+      - name: deploy to beta
+        run: earthly --secret FLY_API_TOKEN -P +deploy.backend --stage=prod
