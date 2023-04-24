@@ -10,33 +10,29 @@
         karmaReceived: true,
       },
     });
-    const leaderboard = (
-      await Promise.all(
-        _.map(karmaCounts, async (value) => {
-          // show ties
-          if (value.karmaReceived !== prev) {
-            rank++;
-          }
-          // make a copy of rank. I think this is required because the function is async?
-          const myRank = rank;
-          prev = value.karmaReceived;
 
-          // mention the user who called the leaderboard command
-          let user = (await client.users.fetch(value.id, { cache: true })).username;
-          if (interaction.user.id === value.id) {
-            user = userMention(interaction.user.id);
-          }
+    let rank = 0;
+    let prev;
 
-          let rankString = `#${myRank.toString()}`;
-          // top 3 are better than everyone else
-          if (myRank <= 3) {
-            rankString = bold(rankString);
-          }
+    const leaderboard = await Promise.all(
+      _.map(karmaCounts, async (value) => {
+        // show ties
+        if (value.karmaReceived !== prev) {
+          rank++;
+        }
+        // make a copy of rank. I think this is required because the function is async?
+        const myRank = rank;
+        prev = value.karmaReceived;
 
-          return `${rankString}: ${user} (${value.karmaReceived} karma)`;
-        })
-      )
-    ).join("\n");
+        let rankString = `#${myRank.toString()}`;
+        // top 3 are better than everyone else
+        if (myRank <= 3) {
+          rankString = rankString;
+        }
+
+        return `${rankString}: ${value.id} (${value.karmaReceived} karma)`;
+      })
+    );
     return leaderboard;
   }
 </script>
@@ -45,7 +41,13 @@
 {#await getLeaderboard()}
   <p>...waiting</p>
 {:then leaderboard}
-  {leaderboard}
+  <ol>
+    {#each leaderboard as entry}
+      <li>
+        {entry}
+      </li>
+    {/each}
+  </ol>
 {:catch error}
   <p style="color: red">{error.message}</p>
 {/await}
