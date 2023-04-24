@@ -8,15 +8,11 @@ const updateCommands = false;
 
 const rest = new REST({ version: "10" }).setToken(Configuration.discordToken);
 
-await (async () => {
-  try {
-    if (updateCommands) {
-      const commands = [karmaCommand.toJSON()];
-      console.log(commands);
-      const data = await rest.put(Routes.applicationCommands(Configuration.applicationId), { body: commands });
-      console.log(data);
-    }
-  } catch (error) {
-    console.error(error);
+try {
+  if (updateCommands) {
+    const commands = [karmaCommand.toJSON()];
+    await rest.put(Routes.applicationCommands(Configuration.applicationId), { body: commands });
   }
-})();
+} catch (error) {
+  console.error(error);
+}

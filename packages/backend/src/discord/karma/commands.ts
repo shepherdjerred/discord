@@ -27,20 +27,6 @@ const karmaCommand = new SlashCommandBuilder()
       )
   )
   .addSubcommand((subcommand) =>
-    subcommand
-      .setName("take")
-      .setDescription("Take karma away from someone")
-      .addUserOption((option) =>
-        option.setName("target").setDescription("The person you'd like to take karma from").setRequired(true)
-      )
-      .addStringOption((option) =>
-        option
-          .setName("reason")
-          .setDescription("An optional reason about why they don't deserve karma")
-          .setMaxLength(200)
-      )
-  )
-  .addSubcommand((subcommand) =>
     subcommand.setName("leaderboard").setDescription("See karma values for everyone on the server")
   )
   .addSubcommand((subcommand) =>
@@ -135,27 +121,6 @@ async function handleKarmaGive(interaction: CommandInteraction) {
   }
 }
 
-async function handleKarmaTake(interaction: CommandInteraction) {
-  const giverUser = interaction.user;
-  const receiverUser = interaction.options.getUser("target", true);
-  const reason = interaction.options.get("reason", false)?.value as string | undefined;
-  await modifyKarma(giverUser.id, receiverUser.id, -1, reason);
-  const newReceiverKarma = await getKarma(receiverUser.id);
-  if (reason) {
-    await interaction.reply(
-      `${userMention(giverUser.id)} took karma from ${userMention(receiverUser.id)} ${inlineCode(
-        reason
-      )}. They now have ${bold(newReceiverKarma.toString())} karma.`
-    );
-  } else {
-    await interaction.reply(
-      `${userMention(giverUser.id)} took karma from ${userMention(receiverUser.id)}. They now have ${bold(
-        newReceiverKarma.toString()
-      )} karma.`
-    );
-  }
-}
-
 async function handleKarmaLeaderboard(interaction: CommandInteraction) {
   const karmaCounts = await dataSource.getRepository(KarmaReceived).find({
     select: {
@@ -232,9 +197,6 @@ async function handleKarma(interaction: ChatInputCommandInteraction) {
   switch (interaction.options.getSubcommand()) {
     case "give":
       await handleKarmaGive(interaction);
-      break;
-    case "take":
-      await handleKarmaTake(interaction);
       break;
     case "leaderboard":
       await handleKarmaLeaderboard(interaction);
