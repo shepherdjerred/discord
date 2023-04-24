@@ -4,7 +4,7 @@ import { DataSource } from "typeorm";
 import { Karma, KarmaCounts, KarmaGiven, KarmaReceived, Person } from "@glitter-boys/data";
 import "sql.js";
 
-const data = await fetch("http://localhost:5173/glitter.sqlite").then((res) => res.arrayBuffer());
+const data = await fetch("https://prod.glitter-boys.com/glitter.sqlite").then((res) => res.arrayBuffer());
 
 export const dataSource = new DataSource({
   type: "sqljs",

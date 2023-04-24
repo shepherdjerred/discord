@@ -6,7 +6,7 @@ import cors from "cors";
 const app = express();
 const port = process.env["PORT"] || 8080;
 
-app.use(cors);
+app.use(cors());
 app.get("/", function (_: Request, res: Response) {
   res.send("Hey there :)");
 });
