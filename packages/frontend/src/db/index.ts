@@ -1,6 +1,6 @@
 // required for type orm
 import "reflect-metadata";
-import { DataSource } from "typeorm";
+import { DataSource } from "typeorm/browser";
 import { Karma, KarmaCounts, KarmaGiven, KarmaReceived, Person } from "@glitter-boys/data";
 import initSqlJs from "sql.js";
 
