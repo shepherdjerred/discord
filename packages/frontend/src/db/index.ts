@@ -7,8 +7,6 @@ import initSqlJs from "sql.js";
 const data = await fetch("https://prod.glitter-boys.com/glitter.sqlite").then((res) => res.arrayBuffer());
 
 const SQL = await initSqlJs({
-  // Required to load the wasm binary asynchronously. Of course, you can host it wherever you want
-  // You can omit locateFile completely when running in node
   locateFile: (file) => `https://sql.js.org/dist/${file}`,
 });
 

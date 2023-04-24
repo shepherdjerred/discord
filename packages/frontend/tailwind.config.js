@@ -3,6 +3,11 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
+    fontFamily: {
+      sans: ["Open Sans"],
+      serif: ["Sorts Mill Goudy"],
+      mono: ["Fira Code"],
+    },
   },
   plugins: [],
 };

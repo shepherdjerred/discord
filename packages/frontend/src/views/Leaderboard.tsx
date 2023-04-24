@@ -1,11 +1,12 @@
 import { KarmaReceived } from "@glitter-boys/data";
-import { dataSource } from "./db/index.ts";
 import _ from "lodash";
 import { useState, useEffect } from "react";
-import KarmaUser, { KarmaUserProps } from "./KarmaUser.tsx";
+import { dataSource } from "../db/index.js";
+import { Spinner } from "../components/Spinner.tsx";
+import { LeaderboardList, LeaderboardUser } from "../components/LeaderboardList.tsx";
 
-export default function App() {
-  const [entries, setEntries] = useState<KarmaUserProps[] | undefined>(undefined);
+export default function Leaderboard() {
+  const [entries, setEntries] = useState<LeaderboardUser[] | undefined>(undefined);
 
   useEffect(() => {
     async function getEntries() {
@@ -13,27 +14,23 @@ export default function App() {
       setEntries(entries);
     }
 
-    if (!entries) {
-      getEntries();
-    }
-  }, [entries]);
+    getEntries();
+  }, []);
 
-  const listItems = _.map(entries, (entry) => {
-    return <KarmaUser {...entry} />;
-  });
+  const header = <h1 className="text-3xl font-bold font-serif mb-5">Karma Leaderboard</h1>;
 
   if (entries) {
     return (
       <>
-        <h1>Karma Leaderboard</h1>
-        <ol>{listItems}</ol>
+        {header}
+        <LeaderboardList users={entries} />
       </>
     );
   } else {
     return (
       <>
-        <h1>Karma Leaderboard</h1>
-        Loading...
+        {header}
+        <Spinner />
       </>
     );
   }
@@ -51,11 +48,9 @@ async function getLeaderboard() {
   let prev: number;
 
   return _.map(karmaCounts, (value) => {
-    // show ties
     if (value.karmaReceived !== prev) {
       rank++;
     }
-    // make a copy of rank. I think this is required because the function is async?
     const myRank = rank;
     prev = value.karmaReceived;
 
