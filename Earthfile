@@ -32,7 +32,6 @@ build.backend:
 build.frontend:
   FROM +prepare
   RUN npm run build --workspace packages/frontend
-  SAVE ARTIFACT packages/frontend/.svelte-kit/output AS LOCAL packages/frontend/.svelte-kit/output
 
 build.data:
   FROM +prepare

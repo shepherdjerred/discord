@@ -1,16 +1,7 @@
-import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
 
-/** @type {import('vite').UserConfig} */
-const config = {
-  plugins: [sveltekit()],
-  build: {
-    target: ["esnext"],
-  },
-  server: {
-    fs: {
-      allow: ["static"],
-    },
-  },
-};
-
-export default config;
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+});
