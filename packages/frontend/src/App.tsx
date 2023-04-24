@@ -1,31 +1,68 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { KarmaReceived } from "@glitter-boys/data";
+import { dataSource } from "./db/index.ts";
+import _ from "lodash";
+import { useState, useEffect } from "react";
+import KarmaUser, { KarmaUserProps } from "./KarmaUser.tsx";
 
-function App() {
-  const [count, setCount] = useState(0);
+export default function App() {
+  const [entries, setEntries] = useState<KarmaUserProps[] | undefined>(undefined);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
-  );
+  useEffect(() => {
+    async function getEntries() {
+      const entries = await getLeaderboard();
+      setEntries(entries);
+    }
+
+    if (!entries) {
+      getEntries();
+    }
+  }, [entries]);
+
+  const listItems = _.map(entries, (entry) => {
+    return <KarmaUser {...entry} />;
+  });
+
+  if (entries) {
+    return (
+      <>
+        <h1>Karma Leaderboard</h1>
+        <ol>{listItems}</ol>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <h1>Karma Leaderboard</h1>
+        Loading...
+      </>
+    );
+  }
 }
 
-export default App;
+async function getLeaderboard() {
+  const karmaCounts = await dataSource.getRepository(KarmaReceived).find({
+    select: {
+      id: true,
+      karmaReceived: true,
+    },
+  });
+
+  let rank = 0;
+  let prev: number;
+
+  return _.map(karmaCounts, (value) => {
+    // show ties
+    if (value.karmaReceived !== prev) {
+      rank++;
+    }
+    // make a copy of rank. I think this is required because the function is async?
+    const myRank = rank;
+    prev = value.karmaReceived;
+
+    return {
+      rank: myRank,
+      id: value.id,
+      karma: value.karmaReceived,
+    };
+  });
+}

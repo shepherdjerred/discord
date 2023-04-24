@@ -34,7 +34,9 @@
         "mkhl.shfmt",
         "redhat.vscode-yaml",
         "arahata.linter-actionlint",
-        "exiasr.hadolint"
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss",
+        "lightyen.tailwindcss-intellisense-twin"
       ],
       "settings": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
