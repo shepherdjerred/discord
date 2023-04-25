@@ -21,7 +21,7 @@
     "react-router-dom": "^6.10.0",
     "reflect-metadata": "^0.1.13",
     "sql.js": "^1.8.0",
-    "typeorm": "^0.3.14"
+    "typeorm": "https://github.com/shepherdjerred/typeorm"
   },
   "devDependencies": {
     "@tsconfig/vite-react": "^1.0.1",

@@ -8,7 +8,10 @@ export default defineConfig({
   build: {
     target: "esnext",
     commonjsOptions: {
-      transformMixedEsModules: true,
+      // transformMixedEsModules: true,
     },
+  },
+  optimizeDeps: {
+    // include: ['typeorm', 'sql.js']
   },
 });
