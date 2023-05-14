@@ -24,7 +24,7 @@
     "typeorm": "https://github.com/shepherdjerred/typeorm"
   },
   "devDependencies": {
-    "@tsconfig/vite-react": "^1.0.1",
+    "@tsconfig/vite-react": "^2.0.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/sql.js": "^1.4.4",
