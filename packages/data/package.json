@@ -18,6 +18,6 @@
     "typeorm": "https://github.com/shepherdjerred/typeorm"
   },
   "devDependencies": {
-    "@types/node": "^18.16.0"
+    "@types/node": "^20.1.4"
   }
 }
