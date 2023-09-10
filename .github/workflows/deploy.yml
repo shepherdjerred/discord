@@ -18,7 +18,7 @@ jobs:
       - uses: earthly/actions-setup@v1.0.7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: deploy
         run: earthly --secret FLY_API_TOKEN -P +deploy.backend --stage=beta
   prod:
@@ -35,6 +35,6 @@ jobs:
       - uses: earthly/actions-setup@v1.0.7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: deploy
         run: earthly --secret FLY_API_TOKEN -P +deploy.backend --stage=prod
