@@ -1,44 +1,15 @@
 {
-  "name": "@glitter-boys/frontend",
-  "private": true,
-  "version": "1.0.0",
+  "name": "",
   "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "dev": "vite --host",
-    "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview --host"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.4.0",
-    "@fortawesome/free-regular-svg-icons": "^6.4.0",
-    "@fortawesome/free-solid-svg-icons": "^6.4.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-error-boundary": "^4.0.4",
-    "react-router": "^6.10.0",
-    "react-router-dom": "^6.10.0",
-    "reflect-metadata": "^0.1.13",
-    "sql.js": "^1.8.0",
-    "typeorm": "https://github.com/shepherdjerred/typeorm"
-  },
-  "devDependencies": {
-    "@tsconfig/vite-react": "^1.0.1",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "@types/sql.js": "^1.4.4",
-    "@typescript-eslint/eslint-plugin": "^5.57.1",
-    "@typescript-eslint/parser": "^5.57.1",
-    "@vitejs/plugin-react-swc": "^3.0.0",
-    "autoprefixer": "^10.4.14",
-    "eslint": "^8.38.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.3.4",
-    "postcss": "^8.4.23",
-    "tailwindcss": "^3.3.1",
-    "typescript": "^5.0.2",
-    "vite": "^4.3.0",
-    "vite-plugin-webfont-dl": "^3.7.3"
+    "astro": "^3.1.4"
   }
 }

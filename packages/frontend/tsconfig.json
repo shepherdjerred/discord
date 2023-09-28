@@ -1,12 +1,3 @@
 {
-  "extends": "@tsconfig/vite-react/tsconfig.json",
-  "compilerOptions": {
-    "moduleResolution": "nodenext",
-    "allowImportingTsExtensions": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": ["src", "types"],
-  "references": [{ "path": "./tsconfig.vite.json" }]
+  "extends": "astro/tsconfigs/strictest"
 }
