@@ -14,8 +14,7 @@
   },
   "type": "module",
   "dependencies": {
-    "reflect-metadata": "^0.1.13",
-    "typeorm": "https://github.com/shepherdjerred/typeorm"
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/node": "^18.16.0"

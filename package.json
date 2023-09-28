@@ -18,7 +18,6 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "reflect-metadata": "^0.1.13",
-    "typeorm": "https://github.com/shepherdjerred/typeorm"
+    "reflect-metadata": "^0.1.13"
   }
 }
