@@ -1,4 +1,13 @@
 import Layout from "../../layouts/Layout.astro";
+import Follow from "../../assets/t6/follow.png";
+import Login from "../../assets/t6/login.png";
+import Dialog from "../../assets/t6/dialog.png";
+import Folder from "../../assets/t6/t6_folder.png";
+import Sidebar from "../../assets/t6/sidebar.mp4";
+import Setup from "../../assets/t6/setup.png";
+import Register from "../../assets/t6/register.png";
+import { Image, Video } from 'astro:assets';
+
 
 <Layout title="Black Ops 2 Zombies" noindex>
 <div class="grid justify-center dark:bg-black">
@@ -6,12 +15,26 @@ import Layout from "../../layouts/Layout.astro";
 # Black Ops 2 Zombies
 
 1. Download the [game files](https://files.sjer.red/games/t6.zip) (14GB).
-1. Create an account on the [Plutonium forums](https://forum.plutonium.pw/).
+1. Create an account on the [Plutonium forums](https://forum.plutonium.pw/register).
+
+    Note: the username you choose here will be what you are known as in-game.
+
+    <Image src={Register} alt="A screenshot of Plutonium's register page" />
 1. Follow [sjerred](https://forum.plutonium.pw/user/sjerred) to add them as a friend.
-1. Extract `t6.zip`.
-1. Run the `plutonium` executable.
-1. Once plutonium is running, look on the left sidebar for an icon labeled "T6 Zombies". Click the icon.
-1. Click the "setup" button. In the popup, select the `t6` folder with the game files in it. It should be the same `t6` folder with the `plutonium` executable.
+    <Image src={Follow} alt="A screenshot of a Plutonium user's profie with the follow button" />
+1. Unzip `t6.zip`.
+1. Go into the `t6` folder that was created when unzipping.
+1. Run the `plutonium` executable in the `t6` folder. This will start the Plutonium client.
+1. Login to the Plutonium client using the account you created in step 2.
+    <Image src={Login} alt="The login screen for Plutonium" />
+1. Hover your cursor over the icons on the sidear. Look for an icon labeled "T6 Zombies". Click the icon.
+    <video controls>
+        <source src={Sidebar} type="video/mp4" />
+    </video>
+1. Click the "setup" button.
+    <Image src={Setup} alt="The setup button" />
+1. In the popup dialog, select the `t6` folder with the game files in it. The folder that you pick should have the `plutonium` executable in it.
+    <Image src={Folder} alt="The contents of the t6 folder" />
 1. Click the "Play" button to start the game.
 
 </article>
