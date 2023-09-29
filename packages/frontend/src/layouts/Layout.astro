@@ -1,9 +1,13 @@
 ---
 interface Props {
   title: string;
+  description?: string;
+  index?: boolean;
 }
 
 const { title } = Astro.props;
+const index = Astro.props.index || true;
+const description = Astro.props.description || "Glitter Boys"
 
 import "../styles/links.scss"
 ---
@@ -12,12 +16,13 @@ import "../styles/links.scss"
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
+    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <link rel="sitemap" href="/sitemap-index.xml" />
+    { !index && <meta name="robots" content="noindex">}
   </head>
   <body class="dark:bg-black">
     <slot />
