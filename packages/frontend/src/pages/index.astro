@@ -1,26 +1,42 @@
 ---
-import { RegionGroups } from "twisted/dist/constants";
+import UserProfile from "../components/UserProfile.astro";
 import Layout from "../layouts/Layout.astro";
+import type { User } from "../model/User";
 
-import { LolApi, Constants } from 'twisted';
-
-const api = new LolApi({
-  key: "",
-  rateLimitRetryAttempts: 10,
-  concurrency: 1,
-});
-const result = await api.Summoner.getByName('sjerred', Constants.Regions.AMERICA_NORTH);
-const matches = await api.MatchV5.list(result.response.puuid, RegionGroups.AMERICAS);
-const matchDetails = await Promise.all(matches.response.map(async (match) => {
-  return (await api.MatchV5.get(match, RegionGroups.AMERICAS)).response;
-}));
+const user: User = {
+  leagueOfLegends: {
+    username: "sjerred",
+    rank: {
+      solo: {
+        tier: "gold",
+        division: 4,
+        wins: 2,
+        losses: 10
+      },
+      flex: {
+        tier: "bronze",
+        division: 2,
+        wins: 2,
+        losses: 10
+      }
+    },
+    matchHistory: [
+      {
+        outcome: "defeat"
+      },
+      {
+        outcome: "defeat"
+      },
+      {
+        outcome: "defeat"
+      }
+    ]
+  }
+}
 ---
 
 <Layout title="GLITTER BOYS">
   <main>
-    <a href="https://www.thephotographywa.com/new-page-1">IMPORTANT</a>
-    {JSON.stringify(result.response)}
-    {JSON.stringify(matches.response)}
-    {JSON.stringify(matchDetails)}
+    <UserProfile user={user} />
   </main>
 </Layout>

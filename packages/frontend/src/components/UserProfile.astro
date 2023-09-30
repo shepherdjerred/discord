@@ -1,0 +1,37 @@
+---
+import { type User } from '../model/User';
+
+interface Props {
+    user: User;
+}
+
+const { user } = Astro.props;
+
+---
+
+<div class="dark:text-white">
+    <h2>{user.leagueOfLegends.username}</h2>
+    {
+        user.leagueOfLegends.matchHistory.map((entry) =>
+            (<span>
+                {entry.outcome}
+                </span>)
+        )
+    }
+    {
+user.leagueOfLegends.rank.solo && (
+    <div>
+        <h3>Solo Queue</h3>
+        <h4>{user.leagueOfLegends.rank.solo.tier}&nbsp{user.leagueOfLegends.rank.solo.division}</h4>
+        </div>
+)
+    }
+        {
+            user.leagueOfLegends.rank.flex && (
+                <div>
+                    <h3>Flex Queue</h3>
+                    <h4>{user.leagueOfLegends.rank.flex.tier}&nbsp{user.leagueOfLegends.rank.flex.division}</h4>
+                    </div>
+            )
+                }
+</div>
