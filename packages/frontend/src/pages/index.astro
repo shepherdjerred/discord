@@ -1,9 +1,26 @@
 ---
+import { RegionGroups } from "twisted/dist/constants";
 import Layout from "../layouts/Layout.astro";
+
+import { LolApi, Constants } from 'twisted';
+
+const api = new LolApi({
+  key: "",
+  rateLimitRetryAttempts: 10,
+  concurrency: 1,
+});
+const result = await api.Summoner.getByName('sjerred', Constants.Regions.AMERICA_NORTH);
+const matches = await api.MatchV5.list(result.response.puuid, RegionGroups.AMERICAS);
+const matchDetails = await Promise.all(matches.response.map(async (match) => {
+  return (await api.MatchV5.get(match, RegionGroups.AMERICAS)).response;
+}));
 ---
 
 <Layout title="GLITTER BOYS">
   <main>
     <a href="https://www.thephotographywa.com/new-page-1">IMPORTANT</a>
+    {JSON.stringify(result.response)}
+    {JSON.stringify(matches.response)}
+    {JSON.stringify(matchDetails)}
   </main>
 </Layout>
