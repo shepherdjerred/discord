@@ -103,5 +103,20 @@
       "wins": 6,
       "losses": 7
     }
+  },
+  {
+    "league": {
+      "id": "BTJvZNnOUHFnEICbwyq-5A2ZG-7JOGvbw-87juNrEaSr6PTc",
+      "accountId": "h0YBZPKSBXV-TGYeFMWGigZPOI9ervu2z168uhTlYe9u24w",
+      "puuid": "beA95KLRaBvnFQt6MhKJniDOH0vp9mhpdCtlOH8tPrvAYO3RLgyPyf1CPmxTZJA_wKjZw6Gv03Yhmg"
+    },
+    "discordId": "410595870380392458",
+    "startingRank": {
+      "division": 1,
+      "tier": "silver",
+      "lp": 42,
+      "wins": 2,
+      "losses": 3
+    }
   }
 ]
