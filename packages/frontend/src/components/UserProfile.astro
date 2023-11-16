@@ -9,7 +9,7 @@ const { user } = Astro.props;
 
 ---
 
-<div class="dark:text-white">
+<div class="dark:text-white bg-blue">
     <h2>{user.leagueOfLegends.username}</h2>
     {
         user.leagueOfLegends.matchHistory.map((entry) =>
