@@ -100,8 +100,8 @@
       "division": 2,
       "tier": "gold",
       "lp": 22,
-      "wins": 6,
-      "losses": 7
+      "wins": 9,
+      "losses": 10
     }
   },
   {
@@ -112,10 +112,25 @@
     },
     "discordId": "410595870380392458",
     "startingRank": {
-      "division": 1,
+      "division": 3,
       "tier": "silver",
       "lp": 42,
       "wins": 2,
+      "losses": 3
+    }
+  },
+  {
+    "league": {
+      "id": "BB7ZBInbKvaE-LvGEwFEhEo9zvkZGcqDDKJcd5W1bS0Vlxb1VtylUWLpNw",
+      "accountId": "EBRpyLP2o-vFiEtrR30rcycJ6Frpu3yCKuTAdWbV5ngvwI0wErx6YZZA",
+      "puuid": "GksNHpwZi2ICy9ccgifFytu9DvPtRYxmGmnGxcbe8shr4IFwa0hajbgj0eblVRYyL6oaqil5znDgGg"
+    },
+    "discordId": "331238905619677185",
+    "startingRank": {
+      "division": 1,
+      "tier": "bronze",
+      "lp": 9,
+      "wins": 3,
       "losses": 3
     }
   }
