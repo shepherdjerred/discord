@@ -83,7 +83,14 @@ const message = _.join(
         rankString = bold(rankString);
       }
 
-      return `${rankString}: ${user} (${lp} LP diff)`;
+      let lpString;
+      if (lp < 0) {
+        lpString = `(${lp} LP)`;
+      } else {
+        lpString = `(+${lp} LP)`;
+      }
+
+      return `${rankString}: ${user} ${lpString}`;
     }),
   ),
   "\n",
