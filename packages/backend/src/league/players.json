@@ -163,5 +163,20 @@
       "wins": 39,
       "losses": 57
     }
+  },
+  {
+    "league": {
+      "id": "z27c2dEA_YQ1TikXh-NpWpy7XN-FUHYVAg1VymYZGdI4NOw",
+      "accountId": "A-qxB7HUhtqWLLcPEh1gik6VOqgK3QvmMMN1BHLxlHjlkX4",
+      "puuid": "ZF_grAnZjpHTTmh-RyVax-LCwZVCVLRJMLgTU2BJiUN2UcLYpeq6RZxvRBXlcQpwNVqg-OFNr41qXA"
+    },
+    "discordId": "251485022429642752",
+    "startingRank": {
+      "division": 3,
+      "tier": "emerald",
+      "lp": 6,
+      "wins": 100,
+      "losses": 81
+    }
   }
 ]
