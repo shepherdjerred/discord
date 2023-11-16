@@ -8,7 +8,9 @@ import client from "../discord/client.js";
 import configuration from "../configuration.js";
 import { rankToLp } from "./utils.js";
 
-const playersJson = (await (await open("players.json")).readFile()).toString();
+const file = await open("players.json");
+const playersJson = (await file.readFile()).toString();
+await file.close();
 
 const players = PlayersConfigSchema.parse(JSON.parse(playersJson));
 

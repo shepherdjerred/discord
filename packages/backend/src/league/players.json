@@ -43,5 +43,50 @@
       "wins": 25,
       "losses": 26
     }
+  },
+  {
+    "league": {
+      "id": "Da3sZ07dKgUOSeg5bpCKtOT_LLvpkeZsDFl7AttZUS_3C-4",
+      "accountId": "APQ1qsXDKxhA7oSlM2PGuTBt6goOrubkskPx1UVC7YYly-E",
+      "puuid": "2n5udsJWrMZOEkQm8KbL22syLuwk9cWGN9809KL3vaLImOAMZgMLn7YI-iBaJYW12DE5jdyM71EJ3w"
+    },
+    "discordId": "189534213391908865",
+    "startingRank": {
+      "division": 1,
+      "tier": "platinum",
+      "lp": 0,
+      "wins": 28,
+      "losses": 30
+    }
+  },
+  {
+    "league": {
+      "id": "HSWRh_aZE6YJc7sTwvcxUisHLFOfjlHyr6VpAnaXMqAUBVg",
+      "accountId": "Vad_2osVJ24CUewLaALXXMIPDfK3P7OT9gW_igxec4EU89Y",
+      "puuid": "kX9vu-HMTuwqbk1O6HQa1EcGdhKeqcpJ53QEVanqHk6-B-f4dhRQ1mXO_fOH1TjXoVYBLTOrGD_esA"
+    },
+    "discordId": "327908907714478080",
+    "startingRank": {
+      "division": 2,
+      "tier": "platinum",
+      "lp": 58,
+      "wins": 19,
+      "losses": 16
+    }
+  },
+  {
+    "league": {
+      "id": "Mv2ExMQFAchYyFc2eUaJn2Q62p8sKCOAWX85A8xZm3Ef",
+      "accountId": "Sn8wbtiSKpJTrgYSFbZsd9CVepf3XuzM-33JW6_BWms",
+      "puuid": "okVQL80zjnT_HMuDoqR3QiuGTKHQNKPDTbRcjeLjhgprfPeWdMPJXTA_sbK3rxDt2tyIdv9SG2V_Lw"
+    },
+    "discordId": "208425244128444418",
+    "startingRank": {
+      "division": 1,
+      "tier": "platinum",
+      "lp": 53,
+      "wins": 68,
+      "losses": 70
+    }
   }
 ]
