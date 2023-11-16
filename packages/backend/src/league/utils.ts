@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import { Tier, Rank } from "./model.js";
+import { Tier, Rank, Division, numDivisions } from "./model.js";
 
 export function tierToLp(tier: Tier): number {
   const multiplier = match(tier)
@@ -18,7 +18,17 @@ export function tierToLp(tier: Tier): number {
 }
 
 export function rankToLp(rank: Rank): number {
-  const divisionLp = rank.division * 100;
+  const divisionLp = (numDivisions - rank.division) * 100;
   const tierLp = tierToLp(rank.tier);
   return divisionLp + tierLp + rank.lp;
+}
+
+export function stringToDivision(input: string): Division {
+  return match(input)
+    .returnType<Division>()
+    .with("IV", () => 4)
+    .with("III", () => 3)
+    .with("II", () => 2)
+    .with("I", () => 1)
+    .run();
 }

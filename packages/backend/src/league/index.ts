@@ -2,11 +2,10 @@ import { open, writeFile } from "fs/promises";
 import { Player, PlayersConfigSchema, TierSchema } from "./model.js";
 import _ from "lodash";
 import { Constants, LolApi } from "twisted";
-import { match } from "ts-pattern";
 import { bold } from "discord.js";
 import client from "../discord/client.js";
 import configuration from "../configuration.js";
-import { rankToLp } from "./utils.js";
+import { rankToLp, stringToDivision } from "./utils.js";
 
 const file = await open("players.json");
 const playersJson = (await file.readFile()).toString();
@@ -17,15 +16,6 @@ const players = PlayersConfigSchema.parse(JSON.parse(playersJson));
 const api = new LolApi({
   key: configuration.riotApiToken,
 });
-
-function stringToDivision(input: string): number {
-  return match(input)
-    .with("IV", () => 4)
-    .with("III", () => 3)
-    .with("II", () => 2)
-    .with("I", () => 1)
-    .run();
-}
 
 const promises = _.map(players, async (player): Promise<Player> => {
   const response = await api.League.bySummoner(player.league.id, Constants.Regions.AMERICA_NORTH);

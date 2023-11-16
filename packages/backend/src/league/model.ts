@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const numDivisions = 4;
+
 export type Queue = z.infer<typeof QueueSchema>;
 export const QueueSchema = z.enum(["solo", "flex"]);
 
@@ -25,11 +27,14 @@ export const MatchSchema = z.strictObject({
   outcome: OutcomeSchema,
 });
 
+export type Division = z.infer<typeof DivisionSchema>;
+export const DivisionSchema = z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]);
+
 export type Rank = z.infer<typeof RankSchema>;
 export const RankSchema = z.strictObject({
-  division: z.number(),
+  division: DivisionSchema,
   tier: TierSchema,
-  lp: z.number(),
+  lp: z.number().nonnegative().max(100),
   wins: z.number().nonnegative(),
   losses: z.number().nonnegative(),
 });
@@ -41,18 +46,18 @@ export const LeagueOfLegendsSchema = z.strictObject({
 
 export type Player = z.infer<typeof PlayerSchema>;
 export const PlayerSchema = z.object({
-  discordId: z.string(),
+  discordId: z.string().min(0),
   startingRank: RankSchema,
   rank: RankSchema,
 });
 
 export const PlayerConfigSchema = z.object({
   league: z.object({
-    id: z.string(),
-    accountId: z.string(),
-    puuid: z.string(),
+    id: z.string().min(0),
+    accountId: z.string().min(0),
+    puuid: z.string().min(0),
   }),
-  discordId: z.string(),
+  discordId: z.string().min(0),
   startingRank: RankSchema,
 });
 
