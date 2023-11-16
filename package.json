@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A monorepo in TypeScript",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],

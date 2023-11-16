@@ -1,5 +1,5 @@
 import { ViewColumn, DataSource, ViewEntity } from "typeorm";
-import { Person } from "./Person.js";
+import { Person } from "../Person.js";
 import { KarmaGiven } from "./KarmaGiven.js";
 import { KarmaReceived } from "./KarmaReceived.js";
 

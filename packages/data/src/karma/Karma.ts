@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, type Relation } from "typeorm";
-import { Person } from "./Person.js";
+import { Person } from "../Person.js";
 
 @Entity()
 export class Karma {
