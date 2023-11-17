@@ -46,6 +46,7 @@ export const LeagueOfLegendsSchema = z.strictObject({
 
 export type Player = z.infer<typeof PlayerSchema>;
 export const PlayerSchema = z.object({
+  name: z.string(),
   discordId: z.string().min(0),
   startingRank: RankSchema,
   rank: RankSchema,
@@ -53,6 +54,7 @@ export const PlayerSchema = z.object({
 
 export type PlayerConfig = z.infer<typeof PlayerConfigSchema>;
 export const PlayerConfigSchema = z.object({
+  name: z.string(),
   league: z.object({
     // AKA encrypted summoner ID
     id: z.string().min(0),

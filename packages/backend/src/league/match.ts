@@ -53,11 +53,8 @@ export async function checkMatch() {
       );
 
       const damagePosition = _.findIndex(
-        _.sortBy(
-          match.info.participants,
-          (participant) => participant.totalDamageDealtToChampions,
-          (participant) => participant.puuid === state.player.league.puuid,
-        ),
+        _.sortBy(match.info.participants, (participant) => participant.totalDamageDealtToChampions),
+        (participant) => participant.puuid === state.player.league.puuid,
       );
 
       if (player == undefined) {
@@ -76,9 +73,9 @@ export async function checkMatch() {
       const user = await client.users.fetch(state.player.discordId, { cache: true });
       const message = `${userMention(user.id)} ${resultString} a ${_.round(
         match.info.gameDuration / 60,
-      )} minute game playing ${player.championName} ${translateTeamPosition(player.teamPosition)}.\n${player.kills}/${
-        player.deaths
-      }/${player.assists}\nDAMAGE CHARTS: ${translateIndex(damagePosition)} place`;
+      )} minute game playing ${player.championName} ${translateTeamPosition(player.teamPosition)}.\nKDA: ${
+        player.kills
+      }/${player.deaths}/${player.assists}\nDAMAGE CHARTS: ${translateIndex(damagePosition)} place`;
 
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {

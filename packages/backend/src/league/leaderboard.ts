@@ -22,6 +22,7 @@ export async function postUpdate() {
       throw new Error("unable to find solo queue");
     }
     return {
+      name: player.name,
       startingRank: player.startingRank,
       discordId: player.discordId,
       rank: {
