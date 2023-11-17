@@ -57,38 +57,41 @@ export async function checkMatch() {
         return;
       }
 
-      const damage = `${_.round(player.totalDamageDealtToChampions / 1000)}K damage`;
-      const vs = `${player.visionScore} vision score`;
-      const cs = `${player.totalMinionsKilled + player.neutralMinionsKilled} cs`;
-
-      const damagePosition = _.findIndex(
-        _.sortBy(
-          _.filter(match.info.participants, (participant) => participant.teamId === player.teamId),
-          (participant) => participant.totalDamageDealtToChampions,
+      const damageRank = _.findIndex(
+        _.reverse(
+          _.sortBy(
+            _.filter(match.info.participants, (participant) => participant.teamId === player.teamId),
+            (participant) => participant.totalDamageDealtToChampions,
+          ),
         ),
         (participant) => participant.puuid === state.player.league.puuid,
       );
 
-      let resultString: string;
+      const minutes = _.round(match.info.gameDuration / 60);
+      const damageString = `DAMAGE CHARTS: ${translateIndex(damageRank)} place (${_.round(
+        player.totalDamageDealtToChampions / 1000,
+      )}K damage) `;
+      const vsString = `${player.visionScore} vision score (${_.round(player.visionScore / minutes)}/min)`;
+      const totalCs = player.totalMinionsKilled + player.neutralMinionsKilled;
+      const csString = `${totalCs} CS (${_.round(totalCs / minutes)}/min)`;
+      const kdaString = `KDA: ${player.kills}/${player.deaths}/${player.assists}`;
+
+      let outcomeString: string;
 
       if (player.gameEndedInSurrender) {
-        resultString = "surrendered";
+        outcomeString = "surrendered";
       } else if (player.win) {
-        resultString = "won";
+        outcomeString = "won";
       } else {
-        resultString = "lost";
+        outcomeString = "lost";
       }
 
       // TODO: send duo queue message
 
       const user = await client.users.fetch(state.player.discordId, { cache: true });
-      const message = `${userMention(user.id)} ${resultString} a ${_.round(
-        match.info.gameDuration / 60,
-      )} minute game playing ${player.championName} ${translateTeamPosition(player.teamPosition)}\nKDA: ${
-        player.kills
-      }/${player.deaths}/${player.assists}\nDAMAGE CHARTS: ${translateIndex(
-        damagePosition,
-      )} place (${damage})\n${vs}\n${cs}`;
+      const message = `${userMention(user.id)} ${outcomeString} a ${minutes} minute game playing ${
+        player.championName
+      } ${translateTeamPosition(player.teamPosition)}\n${kdaString}\n${damageString}\n${vsString}\n${csString}`;
 
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {

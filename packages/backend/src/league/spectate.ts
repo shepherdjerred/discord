@@ -92,7 +92,7 @@ export async function checkSpectate() {
       // TODO: send duo message
 
       const message = `${userMention(user.id)} started a solo queue game as ${_.startCase(
-        getChampionName(gamePlayer.championId).replaceAll("_", " "),
+        getChampionName(gamePlayer.championId).replaceAll("_", " ").toLowerCase(),
       )}`;
 
       const channel = await client.channels.fetch(configuration.leagueChannelId);
