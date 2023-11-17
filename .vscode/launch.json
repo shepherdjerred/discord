@@ -7,6 +7,20 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Launch League",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/packages/backend/src/league/index.ts",
+            "preLaunchTask": "npm: build - packages/backend",
+            "outFiles": [
+                "${workspaceFolder}/packages/backend/dist/**/*.js"
+            ],
+            "cwd": "${workspaceFolder}/packages/backend"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Launch Spectate",
             "skipFiles": [
                 "<node_internals>/**"

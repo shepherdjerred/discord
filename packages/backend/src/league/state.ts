@@ -6,21 +6,23 @@ import { PlayerConfigSchema } from "./player.js";
 const stateFileName = "state.json";
 
 export async function loadState(): Promise<[State, () => Promise<void>]> {
-  const release = await lock(stateFileName);
-  let state: State;
   try {
+    const release = await lock(stateFileName);
     const stateFile = await open(stateFileName);
     const stateJson = (await stateFile.readFile()).toString();
-    state = StateSchema.parse(JSON.parse(stateJson));
+    const state = StateSchema.parse(JSON.parse(stateJson));
     await stateFile.close();
-  } catch {
+    return [state, release];
+  } catch (e) {
     console.log("unable to load state file");
+    const release = await lock(stateFileName);
+
     // empty state
-    state = {
+    const state = {
       gamesStarted: [],
     };
+    return [state, release];
   }
-  return [state, release];
 }
 
 export async function writeState(state: State): Promise<void> {
