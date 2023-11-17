@@ -1,3 +1,10 @@
 {
-  "extends": "../../tsconfig.json"
+  "extends": "@tsconfig/strictest/tsconfig.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "sourceMap": true,
+    "outDir": "dist",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  }
 }

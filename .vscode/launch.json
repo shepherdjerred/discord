@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Checker",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/packages/backend/src/league/checker.ts",
+            "preLaunchTask": "npm: build - packages/backend",
+            "outFiles": [
+                "${workspaceFolder}/packages/backend/dist/**/*.js"
+            ],
+            "cwd": "${workspaceFolder}/packages/backend"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Leaderboard",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/packages/backend/src/league/index.ts",
+            "preLaunchTask": "npm: build - packages/backend",
+            "outFiles": [
+                "${workspaceFolder}/packages/backend/dist/**/*.js"
+            ],
+            "cwd": "${workspaceFolder}/packages/backend"
+        }
+    ]
+}

@@ -14,6 +14,7 @@
   "type": "module",
   "dependencies": {
     "@glitter-boys/data": "*",
+    "async": "^3.2.5",
     "cors": "^2.8.5",
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.2",
+    "@types/async": "^3.2.23",
     "@types/cors": "^2.8.16",
     "@types/express": "^4.17.21",
     "@types/lodash": "^4.14.201",

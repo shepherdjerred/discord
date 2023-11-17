@@ -15,6 +15,9 @@ const players = PlayersConfigSchema.parse(JSON.parse(playersJson));
 
 const api = new LolApi({
   key: configuration.riotApiToken,
+  rateLimitRetry: true,
+  rateLimitRetryAttempts: 3,
+  concurrency: 1,
 });
 
 const promises = _.map(players, async (player): Promise<Player> => {
@@ -92,3 +95,5 @@ if (channel?.isTextBased()) {
 } else {
   throw new Error("not text based");
 }
+
+await client.destroy();

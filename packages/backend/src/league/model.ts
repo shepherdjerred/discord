@@ -51,8 +51,10 @@ export const PlayerSchema = z.object({
   rank: RankSchema,
 });
 
+export type PlayerConfig = z.infer<typeof PlayerConfigSchema>;
 export const PlayerConfigSchema = z.object({
   league: z.object({
+    // AKA encrypted summoner ID
     id: z.string().min(0),
     accountId: z.string().min(0),
     puuid: z.string().min(0),
