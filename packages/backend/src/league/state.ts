@@ -15,12 +15,12 @@ export async function loadState(): Promise<[State, () => Promise<void>]> {
     return [state, release];
   } catch (e) {
     console.log("unable to load state file");
-    const release = await lock(stateFileName);
-
     // empty state
     const state = {
       gamesStarted: [],
     };
+    await writeState(state);
+    const release = await lock(stateFileName);
     return [state, release];
   }
 }
