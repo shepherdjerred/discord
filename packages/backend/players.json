@@ -254,5 +254,21 @@
       "wins": 102,
       "losses": 95
     }
+  },
+  {
+    "name": "Jeff",
+    "league": {
+      "id": "tlKA2ghauB_HrNpZJUidamBoRhuXWsc1s6HW7mEJPthdAthr",
+      "accountId": "lATx-_ZB9pRypymY-QnneIBQ8xWq7qDJTuHxZ72NVGbwa0kBvk_GvcRk",
+      "puuid": "97fYJdl3sP_NNmju5p6Y2YkwQaZTYXjdOaKDR9J6J-3bHQf5RAts1Y1nyarnP3Ez9tB8SJnEqAD8Gw"
+    },
+    "discordId": "378335152331554836",
+    "startingRank": {
+      "division": 4,
+      "tier": "diamond",
+      "lp": 0,
+      "wins": 206,
+      "losses": 218
+    }
   }
 ]
