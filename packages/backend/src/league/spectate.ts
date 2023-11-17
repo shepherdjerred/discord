@@ -11,6 +11,7 @@ import { Constants } from "twisted";
 import { userMention } from "discord.js";
 import * as uuid from "uuid";
 import { lock } from "proper-lockfile";
+import { getChampionName } from "twisted/dist/constants/champions.js";
 
 export async function checkSpectate() {
   const release = await lock("state.json");
@@ -76,9 +77,19 @@ export async function checkSpectate() {
   console.log("sending messages");
 
   await Promise.all(
-    _.map(unseenGames, async ([player, _game]) => {
+    _.map(unseenGames, async ([player, game]) => {
       const user = await client.users.fetch(player.discordId, { cache: true });
-      const message = `${userMention(user.id)} started a solo queue game`;
+
+      const gamePlayer = _.first(
+        _.filter(game.participants, (participant) => participant.summonerId === player.league.id),
+      );
+
+      if (gamePlayer == undefined) {
+        console.error("invalid state");
+        return;
+      }
+
+      const message = `${userMention(user.id)} started a solo queue game as ${getChampionName(gamePlayer.championId)}`;
 
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {

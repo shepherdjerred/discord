@@ -57,18 +57,23 @@ export async function checkMatch() {
         return;
       }
 
-      const damage = `${player.totalDamageDealtToChampions / 1000}K damage`;
+      const damage = `${_.round(player.totalDamageDealtToChampions / 1000)}K damage`;
       const vs = `${player.visionScore} vision score`;
-      const cs = `${player.totalMinionsKilled} cs`;
+      const cs = `${player.totalMinionsKilled + player.neutralMinionsKilled} cs`;
 
       const damagePosition = _.findIndex(
-        _.sortBy(match.info.participants, (participant) => participant.totalDamageDealtToChampions),
+        _.sortBy(
+          _.filter(match.info.participants, (participant) => participant.teamId === player.teamId),
+          (participant) => participant.totalDamageDealtToChampions,
+        ),
         (participant) => participant.puuid === state.player.league.puuid,
       );
 
       let resultString: string;
 
-      if (player.win) {
+      if (player.gameEndedInSurrender) {
+        resultString = "surrendered";
+      } else if (player.win) {
         resultString = "won";
       } else {
         resultString = "lost";
@@ -77,11 +82,11 @@ export async function checkMatch() {
       const user = await client.users.fetch(state.player.discordId, { cache: true });
       const message = `${userMention(user.id)} ${resultString} a ${_.round(
         match.info.gameDuration / 60,
-      )} minute game playing ${player.championName} ${translateTeamPosition(player.teamPosition)}.\nKDA: ${
+      )} minute game playing ${player.championName} ${translateTeamPosition(player.teamPosition)}\nKDA: ${
         player.kills
       }/${player.deaths}/${player.assists}\nDAMAGE CHARTS: ${translateIndex(
         damagePosition,
-      )} place (${damage})\nCS/min\n${vs}\n${cs}`;
+      )} place (${damage})\n${vs}\n${cs}`;
 
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {
