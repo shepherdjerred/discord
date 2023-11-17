@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
-    "eslint:check": "eslint .",
+    "eslint:check": "eslint src/",
     "prettier:check": "prettier --check .",
     "lint": "npm run lint:check",
     "lint:check": "npm run eslint:check && npm run prettier:check",
