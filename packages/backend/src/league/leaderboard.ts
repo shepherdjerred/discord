@@ -2,7 +2,7 @@ import { writeFile } from "fs/promises";
 import { Player, TierSchema, loadPlayers } from "./player.js";
 import _ from "lodash";
 import { Constants } from "twisted";
-import { bold } from "discord.js";
+import { bold, userMention } from "discord.js";
 import client from "../discord/client.js";
 import configuration from "../configuration.js";
 import { rankToLp, stringToDivision } from "./utils.js";
@@ -59,7 +59,7 @@ export async function postLeaderboardMessage() {
         const myRank = rank;
         prev = lp;
 
-        const user = (await client.users.fetch(entry.discordId, { cache: true })).username;
+        const user = await client.users.fetch(entry.discordId, { cache: true });
 
         let rankString = `#${myRank.toString()}`;
         // top 3 are better than everyone else
@@ -74,7 +74,7 @@ export async function postLeaderboardMessage() {
           lpString = `(+${lp} LP)`;
         }
 
-        return `${rankString}: ${user} ${lpString}`;
+        return `${rankString}: ${userMention(user.id)} ${lpString}`;
       }),
     ),
     "\n",
