@@ -72,7 +72,7 @@ export async function checkPostMatch() {
 
       let outcomeString: string;
 
-      if (player.gameEndedInSurrender) {
+      if (!player.win && player.gameEndedInSurrender) {
         outcomeString = "surrendered";
       } else if (player.win) {
         outcomeString = "won";
