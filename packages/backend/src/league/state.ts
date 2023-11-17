@@ -7,10 +7,19 @@ const stateFileName = "state.json";
 
 export async function loadState(): Promise<[State, () => Promise<void>]> {
   const release = await lock(stateFileName);
-  const stateFile = await open(stateFileName);
-  const stateJson = (await stateFile.readFile()).toString();
-  const state = StateSchema.parse(JSON.parse(stateJson));
-  await stateFile.close();
+  let state: State;
+  try {
+    const stateFile = await open(stateFileName);
+    const stateJson = (await stateFile.readFile()).toString();
+    state = StateSchema.parse(JSON.parse(stateJson));
+    await stateFile.close();
+  } catch {
+    console.log("unable to load state file");
+    // empty state
+    state = {
+      gamesStarted: [],
+    };
+  }
   return [state, release];
 }
 

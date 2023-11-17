@@ -65,9 +65,9 @@ export async function checkPostMatch() {
       const damageString = `DAMAGE CHARTS: ${translateIndex(damageRank)} place (${_.round(
         player.totalDamageDealtToChampions / 1000,
       )}K damage) `;
-      const vsString = `${player.visionScore} vision score (${_.round(player.visionScore / minutes)}/min)`;
+      const vsString = `${player.visionScore} vision score (${_.round(player.visionScore / minutes, 2)}/min)`;
       const totalCs = player.totalMinionsKilled + player.neutralMinionsKilled;
-      const csString = `${totalCs} CS (${_.round(totalCs / minutes)}/min)`;
+      const csString = `${totalCs} CS (${_.round(totalCs / minutes, 2)}/min)`;
       const kdaString = `KDA: ${player.kills}/${player.deaths}/${player.assists}`;
 
       let outcomeString: string;
