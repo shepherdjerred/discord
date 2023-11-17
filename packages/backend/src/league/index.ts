@@ -15,3 +15,6 @@ new CronJob(
 new CronJob("0 * * * * *", checkPreMatch, () => console.log("checked spectate"), true, "America/Los_Angeles");
 // check match status every minute
 new CronJob("30 * * * * *", checkPostMatch, () => console.log("checked match"), true, "America/Los_Angeles");
+
+await checkPreMatch();
+await checkPostMatch();

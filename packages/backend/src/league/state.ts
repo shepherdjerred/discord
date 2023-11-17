@@ -9,18 +9,13 @@ export async function loadState(): Promise<[State, () => Promise<void>]> {
   const release = await lock(stateFileName);
   const stateFile = await open(stateFileName);
   const stateJson = (await stateFile.readFile()).toString();
-  await stateFile.close();
   const state = StateSchema.parse(JSON.parse(stateJson));
+  await stateFile.close();
   return [state, release];
 }
 
 export async function writeState(state: State): Promise<void> {
-  return await writeFile(
-    stateFileName,
-    JSON.stringify({
-      state,
-    }),
-  );
+  return await writeFile(stateFileName, JSON.stringify(state));
 }
 
 export type GameState = z.infer<typeof GameStateSchema>;
