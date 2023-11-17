@@ -52,15 +52,19 @@ export async function checkMatch() {
         _.filter(match.info.participants, (participant) => participant.puuid === state.player.league.puuid),
       );
 
-      const damagePosition = _.findIndex(
-        _.sortBy(match.info.participants, (participant) => participant.totalDamageDealtToChampions),
-        (participant) => participant.puuid === state.player.league.puuid,
-      );
-
       if (player == undefined) {
         console.error("invalid state");
         return;
       }
+
+      const damage = `${player.totalDamageDealtToChampions / 1000}K damage`;
+      const vs = `${player.visionScore} vision score`;
+      const cs = `${player.totalMinionsKilled} cs`;
+
+      const damagePosition = _.findIndex(
+        _.sortBy(match.info.participants, (participant) => participant.totalDamageDealtToChampions),
+        (participant) => participant.puuid === state.player.league.puuid,
+      );
 
       let resultString: string;
 
@@ -75,7 +79,9 @@ export async function checkMatch() {
         match.info.gameDuration / 60,
       )} minute game playing ${player.championName} ${translateTeamPosition(player.teamPosition)}.\nKDA: ${
         player.kills
-      }/${player.deaths}/${player.assists}\nDAMAGE CHARTS: ${translateIndex(damagePosition)} place`;
+      }/${player.deaths}/${player.assists}\nDAMAGE CHARTS: ${translateIndex(
+        damagePosition,
+      )} place (${damage})\nCS/min\n${vs}\n${cs}`;
 
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {
