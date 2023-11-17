@@ -20,22 +20,22 @@ const karmaCommand = new SlashCommandBuilder()
       .setName("give")
       .setDescription("Give karma to someone")
       .addUserOption((option) =>
-        option.setName("target").setDescription("The person you'd like to give karma to").setRequired(true)
+        option.setName("target").setDescription("The person you'd like to give karma to").setRequired(true),
       )
       .addStringOption((option) =>
-        option.setName("reason").setDescription("An optional reason about why they deserve karma").setMaxLength(200)
-      )
+        option.setName("reason").setDescription("An optional reason about why they deserve karma").setMaxLength(200),
+      ),
   )
   .addSubcommand((subcommand) =>
-    subcommand.setName("leaderboard").setDescription("See karma values for everyone on the server")
+    subcommand.setName("leaderboard").setDescription("See karma values for everyone on the server"),
   )
   .addSubcommand((subcommand) =>
     subcommand
       .setName("history")
       .setDescription("View recent changes to a person's karma")
       .addUserOption((option) =>
-        option.setName("target").setDescription("The person whose karma history you'd like to view").setRequired(true)
-      )
+        option.setName("target").setDescription("The person whose karma history you'd like to view").setRequired(true),
+      ),
   );
 
 async function getOrCreate(id: string): Promise<Person> {
@@ -97,7 +97,7 @@ async function handleKarmaGive(interaction: CommandInteraction) {
     const newKarma = await getKarma(receiverUser.id);
     await interaction.reply({
       content: `${userMention(giverUser.id)} tried altering their karma. SMH my head. ${bold(
-        "-1"
+        "-1",
       )} karma. They now have ${bold(newKarma.toString())} karma.`,
     });
     return;
@@ -109,14 +109,14 @@ async function handleKarmaGive(interaction: CommandInteraction) {
   if (reason) {
     await interaction.reply(
       `${userMention(giverUser.id)} gave karma to ${userMention(receiverUser.id)} because ${inlineCode(
-        reason
-      )}. They now have ${bold(newReceiverKarma.toString())} karma.`
+        reason,
+      )}. They now have ${bold(newReceiverKarma.toString())} karma.`,
     );
   } else {
     await interaction.reply(
       `${userMention(giverUser.id)} gave karma to ${userMention(receiverUser.id)}. They now have ${bold(
-        newReceiverKarma.toString()
-      )} karma.`
+        newReceiverKarma.toString(),
+      )} karma.`,
     );
   }
 }
@@ -155,7 +155,7 @@ async function handleKarmaLeaderboard(interaction: CommandInteraction) {
         }
 
         return `${rankString}: ${user} (${value.karmaReceived} karma)`;
-      })
+      }),
     )
   ).join("\n");
   await interaction.reply({ content: `Karma Leaderboard:\n${leaderboard}`, ephemeral: true });
@@ -171,7 +171,7 @@ async function handleKarmaHistory(interaction: CommandInteraction) {
     .map((item) => {
       if (target.id === item.giver.id) {
         let message = `${time(item.datetime)} Gave ${bold(item.amount.toString())} karma to ${userMention(
-          item.receiver.id
+          item.receiver.id,
         )}`;
         if (item.reason) {
           message += ` for ${inlineCode(item.reason)}`;
@@ -180,7 +180,7 @@ async function handleKarmaHistory(interaction: CommandInteraction) {
       }
       if (target.id === item.receiver.id) {
         let message = `${time(item.datetime)} Received ${bold(item.amount.toString())} karma from ${userMention(
-          item.giver.id
+          item.giver.id,
         )}`;
         if (item.reason) {
           message += ` for ${inlineCode(item.reason)}`;

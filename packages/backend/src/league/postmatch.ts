@@ -1,4 +1,3 @@
-import { open, writeFile } from "fs/promises";
 import { Constants } from "twisted";
 import configuration from "../configuration.js";
 import _ from "lodash";
@@ -6,17 +5,12 @@ import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import client from "../discord/client.js";
 import { z } from "zod";
 import { api } from "./api.js";
-import { GameState, StateSchema } from "./state.js";
+import { GameState, loadState, writeState } from "./state.js";
 import { userMention } from "discord.js";
-import { lock } from "proper-lockfile";
 import { translateIndex, translateTeamPosition } from "./utils.js";
 
-export async function checkMatch() {
-  const release = await lock("state.json");
-  const stateFile = await open("state.json");
-  const stateJson = (await stateFile.readFile()).toString();
-  await stateFile.close();
-  const state = StateSchema.parse(JSON.parse(stateJson));
+export async function checkPostMatch() {
+  const [state, release] = await loadState();
 
   console.log("checking match api");
 
@@ -110,12 +104,9 @@ export async function checkMatch() {
     (state) => state.uuid,
   );
 
-  await writeFile(
-    "state.json",
-    JSON.stringify({
-      ...state,
-      gamesStarted: newMatches,
-    }),
-  );
+  await writeState({
+    ...state,
+    gamesStarted: newMatches,
+  });
   await release();
 }

@@ -1,1 +1,10 @@
-{"date":1700099339223,"data":[{"startingRank":{"division":4,"tier":"gold","lp":0,"wins":60,"losses":75},"discordId":"160509172704739328","rank":{"division":4,"tier":"gold","lp":0,"wins":60,"losses":75}}]}
+{
+  "date": 1700099339223,
+  "data": [
+    {
+      "startingRank": { "division": 4, "tier": "gold", "lp": 0, "wins": 60, "losses": 75 },
+      "discordId": "160509172704739328",
+      "rank": { "division": 4, "tier": "gold", "lp": 0, "wins": 60, "losses": 75 }
+    }
+  ]
+}

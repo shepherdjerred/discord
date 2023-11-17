@@ -1,1 +1,30 @@
-{"date":1700100230679,"data":[{"startingRank":{"division":4,"tier":"gold","lp":0,"wins":60,"losses":75},"discordId":"160509172704739328","rank":{"division":4,"tier":"gold","lp":0,"wins":60,"losses":75}},{"startingRank":{"division":4,"tier":"platinum","lp":45,"wins":31,"losses":26},"discordId":"138906561895464960","rank":{"division":4,"tier":"platinum","lp":45,"wins":35,"losses":32}},{"startingRank":{"division":2,"tier":"gold","lp":32,"wins":25,"losses":26},"discordId":"528096854831792159","rank":{"division":2,"tier":"gold","lp":59,"wins":26,"losses":26}},{"startingRank":{"division":1,"tier":"platinum","lp":0,"wins":28,"losses":30},"discordId":"189534213391908865","rank":{"division":1,"tier":"platinum","lp":0,"wins":28,"losses":30}},{"startingRank":{"division":2,"tier":"platinum","lp":58,"wins":19,"losses":16},"discordId":"327908907714478080","rank":{"division":2,"tier":"platinum","lp":58,"wins":19,"losses":16}}]}
+{
+  "date": 1700100230679,
+  "data": [
+    {
+      "startingRank": { "division": 4, "tier": "gold", "lp": 0, "wins": 60, "losses": 75 },
+      "discordId": "160509172704739328",
+      "rank": { "division": 4, "tier": "gold", "lp": 0, "wins": 60, "losses": 75 }
+    },
+    {
+      "startingRank": { "division": 4, "tier": "platinum", "lp": 45, "wins": 31, "losses": 26 },
+      "discordId": "138906561895464960",
+      "rank": { "division": 4, "tier": "platinum", "lp": 45, "wins": 35, "losses": 32 }
+    },
+    {
+      "startingRank": { "division": 2, "tier": "gold", "lp": 32, "wins": 25, "losses": 26 },
+      "discordId": "528096854831792159",
+      "rank": { "division": 2, "tier": "gold", "lp": 59, "wins": 26, "losses": 26 }
+    },
+    {
+      "startingRank": { "division": 1, "tier": "platinum", "lp": 0, "wins": 28, "losses": 30 },
+      "discordId": "189534213391908865",
+      "rank": { "division": 1, "tier": "platinum", "lp": 0, "wins": 28, "losses": 30 }
+    },
+    {
+      "startingRank": { "division": 2, "tier": "platinum", "lp": 58, "wins": 19, "losses": 16 },
+      "discordId": "327908907714478080",
+      "rank": { "division": 2, "tier": "platinum", "lp": 58, "wins": 19, "losses": 16 }
+    }
+  ]
+}

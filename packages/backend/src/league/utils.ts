@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import { Tier, Rank, Division, numDivisions } from "./model.js";
+import { Tier, Rank, Division, numDivisions } from "./player.js";
 
 export function tierToLp(tier: Tier): number {
   const multiplier = match(tier)

@@ -1,21 +1,18 @@
-import { open, writeFile } from "fs/promises";
+import { open } from "fs/promises";
 import { CurrentGameInfoDTO, SpectatorNotAvailableDTO } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
 import configuration from "../configuration.js";
 import client from "../discord/client.js";
 import { api } from "./api.js";
-import { PlayersConfigSchema, type PlayerConfig } from "./model.js";
-import { GameState, StateSchema } from "./state.js";
+import { PlayersConfigSchema, type PlayerConfig } from "./player.js";
+import { GameState, loadState, writeState } from "./state.js";
 import _ from "lodash";
 import { Constants } from "twisted";
 import { userMention } from "discord.js";
 import * as uuid from "uuid";
-import { lock } from "proper-lockfile";
 import { getChampionName } from "twisted/dist/constants/champions.js";
 
-export async function checkSpectate() {
-  const release = await lock("state.json");
-
+export async function checkPreMatch() {
   // loop over all tracked players
   const playersFile = await open("players.json");
   const playersJson = (await playersFile.readFile()).toString();
@@ -57,10 +54,7 @@ export async function checkSpectate() {
     CurrentGameInfoDTO,
   ][];
 
-  const stateFile = await open("state.json");
-  const stateJson = (await stateFile.readFile()).toString();
-  await stateFile.close();
-  const state = StateSchema.parse(JSON.parse(stateJson));
+  const [state, release] = await loadState();
 
   console.log("removing games already seen");
 
@@ -119,12 +113,9 @@ export async function checkSpectate() {
 
   const entries = _.concat(state.gamesStarted, unseenEntries);
 
-  await writeFile(
-    "state.json",
-    JSON.stringify({
-      ...state,
-      gamesStarted: entries,
-    }),
-  );
+  await writeState({
+    ...state,
+    gamesStarted: entries,
+  });
   await release();
 }
