@@ -10,10 +10,11 @@ import _ from "lodash";
 import { Constants } from "twisted";
 import { userMention } from "discord.js";
 import * as uuid from "uuid";
-
-checkSpectate();
+import { lock } from "proper-lockfile";
 
 export async function checkSpectate() {
+  const release = await lock("state.json");
+
   // loop over all tracked players
   const playersFile = await open("players.json");
   const playersJson = (await playersFile.readFile()).toString();
@@ -110,4 +111,5 @@ export async function checkSpectate() {
       gamesStarted: entries,
     }),
   );
+  await release();
 }

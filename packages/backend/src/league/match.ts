@@ -8,8 +8,11 @@ import { z } from "zod";
 import { api } from "./api.js";
 import { GameState, StateSchema } from "./state.js";
 import { userMention } from "discord.js";
+import { lock } from "proper-lockfile";
+import { translateIndex, translateTeamPosition } from "./utils.js";
 
 export async function checkMatch() {
+  const release = await lock("state.json");
   const stateFile = await open("state.json");
   const stateJson = (await stateFile.readFile()).toString();
   await stateFile.close();
@@ -49,6 +52,14 @@ export async function checkMatch() {
         _.filter(match.info.participants, (participant) => participant.puuid === state.player.league.puuid),
       );
 
+      const damagePosition = _.findIndex(
+        _.sortBy(
+          match.info.participants,
+          (participant) => participant.totalDamageDealtToChampions,
+          (participant) => participant.puuid === state.player.league.puuid,
+        ),
+      );
+
       if (player == undefined) {
         console.error("invalid state");
         return;
@@ -63,9 +74,11 @@ export async function checkMatch() {
       }
 
       const user = await client.users.fetch(state.player.discordId, { cache: true });
-      const message = `${userMention(user.id)} ${resultString} a ${match.info.gameDuration / 60} minute game ${
-        player.role
-      }, ${player.kills}/${player.deaths}/${player.assists}`;
+      const message = `${userMention(user.id)} ${resultString} a ${_.round(
+        match.info.gameDuration / 60,
+      )} minute game playing ${player.championName} ${translateTeamPosition(player.teamPosition)}.\n${player.kills}/${
+        player.deaths
+      }/${player.assists}\nDAMAGE CHARTS: ${translateIndex(damagePosition)} place`;
 
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {
@@ -79,8 +92,8 @@ export async function checkMatch() {
   console.log("saving state files");
 
   const newMatches = _.differenceBy(
-    _.map(finishedGames, (game) => game[0]),
     state.gamesStarted,
+    _.map(finishedGames, (game) => game[0]),
     (state) => state.uuid,
   );
 
@@ -91,4 +104,5 @@ export async function checkMatch() {
       gamesStarted: newMatches,
     }),
   );
+  await release();
 }

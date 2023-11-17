@@ -32,3 +32,23 @@ export function stringToDivision(input: string): Division {
     .with("I", () => 1)
     .run();
 }
+
+export function translateTeamPosition(input: string): string {
+  return match(input)
+    .with("MIDDLE", () => "middle")
+    .with("TOP", () => "top")
+    .with("JUNGLE", () => "jungle")
+    .with("BOTTOM", () => "adc")
+    .with("UTILITY", () => "support")
+    .otherwise(() => "unknown");
+}
+
+export function translateIndex(index: number): string {
+  return match(index)
+    .with(0, () => "1st")
+    .with(1, () => "2nd")
+    .with(2, () => "3rd")
+    .with(3, () => "4th")
+    .with(4, () => "5th")
+    .otherwise(() => "unknown");
+}
