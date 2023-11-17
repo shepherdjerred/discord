@@ -217,8 +217,8 @@
     "discordId": "186665676134547461",
     "startingRank": {
       "division": 4,
-      "tier": "diamond",
-      "lp": 0,
+      "tier": "emerald",
+      "lp": 59,
       "wins": 30,
       "losses": 35
     }
@@ -232,9 +232,9 @@
     },
     "discordId": "171455587517857796",
     "startingRank": {
-      "division": 3,
+      "division": 4,
       "tier": "emerald",
-      "lp": 1,
+      "lp": 47,
       "wins": 51,
       "losses": 54
     }
