@@ -238,5 +238,21 @@
       "wins": 51,
       "losses": 54
     }
+  },
+  {
+    "name": "Wanye",
+    "league": {
+      "id": "Tgo7M5lQS2ELTQd3N3Xfb7kxO6OOZaiAnQuzQtQ71yIr8n0",
+      "accountId": "LMjECS0JDNdakn2ftv4O-Ic5FN679WyjULM_i7ICFMtuyJE",
+      "puuid": "JvbEey_NM465IzI92Iu-lyO1vuCrM5Uv28eCXnAkY6X6_8fB_gq8MngCWN8uGbw-TpNH_JP73Oo-Gg"
+    },
+    "discordId": "327894775103750154",
+    "startingRank": {
+      "division": 4,
+      "tier": "platinum",
+      "lp": 0,
+      "wins": 102,
+      "losses": 95
+    }
   }
 ]
