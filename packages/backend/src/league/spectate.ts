@@ -89,9 +89,11 @@ export async function checkSpectate() {
         return;
       }
 
-      const message = `${userMention(user.id)} started a solo queue game as ${getChampionName(gamePlayer.championId)
-        .toLowerCase()
-        .replaceAll("_", " ")}`;
+      // TODO: send duo message
+
+      const message = `${userMention(user.id)} started a solo queue game as ${_.startCase(
+        getChampionName(gamePlayer.championId).replaceAll("_", " "),
+      )}`;
 
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {

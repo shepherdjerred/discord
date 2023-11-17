@@ -79,6 +79,8 @@ export async function checkMatch() {
         resultString = "lost";
       }
 
+      // TODO: send duo queue message
+
       const user = await client.users.fetch(state.player.discordId, { cache: true });
       const message = `${userMention(user.id)} ${resultString} a ${_.round(
         match.info.gameDuration / 60,
