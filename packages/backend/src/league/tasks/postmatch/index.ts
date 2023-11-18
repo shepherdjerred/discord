@@ -9,7 +9,7 @@ import { GameState, getState, writeState } from "../../model/state.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
 import { createMatchObject } from "./image/match.js";
 import { matchToImage } from "./image/index.js";
-import { generateMessageFromBrian } from "./brian/index.js";
+import { generateMessageFromBrian } from "./feedback/index.js";
 import { rankToLeaguePoints } from "../../model/leaguePoints.js";
 import { indexToRanking } from "../../model/relativeRanking.js";
 import { parseLane } from "../../model/lane.js";
@@ -109,8 +109,8 @@ DAMAGE CHARTS: ${indexToRanking(damageRank)} place
 ${lpString}`;
 
       try {
-        const brian = await generateMessageFromBrian(promptMessage);
-        discordMessage = `${discordMessage}\nBrian says: ${brian}`;
+        const { name, message } = await generateMessageFromBrian(promptMessage);
+        discordMessage = `${discordMessage}\n${name}says: ${message}`;
       } catch (e) {
         console.error(e);
       }
