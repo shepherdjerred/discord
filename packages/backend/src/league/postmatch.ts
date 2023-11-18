@@ -11,7 +11,6 @@ import { rankToLp, translateIndex, translateTeamPosition } from "./utils.js";
 import { getCurrentRank } from "./player/current.js";
 import { createMatchObject } from "./image/match.js";
 import { matchToImage } from "./image/index.js";
-import svg2img from "svg2img";
 import { Resvg } from "@resvg/resvg-js";
 
 export async function checkPostMatch() {
