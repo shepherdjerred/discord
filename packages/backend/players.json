@@ -340,5 +340,23 @@
       }
     },
     "discordAccount": { "id": "177669150062149633" }
+  },
+  {
+    "name": "Jake",
+    "league": {
+      "leagueAccount": {
+        "id": "zWmZRsnC6szqQHT5zTVVEtS0Sps4PaGBf-PD93MPOC9tMpU",
+        "accountId": "Df8AzcdGVYvw7nWkoJmmQf3MIsEL8ugzRbKufT35f815T7E",
+        "puuid": "P14duZWshXWprvjn1u_sAblNYARfpvbxiv7PvcWPYKSlSGVUUd850GLSCpexkNVazR3KlRI8RgD9tA"
+      },
+      "initialRank": {
+        "division": 4,
+        "tier": "emerald",
+        "lp": 1,
+        "wins": 32,
+        "losses": 29
+      }
+    },
+    "discordAccount": { "id": "108659981309468672" }
   }
 ]
