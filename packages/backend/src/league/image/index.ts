@@ -1,50 +1,151 @@
-import { createCanvas } from "canvas";
 import _ from "lodash";
-import { Match } from "./match.js";
+import { Champion, Match } from "./match.js";
+import satori from "satori";
+import { readFile } from "fs/promises";
 
-// const matchObj = createMatchObject(exampleMatch);
-// const result = matchToImage(matchObj);
-// await writeFile("test.png", result);
+export async function matchToImage(match: Match) {
+  const font = await readFile("src/league/image/fonts/BeaufortForLoL-TTF/BeaufortforLOL-Medium.ttf");
+  const fontBold = await readFile("src/league/image/fonts/BeaufortForLoL-TTF/BeaufortforLOL-Bold.ttf");
 
-export function matchToImage(match: Match) {
-  const width = 1200;
-  const height = 627;
+  const minutes = _.round(match.duration / 60);
+  const damageString = `${_.round(match.damage / 1000)}K damage `;
+  const vsString = `${match.vs} vision score (${_.round(match.vs / minutes, 2)}/min)`;
+  const csString = `${match.cs} CS (${_.round(match.cs / minutes, 1)}/min)`;
 
-  const canvas = createCanvas(width, height);
-  const context = canvas.getContext("2d");
+  function transformChampion(champion: Champion) {
+    const isPlayer = champion.champion === match.champion;
+    return {
+      type: "div",
+      props: {
+        children: [
+          {
+            type: "div",
+            props: {
+              children: [
+                {
+                  type: "span",
+                  props: {
+                    children: [champion.champion],
+                    style: { display: "flex", fontWeight: isPlayer ? "700" : "400", color: isPlayer ? "#0397AB" : "" },
+                  },
+                },
+                {
+                  type: "span",
+                  props: {
+                    children: [`${champion.kills}/${champion.deaths}/${champion.assists}`],
+                    style: { display: "flex", fontWeight: isPlayer ? "700" : "400", color: isPlayer ? "#0397AB" : "" },
+                  },
+                },
+              ],
+              style: { display: "flex", gap: "10px" },
+            },
+          },
+        ],
+        style: { display: "flex" },
+      },
+    };
+  }
 
-  context.fillStyle = "#764abc";
-  context.fillRect(0, 0, width, height);
+  const red = _.map(match.teams.red, transformChampion);
 
-  context.font = "bold 20pt 'PT Sans'";
-  context.textAlign = "left";
-  context.fillStyle = "#fff";
+  const blue = _.map(match.teams.blue, transformChampion);
 
-  const championNameOffset = 100;
-  const spacing = 75;
-
-  _.forEach(match.teams.red, (player, i) => {
-    const offset = 100;
-
-    context.fillText(player.champion, offset, (i + 1) * spacing);
-    context.fillText(
-      `${player.kills}/${player.deaths}/${player.assists}`,
-      offset + championNameOffset,
-      (i + 1) * spacing,
-    );
-  });
-
-  _.forEach(match.teams.blue, (player, i) => {
-    const offset = 500;
-    context.fillText(player.champion, offset, (i + 1) * spacing);
-    context.fillText(
-      `${player.kills}/${player.deaths}/${player.assists}`,
-      offset + championNameOffset,
-      (i + 1) * spacing,
-    );
-  });
-
-  context.fillText(match.outcome, 100, 500);
-
-  return canvas.toBuffer("image/png");
+  const svg = await satori(
+    {
+      type: "div",
+      props: {
+        children: [
+          {
+            type: "div",
+            props: {
+              children: `Victory: ${match.name}`,
+              style: { color: "#C89B3C", fontSize: "2rem", display: "flex", flexDirection: "column" },
+            },
+          },
+          {
+            type: "div",
+            props: {
+              children: [
+                {
+                  type: "div",
+                  props: {
+                    children: red,
+                    style: { display: "flex", flexDirection: "column", gap: "10px" },
+                  },
+                },
+                {
+                  type: "div",
+                  props: {
+                    children: blue,
+                    style: { display: "flex", flexDirection: "column", gap: "10px" },
+                  },
+                },
+                {
+                  type: "div",
+                  props: {
+                    children: [
+                      {
+                        type: "div",
+                        props: {
+                          children: [damageString],
+                          style: { display: "flex" },
+                        },
+                      },
+                      {
+                        type: "div",
+                        props: {
+                          children: [vsString],
+                          style: { display: "flex" },
+                        },
+                      },
+                      {
+                        type: "div",
+                        props: {
+                          children: [csString],
+                          style: { display: "flex" },
+                        },
+                      },
+                    ],
+                    style: { display: "flex", flexDirection: "column", gap: "10px" },
+                  },
+                },
+              ],
+              style: { display: "flex", gap: "20px" },
+            },
+          },
+        ],
+        style: {
+          width: "100%",
+          height: "100%",
+          color: "#A09B8C",
+          backgroundColor: "#091428",
+          display: "flex",
+          flexDirection: "column",
+          border: "5px",
+          borderColor: "#0A323C",
+          padding: "10px",
+          gap: "10px",
+        },
+      },
+    },
+    {
+      width: 600,
+      height: 320,
+      fonts: [
+        {
+          name: "Beautfort",
+          data: font,
+          weight: 400,
+          style: "normal",
+        },
+        {
+          name: "Beautfort",
+          data: fontBold,
+          weight: 700,
+          style: "normal",
+        },
+      ],
+    },
+  );
+  return svg;
 }

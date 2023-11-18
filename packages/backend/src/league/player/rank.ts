@@ -26,4 +26,3 @@ export const RankSchema = z.strictObject({
   wins: z.number().nonnegative(),
   losses: z.number().nonnegative(),
 });
-

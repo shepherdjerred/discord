@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
+import { PlayerConfigEntry, PlayerConfigEntrySchema } from "../player/config.js";
 
 export type Champion = z.infer<typeof ChampionSchema>;
 export const ChampionSchema = z.strictObject({
@@ -14,17 +15,41 @@ export const ChampionSchema = z.strictObject({
   cs: z.number().nonnegative(),
   vs: z.number().nonnegative(),
   lane: z.enum(["top", "jg", "mid", "adc", "sup"]),
+  damage: z.number().nonnegative(),
 });
 
 export type Match = z.infer<typeof MatchSchema>;
 export const MatchSchema = z.strictObject({
+  player: PlayerConfigEntrySchema,
+  name: z.string().min(0),
+  cs: z.number().nonnegative(),
+  vs: z.number().nonnegative(),
+  lp: z.number(),
+  champion: z.string().min(0),
+  damage: z.number().nonnegative(),
   outcome: z.enum(["win", "loss"]),
   duration: z.number().nonnegative(),
   teams: z.record(z.union([z.literal("red"), z.literal("blue")]), z.array(ChampionSchema).length(5)),
 });
 
-export function createMatchObject(dto: MatchV5DTOs.MatchDto): Match {
+export function createMatchObject(username: string, player: PlayerConfigEntry, dto: MatchV5DTOs.MatchDto): Match {
+  const playerParticipant = _.first(
+    _.filter(dto.info.participants, (participant) => participant.puuid === player.league.leagueAccount.puuid),
+  );
+
+  if (playerParticipant == undefined) {
+    console.error("invalid state");
+    throw Error("");
+  }
+
   return {
+    player,
+    name: username,
+    cs: playerParticipant.totalMinionsKilled + playerParticipant.neutralMinionsKilled,
+    vs: playerParticipant.visionScore,
+    lp: 0,
+    damage: playerParticipant.totalDamageDealtToChampions,
+    champion: playerParticipant.championName,
     outcome: "win",
     duration: dto.info.gameDuration,
     teams: {
@@ -46,5 +71,6 @@ export function createChampionObject(dto: MatchV5DTOs.ParticipantDto): Champion 
     lane: dto.teamPosition.toLowerCase() as Champion["lane"],
     cs: dto.totalMinionsKilled + dto.neutralMinionsKilled,
     vs: dto.visionScore,
+    damage: dto.totalDamageDealtToChampions,
   };
 }

@@ -9,12 +9,12 @@
     "prettier:check": "prettier --check .",
     "lint": "npm run lint:check",
     "lint:check": "npm run eslint:check && npm run prettier:check",
-    "prettier:fix": "prettier --write ."
+    "prettier:fix": "prettier --write .",
+    "test": "vitest"
   },
   "type": "module",
   "dependencies": {
     "@glitter-boys/data": "*",
-    "canvas": "^2.11.2",
     "cors": "^2.8.5",
     "cron": "^3.1.6",
     "discord.js": "^14.14.1",
@@ -23,9 +23,10 @@
     "express": "^4.18.2",
     "lodash": "^4.17.21",
     "proper-lockfile": "^4.1.2",
+    "react": "^18.2.0",
     "reflect-metadata": "^0.1.13",
+    "satori": "^0.10.9",
     "sqlite3": "^5.1.6",
-    "tmp-promise": "^3.0.3",
     "ts-pattern": "^5.0.5",
     "twisted": "^1.54.0",
     "typeorm": "^0.3.17",
@@ -40,7 +41,7 @@
     "@types/lodash": "^4.14.201",
     "@types/node": "^20.9.0",
     "@types/proper-lockfile": "^4.1.4",
-    "@types/tmp": "^0.2.6",
-    "@types/uuid": "^9.0.7"
+    "@types/uuid": "^9.0.7",
+    "vitest": "^0.34.6"
   }
 }

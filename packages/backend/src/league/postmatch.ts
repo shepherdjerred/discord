@@ -9,8 +9,8 @@ import { GameState, loadState, writeState } from "./state.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
 import { rankToLp, translateIndex, translateTeamPosition } from "./utils.js";
 import { getCurrentRank } from "./player/current.js";
-import { matchToImage } from "./image/index.js";
 import { createMatchObject } from "./image/match.js";
+import { matchToImage } from "./image/index.js";
 
 export async function checkPostMatch() {
   const [state, release] = await loadState();
@@ -107,9 +107,9 @@ export async function checkPostMatch() {
 
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {
-        const matchObj = createMatchObject(match);
-        const image = matchToImage(matchObj);
-        const attachment = new AttachmentBuilder(image).setName("match.png");
+        const matchObj = createMatchObject(user.username, state.player, match);
+        const image = await matchToImage(matchObj);
+        const attachment = new AttachmentBuilder(image).setName("match.svg");
         const embed = new EmbedBuilder().setImage(`attachment://${attachment.name}`);
         await channel.send({ content: message, embeds: [embed], files: [attachment] });
       } else {
