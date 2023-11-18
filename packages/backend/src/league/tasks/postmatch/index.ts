@@ -14,6 +14,7 @@ import { rankToLeaguePoints } from "../../model/leaguePoints.js";
 import { indexToRanking } from "../../model/relativeRanking.js";
 import { parseLane } from "../../model/lane.js";
 import { getCurrentRank } from "../../model/playerConfigEntry.js";
+import { mkdir, writeFile } from "fs/promises";
 
 export async function checkPostMatch() {
   const [state, release] = await getState();
@@ -48,6 +49,9 @@ export async function checkPostMatch() {
 
   await Promise.all(
     _.map(finishedGames, async ([state, match]) => {
+      await mkdir("matches");
+      await writeFile(`matches/${match.info.gameId}`, JSON.stringify(match));
+
       const player = _.chain(match.info.participants)
         .filter((participant) => participant.puuid === state.player.league.leagueAccount.puuid)
         .first()
