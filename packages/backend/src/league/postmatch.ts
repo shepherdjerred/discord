@@ -109,7 +109,7 @@ export async function checkPostMatch() {
       if (channel?.isTextBased()) {
         const matchObj = createMatchObject(user.username, state.player, match);
         const image = await matchToImage(matchObj);
-        const attachment = new AttachmentBuilder(image).setName("match.svg");
+        const attachment = new AttachmentBuilder(Buffer.from(image)).setName("match.svg");
         const embed = new EmbedBuilder().setImage(`attachment://${attachment.name}`);
         await channel.send({ content: message, embeds: [embed], files: [attachment] });
       } else {
