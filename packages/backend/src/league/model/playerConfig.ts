@@ -5,7 +5,7 @@ import { PlayerConfigEntrySchema } from "./playerConfigEntry.js";
 export type PlayerConfig = z.infer<typeof PlayerConfigSchema>;
 export const PlayerConfigSchema = z.array(PlayerConfigEntrySchema);
 
-export async function loadPlayers(): Promise<PlayerConfig> {
+export async function getPlayerConfigs(): Promise<PlayerConfig> {
   const file = await open("players.json");
   const playersJson = (await file.readFile()).toString();
   await file.close();
