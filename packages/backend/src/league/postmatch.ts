@@ -112,7 +112,7 @@ export async function checkPostMatch() {
         const { path, cleanup } = await tmp.file({ postfix: ".png" });
         const matchObj = createMatchObject(match);
         const image = matchToImage(matchObj);
-        writeFile(path, image);
+        await writeFile(path, image);
         const exampleEmbed = new EmbedBuilder().setImage(`attachment://${path}`);
         await channel.send({ content: message, embeds: [exampleEmbed] });
         await cleanup();
