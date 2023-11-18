@@ -31,7 +31,8 @@
     "twisted": "^1.54.0",
     "typeorm": "^0.3.17",
     "uuid": "^9.0.1",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "@resvg/resvg-js": "^2.6.0"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.2",
