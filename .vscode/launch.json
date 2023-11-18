@@ -7,7 +7,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch League",
+            "name": "Launch League Main",
             "skipFiles": [
                 "<node_internals>/**"
             ],
