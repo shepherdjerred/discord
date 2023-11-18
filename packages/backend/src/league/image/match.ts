@@ -27,7 +27,7 @@ export const MatchSchema = z.strictObject({
   lp: z.number(),
   champion: z.string().min(0),
   damage: z.number().nonnegative(),
-  outcome: z.enum(["win", "loss"]),
+  outcome: z.enum(["Victory", "Defeat", "Surrender"]),
   duration: z.number().nonnegative(),
   teams: z.record(z.union([z.literal("red"), z.literal("blue")]), z.array(ChampionSchema).length(5)),
 });
@@ -42,6 +42,15 @@ export function createMatchObject(username: string, player: PlayerConfigEntry, d
     throw Error("");
   }
 
+  let outcome: "Victory" | "Defeat" | "Surrender";
+  if (playerParticipant.win) {
+    outcome = "Victory";
+  } else if (playerParticipant.gameEndedInSurrender) {
+    outcome = "Surrender";
+  } else {
+    outcome = "Defeat";
+  }
+
   return {
     player,
     name: username,
@@ -50,7 +59,7 @@ export function createMatchObject(username: string, player: PlayerConfigEntry, d
     lp: 0,
     damage: playerParticipant.totalDamageDealtToChampions,
     champion: playerParticipant.championName,
-    outcome: "win",
+    outcome,
     duration: dto.info.gameDuration,
     teams: {
       red: _.map(dto.info.participants.slice(0, 5), createChampionObject),

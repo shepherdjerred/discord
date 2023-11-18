@@ -2,18 +2,31 @@ import _ from "lodash";
 import { Champion, Match } from "./match.js";
 import satori from "satori";
 import { readFile } from "fs/promises";
+import { Resvg } from "@resvg/resvg-js";
 
 export async function matchToImage(match: Match) {
   const font = await readFile("src/league/image/fonts/BeaufortForLoL-TTF/BeaufortforLOL-Medium.ttf");
   const fontBold = await readFile("src/league/image/fonts/BeaufortForLoL-TTF/BeaufortforLOL-Bold.ttf");
+  const bg = await readFile("src/league/image/image/bg.jpg");
 
   const minutes = _.round(match.duration / 60);
-  const damageString = `${_.round(match.damage / 1000)}K damage `;
+  const damageString = `${_.round(match.damage / 1000)}K damage`;
   const vsString = `${match.vs} vision score (${_.round(match.vs / minutes, 2)}/min)`;
-  const csString = `${match.cs} CS (${_.round(match.cs / minutes, 1)}/min)`;
+  const csString = `${match.cs} cs (${_.round(match.cs / minutes, 1)}/min)`;
 
-  function transformChampion(champion: Champion) {
+  function transformChampion(champion: Champion, color: string) {
     const isPlayer = champion.champion === match.champion;
+
+    const items = _.map(champion.items, (item) => {
+      return {
+        type: "div",
+        props: {
+          children: [item],
+          style: { display: "flex", flexDirection: "column", gap: "3rem" },
+        },
+      };
+    });
+
     return {
       type: "div",
       props: {
@@ -23,32 +36,63 @@ export async function matchToImage(match: Match) {
             props: {
               children: [
                 {
-                  type: "span",
+                  type: "div",
                   props: {
-                    children: [champion.champion],
-                    style: { display: "flex", fontWeight: isPlayer ? "700" : "400", color: isPlayer ? "#0397AB" : "" },
+                    children: [
+                      {
+                        type: "span",
+                        props: {
+                          children: [champion.champion],
+                          style: {
+                            display: "flex",
+                            fontWeight: isPlayer ? "700" : "400",
+                            color: isPlayer ? "#F0E6D2" : "",
+                          },
+                        },
+                      },
+                    ],
+                    style: { display: "flex", gap: "2rem" },
                   },
                 },
                 {
-                  type: "span",
+                  type: "div",
                   props: {
-                    children: [`${champion.kills}/${champion.deaths}/${champion.assists}`],
-                    style: { display: "flex", fontWeight: isPlayer ? "700" : "400", color: isPlayer ? "#0397AB" : "" },
+                    children: [
+                      {
+                        type: "span",
+                        props: {
+                          children: [`${champion.kills}/${champion.deaths}/${champion.assists}`],
+                          style: {
+                            display: "flex",
+                            fontWeight: isPlayer ? "700" : "400",
+                            color: isPlayer ? "#F0E6D2" : "",
+                          },
+                        },
+                      },
+                    ],
+                    style: { display: "flex", gap: "2rem" },
                   },
                 },
               ],
-              style: { display: "flex", gap: "10px" },
+              style: { display: "flex", justifyContent: "space-between", gap: "5rem", color },
+            },
+          },
+          {
+            type: "div",
+            props: {
+              children: [items],
+              style: { display: "none", flexDirection: "row", gap: "2rem" },
             },
           },
         ],
-        style: { display: "flex" },
+        style: { display: "flex", gap: "1rem", flexDirection: "column" },
       },
     };
   }
 
-  const red = _.map(match.teams.red, transformChampion);
+  const red = _.map(match.teams.red, (champion) => transformChampion(champion, "#E84057"));
 
-  const blue = _.map(match.teams.blue, transformChampion);
+  const blue = _.map(match.teams.blue, (champion) => transformChampion(champion, "#00B8ED"));
 
   const svg = await satori(
     {
@@ -56,10 +100,32 @@ export async function matchToImage(match: Match) {
       props: {
         children: [
           {
+            type: "img",
+            props: {
+              src: `data:image/jpeg;base64,${bg.toString("base64")}`,
+              style: { position: "absolute", filter: "blur(400px) grayscale(80%)" },
+            },
+          },
+          {
             type: "div",
             props: {
-              children: `Victory: ${match.name}`,
-              style: { color: "#C89B3C", fontSize: "2rem", display: "flex", flexDirection: "column" },
+              children: [
+                `${match.outcome}`,
+                {
+                  type: "div",
+                  props: {
+                    children: [`${minutes}min ${match.duration % 60}s`],
+                    style: { color: "#C89B3C", fontSize: "6rem", display: "flex", marginBottom: "1rem" },
+                  },
+                },
+              ],
+              style: {
+                color: "#C89B3C",
+                fontSize: "12rem",
+                display: "flex",
+                gap: "3rem",
+                alignItems: "flex-end",
+              },
             },
           },
           {
@@ -70,14 +136,14 @@ export async function matchToImage(match: Match) {
                   type: "div",
                   props: {
                     children: red,
-                    style: { display: "flex", flexDirection: "column", gap: "10px" },
+                    style: { display: "flex", flexDirection: "column", gap: "4rem" },
                   },
                 },
                 {
                   type: "div",
                   props: {
                     children: blue,
-                    style: { display: "flex", flexDirection: "column", gap: "10px" },
+                    style: { display: "flex", flexDirection: "column", gap: "4rem" },
                   },
                 },
                 {
@@ -106,11 +172,11 @@ export async function matchToImage(match: Match) {
                         },
                       },
                     ],
-                    style: { display: "flex", flexDirection: "column", gap: "10px" },
+                    style: { display: "flex", flexDirection: "column", gap: "3rem" },
                   },
                 },
               ],
-              style: { display: "flex", gap: "20px" },
+              style: { display: "flex", gap: "6rem" },
             },
           },
         ],
@@ -121,16 +187,15 @@ export async function matchToImage(match: Match) {
           backgroundColor: "#091428",
           display: "flex",
           flexDirection: "column",
-          border: "5px",
-          borderColor: "#0A323C",
-          padding: "10px",
-          gap: "10px",
+          padding: "0rem",
+          gap: "3rem",
+          fontSize: "5rem",
         },
       },
     },
     {
-      width: 600,
-      height: 300,
+      width: 4000,
+      height: 2000,
       fonts: [
         {
           name: "Beautfort",
@@ -147,5 +212,7 @@ export async function matchToImage(match: Match) {
       ],
     },
   );
-  return svg;
+  const resvg = new Resvg(svg, { dpi: 600, shapeRendering: 2, textRendering: 2, imageRendering: 0 });
+  const pngData = resvg.render();
+  return pngData.asPng();
 }
