@@ -20,7 +20,7 @@ export async function checkPostMatch() {
         const response = await api.MatchV5.get(`NA1_${game.id}`, Constants.RegionGroups.AMERICAS);
         return [game, response.response];
       } catch (e) {
-        const result = z.object({ status: z.number() }).safeParse(e);
+        const result = z.strictObject({ status: z.number() }).safeParse(e);
         if (result.success) {
           if (result.data.status == 404) {
             // game not done
@@ -43,7 +43,10 @@ export async function checkPostMatch() {
   await Promise.all(
     _.map(finishedGames, async ([state, match]) => {
       const player = _.first(
-        _.filter(match.info.participants, (participant) => participant.puuid === state.player.league.puuid),
+        _.filter(
+          match.info.participants,
+          (participant) => participant.puuid === state.player.league.leagueAccount.puuid,
+        ),
       );
 
       if (player == undefined) {
@@ -58,7 +61,7 @@ export async function checkPostMatch() {
             (participant) => participant.totalDamageDealtToChampions,
           ),
         ),
-        (participant) => participant.puuid === state.player.league.puuid,
+        (participant) => participant.puuid === state.player.league.leagueAccount.puuid,
       );
 
       const minutes = _.round(match.info.gameDuration / 60);
@@ -82,7 +85,7 @@ export async function checkPostMatch() {
 
       // TODO: send duo queue message
 
-      const user = await client.users.fetch(state.player.discordId, { cache: true });
+      const user = await client.users.fetch(state.player.discordAccount.id, { cache: true });
       const message = `${userMention(user.id)} ${outcomeString} a ${minutes} minute game playing ${
         player.championName
       } ${translateTeamPosition(player.teamPosition)}\n${kdaString}\n${damageString}\n${vsString}\n${csString}`;

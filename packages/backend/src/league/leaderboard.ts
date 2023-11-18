@@ -1,33 +1,21 @@
 import { writeFile } from "fs/promises";
-import { Player, TierSchema, loadPlayers } from "./player.js";
 import _ from "lodash";
-import { Constants } from "twisted";
 import { bold, userMention } from "discord.js";
 import client from "../discord/client.js";
 import configuration from "../configuration.js";
-import { rankToLp, stringToDivision } from "./utils.js";
-import { api } from "./api.js";
+import { rankToLp } from "./utils.js";
+import { loadPlayers } from "./player/config.js";
+import { Player } from "./player/player.js";
+import { getCurrentRank } from "./player/current.js";
 
 export async function postLeaderboardMessage() {
   const players = await loadPlayers();
 
   const promises = _.map(players, async (player): Promise<Player> => {
-    const response = await api.League.bySummoner(player.league.id, Constants.Regions.AMERICA_NORTH);
-    const soloQueue = _.first(response.response.filter((entry) => entry.queueType === "RANKED_SOLO_5x5"));
-    if (!soloQueue) {
-      throw new Error("unable to find solo queue");
-    }
+    const currentRank = await getCurrentRank(player);
     return {
-      name: player.name,
-      startingRank: player.startingRank,
-      discordId: player.discordId,
-      rank: {
-        division: stringToDivision(soloQueue.rank),
-        tier: TierSchema.parse(soloQueue.tier.toLowerCase()),
-        lp: soloQueue?.leaguePoints,
-        wins: soloQueue.wins,
-        losses: soloQueue.losses,
-      },
+      config: player,
+      currentRank: currentRank,
     };
   });
 
@@ -40,7 +28,9 @@ export async function postLeaderboardMessage() {
 
   await writeFile(`checkpoints/${checkpoint.date.toString()}.json`, JSON.stringify(checkpoint));
 
-  const sorted = _.reverse(_.sortBy(rankings, (player) => rankToLp(player.rank) - rankToLp(player.startingRank)));
+  const sorted = _.reverse(
+    _.sortBy(rankings, (player) => rankToLp(player.currentRank) - rankToLp(player.config.league.initialRank)),
+  );
 
   let rank = 0;
   let prev: number;
@@ -48,7 +38,7 @@ export async function postLeaderboardMessage() {
   const message = _.join(
     await Promise.all(
       _.map(sorted, async (entry) => {
-        const lp = rankToLp(entry.rank) - rankToLp(entry.startingRank);
+        const lp = rankToLp(entry.currentRank) - rankToLp(entry.config.league.initialRank);
 
         // show ties
         if (lp !== prev) {
@@ -59,7 +49,7 @@ export async function postLeaderboardMessage() {
         const myRank = rank;
         prev = lp;
 
-        const user = await client.users.fetch(entry.discordId, { cache: true });
+        const user = await client.users.fetch(entry.config.discordAccount.id, { cache: true });
 
         let rankString = `#${myRank.toString()}`;
         // top 3 are better than everyone else

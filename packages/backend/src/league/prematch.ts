@@ -4,28 +4,32 @@ import { z } from "zod";
 import configuration from "../configuration.js";
 import client from "../discord/client.js";
 import { api } from "./api.js";
-import { PlayersConfigSchema, type PlayerConfig } from "./player.js";
 import { GameState, loadState, writeState } from "./state.js";
 import _ from "lodash";
 import { Constants } from "twisted";
 import { userMention } from "discord.js";
 import * as uuid from "uuid";
 import { getChampionName } from "twisted/dist/constants/champions.js";
+import { PlayerConfigEntry, PlayerConfigSchema } from "./player/config.js";
+import { getCurrentRank } from "./player/current.js";
 
 export async function checkPreMatch() {
   // loop over all tracked players
   const playersFile = await open("players.json");
   const playersJson = (await playersFile.readFile()).toString();
   await playersFile.close();
-  const players = PlayersConfigSchema.parse(JSON.parse(playersJson));
+  const players = PlayerConfigSchema.parse(JSON.parse(playersJson));
 
   console.log("calling spectator API");
 
   // call the spectator API on every player
   const playerStatus = await Promise.all(
-    _.flatMap(players, async (player): Promise<[PlayerConfig, CurrentGameInfoDTO | undefined]> => {
+    _.flatMap(players, async (player): Promise<[PlayerConfigEntry, CurrentGameInfoDTO | undefined]> => {
       try {
-        const response = await api.Spectator.activeGame(player.league.id, Constants.Regions.AMERICA_NORTH);
+        const response = await api.Spectator.activeGame(
+          player.league.leagueAccount.id,
+          Constants.Regions.AMERICA_NORTH,
+        );
         if (response instanceof SpectatorNotAvailableDTO) {
           return [player, undefined];
         }
@@ -33,7 +37,7 @@ export async function checkPreMatch() {
           return [player, response.response];
         }
       } catch (e) {
-        const result = z.object({ status: z.number() }).safeParse(e);
+        const result = z.strictObject({ status: z.number() }).safeParse(e);
         if (result.success) {
           if (result.data.status == 404) {
             // not in game
@@ -50,7 +54,7 @@ export async function checkPreMatch() {
 
   // remove players not in games
   const playersInGame = _.filter(playerStatus, ([_player, game]) => game != undefined) as [
-    PlayerConfig,
+    PlayerConfigEntry,
     CurrentGameInfoDTO,
   ][];
 
@@ -72,10 +76,10 @@ export async function checkPreMatch() {
 
   await Promise.all(
     _.map(unseenGames, async ([player, game]) => {
-      const user = await client.users.fetch(player.discordId, { cache: true });
+      const user = await client.users.fetch(player.discordAccount.id, { cache: true });
 
       const gamePlayer = _.first(
-        _.filter(game.participants, (participant) => participant.summonerId === player.league.id),
+        _.filter(game.participants, (participant) => participant.summonerId === player.league.leagueAccount.id),
       );
 
       if (gamePlayer == undefined) {
@@ -101,12 +105,15 @@ export async function checkPreMatch() {
   console.log("saving state");
 
   const unseenEntries = await Promise.all(
-    _.map(unseenGames, ([player, game]): GameState => {
+    _.map(unseenGames, async ([player, game]): Promise<GameState> => {
+      const currentRank = await getCurrentRank(player);
+
       return {
         date: new Date(game.gameStartTime),
         id: game.gameId,
         uuid: uuid.v4(),
         player,
+        rank: currentRank,
       };
     }),
   );
