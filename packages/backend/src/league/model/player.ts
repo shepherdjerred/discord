@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { PlayerConfigEntrySchema } from "./config.js";
 import { RankSchema } from "./rank.js";
+import { PlayerConfigEntrySchema } from "./playerConfigEntry.js";
 
 export type Player = z.infer<typeof PlayerSchema>;
 export const PlayerSchema = z.strictObject({

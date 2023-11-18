@@ -4,14 +4,16 @@ import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import client from "../discord/client.js";
 import { z } from "zod";
-import { api } from "./api.js";
-import { GameState, loadState, writeState } from "./state.js";
+import { api } from "./riotApi.js";
+import { GameState, loadState, writeState } from "./model/state.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
-import { rankToLp, translateIndex, translateTeamPosition } from "./utils.js";
-import { getCurrentRank } from "./player/current.js";
 import { createMatchObject } from "./image/match.js";
 import { matchToImage } from "./image/index.js";
-import { askBrian } from "./chatgpt.js";
+import { generateMessageFromBrian } from "./ai/brian.js";
+import { rankToLeaguePoints } from "./model/leaguePoints.js";
+import { indexToRanking } from "./model/relativeRanking.js";
+import { parseLane } from "./model/lane.js";
+import { getCurrentRank } from "./model/playerConfigEntry.js";
 
 export async function checkPostMatch() {
   const [state, release] = await loadState();
@@ -69,10 +71,10 @@ export async function checkPostMatch() {
       );
 
       const currentRank = await getCurrentRank(state.player);
-      const lpChange = rankToLp(currentRank) - rankToLp(state.rank);
+      const lpChange = rankToLeaguePoints(currentRank) - rankToLeaguePoints(state.rank);
 
       const minutes = _.round(match.info.gameDuration / 60);
-      const damageString = `DAMAGE CHARTS: ${translateIndex(damageRank)} place (${_.round(
+      const damageString = `DAMAGE CHARTS: ${indexToRanking(damageRank)} place (${_.round(
         player.totalDamageDealtToChampions / 1000,
       )}K damage) `;
       const vsString = `${player.visionScore} vision score (${_.round(player.visionScore / minutes, 2)}/min)`;
@@ -100,15 +102,17 @@ export async function checkPostMatch() {
       // TODO: send duo queue message
 
       const user = await client.users.fetch(state.player.discordAccount.id, { cache: true });
-      let message = `${userMention(user.id)} ${outcomeString} a ${minutes} minute game playing ${
+      const promptMessage = `${userMention(user.id)} ${outcomeString} a ${minutes} minute game playing ${
         player.championName
-      } ${translateTeamPosition(
-        player.teamPosition,
-      )}\n${kdaString}\n${damageString}\n${vsString}\n${csString}\n${lpString}`;
+      } ${parseLane(player.teamPosition)}\n${kdaString}\n${damageString}\n${vsString}\n${csString}\n${lpString}`;
+
+      let discordMessage = `${parseLane(player.teamPosition)}
+DAMAGE CHARTS: ${indexToRanking(damageRank)} place
+${lpString}`;
 
       try {
-        const brian = await askBrian(message);
-        message = `${message}\nBrian says: ${brian}`;
+        const brian = await generateMessageFromBrian(promptMessage);
+        discordMessage = `${discordMessage}\nBrian says: ${brian}`;
       } catch (e) {
         console.error(e);
       }
@@ -120,7 +124,7 @@ export async function checkPostMatch() {
 
         const attachment = new AttachmentBuilder(image).setName("match.png");
         const embed = new EmbedBuilder().setImage(`attachment://${attachment.name}`);
-        await channel.send({ content: message, embeds: [embed], files: [attachment] });
+        await channel.send({ content: discordMessage, embeds: [embed], files: [attachment] });
       } else {
         throw new Error("not text based");
       }

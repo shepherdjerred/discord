@@ -3,16 +3,16 @@ import { CurrentGameInfoDTO, SpectatorNotAvailableDTO } from "twisted/dist/model
 import { z } from "zod";
 import configuration from "../configuration.js";
 import client from "../discord/client.js";
-import { api } from "./api.js";
-import { GameState, loadState, writeState } from "./state.js";
+import { api } from "./riotApi.js";
+import { GameState, loadState, writeState } from "./model/state.js";
 import _ from "lodash";
 import { Constants } from "twisted";
 import { roleMention, userMention } from "discord.js";
 import * as uuid from "uuid";
 import { getChampionName } from "twisted/dist/constants/champions.js";
-import { PlayerConfigEntry, PlayerConfigSchema } from "./player/config.js";
-import { getCurrentRank } from "./player/current.js";
 import { P, match } from "ts-pattern";
+import { PlayerConfigSchema } from "./model/playerConfig.js";
+import { PlayerConfigEntry, getCurrentRank } from "./model/playerConfigEntry.js";
 
 export async function checkPreMatch() {
   // loop over all tracked players

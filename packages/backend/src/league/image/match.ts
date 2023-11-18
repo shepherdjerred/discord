@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
-import { PlayerConfigEntry, PlayerConfigEntrySchema } from "../player/config.js";
+import { PlayerConfigEntrySchema, PlayerConfigEntry } from "../model/playerConfigEntry.js";
 
 export type Champion = z.infer<typeof ChampionSchema>;
 export const ChampionSchema = z.strictObject({
@@ -62,8 +62,8 @@ export function createMatchObject(username: string, player: PlayerConfigEntry, d
     outcome,
     duration: dto.info.gameDuration,
     teams: {
-      red: _.map(dto.info.participants.slice(0, 5), createChampionObject),
-      blue: _.map(dto.info.participants.slice(5, 10), createChampionObject),
+      blue: _.map(dto.info.participants.slice(0, 5), createChampionObject),
+      red: _.map(dto.info.participants.slice(5, 10), createChampionObject),
     },
   };
 }

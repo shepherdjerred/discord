@@ -3,10 +3,10 @@ import _ from "lodash";
 import { bold, userMention } from "discord.js";
 import client from "../discord/client.js";
 import configuration from "../configuration.js";
-import { rankToLp } from "./utils.js";
-import { loadPlayers } from "./player/config.js";
-import { Player } from "./player/player.js";
-import { getCurrentRank } from "./player/current.js";
+import { rankToLeaguePoints } from "./model/leaguePoints.js";
+import { getCurrentRank } from "./model/playerConfigEntry.js";
+import { Player } from "./model/player.js";
+import { loadPlayers } from "./model/playerConfig.js";
 
 export async function postLeaderboardMessage() {
   const players = await loadPlayers();
@@ -29,7 +29,10 @@ export async function postLeaderboardMessage() {
   await writeFile(`checkpoints/${checkpoint.date.toString()}.json`, JSON.stringify(checkpoint));
 
   const sorted = _.reverse(
-    _.sortBy(rankings, (player) => rankToLp(player.currentRank) - rankToLp(player.config.league.initialRank)),
+    _.sortBy(
+      rankings,
+      (player) => rankToLeaguePoints(player.currentRank) - rankToLeaguePoints(player.config.league.initialRank),
+    ),
   );
 
   let rank = 0;
@@ -38,7 +41,7 @@ export async function postLeaderboardMessage() {
   const message = _.join(
     await Promise.all(
       _.map(sorted, async (entry) => {
-        const lp = rankToLp(entry.currentRank) - rankToLp(entry.config.league.initialRank);
+        const lp = rankToLeaguePoints(entry.currentRank) - rankToLeaguePoints(entry.config.league.initialRank);
 
         // show ties
         if (lp !== prev) {

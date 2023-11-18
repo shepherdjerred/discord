@@ -1,9 +1,8 @@
 import { z } from "zod";
 import { lock } from "proper-lockfile";
 import { open, writeFile } from "fs/promises";
-import { PlayerConfigEntrySchema } from "./player/config.js";
-import { RankSchema } from "./player/rank.js";
-
+import { PlayerConfigEntrySchema } from "./playerConfigEntry.js";
+import { RankSchema } from "./rank.js";
 const stateFileName = "state.json";
 
 export async function loadState(): Promise<[State, () => Promise<void>]> {
