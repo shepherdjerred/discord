@@ -7,11 +7,12 @@ import { api } from "./api.js";
 import { GameState, loadState, writeState } from "./state.js";
 import _ from "lodash";
 import { Constants } from "twisted";
-import { userMention } from "discord.js";
+import { roleMention, userMention } from "discord.js";
 import * as uuid from "uuid";
 import { getChampionName } from "twisted/dist/constants/champions.js";
 import { PlayerConfigEntry, PlayerConfigSchema } from "./player/config.js";
 import { getCurrentRank } from "./player/current.js";
+import { P, match } from "ts-pattern";
 
 export async function checkPreMatch() {
   // loop over all tracked players
@@ -96,11 +97,22 @@ export async function checkPreMatch() {
         return;
       }
 
-      // TODO: send duo message
-
-      const message = `${userMention(user.id)} started a solo queue game as ${_.startCase(
-        getChampionName(gamePlayer.championId).replaceAll("_", " ").toLowerCase(),
-      )}`;
+      const message = match([player, game, getChampionName(gamePlayer.championId)])
+        .returnType<string>()
+        .with([P.any, P.any, "Senna"], () => {
+          return `${roleMention("everyone")} ${userMention(user.id)} is playing Senna in solo queue,
+          )}`;
+        })
+        .with([{ name: "Virmel" }, P.any, P.any], () => {
+          return `${userMention(user.id)} Brian says good luck playing ${_.startCase(
+            getChampionName(gamePlayer.championId).replaceAll("_", " ").toLowerCase(),
+          )}!!!`;
+        })
+        .otherwise(() => {
+          return `${userMention(user.id)} started a solo queue game as ${_.startCase(
+            getChampionName(gamePlayer.championId).replaceAll("_", " ").toLowerCase(),
+          )}`;
+        });
 
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {
