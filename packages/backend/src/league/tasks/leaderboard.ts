@@ -9,14 +9,13 @@ import { toLeaderboard } from "../leaderboard/index.js";
 export async function postLeaderboardMessage() {
   const playerConfigs = await getPlayerConfigs();
   const players = await Promise.all(_.map(playerConfigs, getPlayer));
-
   const leaderboard = toLeaderboard(players);
-  const leaderboardString = leaderboardToDiscordMessage(leaderboard);
+  const message = leaderboardToDiscordMessage(leaderboard);
 
   const channel = await client.channels.fetch(configuration.leagueChannelId);
 
   if (channel?.isTextBased()) {
-    await channel.send(leaderboardString);
+    await channel.send(message);
   } else {
     throw new Error("invalid channel");
   }

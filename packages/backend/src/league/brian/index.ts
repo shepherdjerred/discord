@@ -1,4 +1,4 @@
-import { chatGpt } from "./chatGpt.js";
+import { chatGpt } from "./api.js";
 
 export async function generateMessageFromBrian(message: string): Promise<string> {
   const res =

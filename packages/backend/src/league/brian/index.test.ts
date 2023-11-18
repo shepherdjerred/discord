@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { generateMessageFromBrian } from "./brian.js";
+import { generateMessageFromBrian } from "./index.js";
 
 describe("brian", () => {
   it("should return a string", async () => {

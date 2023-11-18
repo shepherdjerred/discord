@@ -4,19 +4,19 @@ import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import client from "../../discord/client.js";
 import { z } from "zod";
-import { api } from "../riotApi.js";
-import { GameState, loadState, writeState } from "../model/state.js";
+import { api } from "../league/api.js";
+import { GameState, getState, writeState } from "../model/state.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
 import { createMatchObject } from "../image/match.js";
 import { matchToImage } from "../image/index.js";
-import { generateMessageFromBrian } from "../ai/brian.js";
+import { generateMessageFromBrian } from "../brian/index.js";
 import { rankToLeaguePoints } from "../model/leaguePoints.js";
 import { indexToRanking } from "../model/relativeRanking.js";
 import { parseLane } from "../model/lane.js";
 import { getCurrentRank } from "../model/playerConfigEntry.js";
 
 export async function checkPostMatch() {
-  const [state, release] = await loadState();
+  const [state, release] = await getState();
 
   console.log("checking match api");
 
@@ -48,12 +48,10 @@ export async function checkPostMatch() {
 
   await Promise.all(
     _.map(finishedGames, async ([state, match]) => {
-      const player = _.first(
-        _.filter(
-          match.info.participants,
-          (participant) => participant.puuid === state.player.league.leagueAccount.puuid,
-        ),
-      );
+      const player = _.chain(match.info.participants)
+        .filter((participant) => participant.puuid === state.player.league.leagueAccount.puuid)
+        .first()
+        .value();
 
       if (player == undefined) {
         console.error("invalid state");

@@ -33,9 +33,10 @@ export const MatchSchema = z.strictObject({
 });
 
 export function createMatchObject(username: string, player: PlayerConfigEntry, dto: MatchV5DTOs.MatchDto): Match {
-  const playerParticipant = _.first(
-    _.filter(dto.info.participants, (participant) => participant.puuid === player.league.leagueAccount.puuid),
-  );
+  const playerParticipant = _.chain(dto.info.participants)
+    .filter((participant) => participant.puuid === player.league.leagueAccount.puuid)
+    .first()
+    .value();
 
   if (playerParticipant == undefined) {
     console.error("invalid state");

@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { z } from "zod";
-import { api } from "../riotApi.js";
+import { api } from "../league/api.js";
 import { DiscordSchema } from "./discord.js";
 import { parseDivision } from "./division.js";
 import { LeagueAcccountSchema } from "./leagueAccount.js";
@@ -20,7 +20,7 @@ export const PlayerConfigEntrySchema = z.strictObject({
 
 export async function getCurrentRank(player: PlayerConfigEntry): Promise<Rank> {
   const response = await api.League.bySummoner(player.league.leagueAccount.id, Constants.Regions.AMERICA_NORTH);
-  const soloQueue = _.first(response.response.filter((entry) => entry.queueType === "RANKED_SOLO_5x5"));
+  const soloQueue = _.chain(response.response).filter((entry) => entry.queueType === "RANKED_SOLO_5x5").first().value(
   if (!soloQueue) {
     throw new Error("unable to find solo queue");
   }

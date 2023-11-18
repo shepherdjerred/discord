@@ -3,64 +3,30 @@ import { CurrentGameInfoDTO, SpectatorNotAvailableDTO } from "twisted/dist/model
 import { z } from "zod";
 import configuration from "../../configuration.js";
 import client from "../../discord/client.js";
-import { api } from "../riotApi.js";
-import { GameState, loadState, writeState } from "../model/state.js";
+import { api } from "../league/api.js";
+import { GameState, getPlayersNotInGame, getState, writeState } from "../model/state.js";
 import _ from "lodash";
 import { Constants } from "twisted";
 import { roleMention, userMention } from "discord.js";
 import * as uuid from "uuid";
 import { getChampionName } from "twisted/dist/constants/champions.js";
 import { P, match } from "ts-pattern";
-import { PlayerConfigSchema } from "../model/playerConfig.js";
+import { getPlayerConfigs } from "../model/playerConfig.js";
 import { PlayerConfigEntry, getCurrentRank } from "../model/playerConfigEntry.js";
+import { getCurrentSoloQueueGame } from "../league/index.js";
 
 export async function checkPreMatch() {
-  // loop over all tracked players
-  const playersFile = await open("players.json");
-  const playersJson = (await playersFile.readFile()).toString();
-  await playersFile.close();
-  const players = PlayerConfigSchema.parse(JSON.parse(playersJson));
-
-  const [state, release] = await loadState();
+  const players = await getPlayerConfigs();
+  const [state, release] = await getState();
 
   console.log("filtering out players in game");
 
-  const playersNotInGame = _.reject(players, (player) =>
-    _.some(
-      state.gamesStarted,
-      (game) => game.player.league.leagueAccount.accountId === player.league.leagueAccount.accountId,
-    ),
-  );
+  const playersNotInGame = getPlayersNotInGame(players, state);
 
   console.log("calling spectator API");
 
   // call the spectator API on every player
-  const playerStatus = await Promise.all(
-    _.map(playersNotInGame, async (player): Promise<[PlayerConfigEntry, CurrentGameInfoDTO | undefined]> => {
-      try {
-        const response = await api.Spectator.activeGame(
-          player.league.leagueAccount.id,
-          Constants.Regions.AMERICA_NORTH,
-        );
-        if (response instanceof SpectatorNotAvailableDTO) {
-          return [player, undefined];
-        }
-        if (response.response.gameQueueConfigId === 420) {
-          return [player, response.response];
-        }
-      } catch (e) {
-        const result = z.object({ status: z.number() }).safeParse(e);
-        if (result.success) {
-          if (result.data.status == 404) {
-            // not in game
-            return [player, undefined];
-          }
-        }
-        console.error(e);
-      }
-      return [player, undefined];
-    }),
-  );
+  const playerStatus = await Promise.all(_.map(playersNotInGame, getCurrentSoloQueueGame));
 
   console.log("filtering players not in game");
 

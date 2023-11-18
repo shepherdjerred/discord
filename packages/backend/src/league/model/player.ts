@@ -22,10 +22,11 @@ export async function getPlayer(playerConfig: PlayerConfigEntry): Promise<Player
   };
 }
 export function sortPlayers(players: Player[]) {
-  return _.reverse(
-    _.sortBy(
+  return _.chain(players)
+    .sortBy(
       players,
       (player) => rankToLeaguePoints(player.currentRank) - rankToLeaguePoints(player.config.league.initialRank),
-    ),
-  );
+    )
+    .reverse()
+    .value();
 }

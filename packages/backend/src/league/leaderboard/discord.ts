@@ -3,7 +3,7 @@ import _ from "lodash";
 import { Leaderboard, LeaderboardEntry } from "./index.js";
 
 export function leaderboardToDiscordMessage(leaderboard: Leaderboard): string {
-  return _.join(_.map(leaderboard, leaderboardEntryToDiscordMessage), "\n");
+  return _.chain(leaderboard).map(leaderboardEntryToDiscordMessage).join("\n").value();
 }
 
 function leaderboardEntryToDiscordMessage({ rank, leaguePointsDelta, player }: LeaderboardEntry): string {
