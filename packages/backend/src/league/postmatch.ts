@@ -7,7 +7,8 @@ import { z } from "zod";
 import { api } from "./api.js";
 import { GameState, loadState, writeState } from "./state.js";
 import { userMention } from "discord.js";
-import { translateIndex, translateTeamPosition } from "./utils.js";
+import { rankToLp, translateIndex, translateTeamPosition } from "./utils.js";
+import { getCurrentRank } from "./player/current.js";
 
 export async function checkPostMatch() {
   const [state, release] = await loadState();
@@ -64,6 +65,9 @@ export async function checkPostMatch() {
         (participant) => participant.puuid === state.player.league.leagueAccount.puuid,
       );
 
+      const currentRank = await getCurrentRank(state.player);
+      const lpChange = rankToLp(currentRank) - rankToLp(state.rank);
+
       const minutes = _.round(match.info.gameDuration / 60);
       const damageString = `DAMAGE CHARTS: ${translateIndex(damageRank)} place (${_.round(
         player.totalDamageDealtToChampions / 1000,
@@ -72,6 +76,13 @@ export async function checkPostMatch() {
       const totalCs = player.totalMinionsKilled + player.neutralMinionsKilled;
       const csString = `${totalCs} CS (${_.round(totalCs / minutes, 2)}/min)`;
       const kdaString = `KDA: ${player.kills}/${player.deaths}/${player.assists}`;
+
+      let lpString;
+      if (lpChange < 0) {
+        lpString = `(${lpChange} LP)`;
+      } else {
+        lpString = `(+${lpChange} LP)`;
+      }
 
       let outcomeString: string;
 
@@ -88,7 +99,9 @@ export async function checkPostMatch() {
       const user = await client.users.fetch(state.player.discordAccount.id, { cache: true });
       const message = `${userMention(user.id)} ${outcomeString} a ${minutes} minute game playing ${
         player.championName
-      } ${translateTeamPosition(player.teamPosition)}\n${kdaString}\n${damageString}\n${vsString}\n${csString}`;
+      } ${translateTeamPosition(
+        player.teamPosition,
+      )}\n${kdaString}\n${damageString}\n${vsString}\n${csString}\n${lpString}`;
 
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {
