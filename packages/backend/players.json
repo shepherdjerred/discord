@@ -322,5 +322,23 @@
       }
     },
     "discordAccount": { "id": "282716540053225472" }
+  },
+  {
+    "name": "Sci",
+    "league": {
+      "leagueAccount": {
+        "id": "G2UKtwQkBLDS5aXCZgtcg7wHHzoRMwvixCjYX9wwSFvMdqQ",
+        "accountId": "2KnCpndbI12PY41fjMWAfJ6e0VlMUfmnIidcPPXqXsRZuQ",
+        "puuid": "aFuA89_GVPHTsJreh5od3_zrVwBjd3NNPXvAqQvGJ7gQErDqOn-tLjMOIMps2v86xbdVmRKl0hyh_g"
+      },
+      "initialRank": {
+        "division": 2,
+        "tier": "platinum",
+        "lp": 83,
+        "wins": 34,
+        "losses": 36
+      }
+    },
+    "discordAccount": { "id": "177669150062149633" }
   }
 ]
