@@ -74,14 +74,14 @@ export async function checkPostMatch() {
       )}K damage) `;
       const vsString = `${player.visionScore} vision score (${_.round(player.visionScore / minutes, 2)}/min)`;
       const totalCs = player.totalMinionsKilled + player.neutralMinionsKilled;
-      const csString = `${totalCs} CS (${_.round(totalCs / minutes, 2)}/min)`;
+      const csString = `${totalCs} CS (${_.round(totalCs / minutes, 1)}/min)`;
       const kdaString = `KDA: ${player.kills}/${player.deaths}/${player.assists}`;
 
       let lpString;
       if (lpChange <= 0) {
-        lpString = `${lpChange} LP (${lpChange / minutes}/min})`;
+        lpString = `${lpChange} LP (${lpChange / minutes / 60}/sec)`;
       } else {
-        lpString = `+${lpChange} LP (${lpChange / minutes}/min)`;
+        lpString = `+${lpChange} LP (${lpChange / minutes / 60}/sec)`;
       }
 
       let outcomeString: string;
