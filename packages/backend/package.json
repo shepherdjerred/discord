@@ -14,6 +14,7 @@
   "type": "module",
   "dependencies": {
     "@glitter-boys/data": "*",
+    "canvas": "^2.11.2",
     "cors": "^2.8.5",
     "cron": "^3.1.6",
     "discord.js": "^14.14.1",
@@ -24,6 +25,8 @@
     "proper-lockfile": "^4.1.2",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^5.1.6",
+    "tmp": "^0.2.1",
+    "tmp-promise": "^3.0.3",
     "ts-node": "^10.9.1",
     "ts-pattern": "^5.0.5",
     "twisted": "^1.54.0",
@@ -39,6 +42,7 @@
     "@types/lodash": "^4.14.201",
     "@types/node": "^20.9.0",
     "@types/proper-lockfile": "^4.1.4",
+    "@types/tmp": "^0.2.6",
     "@types/uuid": "^9.0.7"
   }
 }

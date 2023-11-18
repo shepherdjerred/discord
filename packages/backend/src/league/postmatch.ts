@@ -6,9 +6,13 @@ import client from "../discord/client.js";
 import { z } from "zod";
 import { api } from "./api.js";
 import { GameState, loadState, writeState } from "./state.js";
-import { userMention } from "discord.js";
+import { EmbedBuilder, userMention } from "discord.js";
 import { rankToLp, translateIndex, translateTeamPosition } from "./utils.js";
 import { getCurrentRank } from "./player/current.js";
+import { writeFile } from "fs/promises";
+import * as tmp from "tmp-promise";
+import { matchToImage } from "./image/index.js";
+import { createMatchObject } from "./image/match.js";
 
 export async function checkPostMatch() {
   const [state, release] = await loadState();
@@ -105,7 +109,13 @@ export async function checkPostMatch() {
 
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {
-        await channel.send(message);
+        const { path, cleanup } = await tmp.file({ postfix: ".png" });
+        const matchObj = createMatchObject(match);
+        const image = matchToImage(matchObj);
+        writeFile(path, image);
+        const exampleEmbed = new EmbedBuilder().setImage(`attachment://${path}`);
+        await channel.send({ content: message, embeds: [exampleEmbed] });
+        await cleanup();
       } else {
         throw new Error("not text based");
       }
