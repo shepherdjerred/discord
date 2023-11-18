@@ -130,7 +130,7 @@ export async function matchToImage(match: Match) {
     },
     {
       width: 600,
-      height: 320,
+      height: 300,
       fonts: [
         {
           name: "Beautfort",

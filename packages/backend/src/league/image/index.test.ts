@@ -4,6 +4,7 @@ import { exampleMatch } from "./example.js";
 import { matchToImage } from "./index.js";
 import { createMatchObject } from "./match.js";
 import { PlayerConfigEntry } from "../player/config.js";
+import { Resvg } from "@resvg/resvg-js";
 
 describe("index", () => {
   test("test", async () => {
@@ -18,6 +19,13 @@ describe("index", () => {
       exampleMatch,
     );
     const result = await matchToImage(matchObj);
-    await writeFile("test.svg", result);
+    const resvg = new Resvg(result, {
+      dpi: 600,
+      shapeRendering: 2,
+      textRendering: 2,
+      imageRendering: 0,
+    });
+    const pngData = resvg.render();
+    await writeFile("test.png", pngData.asPng());
   });
 });

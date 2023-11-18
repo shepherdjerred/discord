@@ -11,6 +11,8 @@ import { rankToLp, translateIndex, translateTeamPosition } from "./utils.js";
 import { getCurrentRank } from "./player/current.js";
 import { createMatchObject } from "./image/match.js";
 import { matchToImage } from "./image/index.js";
+import svg2img from "svg2img";
+import { Resvg } from "@resvg/resvg-js";
 
 export async function checkPostMatch() {
   const [state, release] = await loadState();
@@ -109,7 +111,9 @@ export async function checkPostMatch() {
       if (channel?.isTextBased()) {
         const matchObj = createMatchObject(user.username, state.player, match);
         const image = await matchToImage(matchObj);
-        const attachment = new AttachmentBuilder(Buffer.from(image)).setName("match.svg");
+        const resvg = new Resvg(image);
+        const pngData = resvg.render();
+        const attachment = new AttachmentBuilder(pngData.asPng()).setName("match.png");
         const embed = new EmbedBuilder().setImage(`attachment://${attachment.name}`);
         await channel.send({ content: message, embeds: [embed], files: [attachment] });
       } else {

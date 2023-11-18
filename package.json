@@ -22,7 +22,10 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@resvg/resvg-js": "^2.6.0",
+    "canvg": "^4.0.1",
     "reflect-metadata": "^0.1.13",
+    "svg2img": "^1.0.0-beta.2",
     "zod": "^3.22.4"
   }
 }
