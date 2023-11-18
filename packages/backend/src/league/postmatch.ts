@@ -20,7 +20,7 @@ export async function checkPostMatch() {
   const games = await Promise.all(
     _.map(state.gamesStarted, async (game): Promise<[GameState, MatchV5DTOs.MatchDto | undefined]> => {
       try {
-        const response = await api.MatchV5.get(`NA1_${game.id}`, Constants.RegionGroups.AMERICAS);
+        const response = await api.MatchV5.get(`NA1_${game.matchId}`, Constants.RegionGroups.AMERICAS);
         return [game, response.response];
       } catch (e) {
         const result = z.object({ status: z.number() }).safeParse(e);

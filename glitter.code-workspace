@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "path": "packages/backend"
+    },
+    {
+      "path": "packages/data"
+    },
+    {
+      "path": "packages/frontend"
+    }
+  ],
+  "extensions": {
+    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+  }
+}

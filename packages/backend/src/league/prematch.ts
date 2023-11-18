@@ -77,7 +77,7 @@ export async function checkPreMatch() {
   // remove any games already in the state file
   const unseenGames = _.reject(playersInGame, ([_player, game]) =>
     _.some(
-      _.map(state.gamesStarted, (game) => game.id),
+      _.map(state.gamesStarted, (game) => game.matchId),
       (candidate) => candidate === game.gameId,
     ),
   );
@@ -130,8 +130,8 @@ export async function checkPreMatch() {
       const currentRank = await getCurrentRank(player);
 
       return {
-        date: new Date(game.gameStartTime),
-        id: game.gameId,
+        added: new Date(game.gameStartTime),
+        matchId: game.gameId,
         uuid: uuid.v4(),
         player,
         rank: currentRank,
