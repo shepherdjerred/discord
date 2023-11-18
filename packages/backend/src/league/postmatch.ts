@@ -11,6 +11,7 @@ import { rankToLp, translateIndex, translateTeamPosition } from "./utils.js";
 import { getCurrentRank } from "./player/current.js";
 import { createMatchObject } from "./image/match.js";
 import { matchToImage } from "./image/index.js";
+import { ChatGPTAPI } from "chatgpt";
 
 export async function checkPostMatch() {
   const [state, release] = await loadState();
@@ -99,11 +100,37 @@ export async function checkPostMatch() {
       // TODO: send duo queue message
 
       const user = await client.users.fetch(state.player.discordAccount.id, { cache: true });
-      const message = `${userMention(user.id)} ${outcomeString} a ${minutes} minute game playing ${
+      let message = `${userMention(user.id)} ${outcomeString} a ${minutes} minute game playing ${
         player.championName
       } ${translateTeamPosition(
         player.teamPosition,
       )}\n${kdaString}\n${damageString}\n${vsString}\n${csString}\n${lpString}`;
+
+      const api = new ChatGPTAPI({
+        apiKey: configuration.openAiAPiKey,
+        completionParams: { model: "gpt-4" },
+      });
+
+      try {
+        const res =
+          await api.sendMessage(`You're Neko Brian, a Canadian gamer who loves League of Legends and Billie Elish. You're really good at Valorant. You're hosting a tournament with friends to see who's the best at league of legends. After each game, you should rate their performance and leave an encouraging message.
+
+Your messages should be casual, informal, not overbearing, limited to 2-3 sentences, and all lowercase. Don't use intense adjectives. Try to mention Billie Elish. If a game was really bad suggest that they play easier champions.
+
+Use the following phrases if they fit:
+what's up guys
+that is tough
+sorry about your team
+good job
+
+Be sure that your entire message is lowercase.
+
+Here's the match report:
+${message}`);
+        message = `${message}\nBrian says: ${res.text}`;
+      } catch (e) {
+        console.error(e);
+      }
 
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {

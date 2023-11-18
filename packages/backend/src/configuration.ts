@@ -10,4 +10,5 @@ export default {
   dataDir: env.get("DATA_DIR").required().asString(),
   riotApiToken: env.get("RIOT_API_TOKEN").required().asString(),
   leagueChannelId: env.get("LEAGUE_CHANNEL_ID").required().asString(),
+  openAiAPiKey: env.get("OPENAI_API_KEY").required().asString(),
 };
