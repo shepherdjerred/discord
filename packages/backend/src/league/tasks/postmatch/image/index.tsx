@@ -6,9 +6,9 @@ import { Resvg } from "@resvg/resvg-js";
 import React from "react";
 
 export async function matchToImage(match: Match) {
-  const font = await readFile("src/league/image/fonts/BeaufortForLoL-TTF/BeaufortforLOL-Medium.ttf");
-  const fontBold = await readFile("src/league/image/fonts/BeaufortForLoL-TTF/BeaufortforLOL-Bold.ttf");
-  const bg = await readFile("src/league/image/image/bg.jpg");
+  const font = await readFile("src/league/tasks/postmatch/image/fonts/BeaufortForLoL-TTF/BeaufortforLOL-Medium.ttf");
+  const fontBold = await readFile("src/league/tasks/postmatch/image/fonts/BeaufortForLoL-TTF/BeaufortforLOL-Bold.ttf");
+  const bg = await readFile("src/league/tasks/postmatch/image/image/bg.jpg");
 
   const minutes = _.round(match.duration / 60);
   const damageString = `${_.round(match.damage / 1000)}K damage`;
