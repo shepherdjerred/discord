@@ -21,7 +21,7 @@ export async function checkPostMatch() {
         const response = await api.MatchV5.get(`NA1_${game.id}`, Constants.RegionGroups.AMERICAS);
         return [game, response.response];
       } catch (e) {
-        const result = z.strictObject({ status: z.number() }).safeParse(e);
+        const result = z.object({ status: z.number() }).safeParse(e);
         if (result.success) {
           if (result.data.status == 404) {
             // game not done
@@ -78,10 +78,10 @@ export async function checkPostMatch() {
       const kdaString = `KDA: ${player.kills}/${player.deaths}/${player.assists}`;
 
       let lpString;
-      if (lpChange < 0) {
-        lpString = `(${lpChange} LP)`;
+      if (lpChange <= 0) {
+        lpString = `${lpChange} LP (${lpChange / minutes}/min})`;
       } else {
-        lpString = `(+${lpChange} LP)`;
+        lpString = `+${lpChange} LP (${lpChange / minutes}/min)`;
       }
 
       let outcomeString: string;

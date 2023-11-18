@@ -2,8 +2,8 @@ import _ from "lodash";
 import { api } from "../api.js";
 import { stringToDivision } from "../utils.js";
 import { PlayerConfigEntry } from "./config.js";
-import { Rank, TierSchema } from "./player.js";
 import { Constants } from "twisted";
+import { Rank, TierSchema } from "./rank.js";
 
 export async function getCurrentRank(player: PlayerConfigEntry): Promise<Rank> {
   const response = await api.League.bySummoner(player.league.leagueAccount.id, Constants.Regions.AMERICA_NORTH);

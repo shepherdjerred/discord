@@ -2,7 +2,7 @@ import { z } from "zod";
 import { lock } from "proper-lockfile";
 import { open, writeFile } from "fs/promises";
 import { PlayerConfigEntrySchema } from "./player/config.js";
-import { RankSchema } from "./player/player.js";
+import { RankSchema } from "./player/rank.js";
 
 const stateFileName = "state.json";
 

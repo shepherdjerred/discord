@@ -20,11 +20,22 @@ export async function checkPreMatch() {
   await playersFile.close();
   const players = PlayerConfigSchema.parse(JSON.parse(playersJson));
 
+  const [state, release] = await loadState();
+
+  console.log("filtering out players in game");
+
+  const playersNotInGame = _.reject(players, (player) =>
+    _.some(
+      state.gamesStarted,
+      (game) => game.player.league.leagueAccount.accountId === player.league.leagueAccount.accountId,
+    ),
+  );
+
   console.log("calling spectator API");
 
   // call the spectator API on every player
   const playerStatus = await Promise.all(
-    _.flatMap(players, async (player): Promise<[PlayerConfigEntry, CurrentGameInfoDTO | undefined]> => {
+    _.map(playersNotInGame, async (player): Promise<[PlayerConfigEntry, CurrentGameInfoDTO | undefined]> => {
       try {
         const response = await api.Spectator.activeGame(
           player.league.leagueAccount.id,
@@ -37,7 +48,7 @@ export async function checkPreMatch() {
           return [player, response.response];
         }
       } catch (e) {
-        const result = z.strictObject({ status: z.number() }).safeParse(e);
+        const result = z.object({ status: z.number() }).safeParse(e);
         if (result.success) {
           if (result.data.status == 404) {
             // not in game
@@ -57,8 +68,6 @@ export async function checkPreMatch() {
     PlayerConfigEntry,
     CurrentGameInfoDTO,
   ][];
-
-  const [state, release] = await loadState();
 
   console.log("removing games already seen");
 

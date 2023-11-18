@@ -58,7 +58,7 @@ export async function postLeaderboardMessage() {
         }
 
         let lpString;
-        if (lp < 0) {
+        if (lp <= 0) {
           lpString = `(${lp} LP)`;
         } else {
           lpString = `(+${lp} LP)`;

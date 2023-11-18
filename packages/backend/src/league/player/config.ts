@@ -1,6 +1,19 @@
 import { z } from "zod";
-import { LeagueAcccountSchema, RankSchema, DiscordSchema } from "./player.js";
 import { open } from "fs/promises";
+import { RankSchema } from "./rank.js";
+
+export type Discord = z.infer<typeof DiscordSchema>;
+export const DiscordSchema = z.strictObject({
+  id: z.string().min(0),
+});
+
+export type LeagueAccount = z.infer<typeof LeagueAcccountSchema>;
+export const LeagueAcccountSchema = z.strictObject({
+  // AKA encrypted summoner ID
+  id: z.string().min(0),
+  accountId: z.string().min(0),
+  puuid: z.string().min(0),
+});
 
 export type PlayerConfigEntry = z.infer<typeof PlayerConfigEntrySchema>;
 export const PlayerConfigEntrySchema = z.strictObject({
