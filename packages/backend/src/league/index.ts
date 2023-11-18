@@ -1,7 +1,7 @@
 import { CronJob } from "cron";
-import { postLeaderboardMessage } from "./tasks/leaderboard.js";
-import { checkPostMatch } from "./tasks/postmatch.js";
-import { checkPreMatch } from "./tasks/prematch.js";
+import { postLeaderboardMessage } from "./tasks/leaderboard/task.js";
+import { checkPostMatch } from "./tasks/postmatch/index.js";
+import { checkPreMatch } from "./tasks/prematch/index.js";
 import { logErrors } from "./util.js";
 
 // post leaderboard update once a day mon-fri at noon

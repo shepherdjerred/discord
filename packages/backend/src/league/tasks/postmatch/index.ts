@@ -1,19 +1,19 @@
 import { Constants } from "twisted";
-import configuration from "../../configuration.js";
+import configuration from "../../../configuration.js";
 import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
-import client from "../../discord/client.js";
+import client from "../../../discord/client.js";
 import { z } from "zod";
-import { api } from "../league/api.js";
-import { GameState, getState, writeState } from "../model/state.js";
+import { api } from "../../league/api.js";
+import { GameState, getState, writeState } from "../../model/state.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
-import { createMatchObject } from "../image/match.js";
-import { matchToImage } from "../image/index.js";
-import { generateMessageFromBrian } from "../brian/index.js";
-import { rankToLeaguePoints } from "../model/leaguePoints.js";
-import { indexToRanking } from "../model/relativeRanking.js";
-import { parseLane } from "../model/lane.js";
-import { getCurrentRank } from "../model/playerConfigEntry.js";
+import { createMatchObject } from "./image/match.js";
+import { matchToImage } from "./image/index.js";
+import { generateMessageFromBrian } from "./brian/index.js";
+import { rankToLeaguePoints } from "../../model/leaguePoints.js";
+import { indexToRanking } from "../../model/relativeRanking.js";
+import { parseLane } from "../../model/lane.js";
+import { getCurrentRank } from "../../model/playerConfigEntry.js";
 
 export async function checkPostMatch() {
   const [state, release] = await getState();

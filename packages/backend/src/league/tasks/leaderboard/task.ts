@@ -1,10 +1,10 @@
 import _ from "lodash";
-import client from "../../discord/client.js";
-import configuration from "../../configuration.js";
-import { getPlayer } from "../model/player.js";
-import { getPlayerConfigs } from "../model/playerConfig.js";
-import { leaderboardToDiscordMessage } from "../leaderboard/discord.js";
-import { toLeaderboard } from "../leaderboard/index.js";
+import client from "../../../discord/client.js";
+import configuration from "../../../configuration.js";
+import { getPlayer } from "../../model/player.js";
+import { getPlayerConfigs } from "../../model/playerConfig.js";
+import { leaderboardToDiscordMessage } from "./discord.js";
+import { toLeaderboard } from "./index.js";
 
 export async function postLeaderboardMessage() {
   const playerConfigs = await getPlayerConfigs();

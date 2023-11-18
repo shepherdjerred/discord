@@ -1,8 +1,13 @@
-import { CurrentGameInfoDTO, SpectatorNotAvailableDTO } from "twisted/dist/models-dto/index.js";
+import {
+  CurrentGameInfoDTO,
+  CurrentGameParticipantDTO,
+  SpectatorNotAvailableDTO,
+} from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
 import { PlayerConfigEntry } from "../model/playerConfigEntry.js";
 import { api } from "./api.js";
 import { Constants } from "twisted";
+import _ from "lodash";
 
 export const soloQueueConfigId = 420;
 
@@ -26,4 +31,14 @@ export async function getCurrentSoloQueueGame(player: PlayerConfigEntry): Promis
     throw e;
   }
   return undefined;
+}
+
+export function findParticipant(
+  player: PlayerConfigEntry,
+  game: CurrentGameInfoDTO,
+): CurrentGameParticipantDTO | undefined {
+  return _.chain(game.participants)
+    .filter((participant) => participant.summonerId === player.league.leagueAccount.id)
+    .first()
+    .value();
 }

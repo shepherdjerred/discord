@@ -20,7 +20,10 @@ export const PlayerConfigEntrySchema = z.strictObject({
 
 export async function getCurrentRank(player: PlayerConfigEntry): Promise<Rank> {
   const response = await api.League.bySummoner(player.league.leagueAccount.id, Constants.Regions.AMERICA_NORTH);
-  const soloQueue = _.chain(response.response).filter((entry) => entry.queueType === "RANKED_SOLO_5x5").first().value(
+  const soloQueue = _.chain(response.response)
+    .filter((entry) => entry.queueType === "RANKED_SOLO_5x5")
+    .first()
+    .value();
   if (!soloQueue) {
     throw new Error("unable to find solo queue");
   }

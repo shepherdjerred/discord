@@ -1,5 +1,5 @@
 import { ChatGPTAPI } from "chatgpt";
-import configuration from "../../configuration.js";
+import configuration from "../../../../configuration.js";
 
 export const chatGpt = new ChatGPTAPI({
   apiKey: configuration.openAiAPiKey,

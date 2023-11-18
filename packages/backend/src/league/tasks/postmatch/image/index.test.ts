@@ -3,7 +3,7 @@ import { describe, test } from "vitest";
 import { exampleMatch } from "./example.js";
 import { matchToImage } from "./index.js";
 import { createMatchObject } from "./match.js";
-import { PlayerConfigEntry } from "../model/playerConfigEntry.js";
+import { PlayerConfigEntry } from "../../../model/playerConfigEntry.js";
 
 describe("index", () => {
   test("test", async () => {

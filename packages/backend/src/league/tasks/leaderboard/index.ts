@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Player, PlayerSchema, getLeaguePointsDelta, sortPlayers } from "../model/player.js";
+import { Player, PlayerSchema, getLeaguePointsDelta, sortPlayers } from "../../model/player.js";
 import _ from "lodash";
 
 export type LeaderboardEntry = z.infer<typeof LeaderboardEntrySchema>;
