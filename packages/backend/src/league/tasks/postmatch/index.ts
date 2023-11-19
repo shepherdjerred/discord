@@ -8,7 +8,7 @@ import { api } from "../../league/api.js";
 import { GameState, getState, writeState } from "../../model/state.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
 import { createMatchObject } from "./image/match.js";
-import { matchToImage } from "./image/index.js";
+import { matchToImage } from "./image/html/index.js";
 import { generateMessageFromBrian } from "./feedback/index.js";
 import { rankToLeaguePoints } from "../../model/leaguePoints.js";
 import { indexToRanking } from "../../model/relativeRanking.js";

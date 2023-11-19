@@ -5,6 +5,7 @@ import { PlayerConfigEntrySchema, PlayerConfigEntry } from "../../../model/playe
 
 export type Champion = z.infer<typeof ChampionSchema>;
 export const ChampionSchema = z.strictObject({
+  summonerName: z.string().min(0),
   champion: z.string().min(0),
   kills: z.number().nonnegative(),
   deaths: z.number().nonnegative(),
@@ -18,6 +19,9 @@ export const ChampionSchema = z.strictObject({
   damage: z.number().nonnegative(),
 });
 
+export type Team = z.infer<typeof TeamSchema>;
+export const TeamSchema = z.array(ChampionSchema).length(5);
+
 export type Match = z.infer<typeof MatchSchema>;
 export const MatchSchema = z.strictObject({
   player: PlayerConfigEntrySchema,
@@ -29,7 +33,7 @@ export const MatchSchema = z.strictObject({
   damage: z.number().nonnegative(),
   outcome: z.enum(["Victory", "Defeat", "Surrender"]),
   duration: z.number().nonnegative(),
-  teams: z.record(z.union([z.literal("red"), z.literal("blue")]), z.array(ChampionSchema).length(5)),
+  teams: z.record(z.union([z.literal("red"), z.literal("blue")]), TeamSchema),
 });
 
 export function createMatchObject(username: string, player: PlayerConfigEntry, dto: MatchV5DTOs.MatchDto): Match {
@@ -71,6 +75,7 @@ export function createMatchObject(username: string, player: PlayerConfigEntry, d
 
 export function createChampionObject(dto: MatchV5DTOs.ParticipantDto): Champion {
   return {
+    summonerName: dto.summonerName,
     champion: dto.championName,
     kills: dto.kills,
     deaths: dto.deaths,

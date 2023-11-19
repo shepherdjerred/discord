@@ -376,5 +376,23 @@
       }
     },
     "discordAccount": { "id": "688107056846209150" }
+  },
+  {
+    "name": "Filpinothug",
+    "league": {
+      "leagueAccount": {
+        "id": "q4BjYY-8XDE-YXDUXiHCNbjN5biTnqNuMseHDxcTqIanpjE",
+        "accountId": "RF_kmDh3U1NvY_Lr2NW1lzmwgHBLFAwGcqcX35-l-kklqA",
+        "puuid": "BxEyY6sX-bWFvtXtRD3IWIbmm5Wa7WFSfwOUjOsbhcxDknt8tK8VzfSTBsoGnllxsqqaIV8qTRr8nQ"
+      },
+      "initialRank": {
+        "division": 2,
+        "tier": "emerald",
+        "lp": 19,
+        "wins": 25,
+        "losses": 22
+      }
+    },
+    "discordAccount": { "id": "89243433385881600" }
   }
 ]
