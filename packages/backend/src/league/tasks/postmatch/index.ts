@@ -110,7 +110,7 @@ ${lpString}`;
 
       try {
         const { name, message } = await generateMessageFromBrian(promptMessage);
-        discordMessage = `${name} says: ${message}\n\n${discordMessage}`;
+        discordMessage = `${name} says: ${message.replaceAll("<NAME>", userMention(user.id))}\n\n${discordMessage}`;
       } catch (e) {
         console.error(e);
       }

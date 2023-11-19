@@ -69,6 +69,8 @@ export async function generateMessageFromBrian(message: string) {
 
 Do not go over 3 sentences or 300 characters.
 
+The person's name should be output as <NAME>
+
 Here's the match report:
 ${message}`);
   return { name: personality.name, message: res.text };
