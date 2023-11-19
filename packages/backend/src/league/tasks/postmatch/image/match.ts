@@ -2,6 +2,7 @@ import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
 import { PlayerConfigEntrySchema, PlayerConfigEntry } from "../../../model/playerConfigEntry.js";
+import { LaneSchema, parseLane } from "../../../model/lane.js";
 
 export type Champion = z.infer<typeof ChampionSchema>;
 export const ChampionSchema = z.strictObject({
@@ -10,12 +11,14 @@ export const ChampionSchema = z.strictObject({
   kills: z.number().nonnegative(),
   deaths: z.number().nonnegative(),
   assists: z.number().nonnegative(),
+  level: z.number().min(1).max(18),
   items: z.array(z.number()),
+  lane: LaneSchema,
   spells: z.array(z.object({})),
+  gold: z.number().nonnegative(),
   runes: z.array(z.object({})),
   cs: z.number().nonnegative(),
   vs: z.number().nonnegative(),
-  lane: z.enum(["top", "jg", "mid", "adc", "sup"]),
   damage: z.number().nonnegative(),
 });
 
@@ -74,6 +77,12 @@ export function createMatchObject(username: string, player: PlayerConfigEntry, d
 }
 
 export function createChampionObject(dto: MatchV5DTOs.ParticipantDto): Champion {
+  const lane = parseLane(dto.teamPosition);
+
+  if (lane === undefined) {
+    throw Error(`invalid lane ${dto.teamPosition}`);
+  }
+
   return {
     summonerName: dto.summonerName,
     champion: dto.championName,
@@ -83,9 +92,11 @@ export function createChampionObject(dto: MatchV5DTOs.ParticipantDto): Champion 
     items: [dto.item0, dto.item1, dto.item2, dto.item3, dto.item4, dto.item5, dto.item6],
     spells: [dto.summoner1Id, dto.summoner2Id],
     runes: [],
-    lane: dto.teamPosition.toLowerCase() as Champion["lane"],
+    lane,
     cs: dto.totalMinionsKilled + dto.neutralMinionsKilled,
     vs: dto.visionScore,
     damage: dto.totalDamageDealtToChampions,
+    gold: dto.goldEarned,
+    level: dto.champLevel,
   };
 }

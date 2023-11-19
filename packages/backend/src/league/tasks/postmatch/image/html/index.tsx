@@ -42,8 +42,8 @@ export async function matchToImage(match: Match) {
         </div>
       </div>
       <div style={{ display: "flex", gap: "6rem", flexDirection: "column" }}>
-        {renderTeam(match.teams.blue, "1", match.champion)}
-        {renderTeam(match.teams.red, "2", match.champion)}
+        {renderTeam(match.teams.blue, "1", match.champion, match.duration / 60)}
+        {renderTeam(match.teams.red, "2", match.champion, match.duration / 60)}
       </div>
     </div>
   );
@@ -51,7 +51,7 @@ export async function matchToImage(match: Match) {
   const fonts = await loadFonts();
   const svg = await satori(jsx, {
     width: 4096,
-    height: 3240,
+    height: 4096,
     fonts,
   });
   const resvg = new Resvg(svg, { dpi: 600, shapeRendering: 2, textRendering: 2, imageRendering: 0 });

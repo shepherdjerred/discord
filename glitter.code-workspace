@@ -12,5 +12,8 @@
   ],
   "extensions": {
     "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+  },
+  "settings": {
+    "testing.automaticallyOpenPeekView": "never"
   }
 }
