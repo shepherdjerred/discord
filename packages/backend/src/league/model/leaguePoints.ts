@@ -30,3 +30,11 @@ function tierToLeaguePoints(tier: Tier): LeaguePoints {
     .exhaustive();
   return LeaguePointsSchema.parse(multiplier * numberOfDivisions * leaguePointsPerDivision);
 }
+
+export function diffToString(input: number): string {
+  if (input <= 0) {
+    return input.toLocaleString();
+  } else {
+    return `+${input.toLocaleString()}`;
+  }
+}

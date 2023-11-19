@@ -1,9 +1,9 @@
 import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
-import { PlayerConfigEntrySchema, PlayerConfigEntry } from "../../../model/playerConfigEntry.js";
+import { PlayerConfigEntrySchema } from "../../../model/playerConfigEntry.js";
 import { LaneSchema, parseLane } from "../../../model/lane.js";
-import { Player, getLeaguePointsDelta } from "../../../model/player.js";
+import { Player } from "../../../model/player.js";
 
 export type Champion = z.infer<typeof ChampionSchema>;
 export const ChampionSchema = z.strictObject({

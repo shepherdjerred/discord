@@ -10,7 +10,7 @@ import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
 import { createMatchObject } from "./image/match.js";
 import { matchToImage } from "./image/html/index.js";
 import { generateMessageFromBrian } from "./feedback/index.js";
-import { rankToLeaguePoints } from "../../model/leaguePoints.js";
+import { diffToString, rankToLeaguePoints } from "../../model/leaguePoints.js";
 import { indexToRanking } from "../../model/relativeRanking.js";
 import { parseLane } from "../../model/lane.js";
 import { getCurrentRank } from "../../model/playerConfigEntry.js";
@@ -89,12 +89,7 @@ export async function checkPostMatch() {
       const csString = `${totalCs} CS (${_.round(totalCs / minutes, 1)}/min)`;
       const kdaString = `KDA: ${player.kills}/${player.deaths}/${player.assists}`;
 
-      let lpString;
-      if (lpChange <= 0) {
-        lpString = `${lpChange} LP (${lpChange / minutes / 60}/sec)`;
-      } else {
-        lpString = `+${lpChange} LP (${lpChange / minutes / 60}/sec)`;
-      }
+      const lpString = diffToString(lpChange);
 
       let outcomeString: string;
 

@@ -6,6 +6,7 @@ import React from "react";
 import { loadFonts } from "../assets/fonts.js";
 import { palette } from "../assets/colors.js";
 import { renderTeam } from "./team.js";
+import { diffToString } from "../../../../model/leaguePoints.js";
 
 export async function matchToImage(match: Match) {
   // const bg = await readFile("src/league/tasks/postmatch/image/image/bg.jpg");
@@ -26,19 +27,21 @@ export async function matchToImage(match: Match) {
         backgroundColor: palette.blue[6],
         display: "flex",
         flexDirection: "column",
-        padding: "0rem",
+        padding: "5rem",
         gap: "3rem",
         fontSize: "5rem",
       }}
     >
       <div style={{ color: palette.gold[4], fontSize: "12rem", display: "flex", gap: "3rem", alignItems: "flex-end" }}>
-        {match.outcome}
+        <span>{match.outcome}</span>
         <div style={{ color: palette.gold[4], fontSize: "6rem", display: "flex", marginBottom: "1rem" }}>
           {minutes}min {match.duration % 60}s
         </div>
-        <span>{match.lp} LP</span>
-        <span>W: {match.wins}</span>
-        <span>L: {match.losses}</span>
+        <div style={{ display: "flex", gap: "2rem", fontSize: "4rem", color: palette.grey[1], marginBottom: "1.5rem" }}>
+          <span>{diffToString(match.lp)} LP</span>
+          <span>W: {match.wins}</span>
+          <span>L: {match.losses}</span>
+        </div>
       </div>
       <div style={{ display: "flex", gap: "6rem", flexDirection: "column" }}>
         {renderTeam(match.teams.blue, "blue", match.champion, match.duration / 60)}
@@ -50,7 +53,7 @@ export async function matchToImage(match: Match) {
   const fonts = await loadFonts();
   const svg = await satori(jsx, {
     width: 4096,
-    height: 3500,
+    height: 3400,
     fonts,
   });
   const resvg = new Resvg(svg, { dpi: 600, shapeRendering: 2, textRendering: 2, imageRendering: 0 });
