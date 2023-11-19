@@ -27,9 +27,18 @@ export function renderItems(items: number[], visionScore: number) {
     throw new Error("Last item must exist");
   }
   const visionItem = (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", width: `${dimension}px`, height: `${dimension}px` }}>
       {renderItem(lastItem)}
-      <span style={{ position: "absolute", color: palette.white[1], textShadow: "5px 5px", bottom: "0", right: "0" }}>
+      <span
+        style={{
+          position: "absolute",
+          color: palette.white[1],
+          textShadow: "5px 5px",
+          bottom: "0",
+          right: "0",
+          fontWeight: 500,
+        }}
+      >
         {visionScore}
       </span>
     </div>

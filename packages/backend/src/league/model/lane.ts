@@ -14,3 +14,13 @@ export function parseLane(input: string): Lane | undefined {
     .with("utility", () => "support")
     .otherwise(() => undefined);
 }
+
+export function laneToString(lane: Lane): string {
+  return match(lane)
+    .with("middle", () => "Mid")
+    .with("top", () => "Top")
+    .with("jungle", () => "Jungle")
+    .with("adc", () => "ADC")
+    .with("support", () => "Support")
+    .exhaustive();
+}

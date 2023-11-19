@@ -3,6 +3,11 @@ import { Font } from "satori";
 
 const fontPath = "src/league/tasks/postmatch/image/assets/fonts";
 
+export const font = {
+  title: "Beautfort",
+  body: "Spiegel",
+};
+
 export async function loadFonts(): Promise<Font[]> {
   return [
     {

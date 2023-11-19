@@ -1,5 +1,6 @@
 // https://brand.riotgames.com/en-us/league-of-legends/color
 export const palette = {
+  teams: { red: "#ad3138", blue: "#60c8e4" },
   white: {
     1: "#ffff",
   },
@@ -30,6 +31,7 @@ export const palette = {
     5: "#785A28",
     6: "#463714",
     7: "#32281E",
+    bright: "#f0bf3a",
     gradient: {
       start: "#785A28",
       end: "#C89B3C",

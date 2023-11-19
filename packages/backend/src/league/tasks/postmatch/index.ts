@@ -49,7 +49,11 @@ export async function checkPostMatch() {
 
   await Promise.all(
     _.map(finishedGames, async ([state, match]) => {
-      await mkdir("matches");
+      try {
+        await mkdir("matches");
+      } catch (e) {
+        // noop
+      }
       await writeFile(`matches/${match.info.gameId}`, JSON.stringify(match));
 
       const player = _.chain(match.info.participants)
