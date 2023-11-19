@@ -3,6 +3,7 @@ import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
 import { PlayerConfigEntrySchema, PlayerConfigEntry } from "../../../model/playerConfigEntry.js";
 import { LaneSchema, parseLane } from "../../../model/lane.js";
+import { Player, getLeaguePointsDelta } from "../../../model/player.js";
 
 export type Champion = z.infer<typeof ChampionSchema>;
 export const ChampionSchema = z.strictObject({
@@ -41,9 +42,14 @@ export const MatchSchema = z.strictObject({
   teams: z.record(z.union([z.literal("red"), z.literal("blue")]), TeamSchema),
 });
 
-export function createMatchObject(username: string, player: PlayerConfigEntry, dto: MatchV5DTOs.MatchDto): Match {
+export function createMatchObject(
+  username: string,
+  player: Player,
+  dto: MatchV5DTOs.MatchDto,
+  lpChange: number,
+): Match {
   const playerParticipant = _.chain(dto.info.participants)
-    .filter((participant) => participant.puuid === player.league.leagueAccount.puuid)
+    .filter((participant) => participant.puuid === player.config.league.leagueAccount.puuid)
     .first()
     .value();
 
@@ -62,13 +68,13 @@ export function createMatchObject(username: string, player: PlayerConfigEntry, d
   }
 
   return {
-    player,
+    player: player.config,
     name: username,
     cs: playerParticipant.totalMinionsKilled + playerParticipant.neutralMinionsKilled,
     vs: playerParticipant.visionScore,
-    lp: 0,
-    wins: 0,
-    losses: 0,
+    lp: lpChange,
+    wins: player.currentRank.wins - player.config.league.initialRank.wins,
+    losses: player.currentRank.losses - player.config.league.initialRank.losses,
     damage: playerParticipant.totalDamageDealtToChampions,
     champion: playerParticipant.championName,
     outcome,

@@ -15,6 +15,7 @@ import { indexToRanking } from "../../model/relativeRanking.js";
 import { parseLane } from "../../model/lane.js";
 import { getCurrentRank } from "../../model/playerConfigEntry.js";
 import { mkdir, writeFile } from "fs/promises";
+import { getPlayer } from "../../model/player.js";
 
 export async function checkPostMatch() {
   const [state, release] = await getState();
@@ -112,9 +113,7 @@ export async function checkPostMatch() {
         player.championName
       } ${parseLane(player.teamPosition)}\n${kdaString}\n${damageString}\n${vsString}\n${csString}\n${lpString}`;
 
-      let discordMessage = `${parseLane(player.teamPosition)}
-DAMAGE CHARTS: ${indexToRanking(damageRank)} place
-${lpString}`;
+      let discordMessage = "";
 
       try {
         const { name, message } = await generateMessageFromBrian(promptMessage);
@@ -123,9 +122,11 @@ ${lpString}`;
         console.error(e);
       }
 
+      const fullPlayer = await getPlayer(state.player);
+
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {
-        const matchObj = createMatchObject(user.username, state.player, match);
+        const matchObj = createMatchObject(user.username, fullPlayer, match, lpChange);
         const image = await matchToImage(matchObj);
 
         const attachment = new AttachmentBuilder(image).setName("match.png");

@@ -31,18 +31,14 @@ export async function matchToImage(match: Match) {
         fontSize: "5rem",
       }}
     >
-      {/* <img
-        src={`data:image/jpeg;base64,${bg.toString("base64")}`}
-        style={{ position: "absolute", filter: "blur(400px) grayscale(80%)" }}
-      /> */}
       <div style={{ color: palette.gold[4], fontSize: "12rem", display: "flex", gap: "3rem", alignItems: "flex-end" }}>
         {match.outcome}
         <div style={{ color: palette.gold[4], fontSize: "6rem", display: "flex", marginBottom: "1rem" }}>
           {minutes}min {match.duration % 60}s
         </div>
-        <span>{match.lp}LP</span>
-        <span>W:{match.wins}</span>
-        <span>L:{match.losses}</span>
+        <span>{match.lp} LP</span>
+        <span>W: {match.wins}</span>
+        <span>L: {match.losses}</span>
       </div>
       <div style={{ display: "flex", gap: "6rem", flexDirection: "column" }}>
         {renderTeam(match.teams.blue, "blue", match.champion, match.duration / 60)}
