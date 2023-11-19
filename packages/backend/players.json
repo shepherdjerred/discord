@@ -358,5 +358,23 @@
       }
     },
     "discordAccount": { "id": "108659981309468672" }
+  },
+  {
+    "name": "Dan Kim",
+    "league": {
+      "leagueAccount": {
+        "id": "Jf9vbzXSisNKszzFeCxq0gjKC6dETktHMK4cXb-vSvcKy3a3OzeMrX0zRQ",
+        "accountId": "s5KEx4YaQhCxQXrazSp-HUa6MpvJI6zALUnvkd97_m7vm5ibk30fuTED",
+        "puuid": "11IzbDvjaiZ3x4zZX0luM1ILxSr26o5NAhee2nBaEJvAVm9mFJ9VhxRkQyZ5hkX-JQs5Y5bHMnzmCg"
+      },
+      "initialRank": {
+        "division": 3,
+        "tier": "gold",
+        "lp": 7,
+        "wins": 33,
+        "losses": 30
+      }
+    },
+    "discordAccount": { "id": "688107056846209150" }
   }
 ]
