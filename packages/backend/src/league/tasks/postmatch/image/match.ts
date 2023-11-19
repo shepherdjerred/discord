@@ -9,7 +9,7 @@ export const ChampionSchema = z.strictObject({
   kills: z.number().nonnegative(),
   deaths: z.number().nonnegative(),
   assists: z.number().nonnegative(),
-  items: z.array(z.object({})),
+  items: z.array(z.number()),
   spells: z.array(z.object({})),
   runes: z.array(z.object({})),
   cs: z.number().nonnegative(),

@@ -19,7 +19,15 @@ export async function matchToImage(match: Match) {
     const isPlayer = champion.champion === match.champion;
 
     const items = _.map(champion.items, (item) => {
-      return <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>{String(item)}</div>;
+      return (
+        <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
+          <img
+            src={`https://ddragon.leagueoflegends.com/cdn/13.22.1/img/item/${item.toString()}.png`}
+            width={100}
+            height={100}
+          />
+        </div>
+      );
     });
 
     return (
@@ -36,7 +44,7 @@ export async function matchToImage(match: Match) {
             >{`${champion.kills}/${champion.deaths}/${champion.assists}`}</span>
           </div>
         </div>
-        <div style={{ display: "none", flexDirection: "row", gap: "2rem" }}>{items}</div>
+        <div style={{ display: "flex", flexDirection: "row", gap: "2rem" }}>{items}</div>
       </div>
     );
   }
