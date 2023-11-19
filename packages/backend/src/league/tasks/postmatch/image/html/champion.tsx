@@ -4,17 +4,35 @@ import { Champion } from "../match.js";
 import { palette } from "../assets/colors.js";
 import _ from "lodash";
 import { laneToString } from "../../../../model/lane.js";
+import summoner from "../assets/summoner.json";
 
-export function renderChampion(champion: Champion, highlight: boolean, durationInMinutes: number) {
+export function renderChampion(champion: Champion, highlight: boolean, durationInMinutes: number, damageMax: number) {
   const items = renderItems(champion.items, champion.vs);
-  const kdaRatio = _.round((champion.kills + champion.assists) / champion.deaths);
+  const kdaRatio = _.round((champion.kills + champion.assists) / champion.deaths, 1);
   const lane = laneToString(champion.lane);
+  const damagePercent = _.round((champion.damage / damageMax) * 100);
+
+  const summs = _.map(champion.spells, (spell) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const name = _.chain(summoner.data)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      .pickBy((summoner) => summoner.key === spell.toString())
+      .keys()
+      .first()
+      .value();
+
+    if (name === undefined) {
+      throw new Error(`Summoner spell ${spell} not found`);
+    }
+
+    return <img src={`https://ddragon.leagueoflegends.com/cdn/13.22.1/img/spell/${name}.png`} width="60" height="60" />;
+  });
 
   return (
     <div
       style={{
         display: "flex",
-        gap: "1rem",
+        gap: ".1rem",
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -37,16 +55,31 @@ export function renderChampion(champion: Champion, highlight: boolean, durationI
         </span>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "row", gap: "2rem" }}>{items}</div>
+      <div style={{ display: "flex", gap: "3rem" }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>{summs}</div>
+        <div style={{ display: "flex", flexDirection: "row", gap: "0rem" }}>{items}</div>
+      </div>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <span
-          style={{ display: "flex", fontWeight: highlight ? 700 : 400, color: highlight ? palette.gold[1] : "" }}
+          style={{ display: "flex", fontWeight: 700, color: highlight ? palette.gold[1] : "" }}
         >{`${champion.kills} / ${champion.deaths} / ${champion.assists}`}</span>
         <span>{kdaRatio} KDA</span>
       </div>
-      <div style={{ display: "flex", gap: "2rem" }}>{champion.damage.toLocaleString()}K damage</div>
+
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2rem" }}>
+        <div style={{ display: "flex", gap: "2rem", fontWeight: 700 }}>{champion.damage.toLocaleString()} dmg</div>
+        <span style={{ width: "20rem", height: "2rem", backgroundColor: palette.grey[1] }}>
+          <span
+            style={{
+              width: `${damagePercent}%`,
+              height: "100%",
+              backgroundColor: highlight ? palette.gold.bright : palette.white[1],
+            }}
+          />
+        </span>
+      </div>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <span>{champion.gold.toLocaleString()} gold</span>
+        <span style={{ fontWeight: 700 }}>{champion.gold.toLocaleString()} gold</span>
         <span>{_.round(champion.gold / durationInMinutes).toLocaleString()} / min</span>
       </div>
     </div>

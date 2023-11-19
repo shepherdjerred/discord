@@ -15,7 +15,7 @@ export const ChampionSchema = z.strictObject({
   level: z.number().min(1).max(18),
   items: z.array(z.number()),
   lane: LaneSchema,
-  spells: z.array(z.object({})),
+  spells: z.array(z.string()),
   gold: z.number().nonnegative(),
   runes: z.array(z.object({})),
   cs: z.number().nonnegative(),

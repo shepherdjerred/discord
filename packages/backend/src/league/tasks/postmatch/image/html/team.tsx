@@ -10,6 +10,10 @@ export function renderTeam(team: Team, side: "red" | "blue", highlight: string, 
   const teamDeaths = _.sumBy(team, (champion) => champion.deaths);
   const teamAssists = _.sumBy(team, (champion) => champion.assists);
   const teamGold = _.sumBy(team, (champion) => champion.gold);
+  const mostDamage = _.chain(team)
+    .map((champion) => champion.damage)
+    .max()
+    .value();
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "4rem" }}>
       <div style={{ display: "flex", gap: "6rem" }}>
@@ -23,11 +27,13 @@ export function renderTeam(team: Team, side: "red" | "blue", highlight: string, 
           TEAM {side === "blue" ? 1 : 2}
         </span>
         <span style={{ fontWeight: 700 }}>
-          {teamKills} / {teamDeaths} / {teamAssists} KDA
+          {teamKills} / {teamDeaths} / {teamAssists}
         </span>
         <span style={{ fontWeight: 700 }}>{teamGold.toLocaleString()} gold</span>
       </div>
-      {_.map(team, (champion) => renderChampion(champion, champion.champion === highlight, durationInMinutes))}
+      {_.map(team, (champion) =>
+        renderChampion(champion, champion.champion === highlight, durationInMinutes, mostDamage),
+      )}
     </div>
   );
 }

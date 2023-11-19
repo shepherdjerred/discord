@@ -52,7 +52,7 @@ export async function matchToImage(match: Match) {
 
   const fonts = await loadFonts();
   const svg = await satori(jsx, {
-    width: 4096,
+    width: 5096,
     height: 3400,
     fonts,
   });
