@@ -110,7 +110,7 @@ ${lpString}`;
 
       try {
         const { name, message } = await generateMessageFromBrian(promptMessage);
-        discordMessage = `${discordMessage}\n${name}says: ${message}`;
+        discordMessage = `${name} says: ${message}\n\n${discordMessage}`;
       } catch (e) {
         console.error(e);
       }
