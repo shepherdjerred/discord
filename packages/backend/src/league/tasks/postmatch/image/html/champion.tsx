@@ -4,7 +4,7 @@ import { Champion } from "../match.js";
 import { palette } from "../assets/colors.js";
 import _ from "lodash";
 import { laneToString } from "../../../../model/lane.js";
-import summoner from "../assets/summoner.json";
+import summoner from "../assets/summoner.json" assert { type: "json" };
 
 export function renderChampion(champion: Champion, highlight: boolean, durationInMinutes: number, damageMax: number) {
   const items = renderItems(champion.items, champion.vs);
@@ -13,9 +13,7 @@ export function renderChampion(champion: Champion, highlight: boolean, durationI
   const damagePercent = _.round((champion.damage / damageMax) * 100);
 
   const summs = _.map(champion.spells, (spell) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const name = _.chain(summoner.data)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       .pickBy((summoner) => summoner.key === spell.toString())
       .keys()
       .first()
