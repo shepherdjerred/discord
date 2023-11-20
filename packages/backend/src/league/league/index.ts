@@ -36,9 +36,9 @@ export async function getCurrentSoloQueueGame(player: PlayerConfigEntry): Promis
 
 export function findParticipant(
   player: PlayerConfigEntry,
-  game: CurrentGameInfoDTO,
+  participants: CurrentGameParticipantDTO[],
 ): CurrentGameParticipantDTO | undefined {
-  return _.chain(game.participants)
+  return _.chain(participants)
     .filter((participant) => participant.summonerId === player.league.leagueAccount.id)
     .first()
     .value();

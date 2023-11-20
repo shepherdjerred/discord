@@ -4,9 +4,8 @@ import { getChampionName } from "twisted/dist/constants/champions.js";
 import { CurrentGameInfoDTO } from "twisted/dist/models-dto/index.js";
 import { findParticipant } from "../../league/index.js";
 import { PlayerConfigEntry } from "../../model/playerConfigEntry.js";
-
-export function createDiscordMessage(player: PlayerConfigEntry, game: CurrentGameInfoDTO): string {
-  const participant = findParticipant(player, game);
+export function createDiscordMessage([player, game]: [PlayerConfigEntry, CurrentGameInfoDTO]): string {
+  const participant = findParticipant(player, game.participants);
 
   if (participant === undefined) {
     throw new Error(`unable to find participant ${JSON.stringify(player)}, ${JSON.stringify(game)}`);
