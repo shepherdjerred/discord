@@ -11,7 +11,7 @@ export const ChampionSchema = z.strictObject({
   assists: z.number().nonnegative(),
   level: z.number().min(1).max(18),
   items: z.array(z.number()),
-  lane: LaneSchema,
+  lane: LaneSchema.optional(),
   spells: z.array(z.number()),
   gold: z.number().nonnegative(),
   runes: z.array(z.strictObject({})),
@@ -21,10 +21,6 @@ export const ChampionSchema = z.strictObject({
 });
 export function createChampionObject(dto: MatchV5DTOs.ParticipantDto): Champion {
   const lane = parseLane(dto.teamPosition);
-
-  if (lane === undefined) {
-    throw new Error(`invalid lane ${dto.teamPosition}`);
-  }
 
   return {
     summonerName: dto.summonerName,

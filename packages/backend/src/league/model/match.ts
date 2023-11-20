@@ -20,8 +20,8 @@ export const MatchSchema = z.strictObject({
     outcome: z.enum(["Victory", "Defeat", "Surrender"]),
     champion: ChampionSchema,
     team: TeamSchema,
-    lane: LaneSchema,
-    opponent: ChampionSchema,
+    lane: LaneSchema.optional(),
+    laneOpponent: ChampionSchema.optional(),
   }),
   teams: z.strictObject({
     red: RosterSchema,
@@ -54,9 +54,6 @@ export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpC
   }
 
   const lane = parseLane(playerParticipant.lane);
-  if (lane == undefined) {
-    throw new Error(`invalid lane: ${JSON.stringify(playerParticipant.lane)}`);
-  }
 
   const teams = {
     blue: _.map(dto.info.participants.slice(0, 5), createChampionObject),
@@ -70,11 +67,11 @@ export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpC
     otherTeam = "blue";
   }
 
-  const opponent = _.chain(teams[otherTeam])
+  const laneOpponent = _.chain(teams[otherTeam])
     .filter((p) => p.lane === lane)
     .first()
     .value();
-  if (opponent == undefined) {
+  if (laneOpponent == undefined) {
     throw new Error(`invalid state: ${JSON.stringify(teams[otherTeam])}`);
   }
 
@@ -88,7 +85,7 @@ export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpC
       outcome,
       team,
       lane,
-      opponent,
+      laneOpponent: laneOpponent,
     },
     durationInSeconds: dto.info.gameDuration,
     teams,
