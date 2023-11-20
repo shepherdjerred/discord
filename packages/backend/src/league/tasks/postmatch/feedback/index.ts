@@ -19,7 +19,7 @@ export async function generateFeedbackMessage(match: Match) {
 
   const basePrompt = (await readFile(`${promptPath}/base.txt`)).toString();
   const personalityPrompt = (await readFile(`${promptPath}/${randomPersonality.file}`)).toString();
-  const lanePrompt = (await readFile(`${promptPath}/${match.player.lane}.txt`)).toString();
+  const lanePrompt = (await readFile(`${promptPath}/lanes/${match.player.lane}.txt`)).toString();
 
   const replacements = [
     {
@@ -41,6 +41,10 @@ export async function generateFeedbackMessage(match: Match) {
     {
       placeholder: "<PLAYER CHAMPION>",
       replacement: match.player.champion.championName,
+    },
+    {
+      placeholder: "<PLAYER NAME>",
+      replacement: match.player.playerConfig.name,
     },
   ];
 
