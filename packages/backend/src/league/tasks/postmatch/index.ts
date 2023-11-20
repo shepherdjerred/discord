@@ -6,7 +6,7 @@ import client from "../../../discord/client.js";
 import { z } from "zod";
 import { api } from "../../league/api.js";
 import { GameState, getState, writeState } from "../../model/state.js";
-import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
+import { AttachmentBuilder, EmbedBuilder, bold, userMention } from "discord.js";
 import { matchToImage } from "./image/html/index.js";
 import { generateFeedbackMessage } from "./feedback/index.js";
 import { rankToLeaguePoints } from "../../model/leaguePoints.js";
@@ -76,8 +76,8 @@ export async function checkPostMatch() {
 
       try {
         const { name, message } = await generateFeedbackMessage(matchObj);
-        discordMessage = `AI ${name} says: ${message.replaceAll(
-          "<NAME>",
+        discordMessage = `${bold("AI " + name)} says: ${message.replace(
+          state.player.name,
           userMention(state.player.discordAccount.id),
         )}`;
       } catch (e) {
