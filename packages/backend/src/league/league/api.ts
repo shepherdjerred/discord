@@ -4,6 +4,6 @@ import configuration from "../../configuration.js";
 export const api = new LolApi({
   key: configuration.riotApiToken,
   rateLimitRetry: true,
-  rateLimitRetryAttempts: 6,
+  rateLimitRetryAttempts: 3,
   concurrency: 1,
 });

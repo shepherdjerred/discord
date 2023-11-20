@@ -9,7 +9,7 @@ import { api } from "./api.js";
 import { Constants } from "twisted";
 import _ from "lodash";
 
-export const patch = "13.22.1";
+export const currentPatch = "13.22.1";
 export const soloQueueConfigId = 420;
 
 export async function getCurrentSoloQueueGame(player: PlayerConfigEntry): Promise<undefined | CurrentGameInfoDTO> {

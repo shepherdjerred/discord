@@ -1,6 +1,7 @@
 import { bold, userMention } from "discord.js";
 import _ from "lodash";
 import { Leaderboard, LeaderboardEntry } from "./index.js";
+import { diffToString } from "../../model/leaguePoints.js";
 
 export function leaderboardToDiscordMessage(leaderboard: Leaderboard): string {
   return _.chain(leaderboard).map(leaderboardEntryToDiscordMessage).join("\n").value();
@@ -13,12 +14,5 @@ function leaderboardEntryToDiscordMessage({ rank, leaguePointsDelta, player }: L
     rankString = bold(rankString);
   }
 
-  let lpString;
-  if (leaguePointsDelta <= 0) {
-    lpString = `(${leaguePointsDelta} LP)`;
-  } else {
-    lpString = `(+${leaguePointsDelta} LP)`;
-  }
-
-  return `${rankString}: ${userMention(player.config.discordAccount.id)} ${lpString}`;
+  return `${rankString}: ${userMention(player.config.discordAccount.id)} ${diffToString(leaguePointsDelta)} LP`;
 }

@@ -1,6 +1,6 @@
 import _ from "lodash";
 import React from "react";
-import { patch } from "../../../../league/index.js";
+import { currentPatch } from "../../../../league/index.js";
 import { palette } from "../assets/colors.js";
 
 const dimension = 120;
@@ -8,7 +8,7 @@ const dimension = 120;
 export function renderItem(item: number) {
   return (
     <img
-      src={`https://ddragon.leagueoflegends.com/cdn/${patch}/img/item/${item.toString()}.png`}
+      src={`https://ddragon.leagueoflegends.com/cdn/${currentPatch}/img/item/${item.toString()}.png`}
       style={{ backgroundColor: palette.blue[5], border: `1px solid ${palette.gold.bright}` }}
       width={dimension}
       height={dimension}

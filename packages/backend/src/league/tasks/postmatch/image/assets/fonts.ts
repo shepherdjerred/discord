@@ -8,6 +8,7 @@ export const font = {
   body: "Spiegel",
 };
 
+// https://brand.riotgames.com/en-us/league-of-legends/typography
 export async function loadFonts(): Promise<Font[]> {
   return [
     {
