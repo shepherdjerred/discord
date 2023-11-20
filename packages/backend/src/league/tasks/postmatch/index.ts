@@ -82,7 +82,7 @@ export async function checkPostMatch() {
   console.log("removing games in progress");
   const finishedGames = _.chain(state.gamesStarted)
     .zip(games)
-    .filter((game) => game != undefined)
+    .filter(([_game, match]) => match != undefined)
     .value() as [GameState, MatchV5DTOs.MatchDto][];
 
   // TODO: send duo queue message

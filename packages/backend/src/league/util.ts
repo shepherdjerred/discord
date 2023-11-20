@@ -1,7 +1,7 @@
-export function logErrors(fn: () => unknown) {
-  return () => {
+export function logErrors(fn: () => Promise<unknown>) {
+  return async () => {
     try {
-      fn();
+      await fn();
     } catch (e) {
       console.error(e);
     }
