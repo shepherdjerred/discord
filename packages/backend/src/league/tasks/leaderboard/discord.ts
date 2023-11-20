@@ -19,7 +19,7 @@ function leaderboardEntryToDiscordMessage({ position, leaguePointsDelta, player 
   const losses = Math.abs(player.config.league.initialRank.losses - player.currentRank.losses);
   const rank = player.currentRank;
 
-  return `${positionString}: ${userMention(player.config.discordAccount.id)} ${bold(
-    diffToString(leaguePointsDelta),
-  )} LP   (${wins}W, ${losses}L, ${rankToString(rank)})`;
+  return `${positionString}: ${userMention(player.config.discordAccount.id)} ${
+    bold(diffToString(leaguePointsDelta)) + "LP"
+  } (${wins}W, ${losses}L, ${rankToString(rank)})`;
 }
