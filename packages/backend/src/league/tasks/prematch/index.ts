@@ -35,7 +35,7 @@ export async function checkPreMatch() {
   );
 
   console.log("sending messages");
-  await Promise.all(_.chain(newGames).map(createDiscordMessage).map(textChannel).value());
+  await Promise.all(_.chain(newGames).map(createDiscordMessage).map(textChannel.send).value());
 
   console.log("creating new state entries");
   const newStateEntries = await Promise.all(
