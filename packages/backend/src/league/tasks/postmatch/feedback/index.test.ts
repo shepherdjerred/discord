@@ -1,14 +1,28 @@
 import { describe, it } from "vitest";
-import { generateMessageFromBrian } from "./index.js";
+import { generateMessageFromBrian as generateFeedbackMessage } from "./index.js";
+import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
+import exampleMatch from "../image/html/match.json" assert { type: "json" };
+import { Player } from "../../../model/player.js";
+import { PlayerConfigEntry } from "../../../model/playerConfigEntry.js";
+import { createMatchObject } from "../image/match.js";
 
-describe("brian", () => {
+describe("feedbacl", () => {
   it("should return a string", async () => {
-    const response = await generateMessageFromBrian(`@spicy gamecube lost a 26 minute game playing TwistedFate middle
-KDA: 3/7/7
-DAMAGE CHARTS: 2nd place (15K damage)
-11 vision score (0.42/min)
-128 CS (4.9/min)
--22 LP (-0.014102564102564103/sec)`);
+    const matchObj = createMatchObject(
+      "Jerred",
+      {
+        config: {
+          league: {
+            leagueAccount: { puuid: "XtEsV464OFaO3c0_q9REa6wYF0HpC2LK4laLnyM7WhfAVeuDz9biieJ5ZRD049AUCBjLjyBeeezTaw" },
+            initialRank: { division: 4, tier: "gold", lp: 11, wins: 10, losses: 20 },
+          },
+        } as unknown as PlayerConfigEntry,
+        currentRank: { division: 1, tier: "gold", lp: 4, wins: 50, losses: 30 },
+      } as Player,
+      exampleMatch as MatchV5DTOs.MatchDto,
+      27,
+    );
+    const response = await generateFeedbackMessage(matchObj);
     console.log(response);
   });
 });

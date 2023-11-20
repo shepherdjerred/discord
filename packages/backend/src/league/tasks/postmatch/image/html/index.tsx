@@ -11,7 +11,7 @@ import { diffToString } from "../../../../model/leaguePoints.js";
 export async function matchToImage(match: Match) {
   // const bg = await readFile("src/league/tasks/postmatch/image/image/bg.jpg");
 
-  const minutes = _.round(match.duration / 60);
+  const minutes = _.round(match.durationInSeconds / 60);
 
   if (!match.teams.red || !match.teams.blue) {
     throw new Error("Match must have both teams");
@@ -47,17 +47,17 @@ export async function matchToImage(match: Match) {
       >
         <span style={{ color: palette.gold[4] }}>{match.outcome}</span>
         <div style={{ fontSize: "6rem", display: "flex", marginBottom: "1rem" }}>
-          {minutes}min {match.duration % 60}s
+          {minutes}min {match.durationInSeconds % 60}s
         </div>
         <div style={{ display: "flex", gap: "2rem", fontSize: "4rem", color: palette.grey[1], marginBottom: "1.5rem" }}>
-          <span>{diffToString(match.lp)} LP</span>
-          <span>W: {match.wins}</span>
-          <span>L: {match.losses}</span>
+          <span>{diffToString(match.leaguePointsDelta)} LP</span>
+          <span>W: {match.tournamentWins}</span>
+          <span>L: {match.tournamentLosses}</span>
         </div>
       </div>
       <div style={{ display: "flex", gap: "6rem", flexDirection: "column" }}>
-        {renderTeam(match.teams.blue, "blue", match.champion, match.duration / 60)}
-        {renderTeam(match.teams.red, "red", match.champion, match.duration / 60)}
+        {renderTeam(match.teams.blue, "blue", match.championName, match.durationInSeconds / 60)}
+        {renderTeam(match.teams.red, "red", match.championName, match.durationInSeconds / 60)}
       </div>
     </div>
   );

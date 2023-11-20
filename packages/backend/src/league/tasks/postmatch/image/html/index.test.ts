@@ -1,10 +1,11 @@
 import { writeFile } from "fs/promises";
 import { describe, test } from "vitest";
-import { exampleMatch } from "./example.js";
 import { matchToImage } from "./index.js";
 import { createMatchObject } from "../match.js";
 import { PlayerConfigEntry } from "../../../../model/playerConfigEntry.js";
 import { Player } from "../../../../model/player.js";
+import exampleMatch from "./match.json" assert { type: "json" };
+import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 
 describe("index", () => {
   test("test", async () => {
@@ -19,7 +20,7 @@ describe("index", () => {
         } as unknown as PlayerConfigEntry,
         currentRank: { division: 1, tier: "gold", lp: 4, wins: 50, losses: 30 },
       } as Player,
-      exampleMatch,
+      exampleMatch as MatchV5DTOs.MatchDto,
       27,
     );
     const result = await matchToImage(matchObj);

@@ -28,17 +28,17 @@ export const TeamSchema = z.array(ChampionSchema).length(5);
 
 export type Match = z.infer<typeof MatchSchema>;
 export const MatchSchema = z.strictObject({
-  player: PlayerConfigEntrySchema,
-  name: z.string().min(0),
-  cs: z.number().nonnegative(),
-  vs: z.number().nonnegative(),
-  lp: z.number(),
-  wins: z.number().nonnegative(),
-  losses: z.number().nonnegative(),
-  champion: z.string().min(0),
-  damage: z.number().nonnegative(),
+  playerConfig: PlayerConfigEntrySchema,
+  playerName: z.string().min(0),
+  creepScore: z.number().nonnegative(),
+  visionScore: z.number().nonnegative(),
+  leaguePointsDelta: z.number(),
+  tournamentWins: z.number().nonnegative(),
+  tournamentLosses: z.number().nonnegative(),
+  championName: z.string().min(0),
+  totalDamageDealtToChampions: z.number().nonnegative(),
   outcome: z.enum(["Victory", "Defeat", "Surrender"]),
-  duration: z.number().nonnegative(),
+  durationInSeconds: z.number().nonnegative(),
   teams: z.record(z.union([z.literal("red"), z.literal("blue")]), TeamSchema),
 });
 
@@ -68,17 +68,17 @@ export function createMatchObject(
   }
 
   return {
-    player: player.config,
-    name: username,
-    cs: playerParticipant.totalMinionsKilled + playerParticipant.neutralMinionsKilled,
-    vs: playerParticipant.visionScore,
-    lp: lpChange,
-    wins: player.currentRank.wins - player.config.league.initialRank.wins,
-    losses: player.currentRank.losses - player.config.league.initialRank.losses,
-    damage: playerParticipant.totalDamageDealtToChampions,
-    champion: playerParticipant.championName,
+    playerConfig: player.config,
+    playerName: username,
+    creepScore: playerParticipant.totalMinionsKilled + playerParticipant.neutralMinionsKilled,
+    visionScore: playerParticipant.visionScore,
+    leaguePointsDelta: lpChange,
+    tournamentWins: player.currentRank.wins - player.config.league.initialRank.wins,
+    tournamentLosses: player.currentRank.losses - player.config.league.initialRank.losses,
+    totalDamageDealtToChampions: playerParticipant.totalDamageDealtToChampions,
+    championName: playerParticipant.championName,
     outcome,
-    duration: dto.info.gameDuration,
+    durationInSeconds: dto.info.gameDuration,
     teams: {
       blue: _.map(dto.info.participants.slice(0, 5), createChampionObject),
       red: _.map(dto.info.participants.slice(5, 10), createChampionObject),
