@@ -18,14 +18,14 @@ export function renderItem(item: number) {
 
 export function renderItems(items: number[], visionScore: number) {
   if (items.length !== 7) {
-    throw new Error("Items must be length 7");
+    throw new Error(`Items must be length 7: ${items.toString()}`);
   }
 
   const mainItems = _.chain(items).take(6).map(renderItem).value();
 
   const lastItem = _.last(items);
   if (!lastItem) {
-    throw new Error("Last item must exist");
+    throw new Error(`Last item must exist: ${items.toString()}`);
   }
   const visionItem = (
     <div style={{ display: "flex", width: `${dimension}px`, height: `${dimension}px` }}>

@@ -92,7 +92,7 @@ export async function checkPostMatch() {
         const embed = new EmbedBuilder().setImage(`attachment://${attachment.name}`);
         await channel.send({ content: discordMessage, embeds: [embed], files: [attachment] });
       } else {
-        throw new Error("not text based");
+        throw new Error("channel is not text based");
       }
     }),
   );

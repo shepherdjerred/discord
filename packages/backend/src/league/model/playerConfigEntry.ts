@@ -25,11 +25,11 @@ export async function getCurrentRank(player: PlayerConfigEntry): Promise<Rank> {
     .first()
     .value();
   if (!soloQueue) {
-    throw new Error("unable to find solo queue");
+    throw new Error(`unable to find solo queue: ${JSON.stringify(response.response)}`);
   }
   const division = parseDivision(soloQueue.rank);
   if (division === undefined) {
-    throw new Error("unable to find division");
+    throw new Error(`unable to find division, ${JSON.stringify(soloQueue.rank)}`);
   }
   return {
     division,

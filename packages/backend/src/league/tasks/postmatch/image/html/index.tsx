@@ -9,12 +9,10 @@ import { diffToString } from "../../../../model/leaguePoints.js";
 import { Match } from "../../../../model/match.js";
 
 export async function matchToImage(match: Match) {
-  // const bg = await readFile("src/league/tasks/postmatch/image/image/bg.jpg");
-
   const minutes = _.round(match.durationInSeconds / 60);
 
   if (!match.teams.red || !match.teams.blue) {
-    throw new Error("Match must have both teams");
+    throw new Error(`Match must have both teams: ${JSON.stringify(match.teams)}`);
   }
 
   // this variable will store the content of the "svg" variable below, but as JSX

@@ -25,7 +25,7 @@ export async function generateFeedbackMessage(match: Match) {
     .sample()
     .value();
   if (!reviewer) {
-    throw new Error("No reviewer found");
+    throw new Error(`No reviewer found: ${JSON.stringify(bios)}`);
   }
 
   let player = _.chain(bios)

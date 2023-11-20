@@ -23,7 +23,7 @@ export function createChampionObject(dto: MatchV5DTOs.ParticipantDto): Champion 
   const lane = parseLane(dto.teamPosition);
 
   if (lane === undefined) {
-    throw Error(`invalid lane ${dto.teamPosition}`);
+    throw new Error(`invalid lane ${dto.teamPosition}`);
   }
 
   return {

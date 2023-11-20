@@ -36,8 +36,7 @@ export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpC
     .value();
 
   if (playerParticipant == undefined) {
-    console.error("invalid state");
-    throw Error("");
+    throw new Error(`invalid state: ${JSON.stringify(dto.info.participants)}`);
   }
 
   let outcome: "Victory" | "Defeat" | "Surrender";
@@ -51,12 +50,12 @@ export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpC
 
   const team = parseTeam(playerParticipant.teamId);
   if (team == undefined) {
-    throw Error("invalid state");
+    throw new Error(`invalid team: ${JSON.stringify(playerParticipant.teamId)}`);
   }
 
   const lane = parseLane(playerParticipant.lane);
   if (lane == undefined) {
-    throw Error("invalid state");
+    throw new Error(`invalid lane: ${JSON.stringify(playerParticipant.lane)}`);
   }
 
   const teams = {
@@ -76,7 +75,7 @@ export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpC
     .first()
     .value();
   if (opponent == undefined) {
-    throw Error("invalid state");
+    throw new Error(`invalid state: ${JSON.stringify(teams[otherTeam])}`);
   }
 
   return {

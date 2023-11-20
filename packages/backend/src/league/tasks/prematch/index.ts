@@ -56,7 +56,7 @@ export async function checkPreMatch() {
       if (channel?.isTextBased()) {
         await channel.send(message);
       } else {
-        throw new Error("not text based");
+        throw new Error("channel is not text based");
       }
     }),
   );
