@@ -71,9 +71,6 @@ export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpC
     .filter((p) => p.lane === lane)
     .first()
     .value();
-  if (laneOpponent == undefined) {
-    throw new Error(`invalid state: ${JSON.stringify(teams[otherTeam])}`);
-  }
 
   return {
     player: {
