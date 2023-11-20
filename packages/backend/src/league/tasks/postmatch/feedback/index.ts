@@ -20,7 +20,7 @@ export async function generateFeedbackMessage(match: Match) {
   const personalityPrompt = (await readFile(`${promptPath}/${randomPersonality.file}`)).toString();
   const basePrompt = (await readFile(`${promptPath}/base.txt`)).toString();
 
-  const fullPrompt = basePrompt.replaceAll("<PROMPT>", personalityPrompt).replaceAll("<REPORT>", JSON.stringify(match));
+  const fullPrompt = basePrompt.replaceAll("<PROMPT>", personalityPrompt).replaceAll("<CHAMPION>", match.championName).replaceAll("<REPORT>", JSON.stringify(match));
 
   const res = await chatGpt.sendMessage(`${fullPrompt}`);
   return { name: randomPersonality.name, message: res.text };

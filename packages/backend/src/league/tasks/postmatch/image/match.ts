@@ -18,8 +18,8 @@ export const ChampionSchema = z.strictObject({
   spells: z.array(z.number()),
   gold: z.number().nonnegative(),
   runes: z.array(z.object({})),
-  cs: z.number().nonnegative(),
-  vs: z.number().nonnegative(),
+  creepScore: z.number().nonnegative(),
+  visionScore: z.number().nonnegative(),
   damage: z.number().nonnegative(),
 });
 
@@ -30,8 +30,6 @@ export type Match = z.infer<typeof MatchSchema>;
 export const MatchSchema = z.strictObject({
   playerConfig: PlayerConfigEntrySchema,
   playerName: z.string().min(0),
-  creepScore: z.number().nonnegative(),
-  visionScore: z.number().nonnegative(),
   leaguePointsDelta: z.number(),
   tournamentWins: z.number().nonnegative(),
   tournamentLosses: z.number().nonnegative(),
@@ -70,8 +68,6 @@ export function createMatchObject(
   return {
     playerConfig: player.config,
     playerName: username,
-    creepScore: playerParticipant.totalMinionsKilled + playerParticipant.neutralMinionsKilled,
-    visionScore: playerParticipant.visionScore,
     leaguePointsDelta: lpChange,
     tournamentWins: player.currentRank.wins - player.config.league.initialRank.wins,
     tournamentLosses: player.currentRank.losses - player.config.league.initialRank.losses,
@@ -103,8 +99,8 @@ export function createChampionObject(dto: MatchV5DTOs.ParticipantDto): Champion 
     spells: [dto.summoner1Id, dto.summoner2Id],
     runes: [],
     lane,
-    cs: dto.totalMinionsKilled + dto.neutralMinionsKilled,
-    vs: dto.visionScore,
+    creepScore: dto.totalMinionsKilled + dto.neutralMinionsKilled,
+    visionScore: dto.visionScore,
     damage: dto.totalDamageDealtToChampions,
     gold: dto.goldEarned,
     level: dto.champLevel,

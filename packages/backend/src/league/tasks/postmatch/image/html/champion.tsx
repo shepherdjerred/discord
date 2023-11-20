@@ -7,7 +7,7 @@ import { laneToString } from "../../../../model/lane.js";
 import summoner from "../assets/summoner.json" assert { type: "json" };
 
 export function renderChampion(champion: Champion, highlight: boolean, durationInMinutes: number, damageMax: number) {
-  const items = renderItems(champion.items, champion.vs);
+  const items = renderItems(champion.items, champion.visionScore);
   const kdaRatio = _.round((champion.kills + champion.assists) / champion.deaths, 1);
   const lane = laneToString(champion.lane);
   const damagePercent = _.round((champion.damage / damageMax) * 100);

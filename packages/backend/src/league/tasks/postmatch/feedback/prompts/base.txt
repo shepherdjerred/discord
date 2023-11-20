@@ -6,5 +6,7 @@ Your response should not go over 400 characters.
 
 The person's name should be output as "<NAME>".
 
+The player you're reviewing was playing as <CHAMPION>. You should mention their opponent who was playing in the same lane.
+
 Here's the match report as a JSON object:
 <REPORT>

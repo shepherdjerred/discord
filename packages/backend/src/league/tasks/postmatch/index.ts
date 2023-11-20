@@ -78,7 +78,7 @@ export async function checkPostMatch() {
 
       try {
         const { name, message } = await generateFeedbackMessage(matchObj);
-        discordMessage = `${name} says: ${message.replaceAll("<NAME>", userMention(user.id))}\n\n${discordMessage}`;
+        discordMessage = `AI ${name} says: ${message.replaceAll("<NAME>", userMention(user.id))}`;
       } catch (e) {
         console.error(e);
       }
