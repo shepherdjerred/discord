@@ -22,11 +22,5 @@ export async function getPlayer(playerConfig: PlayerConfigEntry): Promise<Player
   };
 }
 export function sortPlayers(players: Player[]) {
-  return _.chain(players)
-    .sortBy(
-      players,
-      (player) => rankToLeaguePoints(player.currentRank) - rankToLeaguePoints(player.config.league.initialRank),
-    )
-    .reverse()
-    .value();
+  return _.chain(players).sortBy(getLeaguePointsDelta).reverse().value();
 }

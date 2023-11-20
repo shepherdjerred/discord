@@ -7,52 +7,10 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Image",
+      "name": "Post Leaderboard",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/packages/backend/src/league/image/index.ts",
-      "preLaunchTask": "npm: build - packages/backend",
-      "outFiles": ["${workspaceFolder}/packages/backend/dist/**/*.js"],
-      "cwd": "${workspaceFolder}/packages/backend"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch League Main",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/packages/backend/src/league/index.ts",
-      "preLaunchTask": "npm: build - packages/backend",
-      "outFiles": ["${workspaceFolder}/packages/backend/dist/**/*.js"],
-      "cwd": "${workspaceFolder}/packages/backend"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Spectate",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/packages/backend/src/league/spectate.ts",
-      "preLaunchTask": "npm: build - packages/backend",
-      "outFiles": ["${workspaceFolder}/packages/backend/dist/**/*.js"],
-      "cwd": "${workspaceFolder}/packages/backend"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Match",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/packages/backend/src/league/match.ts",
-      "preLaunchTask": "npm: build - packages/backend",
-      "outFiles": ["${workspaceFolder}/packages/backend/dist/**/*.js"],
-      "cwd": "${workspaceFolder}/packages/backend"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Leaderboard",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/packages/backend/src/league/leaderboard.ts",
-      "preLaunchTask": "npm: build - packages/backend",
-      "outFiles": ["${workspaceFolder}/packages/backend/dist/**/*.js"],
-      "cwd": "${workspaceFolder}/packages/backend"
+      "program": "${workspaceFolder}/src/league/tasks/leaderboard/oneshot.ts",
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
     }
   ]
 }
