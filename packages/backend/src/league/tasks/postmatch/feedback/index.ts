@@ -37,7 +37,7 @@ export async function generateFeedbackMessage(match: Match) {
   }
 
   const basePrompt = (await readFile(`${promptPath}/base.txt`)).toString();
-  const lanePrompt = (await readFile(`${promptPath}/lanes/${match.player.lane}.txt`)).toString();
+  const lanePrompt = (await readFile(`${promptPath}/lanes/${match.player.lane || "generic"}.txt`)).toString();
   const reviewerBioPrompt = (await readFile(`${promptPath}/bios/${reviewer.file}`)).toString();
   const playerBioPrompt = (await readFile(`${promptPath}/bios/${player.file}`)).toString();
 
