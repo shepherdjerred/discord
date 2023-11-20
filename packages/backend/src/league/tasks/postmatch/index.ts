@@ -9,10 +9,8 @@ import { GameState, getState, writeState } from "../../model/state.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
 import { createMatchObject } from "./image/match.js";
 import { matchToImage } from "./image/html/index.js";
-import { generateMessageFromBrian } from "./feedback/index.js";
-import { diffToString, rankToLeaguePoints } from "../../model/leaguePoints.js";
-import { indexToRanking } from "../../model/relativeRanking.js";
-import { parseLane } from "../../model/lane.js";
+import { generateFeedbackMessage } from "./feedback/index.js";
+import { rankToLeaguePoints } from "../../model/leaguePoints.js";
 import { getCurrentRank } from "../../model/playerConfigEntry.js";
 import { mkdir, writeFile } from "fs/promises";
 import { getPlayer } from "../../model/player.js";
@@ -67,61 +65,26 @@ export async function checkPostMatch() {
         return;
       }
 
-      const damageRank = _.findIndex(
-        _.reverse(
-          _.sortBy(
-            _.filter(match.info.participants, (participant) => participant.teamId === player.teamId),
-            (participant) => participant.totalDamageDealtToChampions,
-          ),
-        ),
-        (participant) => participant.puuid === state.player.league.leagueAccount.puuid,
-      );
-
       const currentRank = await getCurrentRank(state.player);
       const lpChange = rankToLeaguePoints(currentRank) - rankToLeaguePoints(state.rank);
-
-      const minutes = _.round(match.info.gameDuration / 60);
-      const damageString = `DAMAGE CHARTS: ${indexToRanking(damageRank)} place (${_.round(
-        player.totalDamageDealtToChampions / 1000,
-      )}K damage) `;
-      const vsString = `${player.visionScore} vision score (${_.round(player.visionScore / minutes, 2)}/min)`;
-      const totalCs = player.totalMinionsKilled + player.neutralMinionsKilled;
-      const csString = `${totalCs} CS (${_.round(totalCs / minutes, 1)}/min)`;
-      const kdaString = `KDA: ${player.kills}/${player.deaths}/${player.assists}`;
-
-      const lpString = diffToString(lpChange);
-
-      let outcomeString: string;
-
-      if (!player.win && player.gameEndedInSurrender) {
-        outcomeString = "surrendered";
-      } else if (player.win) {
-        outcomeString = "won";
-      } else {
-        outcomeString = "lost";
-      }
 
       // TODO: send duo queue message
 
       const user = await client.users.fetch(state.player.discordAccount.id, { cache: true });
-      const promptMessage = `${userMention(user.id)} ${outcomeString} a ${minutes} minute game playing ${
-        player.championName
-      } ${parseLane(player.teamPosition)}\n${kdaString}\n${damageString}\n${vsString}\n${csString}\n${lpString}`;
 
       let discordMessage = "";
+      const fullPlayer = await getPlayer(state.player);
+      const matchObj = createMatchObject(user.username, fullPlayer, match, lpChange);
 
       try {
-        const { name, message } = await generateMessageFromBrian(promptMessage);
+        const { name, message } = await generateFeedbackMessage(matchObj);
         discordMessage = `${name} says: ${message.replaceAll("<NAME>", userMention(user.id))}\n\n${discordMessage}`;
       } catch (e) {
         console.error(e);
       }
 
-      const fullPlayer = await getPlayer(state.player);
-
       const channel = await client.channels.fetch(configuration.leagueChannelId);
       if (channel?.isTextBased()) {
-        const matchObj = createMatchObject(user.username, fullPlayer, match, lpChange);
         const image = await matchToImage(matchObj);
 
         const attachment = new AttachmentBuilder(image).setName("match.png");
