@@ -9,6 +9,7 @@ export function renderItem(item: number) {
   return (
     <img
       src={`https://ddragon.leagueoflegends.com/cdn/${patch}/img/item/${item.toString()}.png`}
+      style={{ backgroundColor: palette.blue[5], border: `1px solid ${palette.gold.bright}` }}
       width={dimension}
       height={dimension}
     />
@@ -33,10 +34,10 @@ export function renderItems(items: number[], visionScore: number) {
         style={{
           position: "absolute",
           color: palette.white[1],
-          textShadow: "5px 5px",
+          textShadow: "8px 8px",
           bottom: "0",
-          right: "0",
-          fontWeight: 500,
+          right: "10",
+          fontWeight: 700,
         }}
       >
         {visionScore}

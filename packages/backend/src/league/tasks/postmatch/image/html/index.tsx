@@ -24,17 +24,29 @@ export async function matchToImage(match: Match) {
         width: "100%",
         height: "100%",
         color: palette.grey[1],
-        backgroundColor: palette.blue[6],
+        background: `linear-gradient(90deg, ${palette.blue.gradient.dark.start} 0%, ${palette.blue.gradient.dark.end} 50%, ${palette.blue.gradient.dark.start} 100%)`,
         display: "flex",
         flexDirection: "column",
-        padding: "5rem",
-        gap: "3rem",
+        paddingLeft: "5rem",
+        paddingRight: "5rem",
         fontSize: "5rem",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      <div style={{ color: palette.gold[4], fontSize: "12rem", display: "flex", gap: "3rem", alignItems: "flex-end" }}>
-        <span>{match.outcome}</span>
-        <div style={{ color: palette.gold[4], fontSize: "6rem", display: "flex", marginBottom: "1rem" }}>
+      <div
+        style={{
+          fontSize: "12rem",
+          display: "flex",
+          gap: "10rem",
+          alignItems: "flex-end",
+          justifyContent: "space-between",
+          alignSelf: "flex-start",
+          marginBottom: "5rem",
+        }}
+      >
+        <span style={{ color: palette.gold[4] }}>{match.outcome}</span>
+        <div style={{ fontSize: "6rem", display: "flex", marginBottom: "1rem" }}>
           {minutes}min {match.duration % 60}s
         </div>
         <div style={{ display: "flex", gap: "2rem", fontSize: "4rem", color: palette.grey[1], marginBottom: "1.5rem" }}>
@@ -52,8 +64,8 @@ export async function matchToImage(match: Match) {
 
   const fonts = await loadFonts();
   const svg = await satori(jsx, {
-    width: 5096,
-    height: 3400,
+    width: 4100,
+    height: 3500,
     fonts,
   });
   const resvg = new Resvg(svg, { dpi: 600, shapeRendering: 2, textRendering: 2, imageRendering: 0 });
