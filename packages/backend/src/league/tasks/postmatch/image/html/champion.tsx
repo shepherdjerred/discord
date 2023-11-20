@@ -9,7 +9,7 @@ import { Champion } from "../../../../model/champion.js";
 export function renderChampion(champion: Champion, highlight: boolean, durationInMinutes: number, damageMax: number) {
   const items = renderItems(champion.items, champion.visionScore);
   const kdaRatio = _.round((champion.kills + champion.assists) / champion.deaths, 1);
-  const lane = laneToString(champion.lane);
+  const lane = champion.lane ? laneToString(champion.lane) : "?";
   const damagePercent = _.round((champion.damage / damageMax) * 100);
 
   const summs = _.map(champion.spells, (spell) => {

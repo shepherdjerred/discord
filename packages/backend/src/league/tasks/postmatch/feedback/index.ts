@@ -84,7 +84,7 @@ export async function generateFeedbackMessage(match: Match) {
     },
     {
       placeholder: "<OPPONENT CHAMPION>",
-      replacement: match.player.laneOpponent.championName,
+      replacement: match.player.laneOpponent ? match.player.laneOpponent.championName : "unknown",
     },
     {
       placeholder: "<MATCH REPORT>",
