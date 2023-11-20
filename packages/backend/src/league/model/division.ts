@@ -14,3 +14,13 @@ export function parseDivision(input: string): Division | undefined {
     .with("I", () => 1)
     .otherwise(() => undefined);
 }
+
+export function divisionToString(division: Division): string {
+  return match(division)
+    .returnType<string>()
+    .with(4, () => "IV")
+    .with(3, () => "III")
+    .with(2, () => "II")
+    .with(1, () => "I")
+    .exhaustive();
+}

@@ -5,7 +5,7 @@ import _ from "lodash";
 export type LeaderboardEntry = z.infer<typeof LeaderboardEntrySchema>;
 export const LeaderboardEntrySchema = z.strictObject({
   player: PlayerSchema,
-  rank: z.number(),
+  position: z.number().nonnegative(),
   leaguePointsDelta: z.number(),
 });
 
@@ -13,7 +13,7 @@ export type Leaderboard = z.infer<typeof LeaderboardSchema>;
 export const LeaderboardSchema = z.array(LeaderboardEntrySchema);
 
 export function toLeaderboard(players: Player[]): Leaderboard {
-  let rank = 0;
+  let position = 0;
   let previous: number;
 
   const playersSorted = sortPlayers(players);
@@ -23,13 +23,13 @@ export function toLeaderboard(players: Player[]): Leaderboard {
 
     // account for ties
     if (leaguePointsDelta !== previous) {
-      rank++;
+      position++;
     }
 
     return {
       player,
-      rank,
       leaguePointsDelta,
+      position,
     };
   });
 }
