@@ -6,7 +6,7 @@ import { getPlayerConfigs } from "../../model/playerConfig.js";
 import { PlayerConfigEntry, getCurrentRank } from "../../model/playerConfigEntry.js";
 import { getCurrentSoloQueueGame } from "../../league/index.js";
 import { createDiscordMessage } from "./discord.js";
-import { textChannel } from "../../discord/channel.js";
+import { send } from "../../discord/channel.js";
 
 export async function checkPreMatch() {
   const players = await getPlayerConfigs();
@@ -35,7 +35,7 @@ export async function checkPreMatch() {
   );
 
   console.log("sending messages");
-  await Promise.all(_.chain(newGames).map(createDiscordMessage).map(textChannel.send).value());
+  await Promise.all(_.chain(newGames).map(createDiscordMessage).map(send).value());
 
   console.log("creating new state entries");
   const newStateEntries = await Promise.all(

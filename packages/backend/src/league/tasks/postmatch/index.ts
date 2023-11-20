@@ -12,7 +12,7 @@ import { getCurrentRank } from "../../model/playerConfigEntry.js";
 import { mkdir, writeFile } from "fs/promises";
 import { getPlayer } from "../../model/player.js";
 import { Match, createMatchObject } from "../../model/match.js";
-import { textChannel } from "../../discord/channel.js";
+import { send } from "../../discord/channel.js";
 
 async function checkMatch(game: GameState) {
   try {
@@ -94,7 +94,7 @@ export async function checkPostMatch() {
       const matchObj = await createMatchObj(state, match);
       const discordMessage = await getAiMessage(matchObj);
       const [attachment, embed] = await getImage(matchObj);
-      await textChannel.send({ content: discordMessage, embeds: [embed], files: [attachment] });
+      await send({ content: discordMessage, embeds: [embed], files: [attachment] });
     }),
   );
 
