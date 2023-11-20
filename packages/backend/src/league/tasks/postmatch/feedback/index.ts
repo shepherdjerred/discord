@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { chatGpt } from "./api.js";
-import { Match } from "../image/match.js";
 import { readFile } from "fs/promises";
+import { Match } from "../../../model/match.js";
 
 const promptPath = "src/league/tasks/postmatch/feedback/prompts";
 
@@ -17,11 +17,38 @@ export async function generateFeedbackMessage(match: Match) {
     throw new Error("Illegal state");
   }
 
-  const personalityPrompt = (await readFile(`${promptPath}/${randomPersonality.file}`)).toString();
   const basePrompt = (await readFile(`${promptPath}/base.txt`)).toString();
+  const personalityPrompt = (await readFile(`${promptPath}/${randomPersonality.file}`)).toString();
+  const lanePrompt = (await readFile(`${promptPath}/${match.player.lane}.txt`)).toString();
 
-  const fullPrompt = basePrompt.replaceAll("<PROMPT>", personalityPrompt).replaceAll("<CHAMPION>", match.championName).replaceAll("<REPORT>", JSON.stringify(match));
+  const replacements = [
+    {
+      placeholder: "<PLAYER LANE>",
+      replacement: lanePrompt,
+    },
+    {
+      placeholder: "<OPPONENT CHAMPION>",
+      replacement: match.player.opponent.championName,
+    },
+    {
+      placeholder: "<PERSONALITY>",
+      replacement: personalityPrompt,
+    },
+    {
+      placeholder: "<MATCH REPORT>",
+      replacement: JSON.stringify(match),
+    },
+    {
+      placeholder: "<PLAYER CHAMPION>",
+      replacement: match.player.champion.championName,
+    },
+  ];
 
-  const res = await chatGpt.sendMessage(`${fullPrompt}`);
+  let tempPrompt = basePrompt;
+  for (const replacement of replacements) {
+    tempPrompt = tempPrompt.replaceAll(replacement.placeholder, replacement.replacement);
+  }
+
+  const res = await chatGpt.sendMessage(tempPrompt);
   return { name: randomPersonality.name, message: res.text };
 }

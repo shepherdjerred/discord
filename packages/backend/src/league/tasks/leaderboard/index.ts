@@ -3,7 +3,7 @@ import { Player, PlayerSchema, getLeaguePointsDelta, sortPlayers } from "../../m
 import _ from "lodash";
 
 export type LeaderboardEntry = z.infer<typeof LeaderboardEntrySchema>;
-export const LeaderboardEntrySchema = z.object({
+export const LeaderboardEntrySchema = z.strictObject({
   player: PlayerSchema,
   rank: z.number(),
   leaguePointsDelta: z.number(),

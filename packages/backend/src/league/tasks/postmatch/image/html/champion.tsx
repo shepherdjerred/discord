@@ -1,10 +1,10 @@
 import React from "react";
 import { renderItems } from "./item.js";
-import { Champion } from "../match.js";
 import { palette } from "../assets/colors.js";
 import _ from "lodash";
 import { laneToString } from "../../../../model/lane.js";
 import summoner from "../assets/summoner.json" assert { type: "json" };
+import { Champion } from "../../../../model/champion.js";
 
 export function renderChampion(champion: Champion, highlight: boolean, durationInMinutes: number, damageMax: number) {
   const items = renderItems(champion.items, champion.visionScore);
@@ -55,7 +55,7 @@ export function renderChampion(champion: Champion, highlight: boolean, durationI
         }}
       >
         <span style={{ fontWeight: 700 }}>{champion.summonerName}</span>
-        <span>{champion.champion}</span>
+        <span>{champion.championName}</span>
       </div>
 
       <div style={{ display: "flex", gap: "3rem" }}>

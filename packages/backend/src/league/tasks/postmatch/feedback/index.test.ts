@@ -4,14 +4,13 @@ import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import exampleMatch from "../image/html/match.json" assert { type: "json" };
 import { Player } from "../../../model/player.js";
 import { PlayerConfigEntry } from "../../../model/playerConfigEntry.js";
-import { createMatchObject } from "../image/match.js";
+import { createMatchObject } from "../../../model/match.js";
 
 describe(
   "feedback",
   () => {
     it("should return a string", async () => {
       const matchObj = createMatchObject(
-        "Jerred",
         {
           config: {
             league: {

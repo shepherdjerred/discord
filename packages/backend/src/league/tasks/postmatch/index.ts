@@ -7,13 +7,13 @@ import { z } from "zod";
 import { api } from "../../league/api.js";
 import { GameState, getState, writeState } from "../../model/state.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
-import { createMatchObject } from "./image/match.js";
 import { matchToImage } from "./image/html/index.js";
 import { generateFeedbackMessage } from "./feedback/index.js";
 import { rankToLeaguePoints } from "../../model/leaguePoints.js";
 import { getCurrentRank } from "../../model/playerConfigEntry.js";
 import { mkdir, writeFile } from "fs/promises";
 import { getPlayer } from "../../model/player.js";
+import { createMatchObject } from "../../model/match.js";
 
 export async function checkPostMatch() {
   const [state, release] = await getState();
@@ -70,15 +70,16 @@ export async function checkPostMatch() {
 
       // TODO: send duo queue message
 
-      const user = await client.users.fetch(state.player.discordAccount.id, { cache: true });
-
       let discordMessage = "";
       const fullPlayer = await getPlayer(state.player);
-      const matchObj = createMatchObject(user.username, fullPlayer, match, lpChange);
+      const matchObj = createMatchObject(fullPlayer, match, lpChange);
 
       try {
         const { name, message } = await generateFeedbackMessage(matchObj);
-        discordMessage = `AI ${name} says: ${message.replaceAll("<NAME>", userMention(user.id))}`;
+        discordMessage = `AI ${name} says: ${message.replaceAll(
+          "<NAME>",
+          userMention(state.player.discordAccount.id),
+        )}`;
       } catch (e) {
         console.error(e);
       }

@@ -1,11 +1,11 @@
 import React from "react";
-import { Team } from "../match.js";
 import { renderChampion } from "./champion.js";
 import _ from "lodash";
 import { palette } from "../assets/colors.js";
 import { font } from "../assets/fonts.js";
+import { Roster } from "../../../../model/roster.js";
 
-export function renderTeam(team: Team, side: "red" | "blue", highlight: string, durationInMinutes: number) {
+export function renderTeam(team: Roster, side: "red" | "blue", highlight: string, durationInMinutes: number) {
   const teamKills = _.sumBy(team, (champion) => champion.kills);
   const teamDeaths = _.sumBy(team, (champion) => champion.deaths);
   const teamAssists = _.sumBy(team, (champion) => champion.assists);
@@ -32,7 +32,7 @@ export function renderTeam(team: Team, side: "red" | "blue", highlight: string, 
         <span style={{ fontWeight: 700 }}>{teamGold.toLocaleString()} gold</span>
       </div>
       {_.map(team, (champion) =>
-        renderChampion(champion, champion.champion === highlight, durationInMinutes, mostDamage),
+        renderChampion(champion, champion.championName === highlight, durationInMinutes, mostDamage),
       )}
     </div>
   );

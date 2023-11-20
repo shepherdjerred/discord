@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { Match } from "../match.js";
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
 import React from "react";
@@ -7,6 +6,7 @@ import { loadFonts } from "../assets/fonts.js";
 import { palette } from "../assets/colors.js";
 import { renderTeam } from "./team.js";
 import { diffToString } from "../../../../model/leaguePoints.js";
+import { Match } from "../../../../model/match.js";
 
 export async function matchToImage(match: Match) {
   // const bg = await readFile("src/league/tasks/postmatch/image/image/bg.jpg");
@@ -45,19 +45,19 @@ export async function matchToImage(match: Match) {
           marginBottom: "5rem",
         }}
       >
-        <span style={{ color: palette.gold[4] }}>{match.outcome}</span>
+        <span style={{ color: palette.gold[4] }}>{match.player.outcome}</span>
         <div style={{ fontSize: "6rem", display: "flex", marginBottom: "1rem" }}>
           {minutes}min {match.durationInSeconds % 60}s
         </div>
         <div style={{ display: "flex", gap: "2rem", fontSize: "4rem", color: palette.grey[1], marginBottom: "1.5rem" }}>
-          <span>{diffToString(match.leaguePointsDelta)} LP</span>
-          <span>W: {match.tournamentWins}</span>
-          <span>L: {match.tournamentLosses}</span>
+          <span>{diffToString(match.player.leaguePointsDelta)} LP</span>
+          <span>W: {match.player.tournamentWins}</span>
+          <span>L: {match.player.tournamentLosses}</span>
         </div>
       </div>
       <div style={{ display: "flex", gap: "6rem", flexDirection: "column" }}>
-        {renderTeam(match.teams.blue, "blue", match.championName, match.durationInSeconds / 60)}
-        {renderTeam(match.teams.red, "red", match.championName, match.durationInSeconds / 60)}
+        {renderTeam(match.teams.blue, "blue", match.player.champion.championName, match.durationInSeconds / 60)}
+        {renderTeam(match.teams.red, "red", match.player.champion.championName, match.durationInSeconds / 60)}
       </div>
     </div>
   );
