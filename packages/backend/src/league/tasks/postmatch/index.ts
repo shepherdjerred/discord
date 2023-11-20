@@ -80,6 +80,9 @@ export async function checkPostMatch() {
           state.player.name,
           userMention(state.player.discordAccount.id),
         )}`;
+        [
+          client.emojis.
+        ]
       } catch (e) {
         console.error(e);
       }

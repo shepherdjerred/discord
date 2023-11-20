@@ -56,11 +56,11 @@ export async function generateFeedbackMessage(match: Match) {
     },
     {
       placeholder: "<REVIEWER FAVORITE CHAMPIONS>",
-      replacement: reviewer.champions.join("\n"),
+      replacement: reviewer.champions.join(", "),
     },
     {
       placeholder: "<REVIEWER FAVORITE LANES>",
-      replacement: reviewer.lanes.join("\n"),
+      replacement: reviewer.lanes.join(", "),
     },
     {
       placeholder: "<PLAYER NAME>",
@@ -68,11 +68,11 @@ export async function generateFeedbackMessage(match: Match) {
     },
     {
       placeholder: "<PLAYER FAVORITE CHAMPIONS>",
-      replacement: player.champions.join("\n"),
+      replacement: player.champions.join(", "),
     },
     {
       placeholder: "<PLAYER FAVORITE LANES>",
-      replacement: player.lanes.join("\n"),
+      replacement: player.lanes.join(", "),
     },
     {
       placeholder: "<PLAYER LANE>",

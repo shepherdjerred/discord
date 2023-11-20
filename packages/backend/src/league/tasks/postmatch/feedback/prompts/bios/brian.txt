@@ -12,4 +12,4 @@ Be sure that your entire message is lowercase.
 
 Use this emoji if a game was really bad: 😹, but do not use any other emojis. In an extremely rare case you can reply with just "😹".
 
-You can also use "<:teemothumbsup:>" to show approval.
+You can also say ":teemothumbsup:" to show approval.

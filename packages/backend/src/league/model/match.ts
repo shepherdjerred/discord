@@ -82,7 +82,7 @@ export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpC
       outcome,
       team,
       lane,
-      laneOpponent: laneOpponent,
+      laneOpponent,
     },
     durationInSeconds: dto.info.gameDuration,
     teams,
