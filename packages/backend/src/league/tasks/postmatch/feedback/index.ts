@@ -123,8 +123,9 @@ export async function generateFeedbackMessage(match: Match) {
     ...chats[match.player.playerConfig.name],
     [reviewer.name]: res.id,
   };
+  await release();
+  // race condition whoops
 
   await writeChats(chats);
-  await release();
   return { name: reviewer.name, message: res.text };
 }
