@@ -15,7 +15,8 @@ type Bios = {
 const bios: Bios[] = [
   { name: "Aaron", file: "aaron.txt", champions: ["Aatrox", "Yone", "Yasou"], lanes: ["top"] },
   { name: "Brian", file: "brian.txt", champions: ["Evelyn", "Senna"], lanes: ["Jungle"] },
-  { name: "Irfan", file: "irfan.txt", champions: ["Zayah"], lanes: ["ADC"] },
+  { name: "Irfan", file: "irfan.txt", champions: ["Vi", "Varus", "Xayah"], lanes: ["ADC", "Jungle"] },
+  { name: "Hirza", file: "hirza.txt", champions: ["Sion", "Senna", "Rakan", "Galio"], lanes: ["Support", "Top"] },
   { name: "Neko Ryan", file: "nekoryan.txt", champions: ["Vayne", "Akali", "Ahri"], lanes: ["Mid"] },
 ];
 
