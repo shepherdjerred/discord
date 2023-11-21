@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import { Font } from "satori";
 
-const fontPath = "src/league/tasks/postmatch/image/assets/fonts";
+const fontPath = "src/league/image/assets/fonts";
 
 export const font = {
   title: "Beautfort",

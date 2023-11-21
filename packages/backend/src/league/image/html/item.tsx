@@ -1,6 +1,6 @@
 import _ from "lodash";
 import React from "react";
-import { currentPatch } from "../../../../league/index.js";
+import { currentPatch } from "../../api/index.js";
 import { palette } from "../assets/colors.js";
 
 const dimension = 120;

@@ -1,5 +1,5 @@
 import { ChatGPTAPI } from "chatgpt";
-import configuration from "../../../../configuration.js";
+import configuration from "../../configuration.js";
 import Keyv from "keyv";
 
 const keyv = new Keyv("sqlite://chatgpt.sqlite");

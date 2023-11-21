@@ -2,11 +2,11 @@ import _ from "lodash";
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
 import React from "react";
-import { loadFonts } from "../assets/fonts.js";
+import { loadFonts } from "../assets/index.js";
 import { palette } from "../assets/colors.js";
 import { renderTeam } from "./team.js";
-import { diffToString } from "../../../../model/leaguePoints.js";
-import { Match } from "../../../../model/match.js";
+import { diffToString } from "../../model/leaguePoints.js";
+import { Match } from "../../model/match.js";
 
 export async function matchToImage(match: Match) {
   const minutes = _.round(match.durationInSeconds / 60);

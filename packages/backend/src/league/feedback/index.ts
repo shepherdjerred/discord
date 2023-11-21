@@ -1,10 +1,10 @@
 import _ from "lodash";
 import { chatGpt } from "./api.js";
 import { readFile } from "fs/promises";
-import { Match } from "../../../model/match.js";
-import { getChats, writeChats } from "../../../model/chats.js";
+import { Match } from "../model/match.js";
+import { getChats, writeChats } from "../model/chats.js";
 
-const promptPath = "src/league/tasks/postmatch/feedback/prompts";
+const promptPath = "src/league/feedback/prompts";
 
 type Bios = {
   name: string;

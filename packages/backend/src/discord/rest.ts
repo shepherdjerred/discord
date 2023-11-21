@@ -1,6 +1,6 @@
 import { REST, Routes } from "discord.js";
 import Configuration from "../configuration.js";
-import { karmaCommand } from "./karma/commands.js";
+import { karmaCommand } from "../karma/commands.js";
 
 // the commands API is rate limited.
 // we only need to update commands when the interfaces have changed.

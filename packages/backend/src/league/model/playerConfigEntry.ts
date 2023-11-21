@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { z } from "zod";
-import { api } from "../league/api.js";
+import { api } from "../api/api.js";
 import { DiscordSchema } from "./discord.js";
 import { parseDivision } from "./division.js";
 import { LeagueAcccountSchema } from "./leagueAccount.js";

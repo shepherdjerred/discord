@@ -4,7 +4,7 @@ import _ from "lodash";
 import * as uuid from "uuid";
 import { getPlayerConfigs } from "../../model/playerConfig.js";
 import { PlayerConfigEntry, getCurrentRank } from "../../model/playerConfigEntry.js";
-import { getCurrentSoloQueueGame } from "../../league/index.js";
+import { getCurrentSoloQueueGame } from "../../api/index.js";
 import { createDiscordMessage } from "./discord.js";
 import { send } from "../../discord/channel.js";
 

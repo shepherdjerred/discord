@@ -1,5 +1,5 @@
 import { Events } from "discord.js";
-import { handleKarma } from "./karma/commands.js";
+import { handleKarma } from "../karma/commands.js";
 import "./rest.js";
 import client from "./client.js";
 

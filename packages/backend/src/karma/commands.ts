@@ -8,9 +8,9 @@ import {
   inlineCode,
   bold,
 } from "discord.js";
-import { dataSource } from "../../db/index.js";
+import { dataSource } from "../db/index.js";
 import _ from "lodash";
-import client from "../client.js";
+import client from "../discord/client.js";
 
 const karmaCommand = new SlashCommandBuilder()
   .setName("karma")
