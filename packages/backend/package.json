@@ -27,7 +27,7 @@
     "proper-lockfile": "^4.1.2",
     "react": "^18.2.0",
     "reflect-metadata": "^0.1.13",
-    "satori": "^0.10.9",
+    "satori": "^0.10.11",
     "sqlite3": "^5.1.6",
     "ts-pattern": "^5.0.5",
     "twisted": "^1.54.0",
@@ -38,12 +38,12 @@
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.2",
     "@types/async": "^3.2.23",
-    "@types/cors": "^2.8.16",
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
-    "@types/lodash": "^4.14.201",
-    "@types/node": "^20.9.2",
+    "@types/lodash": "^4.14.202",
+    "@types/node": "^20.9.3",
     "@types/proper-lockfile": "^4.1.4",
-    "@types/react": "^18.2.37",
+    "@types/react": "^18.2.38",
     "@types/uuid": "^9.0.7",
     "vitest": "^0.34.6"
   }
