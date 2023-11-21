@@ -12,7 +12,7 @@ new CronJob(
   true,
   "America/Los_Angeles",
   undefined,
-  true,
+  false,
 );
 
 // check spectate status every minute
