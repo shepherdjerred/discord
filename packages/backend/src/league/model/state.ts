@@ -5,6 +5,7 @@ import { PlayerConfigEntrySchema } from "./playerConfigEntry.js";
 import { RankSchema } from "./rank.js";
 import _ from "lodash";
 import { PlayerConfig } from "./playerConfig.js";
+
 const stateFileName = "state.json";
 
 export type GameState = z.infer<typeof GameStateSchema>;

@@ -19,6 +19,7 @@ export const ChampionSchema = z.strictObject({
   visionScore: z.number().nonnegative(),
   damage: z.number().nonnegative(),
 });
+
 export function createChampionObject(dto: MatchV5DTOs.ParticipantDto): Champion {
   const lane = parseLane(dto.teamPosition);
 
@@ -28,7 +29,9 @@ export function createChampionObject(dto: MatchV5DTOs.ParticipantDto): Champion 
     kills: dto.kills,
     deaths: dto.deaths,
     assists: dto.assists,
+    // TODO translate these to item names
     items: [dto.item0, dto.item1, dto.item2, dto.item3, dto.item4, dto.item5, dto.item6],
+    // TODO translate these to spell names
     spells: [dto.summoner1Id, dto.summoner2Id],
     runes: [],
     lane,

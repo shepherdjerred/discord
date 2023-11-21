@@ -2,6 +2,7 @@ import _ from "lodash";
 import { chatGpt } from "./api.js";
 import { readFile } from "fs/promises";
 import { Match } from "../../../model/match.js";
+import { getChats, writeChats } from "../../../model/chats.js";
 
 const promptPath = "src/league/tasks/postmatch/feedback/prompts";
 
@@ -36,8 +37,8 @@ export async function generateFeedbackMessage(match: Match) {
     player = { name: "Generic", file: "generic.txt", champions: [], lanes: [] };
   }
 
-  const basePrompt = (await readFile(`${promptPath}/base.txt`)).toString();
-  const lanePrompt = (await readFile(`${promptPath}/lanes/${match.player.lane || "generic"}.txt`)).toString();
+  const rawSystemMessage = (await readFile(`${promptPath}/system_message.txt`)).toString();
+  const rawBasePrompt = (await readFile(`${promptPath}/base.txt`)).toString();
   const reviewerBioPrompt = (await readFile(`${promptPath}/bios/${reviewer.file}`)).toString();
   const playerBioPrompt = (await readFile(`${promptPath}/bios/${player.file}`)).toString();
 
@@ -76,7 +77,11 @@ export async function generateFeedbackMessage(match: Match) {
     },
     {
       placeholder: "<PLAYER LANE>",
-      replacement: lanePrompt,
+      replacement: match.player.lane || "unknown",
+    },
+    {
+      placeholder: "<PLAYER TEAM>",
+      replacement: match.player.team,
     },
     {
       placeholder: "<PLAYER CHAMPION>",
@@ -92,13 +97,34 @@ export async function generateFeedbackMessage(match: Match) {
     },
   ];
 
-  let tempPrompt = basePrompt;
+  let basePrompt = rawBasePrompt;
   for (const replacement of replacements) {
-    tempPrompt = tempPrompt.replaceAll(replacement.placeholder, replacement.replacement);
+    basePrompt = basePrompt.replaceAll(replacement.placeholder, replacement.replacement);
   }
+  console.log(basePrompt);
 
-  console.log(tempPrompt);
+  let systemMessage = rawSystemMessage;
+  for (const replacement of replacements) {
+    systemMessage = systemMessage.replaceAll(replacement.placeholder, replacement.replacement);
+  }
+  console.log(systemMessage);
 
-  const res = await chatGpt.sendMessage(tempPrompt);
+  const [chats, release] = await getChats();
+  const parentMessageId = chats[match.player.playerConfig.name]?.[reviewer.name];
+
+  const res = await chatGpt.sendMessage(basePrompt, {
+    systemMessage: systemMessage,
+    ...{
+      ...(parentMessageId ? { parentMessageId: parentMessageId } : {}),
+    },
+  });
+
+  chats[match.player.playerConfig.name] = {
+    ...chats[match.player.playerConfig.name],
+    [reviewer.name]: res.id,
+  };
+
+  await writeChats(chats);
+  await release();
   return { name: reviewer.name, message: res.text };
 }
