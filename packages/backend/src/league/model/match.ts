@@ -6,7 +6,7 @@ import { Player } from "./player.js";
 import { PlayerConfigEntrySchema } from "./playerConfigEntry.js";
 import { RosterSchema } from "./roster.js";
 import { Team, TeamSchema, parseTeam } from "./team.js";
-import { LaneSchema, parseLane } from "./lane.js";
+import { LaneSchema } from "./lane.js";
 
 export type Match = z.infer<typeof MatchSchema>;
 export const MatchSchema = z.strictObject({
@@ -53,7 +53,7 @@ export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpC
     throw new Error(`invalid team: ${JSON.stringify(playerParticipant.teamId)}`);
   }
 
-  const lane = parseLane(playerParticipant.lane);
+  const lane = createChampionObject(playerParticipant).lane;
 
   const teams = {
     blue: _.map(dto.info.participants.slice(0, 5), createChampionObject),
