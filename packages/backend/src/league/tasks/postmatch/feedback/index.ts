@@ -40,6 +40,7 @@ export async function generateFeedbackMessage(match: Match) {
   const rawSystemMessage = (await readFile(`${promptPath}/system_message.txt`)).toString();
   const rawBasePrompt = (await readFile(`${promptPath}/base.txt`)).toString();
   const reviewerBioPrompt = (await readFile(`${promptPath}/bios/${reviewer.file}`)).toString();
+  const reviewerInstructionsPrompt = (await readFile(`${promptPath}/instructions/${reviewer.file}`)).toString();
   const playerBioPrompt = (await readFile(`${promptPath}/bios/${player.file}`)).toString();
 
   const replacements = [
@@ -50,6 +51,10 @@ export async function generateFeedbackMessage(match: Match) {
     {
       placeholder: "<PLAYER PERSONALITY>",
       replacement: playerBioPrompt,
+    },
+    {
+      placeholder: "<REVIEWER INSTRUCTIONS>",
+      replacement: reviewerInstructionsPrompt,
     },
     {
       placeholder: "<REVIEWER NAME>",
