@@ -122,6 +122,7 @@ async function handleKarmaGive(interaction: CommandInteraction) {
 }
 
 async function handleKarmaLeaderboard(interaction: CommandInteraction) {
+  await interaction.deferReply({ ephemeral: true });
   const karmaCounts = await dataSource.getRepository(KarmaReceived).find({
     select: {
       id: true,
@@ -190,7 +191,7 @@ async function handleKarmaHistory(interaction: CommandInteraction) {
       return "Unknown";
     })
     .join("\n");
-  await interaction.reply({ content: `${userMention(target.id)}'s Karma History:\n${str}`, ephemeral: true });
+  await interaction.editReply({ content: `${userMention(target.id)}'s Karma History:\n${str}` });
 }
 
 async function handleKarma(interaction: ChatInputCommandInteraction) {
