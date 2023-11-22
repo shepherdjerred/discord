@@ -43,11 +43,12 @@ build.data:
 
 image.backend:
   FROM +build.backend
+  WORKDIR /workspace/packages/backend
   # or for debian/ubuntu-based images
   RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite3
   COPY +litefs/litefs /usr/local/bin/litefs
   COPY litefs.yaml /etc/litefs.yml
-  COPY packages/backend/players.json players.json
+  COPY players.json players.json
   ENTRYPOINT litefs mount
   SAVE IMAGE glitter/backend:latest
 
