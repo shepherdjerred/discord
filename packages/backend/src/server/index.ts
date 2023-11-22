@@ -4,7 +4,7 @@ import configuration from "../configuration.js";
 import cors from "cors";
 
 const app = express();
-const port = process.env["PORT"] || 8080;
+const port = process.env["PORT"] || 8000;
 
 app.use(cors());
 app.get("/", function (_: Request, res: Response) {

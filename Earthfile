@@ -16,13 +16,16 @@ deps:
 prepare:
   FROM +deps
   COPY packages packages
-  COPY tsconfig.json .
 
 lint:
   FROM +prepare
   RUN npm run lint --workspace packages/backend
   RUN npm run lint --workspace packages/lint
   RUN npm run lint --workspace packages/data
+
+litefs:
+  FROM flyio/litefs:0.5
+  SAVE ARTIFACT /usr/local/bin/litefs
 
 build.backend:
   FROM +build.data
@@ -39,10 +42,13 @@ build.data:
   SAVE ARTIFACT packages/data/dist AS LOCAL packages/data/dist
 
 image.backend:
-  ARG --required stage
   FROM +build.backend
-  ENTRYPOINT node packages/backend/dist/index.js
-  SAVE IMAGE glitter/backend:$stage
+  # or for debian/ubuntu-based images
+  RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite3
+  COPY +litefs/litefs /usr/local/bin/litefs
+  COPY litefs.yaml /etc/litefs.yml
+  ENTRYPOINT litefs mount
+  SAVE IMAGE glitter/backend
 
 deploy.backend:
   ARG --required stage
@@ -50,6 +56,6 @@ deploy.backend:
   RUN curl -L https://fly.io/install.sh | sh
   ENV PATH=$PATH:/root/.fly/bin
   COPY fly.$stage.toml .
-  WITH DOCKER --load=+image.backend
+  WITH DOCKER --load=(+image.backend )
     RUN --no-cache --secret FLY_API_TOKEN fly deploy --local-only --config fly.$stage.toml
   END
