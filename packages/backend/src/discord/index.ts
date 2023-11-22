@@ -4,12 +4,16 @@ import "./rest.js";
 import client from "./client.js";
 
 client.on(Events.InteractionCreate, async (interaction) => {
-  if (!interaction.isChatInputCommand()) {
-    return;
-  }
-  switch (interaction.commandName) {
-    case "karma":
-      await handleKarma(interaction);
-      break;
+  try {
+    if (!interaction.isChatInputCommand()) {
+      return;
+    }
+    switch (interaction.commandName) {
+      case "karma":
+        await handleKarma(interaction);
+        break;
+    }
+  } catch (e) {
+    console.error(e);
   }
 });

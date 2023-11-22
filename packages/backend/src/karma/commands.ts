@@ -159,7 +159,7 @@ async function handleKarmaLeaderboard(interaction: CommandInteraction) {
       }),
     )
   ).join("\n");
-  await interaction.reply({ content: `Karma Leaderboard:\n${leaderboard}`, ephemeral: true });
+  await interaction.editReply({ content: `Karma Leaderboard:\n${leaderboard}` });
 }
 
 async function handleKarmaHistory(interaction: CommandInteraction) {
@@ -191,7 +191,7 @@ async function handleKarmaHistory(interaction: CommandInteraction) {
       return "Unknown";
     })
     .join("\n");
-  await interaction.editReply({ content: `${userMention(target.id)}'s Karma History:\n${str}` });
+  await interaction.reply({ content: `${userMention(target.id)}'s Karma History:\n${str}`, ephemeral: true });
 }
 
 async function handleKarma(interaction: ChatInputCommandInteraction) {

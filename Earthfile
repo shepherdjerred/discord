@@ -48,7 +48,7 @@ image.backend:
   COPY +litefs/litefs /usr/local/bin/litefs
   COPY litefs.yaml /etc/litefs.yml
   ENTRYPOINT litefs mount
-  SAVE IMAGE glitter/backend
+  SAVE IMAGE glitter/backend:latest
 
 deploy.backend:
   ARG --required stage
