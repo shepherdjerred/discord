@@ -24,7 +24,7 @@ export function renderItems(items: number[], visionScore: number) {
   const mainItems = _.chain(items).take(6).map(renderItem).value();
 
   const lastItem = _.last(items);
-  if (!lastItem) {
+  if (lastItem === undefined) {
     throw new Error(`Last item must exist: ${items.toString()}`);
   }
   const visionItem = (
