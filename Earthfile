@@ -48,7 +48,6 @@ image.backend:
   RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite3
   COPY +litefs/litefs /usr/local/bin/litefs
   COPY litefs.yaml /etc/litefs.yml
-  COPY players.json players.json
   ENTRYPOINT litefs mount
   SAVE IMAGE glitter/backend:latest
 
