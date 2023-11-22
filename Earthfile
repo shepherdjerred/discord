@@ -57,7 +57,7 @@ deploy.backend:
   RUN curl -L https://fly.io/install.sh | sh
   ENV PATH=$PATH:/root/.fly/bin
   COPY fly.$stage.toml .
-  COPY players.$stage.json players.json
+  COPY packages/backend/players.$stage.json players.json
   WITH DOCKER --load=(+image.backend )
     RUN --no-cache --secret FLY_API_TOKEN fly deploy --local-only --config fly.$stage.toml
   END
