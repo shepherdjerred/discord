@@ -92,7 +92,8 @@ export async function checkPostMatch() {
       await saveMatch(match);
 
       const matchObj = await createMatchObj(state, match);
-      const discordMessage = await getAiMessage(matchObj);
+      // const discordMessage = await getAiMessage(matchObj);
+      const discordMessage = userMention(matchObj.player.playerConfig.discordAccount.id);
       const [attachment, embed] = await getImage(matchObj);
       await send({ content: discordMessage, embeds: [embed], files: [attachment] });
     }),
