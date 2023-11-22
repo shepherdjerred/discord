@@ -1,8 +1,7 @@
 import { bold, userMention } from "discord.js";
 import _ from "lodash";
-import { Leaderboard, LeaderboardEntry } from "./index.js";
-import { diffToString } from "../../model/leaguePoints.js";
-import { rankToString } from "../../model/rank.js";
+import { Leaderboard, LeaderboardEntry, diffToString } from "@glitter-boys/data";
+import { rankToString } from "@glitter-boys/data";
 
 export function leaderboardToDiscordMessage(leaderboard: Leaderboard): string {
   return _.chain(leaderboard).map(leaderboardEntryToDiscordMessage).join("\n").value();

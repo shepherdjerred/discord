@@ -2,9 +2,9 @@ import { describe, it } from "vitest";
 import { generateFeedbackMessage as generateFeedbackMessage } from "./index.js";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import exampleMatch from "../image/html/match.json" assert { type: "json" };
-import { Player } from "../model/player.js";
-import { PlayerConfigEntry } from "../model/playerConfigEntry.js";
-import { createMatchObject } from "../model/match.js";
+import { Player } from "@glitter-boys/data";
+import { PlayerConfigEntry } from "@glitter-boys/data";
+import { createMatchObject } from "../tasks/match.js";
 
 describe(
   "feedback",

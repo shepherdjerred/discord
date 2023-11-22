@@ -1,11 +1,11 @@
 import { writeFile } from "fs/promises";
 import { describe, test } from "vitest";
 import { matchToImage } from "./index.js";
-import { PlayerConfigEntry } from "../../model/playerConfigEntry.js";
-import { Player } from "../../model/player.js";
+import { PlayerConfigEntry } from "@glitter-boys/data";
+import { Player } from "@glitter-boys/data";
 import exampleMatch from "./match.json" assert { type: "json" };
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
-import { createMatchObject } from "../../model/match.js";
+import { createMatchObject } from "../../tasks/match.js";
 
 describe("index", () => {
   test("test", async () => {

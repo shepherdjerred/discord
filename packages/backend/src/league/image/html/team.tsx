@@ -3,8 +3,8 @@ import { renderChampion } from "./champion.js";
 import _ from "lodash";
 import { palette } from "../assets/colors.js";
 import { font } from "../assets/index.js";
-import { Roster } from "../../model/roster.js";
-import { Team } from "../../model/team.js";
+import { Roster } from "@glitter-boys/data";
+import { Team } from "@glitter-boys/data";
 
 export function renderTeam(team: Roster, side: Team, highlight: string, durationInMinutes: number) {
   const teamKills = _.sumBy(team, (champion) => champion.kills);

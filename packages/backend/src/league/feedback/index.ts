@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { chatGpt } from "./api.js";
 import { readFile } from "fs/promises";
-import { Match } from "../model/match.js";
-import { getChats, writeChats } from "../model/chats.js";
+import { Match } from "@glitter-boys/data";
+import { getChats, writeChats } from "@glitter-boys/data";
 
 const promptPath = "src/league/feedback/prompts";
 

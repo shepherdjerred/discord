@@ -3,19 +3,18 @@ import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
 import { api } from "../../api/api.js";
-import { GameState, getState, writeState } from "../../model/state.js";
+import { GameState, Match, getState, writeState } from "@glitter-boys/data";
 import { AttachmentBuilder, EmbedBuilder, bold, userMention } from "discord.js";
 import { matchToImage } from "../../image/html/index.js";
 import { generateFeedbackMessage } from "../../feedback/index.js";
-import { rankToLeaguePoints } from "../../model/leaguePoints.js";
-import { getCurrentRank } from "../../model/playerConfigEntry.js";
-import { mkdir, writeFile } from "fs/promises";
-import { getPlayer } from "../../model/player.js";
-import { Match, createMatchObject } from "../../model/match.js";
+import { rankToLeaguePoints } from "@glitter-boys/data";
 import { send } from "../../discord/channel.js";
 import { s3 } from "../../s3.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import configuration from "../../../configuration.js";
+import { getPlayer } from "../../player.js";
+import { getCurrentRank } from "../../rank.js";
+import { createMatchObject } from "../match.js";
 
 async function checkMatch(game: GameState) {
   try {

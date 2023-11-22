@@ -1,42 +1,7 @@
 ---
-import UserProfile from "../components/UserProfile.astro";
 import Layout from "../layouts/Layout.astro";
-import type { User } from "../model/User";
-
-const user: User = {
-  leagueOfLegends: {
-    username: "sjerred",
-    rank: {
-      solo: {
-        tier: "gold",
-        division: 4,
-        wins: 2,
-        losses: 10
-      },
-      flex: {
-        tier: "bronze",
-        division: 2,
-        wins: 2,
-        losses: 10
-      }
-    },
-    matchHistory: [
-      {
-        outcome: "defeat"
-      },
-      {
-        outcome: "defeat"
-      },
-      {
-        outcome: "defeat"
-      }
-    ]
-  }
-}
 ---
 
 <Layout title="GLITTER BOYS">
-  <main>
-    <UserProfile user={user} />
-  </main>
+  <main>Leaderboard</main>
 </Layout>

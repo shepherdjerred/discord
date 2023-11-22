@@ -1,33 +1,9 @@
+import { Match } from "@glitter-boys/data";
+import { Player } from "@glitter-boys/data";
+import { Team, parseTeam } from "@glitter-boys/data";
 import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
-import { z } from "zod";
-import { ChampionSchema, createChampionObject } from "./champion.js";
-import { Player } from "./player.js";
-import { PlayerConfigEntrySchema } from "./playerConfigEntry.js";
-import { RosterSchema } from "./roster.js";
-import { Team, TeamSchema, parseTeam } from "./team.js";
-import { LaneSchema } from "./lane.js";
-
-export type Match = z.infer<typeof MatchSchema>;
-export const MatchSchema = z.strictObject({
-  durationInSeconds: z.number().nonnegative(),
-  // this field stores data specific to the player we care about
-  player: z.strictObject({
-    playerConfig: PlayerConfigEntrySchema,
-    leaguePointsDelta: z.number(),
-    tournamentWins: z.number().nonnegative(),
-    tournamentLosses: z.number().nonnegative(),
-    outcome: z.enum(["Victory", "Defeat", "Surrender"]),
-    champion: ChampionSchema,
-    team: TeamSchema,
-    lane: LaneSchema.optional(),
-    laneOpponent: ChampionSchema.optional(),
-  }),
-  teams: z.strictObject({
-    red: RosterSchema,
-    blue: RosterSchema,
-  }),
-});
+import { createChampionObject } from "../champion.js";
 
 export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpChange: number): Match {
   const playerParticipant = _.chain(dto.info.participants)

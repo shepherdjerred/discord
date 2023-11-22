@@ -5,8 +5,8 @@ import React from "react";
 import { loadFonts } from "../assets/index.js";
 import { palette } from "../assets/colors.js";
 import { renderTeam } from "./team.js";
-import { diffToString } from "../../model/leaguePoints.js";
-import { Match } from "../../model/match.js";
+import { diffToString } from "@glitter-boys/data";
+import { Match } from "@glitter-boys/data";
 
 export async function matchToImage(match: Match) {
   const minutes = _.round(match.durationInSeconds / 60);

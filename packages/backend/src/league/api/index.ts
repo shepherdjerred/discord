@@ -4,7 +4,7 @@ import {
   SpectatorNotAvailableDTO,
 } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
-import { PlayerConfigEntry } from "../model/playerConfigEntry.js";
+import { PlayerConfigEntry } from "@glitter-boys/data";
 import { api } from "./api.js";
 import { Constants } from "twisted";
 import _ from "lodash";
