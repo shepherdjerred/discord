@@ -1,5 +1,5 @@
 import { CurrentGameInfoDTO } from "twisted/dist/models-dto/index.js";
-import { GameState, getPlayersNotInGame, getState, writeState } from "../../model/state.js";
+import { getPlayersNotInGame, getState, writeState } from "../../model/state.js";
 import _ from "lodash";
 import * as uuid from "uuid";
 import { getPlayerConfigs } from "../../model/playerConfig.js";
@@ -35,28 +35,31 @@ export async function checkPreMatch() {
   );
 
   console.log("sending messages");
-  await Promise.all(_.chain(newGames).map(createDiscordMessage).map(send).value());
+  await Promise.all(
+    _.chain(newGames)
+      .map(async ([player, game]) => {
+        const message = createDiscordMessage([player, game]);
+        await send(message);
 
-  console.log("creating new state entries");
-  const newStateEntries = await Promise.all(
-    _.map(newGames, async ([player, game]): Promise<GameState> => {
-      const currentRank = await getCurrentRank(player);
+        const currentRank = await getCurrentRank(player);
 
-      return {
-        added: new Date(game.gameStartTime),
-        matchId: game.gameId,
-        uuid: uuid.v4(),
-        player,
-        rank: currentRank,
-      };
-    }),
+        console.log("creating new state entries");
+        const entry = {
+          added: new Date(game.gameStartTime),
+          matchId: game.gameId,
+          uuid: uuid.v4(),
+          player,
+          rank: currentRank,
+        };
+
+        console.log("saving state");
+        [state, release] = await getState();
+        await writeState({
+          ...state,
+          gamesStarted: _.concat(state.gamesStarted, entry),
+        });
+        await release();
+      })
+      .value(),
   );
-
-  console.log("saving state");
-  [state, release] = await getState();
-  await writeState({
-    ...state,
-    gamesStarted: _.concat(state.gamesStarted, newStateEntries),
-  });
-  await release();
 }

@@ -96,21 +96,21 @@ export async function checkPostMatch() {
       const discordMessage = userMention(matchObj.player.playerConfig.discordAccount.id);
       const [attachment, embed] = await getImage(matchObj);
       await send({ content: discordMessage, embeds: [embed], files: [attachment] });
+
+      console.log("calculating new state");
+      const [newState, release] = await getState();
+      const newMatches = _.differenceBy(
+        newState.gamesStarted,
+        _.map(finishedGames, (game) => game[0]),
+        (state) => state.uuid,
+      );
+
+      console.log("saving state files");
+      await writeState({
+        ...state,
+        gamesStarted: newMatches,
+      });
+      await release();
     }),
   );
-
-  console.log("calculating new state");
-  [state, release] = await getState();
-  const newMatches = _.differenceBy(
-    state.gamesStarted,
-    _.map(finishedGames, (game) => game[0]),
-    (state) => state.uuid,
-  );
-
-  console.log("saving state files");
-  await writeState({
-    ...state,
-    gamesStarted: newMatches,
-  });
-  await release();
 }
