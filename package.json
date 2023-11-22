@@ -5,7 +5,9 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/*"
+    "packages/data",
+    "packages/backend",
+    "packages/frontend"
   ],
   "scripts": {
     "lint": "prettier -w ."
