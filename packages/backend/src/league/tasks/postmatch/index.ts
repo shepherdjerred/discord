@@ -47,7 +47,7 @@ async function getImage(match: Match): Promise<[AttachmentBuilder, EmbedBuilder]
   return [attachment, embed];
 }
 
-async function getAiMessage(match: Match) {
+export async function getAiMessage(match: Match) {
   const { name, message } = await generateFeedbackMessage(match);
   return `${bold("AI " + name)} says: ${message.replace(
     match.player.playerConfig.name,
