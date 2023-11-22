@@ -378,7 +378,7 @@
     "discordAccount": { "id": "688107056846209150" }
   },
   {
-    "name": "Filpinothug",
+    "name": "Kendrick",
     "league": {
       "leagueAccount": {
         "id": "q4BjYY-8XDE-YXDUXiHCNbjN5biTnqNuMseHDxcTqIanpjE",
@@ -394,5 +394,41 @@
       }
     },
     "discordAccount": { "id": "89243433385881600" }
+  },
+  {
+    "name": "Brandon",
+    "league": {
+      "leagueAccount": {
+        "id": "xeGfv3o7hUEKA8DE4gEIIb16EhXVov-vao-FkqWPnmK5DK4",
+        "accountId": "eCsEgIP3QXpIkGMY8wRIEBNvu6w2C2OdxOu2WPxx2BwJJg",
+        "puuid": "eNfkTOITU7rdr3a_DEWZBE14PLXXIC7h8oM6UkwGO8nl8cxdRjtaLuzroqVWjg4x0d3EyfqNATvZUQ"
+      },
+      "initialRank": {
+        "division": 3,
+        "tier": "gold",
+        "lp": 0,
+        "wins": 3,
+        "losses": 2
+      }
+    },
+    "discordAccount": { "id": "89800891070164992" }
+  },
+  {
+    "name": "Francesca",
+    "league": {
+      "leagueAccount": {
+        "id": "3jhmWYi89Zn4Rw8A0v0NYhxbjjmz6mN8dM1n0dr91KhnETU",
+        "accountId": "HtRdADiCEu59amhqUbEI-MKf-F_9K_VBR3KRxnqZrBzACVFZeNolIaAA",
+        "puuid": "D7OS33qJ1w1uAIcmigzWMmsxNfk8SM_DBV2iFzp3dQwa3bVROYVs1O0AcEiP7tov7TNR33GgAs8P-g"
+      },
+      "initialRank": {
+        "division": 4,
+        "tier": "gold",
+        "lp": 86,
+        "wins": 3,
+        "losses": 2
+      }
+    },
+    "discordAccount": { "id": "1016111302453768196" }
   }
 ]
