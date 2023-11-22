@@ -1,11 +1,8 @@
 ---
-import { useReactTable } from "@tanstack/react-table";
 import { LeaderboardSchema, type Leaderboard } from "@glitter-boys/data";
 
 const result = await fetch("https://prod.bucket.glitter-boys.com/leaderboard.json");
 const leaderboard: Leaderboard = LeaderboardSchema.parse(await result.json());
-
-const table = useReactTable({});
 ---
 
 <div>
