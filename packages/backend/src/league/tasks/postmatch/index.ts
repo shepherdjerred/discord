@@ -13,6 +13,9 @@ import { mkdir, writeFile } from "fs/promises";
 import { getPlayer } from "../../model/player.js";
 import { Match, createMatchObject } from "../../model/match.js";
 import { send } from "../../discord/channel.js";
+import { s3 } from "../../s3.js";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import configuration from "../../../configuration.js";
 
 async function checkMatch(game: GameState) {
   try {
@@ -32,12 +35,12 @@ async function checkMatch(game: GameState) {
 }
 
 async function saveMatch(match: MatchV5DTOs.MatchDto) {
-  try {
-    await mkdir("matches");
-  } catch (e) {
-    // noop
-  }
-  await writeFile(`matches/${match.info.gameId}`, JSON.stringify(match));
+  const command = new PutObjectCommand({
+    Bucket: configuration.s3BucketName,
+    Key: `matches/${match.info.gameId}}`,
+    Body: JSON.stringify(match),
+  });
+  await s3.send(command);
 }
 
 async function getImage(match: Match): Promise<[AttachmentBuilder, EmbedBuilder]> {

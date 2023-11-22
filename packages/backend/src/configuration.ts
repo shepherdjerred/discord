@@ -11,4 +11,5 @@ export default {
   riotApiToken: env.get("RIOT_API_TOKEN").required().asString(),
   leagueChannelId: env.get("LEAGUE_CHANNEL_ID").required().asString(),
   openAiAPiKey: env.get("OPENAI_API_KEY").required().asString(),
+  s3BucketName: env.get("S3_BUCKET_NAME").required().asString(),
 };
