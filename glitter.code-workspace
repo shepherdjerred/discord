@@ -2,7 +2,7 @@
   "folders": [
     {
       "name": "root",
-      "path": "/"
+      "path": "."
     },
     {
       "path": "packages/backend"
@@ -15,7 +15,12 @@
     }
   ],
   "extensions": {
-    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "earthly.earthfile-syntax-highlighting",
+      "tamasfe.even-better-toml"
+    ]
   },
   "settings": {
     "testing.automaticallyOpenPeekView": "never"

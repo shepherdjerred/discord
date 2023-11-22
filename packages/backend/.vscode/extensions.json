@@ -1,3 +1,9 @@
 {
-  "recommendations": ["zixuanchen.vitest-explorer", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+  "recommendations": [
+    "zixuanchen.vitest-explorer",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "earthly.earthfile-syntax-highlighting",
+    "tamasfe.even-better-toml"
+  ]
 }
