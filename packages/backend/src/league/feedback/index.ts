@@ -2,7 +2,7 @@ import _ from "lodash";
 import { chatGpt } from "./api.js";
 import { readFile } from "fs/promises";
 import { Match } from "@glitter-boys/data";
-import { getChats, writeChats } from "@glitter-boys/data";
+import { getChats, writeChats } from "../chats.js";
 
 const promptPath = "src/league/feedback/prompts";
 

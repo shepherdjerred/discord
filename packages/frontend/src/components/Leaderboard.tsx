@@ -4,7 +4,6 @@ import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "
 import { type Leaderboard, LeaderboardSchema, type LeaderboardEntry, rankToString } from "@glitter-boys/data";
 import { P, match } from "ts-pattern";
 import _ from "lodash";
-import { date } from "astro/zod";
 import { addDays, formatDistance, isWithinInterval, subDays } from "date-fns";
 
 const columnHelper = createColumnHelper<LeaderboardEntry>();

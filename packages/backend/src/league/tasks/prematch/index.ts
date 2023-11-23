@@ -1,13 +1,13 @@
 import { CurrentGameInfoDTO } from "twisted/dist/models-dto/index.js";
-import { getPlayersNotInGame, getState, writeState } from "@glitter-boys/data";
 import _ from "lodash";
 import * as uuid from "uuid";
-import { getPlayerConfigs } from "@glitter-boys/data";
-import { PlayerConfigEntry } from "@glitter-boys/data";
+import { PlayerConfigEntry, getPlayersNotInGame } from "@glitter-boys/data";
 import { getCurrentSoloQueueGame } from "../../api/index.js";
 import { createDiscordMessage } from "./discord.js";
 import { send } from "../../discord/channel.js";
 import { getCurrentRank } from "../../rank.js";
+import { getPlayerConfigs } from "../../playerConfig.js";
+import { getState, writeState } from "../../state.js";
 
 export async function checkPreMatch() {
   const players = await getPlayerConfigs();

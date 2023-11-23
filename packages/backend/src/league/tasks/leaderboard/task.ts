@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { getPlayerConfigs } from "@glitter-boys/data";
 import { toLeaderboard } from "./index.js";
 import { getPlayer } from "../../player.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
@@ -7,6 +6,7 @@ import configuration from "../../../configuration.js";
 import { s3 } from "../../s3.js";
 import { send } from "../../discord/channel.js";
 import { leaderboardToDiscordMessage } from "./discord.js";
+import { getPlayerConfigs } from "../../playerConfig.js";
 
 export async function postLeaderboardMessage() {
   const playerConfigs = await getPlayerConfigs();
