@@ -5,8 +5,7 @@ import React from "react";
 import { loadFonts } from "../assets/index.js";
 import { palette } from "../assets/colors.js";
 import { renderTeam } from "./team.js";
-import { diffToString } from "@glitter-boys/data";
-import { Match } from "@glitter-boys/data";
+import { Match, lpDiffToString } from "@glitter-boys/data";
 
 export async function matchToImage(match: Match) {
   const minutes = _.round(match.durationInSeconds / 60);
@@ -48,7 +47,7 @@ export async function matchToImage(match: Match) {
           {minutes}min {match.durationInSeconds % 60}s
         </div>
         <div style={{ display: "flex", gap: "2rem", fontSize: "4rem", color: palette.grey[1], marginBottom: "1.5rem" }}>
-          <span>{diffToString(match.player.leaguePointsDelta)} LP</span>
+          <span>{lpDiffToString(match.player.leaguePointsDelta)}</span>
           <span>W: {match.player.tournamentWins}</span>
           <span>L: {match.player.tournamentLosses}</span>
         </div>

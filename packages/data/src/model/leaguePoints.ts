@@ -1,4 +1,4 @@
-import { match } from "ts-pattern";
+import { match, P } from "ts-pattern";
 import { z } from "zod";
 import { numberOfDivisions } from "./division.js";
 import { Rank } from "./rank.js";
@@ -31,10 +31,10 @@ function tierToLeaguePoints(tier: Tier): LeaguePoints {
   return LeaguePointsSchema.parse(multiplier * numberOfDivisions * leaguePointsPerDivision);
 }
 
-export function diffToString(input: number): string {
-  if (input <= 0) {
-    return input.toLocaleString();
-  } else {
-    return `+${input.toLocaleString()}`;
-  }
+export function lpDiffToString(input: number): string {
+  return match(input)
+    .with(P.number.negative(), () => `${input.toLocaleString()} LP`)
+    .with(0, () => "-")
+    .with(P.number.positive(), () => `+${input.toLocaleString()} LP`)
+    .run();
 }
