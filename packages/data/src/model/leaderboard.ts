@@ -9,4 +9,7 @@ export const LeaderboardEntrySchema = z.strictObject({
 });
 
 export type Leaderboard = z.infer<typeof LeaderboardSchema>;
-export const LeaderboardSchema = z.array(LeaderboardEntrySchema);
+export const LeaderboardSchema = z.strictObject({
+  date: z.string().pipe(z.coerce.date()),
+  contents: z.array(LeaderboardEntrySchema),
+});

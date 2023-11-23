@@ -10,7 +10,8 @@
       "name": "Post Leaderboard",
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/src/league/tasks/leaderboard/oneshot.ts",
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "npm: build"
     }
   ]
 }

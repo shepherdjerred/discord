@@ -4,7 +4,8 @@ import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "
 import { type Leaderboard, LeaderboardSchema, type LeaderboardEntry, rankToString } from "@glitter-boys/data";
 import { P, match } from "ts-pattern";
 import _ from "lodash";
-import { addDays, formatDistance, isWithinInterval, subDays } from "date-fns";
+import { addDays, formatDistance, isWithinInterval } from "date-fns";
+import { useState, useEffect } from "react";
 
 const columnHelper = createColumnHelper<LeaderboardEntry>();
 
@@ -62,26 +63,29 @@ const columns = [
 
 const now = new Date();
 const todayAtNoon = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
-const yesterdayAtNoon = subDays(todayAtNoon, 1);
 const tomorrowAtNoon = addDays(todayAtNoon, 1);
 
-let previous: Date;
 let next: Date;
 
 if (isWithinInterval(now, { start: todayAtNoon, end: tomorrowAtNoon })) {
-  previous = todayAtNoon;
   next = tomorrowAtNoon;
 } else {
-  previous = yesterdayAtNoon;
   next = todayAtNoon;
 }
 
-const result = await fetch("https://prod.bucket.glitter-boys.com/leaderboard.json");
-const leaderboard: Leaderboard = LeaderboardSchema.parse(await result.json());
-
 export function LeaderboardComponent() {
+  const [leaderboard, setLeaderboard] = useState<Leaderboard | undefined>(undefined);
+
+  useEffect(() => {
+    (async () => {
+      const result = await fetch("https://beta.bucket.glitter-boys.com/leaderboard.json");
+      const leaderboard: Leaderboard = LeaderboardSchema.parse(await result.json());
+      setLeaderboard(leaderboard);
+    })();
+  }, []);
+
   const table = useReactTable<LeaderboardEntry>({
-    data: leaderboard,
+    data: leaderboard?.contents || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -92,7 +96,8 @@ export function LeaderboardComponent() {
         <hgroup className="text-center">
           <h1 className="text-3xl">Leaderboard</h1>
           <p>
-            Updated {formatDistance(previous, now)} ago. Next update in {formatDistance(now, next)}.
+            Updated {leaderboard?.date !== undefined ? formatDistance(leaderboard.date, now) : ""} ago. Next update in{" "}
+            {formatDistance(now, next)}.
           </p>
         </hgroup>
         <div>

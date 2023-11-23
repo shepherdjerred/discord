@@ -38,6 +38,7 @@ async function saveMatch(match: MatchV5DTOs.MatchDto) {
     Bucket: configuration.s3BucketName,
     Key: `matches/${match.info.gameId}.json`,
     Body: JSON.stringify(match),
+    ContentType: "application/json",
   });
   await s3.send(command);
 }

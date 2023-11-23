@@ -7,7 +7,7 @@ export function toLeaderboard(players: Player[]): Leaderboard {
 
   const playersSorted = sortPlayers(players);
 
-  return _.map(playersSorted, (player) => {
+  const entries = _.map(playersSorted, (player) => {
     const leaguePointsDelta = getLeaguePointsDelta(player);
 
     // account for ties
@@ -21,4 +21,9 @@ export function toLeaderboard(players: Player[]): Leaderboard {
       position,
     };
   });
+
+  return {
+    date: new Date(),
+    contents: entries,
+  };
 }
