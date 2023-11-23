@@ -1,6 +1,13 @@
 import * as React from "react";
 
-import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+  type SortingState,
+  getSortedRowModel,
+} from "@tanstack/react-table";
 import {
   type Leaderboard,
   LeaderboardSchema,
@@ -9,6 +16,8 @@ import {
   wasPromoted,
   wasDemoted,
   rankToSimpleString,
+  rankToLeaguePoints,
+  type Player,
 } from "@glitter-boys/data";
 import { P, match } from "ts-pattern";
 import _ from "lodash";
@@ -26,7 +35,7 @@ const columnHelper = createColumnHelper<HistoricalLeaderboardEntry>();
 
 const columns = [
   columnHelper.accessor("current.position", {
-    header: () => "",
+    header: () => "Position",
     cell: (info) => <span className="font-bold">#{info.renderValue()}</span>,
     id: "position",
   }),
@@ -58,12 +67,25 @@ const columns = [
         .with(P.number.negative(), (value) => `${value}`)
         .run();
     },
+    sortingFn: (a, b) => {
+      const getVal = (info: HistoricalLeaderboardEntry) => {
+        const previous = info.previous;
+        if (previous === undefined) {
+          return -9999;
+        }
+        return info.current.leaguePointsDelta - previous.leaguePointsDelta;
+      };
+      return (
+        getVal(a.getValue("lp-difference-since-last-update")) - getVal(b.getValue("lp-difference-since-last-update"))
+      );
+    },
     id: "lp-difference-since-last-update",
   }),
   columnHelper.accessor((row) => row.current.player.currentRank, {
     header: "Rank",
     cell: (info) => rankToString(info.getValue()),
     id: "rank",
+    sortingFn: (a, b) => rankToLeaguePoints(a.getValue("rank")) - rankToLeaguePoints(b.getValue("rank")),
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Games",
@@ -72,16 +94,38 @@ const columns = [
       info.getValue().config.league.initialRank.wins +
       (info.getValue().currentRank.losses - info.getValue().config.league.initialRank.losses),
     id: "games",
+    sortingFn: (a, b) => {
+      const getVal = (info: Player) => {
+        return (
+          info.currentRank.wins -
+          info.config.league.initialRank.wins +
+          (info.currentRank.losses - info.config.league.initialRank.losses)
+        );
+      };
+      return getVal(a.getValue("games")) - getVal(b.getValue("games"));
+    },
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Wins",
     cell: (info) => info.getValue().currentRank.wins - info.getValue().config.league.initialRank.wins,
     id: "wins",
+    sortingFn: (a, b) => {
+      const getVal = (info: Player) => {
+        return info.currentRank.wins - info.config.league.initialRank.wins;
+      };
+      return getVal(a.getValue("wins")) - getVal(b.getValue("wins"));
+    },
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Losses",
     cell: (info) => info.getValue().currentRank.losses - info.getValue().config.league.initialRank.losses,
     id: "losses",
+    sortingFn: (a, b) => {
+      const getVal = (info: Player) => {
+        return info.currentRank.losses - info.config.league.initialRank.losses;
+      };
+      return getVal(a.getValue("losses")) - getVal(b.getValue("losses"));
+    },
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Win Rate",
@@ -96,6 +140,19 @@ const columns = [
       return percent ? `${percent}%` : "-";
     },
     id: "win-rate",
+    sortingFn: (a, b) => {
+      const getVal = (info: Player) => {
+        const percent = _.round(
+          ((info.currentRank.wins - info.config.league.initialRank.wins) /
+            (info.currentRank.wins -
+              info.config.league.initialRank.wins +
+              (info.currentRank.losses - info.config.league.initialRank.losses))) *
+            100,
+        );
+        return percent ? percent : -9999;
+      };
+      return getVal(a.getValue("win-rate")) - getVal(b.getValue("win-rate"));
+    },
   }),
 ];
 
@@ -118,6 +175,12 @@ export function LeaderboardComponent() {
   const [currentLeaderboard, setCurrentLeaderboard] = useState<Leaderboard | undefined>(undefined);
   const [leaderboard, setLeaderboard] = useState<HistoricalLeaderboard | undefined>(undefined);
   const [events, setEvents] = useState<string[]>([]);
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      id: "position",
+      desc: false,
+    },
+  ]);
 
   useEffect(() => {
     (async () => {
@@ -177,6 +240,12 @@ export function LeaderboardComponent() {
     data: leaderboard || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    enableSorting: true,
+    onSortingChange: setSorting,
+    state: {
+      sorting,
+    },
   });
 
   return (
@@ -196,7 +265,20 @@ export function LeaderboardComponent() {
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <th key={header.id} className="p-2 bg-gray-100">
-                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                      {header.isPlaceholder ? null : (
+                        <div
+                          {...{
+                            className: header.column.getCanSort() ? "cursor-pointer select-none" : "",
+                            onClick: header.column.getToggleSortingHandler(),
+                          }}
+                        >
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          {{
+                            asc: " 🔼",
+                            desc: " 🔽",
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </div>
+                      )}
                     </th>
                   ))}
                 </tr>
