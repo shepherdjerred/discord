@@ -1,34 +1,44 @@
 import _ from "lodash";
 import { toLeaderboard } from "./index.js";
 import { getPlayer } from "../../player.js";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { CopyObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import configuration from "../../../configuration.js";
 import { s3 } from "../../s3.js";
-import { send } from "../../discord/channel.js";
-import { leaderboardToDiscordMessage } from "./discord.js";
+// import { send } from "../../discord/channel.js";
+// import { leaderboardToDiscordMessage } from "./discord.js";
 import { getPlayerConfigs } from "../../playerConfig.js";
+import { format } from "date-fns";
 
-const link = "https://glitter-boys.com/leaderboard/";
+// const link = "https://glitter-boys.com/leaderboard/";
 
 export async function postLeaderboardMessage() {
   const playerConfigs = await getPlayerConfigs();
   const players = await Promise.all(_.map(playerConfigs, getPlayer));
   const leaderboard = toLeaderboard(players);
-  const message = leaderboardToDiscordMessage(leaderboard);
-  const messageWithLink = `View more details at ${link}\n${message}`;
-  await send(messageWithLink);
-  let command = new PutObjectCommand({
+  // const message = leaderboardToDiscordMessage(leaderboard);
+  // const messageWithLink = `View more details at ${link}\n${message}`;
+  // await send(messageWithLink);
+
+  const copyCommand = new CopyObjectCommand({
+    Bucket: configuration.s3BucketName,
+    CopySource: `${configuration.s3BucketName}/leaderboard.json`,
+    Key: `leaderboards/previous.json`,
+  });
+  await s3.send(copyCommand);
+
+  let putCommand = new PutObjectCommand({
     Bucket: configuration.s3BucketName,
     Key: `leaderboard.json`,
     Body: JSON.stringify(leaderboard),
     ContentType: "application/json",
   });
-  await s3.send(command);
-  command = new PutObjectCommand({
+  await s3.send(putCommand);
+  const date = format(new Date(), "yyyy-MM-dd");
+  putCommand = new PutObjectCommand({
     Bucket: configuration.s3BucketName,
-    Key: `leaderboards/${leaderboard.date.toString()}.json`,
+    Key: `leaderboards/${date}.json`,
     Body: JSON.stringify(leaderboard),
     ContentType: "application/json",
   });
-  await s3.send(command);
+  await s3.send(putCommand);
 }

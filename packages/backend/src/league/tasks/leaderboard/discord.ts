@@ -3,7 +3,7 @@ import _ from "lodash";
 import { Leaderboard, LeaderboardEntry, lpDiffToString } from "@glitter-boys/data";
 
 export function leaderboardToDiscordMessage(leaderboard: Leaderboard): string {
-  return _.chain(leaderboard.contents).map([leaderboardEntryToDiscordMessage]).join("\n").value();
+  return _.chain(leaderboard.contents).map(leaderboardEntryToDiscordMessage).join("\n").value();
 }
 
 function leaderboardEntryToDiscordMessage({ position, leaguePointsDelta, player }: LeaderboardEntry): string {
