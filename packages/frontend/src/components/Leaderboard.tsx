@@ -78,7 +78,7 @@ export function LeaderboardComponent() {
 
   useEffect(() => {
     (async () => {
-      const result = await fetch("https://beta.bucket.glitter-boys.com/leaderboard.json");
+      const result = await fetch("https://prod.bucket.glitter-boys.com/leaderboard.json");
       const leaderboard: Leaderboard = LeaderboardSchema.parse(await result.json());
       setLeaderboard(leaderboard);
     })();
