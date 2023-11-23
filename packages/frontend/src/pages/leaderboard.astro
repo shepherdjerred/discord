@@ -1,16 +1,5 @@
 ---
-import { LeaderboardSchema, type Leaderboard } from "@glitter-boys/data";
-
-const result = await fetch("https://prod.bucket.glitter-boys.com/leaderboard.json");
-const leaderboard: Leaderboard = LeaderboardSchema.parse(await result.json());
+import { LeaderboardComponent } from "../components/Leaderboard";
 ---
 
-<div>
-  {
-    leaderboard.map((entry) => (
-      <div>
-        {entry.player} {entry.position} {entry.leaguePointsDelta}
-      </div>
-    ))
-  }
-</div>
+<LeaderboardComponent />
