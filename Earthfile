@@ -42,6 +42,7 @@ build.data:
   SAVE ARTIFACT packages/data/dist AS LOCAL packages/data/dist
 
 image.backend:
+  ARG --required stage
   FROM +build.backend
   WORKDIR /workspace/packages/backend
   # or for debian/ubuntu-based images
@@ -49,6 +50,7 @@ image.backend:
   COPY +litefs/litefs /usr/local/bin/litefs
   COPY litefs.yaml /etc/litefs.yml
   RUN npm i @resvg/resvg-js-linux-x64-gnu
+  COPY packages/backend/players.$stage.json players.json
   ENTRYPOINT litefs mount
   SAVE IMAGE glitter/backend:latest
 
@@ -58,7 +60,6 @@ deploy.backend:
   RUN curl -L https://fly.io/install.sh | sh
   ENV PATH=$PATH:/root/.fly/bin
   COPY fly.$stage.toml .
-  COPY packages/backend/players.$stage.json players.json
-  WITH DOCKER --load=(+image.backend )
+  WITH DOCKER --load=(+image.backend --stage=$stage)
     RUN --no-cache --secret FLY_API_TOKEN fly deploy --local-only --config fly.$stage.toml
   END
