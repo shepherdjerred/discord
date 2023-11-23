@@ -82,6 +82,7 @@ const columns = [
 ];
 
 const now = new Date();
+// TODO: this should be PST
 const todayAtNoon = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
 const tomorrowAtNoon = addDays(todayAtNoon, 1);
 
@@ -142,7 +143,7 @@ export function LeaderboardComponent() {
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id} className="p-4">
+                  <th key={header.id} className="p-2">
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </th>
                 ))}
@@ -153,7 +154,7 @@ export function LeaderboardComponent() {
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="p-4">
+                  <td key={cell.id} className="p-2">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
