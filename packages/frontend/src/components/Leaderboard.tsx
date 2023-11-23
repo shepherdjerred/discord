@@ -9,16 +9,13 @@ const columns = [
   columnHelper.accessor("position", {
     header: () => "#",
     cell: (info) => info.renderValue(),
-    footer: (info) => info.column.id,
   }),
   columnHelper.accessor("player.config.name", {
     header: "Name",
     cell: (info) => info.getValue(),
-    footer: (info) => info.column.id,
   }),
   columnHelper.accessor("leaguePointsDelta", {
     header: "LP Delta",
-    footer: (info) => info.column.id,
   }),
 ];
 
@@ -33,8 +30,12 @@ export function LeaderboardComponent() {
   });
 
   return (
-    <div className="p-2">
-      <table>
+    <>
+      <hgroup>
+        <h1>Leaderboard</h1>
+        <p>Updated {Date.now()}</p>
+      </hgroup>
+      <table className="table-auto">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -56,6 +57,6 @@ export function LeaderboardComponent() {
           ))}
         </tbody>
       </table>
-    </div>
+    </>
   );
 }
