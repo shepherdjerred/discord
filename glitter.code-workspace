@@ -25,5 +25,15 @@
   },
   "settings": {
     "testing.automaticallyOpenPeekView": "never"
+  },
+  "launch": {
+    "configurations": [
+      {
+        "type": "chrome",
+        "name": "https://localhost:4321",
+        "request": "launch",
+        "url": "https://localhost:4321"
+      }
+    ]
   }
 }

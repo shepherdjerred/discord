@@ -15,8 +15,8 @@ export function rankToLeaguePoints(rank: Rank): LeaguePoints {
   return LeaguePointsSchema.parse(divisionLp + tierLp + rank.lp);
 }
 
-function tierToLeaguePoints(tier: Tier): LeaguePoints {
-  const multiplier = match(tier)
+export function tierToOrdinal(tier: Tier): number {
+  return match(tier)
     .with("iron", () => 0)
     .with("bronze", () => 1)
     .with("silver", () => 2)
@@ -28,6 +28,10 @@ function tierToLeaguePoints(tier: Tier): LeaguePoints {
     .with("grandmaster", () => 8)
     .with("challenger", () => 9)
     .exhaustive();
+}
+
+function tierToLeaguePoints(tier: Tier): LeaguePoints {
+  const multiplier = tierToOrdinal(tier);
   return LeaguePointsSchema.parse(multiplier * numberOfDivisions * leaguePointsPerDivision);
 }
 
