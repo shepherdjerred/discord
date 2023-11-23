@@ -15,7 +15,7 @@ export async function postLeaderboardMessage() {
   const players = await Promise.all(_.map(playerConfigs, getPlayer));
   const leaderboard = toLeaderboard(players);
   const message = leaderboardToDiscordMessage(leaderboard);
-  const messageWithLink = `More details at ${link}\n${message}`;
+  const messageWithLink = `View more details at ${link}\n${message}`;
   await send(messageWithLink);
   let command = new PutObjectCommand({
     Bucket: configuration.s3BucketName,

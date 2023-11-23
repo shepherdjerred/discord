@@ -19,7 +19,7 @@ const columns = [
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor("leaguePointsDelta", {
-    header: "LP Delta",
+    header: "LP Difference",
     cell: (info) =>
       match(info.getValue())
         .with(0, () => "-")
@@ -92,38 +92,38 @@ export function LeaderboardComponent() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col justify-center items-center">
-        <hgroup className="text-center">
+      <div className="container mx-auto">
+        <hgroup className="">
           <h1 className="text-3xl">Leaderboard</h1>
           <p>
             Updated {leaderboard?.date !== undefined ? formatDistance(leaderboard.date, now) : ""} ago. Next update in{" "}
             {formatDistance(now, next)}.
           </p>
         </hgroup>
-        <div>
-          <table className="table-auto text-center">
-            <thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <th key={header.id} className="p-4">
-                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody className="p-10">
-              {table.getRowModel().rows.map((row) => (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <table className="overflow-auto text-left">
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id} className="p-4">
+                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} className="p-4">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   );
