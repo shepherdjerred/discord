@@ -28,7 +28,7 @@ export const StateSchema = z.strictObject({
 
 export async function getState(): Promise<[State, () => Promise<void>]> {
   try {
-    const release = await lock(stateFileName, { retries: { retries: 10, minTimeout: 1000 } });
+    const release = await lock(stateFileName, { retries: { retries: 30, minTimeout: 1000 } });
     const stateFile = await open(stateFileName);
     const stateJson = (await stateFile.readFile()).toString();
     const state = StateSchema.parse(JSON.parse(stateJson));
@@ -41,7 +41,7 @@ export async function getState(): Promise<[State, () => Promise<void>]> {
       gamesStarted: [],
     };
     await writeState(state);
-    const release = await lock(stateFileName, { retries: { retries: 10, minTimeout: 1000 } });
+    const release = await lock(stateFileName, { retries: { retries: 30, minTimeout: 1000 } });
     return [state, release];
   }
 }

@@ -66,15 +66,15 @@ const todayAtNoon = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 1
 const yesterdayAtNoon = subDays(todayAtNoon, 1);
 const tomorrowAtNoon = addDays(todayAtNoon, 1);
 
-let next: Date;
 let previous: Date;
+let next: Date;
 
 if (isWithinInterval(now, { start: todayAtNoon, end: tomorrowAtNoon })) {
-  next = tomorrowAtNoon;
   previous = todayAtNoon;
+  next = tomorrowAtNoon;
 } else {
-  next = todayAtNoon;
   previous = yesterdayAtNoon;
+  next = todayAtNoon;
 }
 
 const result = await fetch("https://prod.bucket.glitter-boys.com/leaderboard.json");

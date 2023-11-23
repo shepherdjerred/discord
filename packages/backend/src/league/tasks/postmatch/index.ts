@@ -36,7 +36,7 @@ async function checkMatch(game: GameState) {
 async function saveMatch(match: MatchV5DTOs.MatchDto) {
   const command = new PutObjectCommand({
     Bucket: configuration.s3BucketName,
-    Key: `matches/${match.info.gameId}}`,
+    Key: `matches/${match.info.gameId}.json`,
     Body: JSON.stringify(match),
   });
   await s3.send(command);
@@ -75,7 +75,7 @@ async function createMatchObj(state: GameState, match: MatchV5DTOs.MatchDto) {
 }
 
 export async function checkPostMatch() {
-  let [state, release] = await getState();
+  const [state, release] = await getState();
   await release();
 
   console.log("checking match api");
@@ -101,18 +101,21 @@ export async function checkPostMatch() {
 
       console.log("calculating new state");
       const [newState, release] = await getState();
-      const newMatches = _.differenceBy(
-        newState.gamesStarted,
-        _.map(finishedGames, (game) => game[0]),
-        (state) => state.uuid,
-      );
+      try {
+        const newMatches = _.differenceBy(
+          newState.gamesStarted,
+          _.map(finishedGames, (game) => game[0]),
+          (state) => state.uuid,
+        );
 
-      console.log("saving state files");
-      await writeState({
-        ...state,
-        gamesStarted: newMatches,
-      });
-      await release();
+        console.log("saving state files");
+        await writeState({
+          ...state,
+          gamesStarted: newMatches,
+        });
+      } finally {
+        await release();
+      }
     }),
   );
 }

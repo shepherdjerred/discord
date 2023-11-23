@@ -17,7 +17,7 @@ const chatsFileName = "chats.json";
 
 export async function getChats(): Promise<[Chats, () => Promise<void>]> {
   try {
-    const release = await lock(chatsFileName, { retries: { retries: 10, minTimeout: 1000 } });
+    const release = await lock(chatsFileName, { retries: { retries: 30, minTimeout: 1000 } });
     const chatsFile = await open(chatsFileName);
     const chatsJson = (await chatsFile.readFile()).toString();
     const state = ChatsSchema.parse(JSON.parse(chatsJson));
@@ -28,7 +28,7 @@ export async function getChats(): Promise<[Chats, () => Promise<void>]> {
     // default to empty
     const chats = {};
     await writeChats(chats);
-    const release = await lock(chatsFileName, { retries: { retries: 10, minTimeout: 1000 } });
+    const release = await lock(chatsFileName, { retries: { retries: 30, minTimeout: 1000 } });
     return [chats, release];
   }
 }
