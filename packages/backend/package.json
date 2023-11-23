@@ -14,6 +14,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.456.0",
     "@glitter-boys/data": "*",
     "@keyv/sqlite": "^3.6.6",
     "@resvg/resvg-js": "^2.6.0",
@@ -34,8 +35,7 @@
     "twisted": "^1.54.0",
     "typeorm": "^0.3.17",
     "uuid": "^9.0.1",
-    "zod": "^3.22.4",
-    "@aws-sdk/client-s3": "^3.456.0"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.2",
@@ -47,13 +47,13 @@
     "@types/proper-lockfile": "^4.1.4",
     "@types/react": "^18.2.38",
     "@types/uuid": "^9.0.7",
-    "vitest": "^0.34.6",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "prettier": "^3.1.0",
     "tslib": "^2.6.2",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.2",
+    "vitest": "^0.34.6"
   }
 }

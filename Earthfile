@@ -11,7 +11,7 @@ deps:
   COPY packages/backend/package*.json packages/backend/
   COPY packages/frontend/package*.json packages/frontend/
   COPY packages/data/package*.json packages/data/
-  RUN npm ci --workspaces
+  RUN npm i --workspaces
 
 prepare:
   FROM +deps
