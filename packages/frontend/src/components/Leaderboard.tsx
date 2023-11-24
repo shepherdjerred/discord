@@ -264,7 +264,7 @@ export function LeaderboardComponent() {
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <th key={header.id} className="p-2 bg-gray-100">
+                    <th key={header.id} className="p-2 bg-gray-100 dark:bg-black">
                       {header.isPlaceholder ? null : (
                         <div
                           {...{

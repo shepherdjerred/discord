@@ -1,13 +1,9 @@
+use prisma instead of JSON files
+deploy to local k8s cluster
 detect duos
+add support for flex
 prompt engineering
 show when someone gets promoted/demoted
-
-feedback:
-add support for flex
-detect when someone gets promoted/demoted
-add way for friends to easily customize prompts
-include champion summaries in match feedback
-pick an AI reviewer when the game starts, and send a short good luck message!
 
 image:
 add champ icon
