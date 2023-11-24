@@ -3,9 +3,8 @@ import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
 import { api } from "../../api/api.js";
-import { AttachmentBuilder, EmbedBuilder, bold, userMention } from "discord.js";
+import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
 import { matchToImage } from "../../image/html/index.js";
-import { generateFeedbackMessage } from "../../feedback/index.js";
 import { GameState, Match, rankToLeaguePoints } from "@glitter-boys/data";
 import { send } from "../../discord/channel.js";
 import { s3 } from "../../s3.js";
@@ -14,7 +13,7 @@ import configuration from "../../../configuration.js";
 import { getPlayer } from "../../player.js";
 import { getCurrentRank } from "../../rank.js";
 import { createMatchObject } from "../match.js";
-import { getState, writeState } from "../../state.js";
+import { getState, setState } from "../../state.js";
 
 async function checkMatch(game: GameState) {
   try {
@@ -50,14 +49,6 @@ async function getImage(match: Match): Promise<[AttachmentBuilder, EmbedBuilder]
   return [attachment, embed];
 }
 
-export async function getAiMessage(match: Match) {
-  const { name, message } = await generateFeedbackMessage(match);
-  return `${bold("AI " + name)} says: ${message.replace(
-    match.player.playerConfig.name,
-    userMention(match.player.playerConfig.discordAccount.id),
-  )}`;
-}
-
 async function createMatchObj(state: GameState, match: MatchV5DTOs.MatchDto) {
   const player = _.chain(match.info.participants)
     .filter((participant) => participant.puuid === state.player.league.leagueAccount.puuid)
@@ -76,8 +67,7 @@ async function createMatchObj(state: GameState, match: MatchV5DTOs.MatchDto) {
 }
 
 export async function checkPostMatch() {
-  const [state, release] = await getState();
-  await release();
+  const state = getState();
 
   console.log("checking match api");
   const games = await Promise.all(_.map(state.gamesStarted, checkMatch));
@@ -95,28 +85,23 @@ export async function checkPostMatch() {
       await saveMatch(match);
 
       const matchObj = await createMatchObj(state, match);
-      // const discordMessage = await getAiMessage(matchObj);
       const discordMessage = userMention(matchObj.player.playerConfig.discordAccount.id);
       const [attachment, embed] = await getImage(matchObj);
       await send({ content: discordMessage, embeds: [embed], files: [attachment] });
 
       console.log("calculating new state");
-      const [newState, release] = await getState();
-      try {
-        const newMatches = _.differenceBy(
-          newState.gamesStarted,
-          _.map(finishedGames, (game) => game[0]),
-          (state) => state.uuid,
-        );
+      const newState = getState();
+      const newMatches = _.differenceBy(
+        newState.gamesStarted,
+        _.map(finishedGames, (game) => game[0]),
+        (state) => state.uuid,
+      );
 
-        console.log("saving state files");
-        await writeState({
-          ...state,
-          gamesStarted: newMatches,
-        });
-      } finally {
-        await release();
-      }
+      console.log("saving state files");
+      setState({
+        ...state,
+        gamesStarted: newMatches,
+      });
     }),
   );
 }

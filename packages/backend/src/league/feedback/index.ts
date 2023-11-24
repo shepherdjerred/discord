@@ -2,7 +2,6 @@ import _ from "lodash";
 import { chatGpt } from "./api.js";
 import { readFile } from "fs/promises";
 import { Match } from "@glitter-boys/data";
-import { getChats, writeChats } from "../chats.js";
 
 const promptPath = "src/league/feedback/prompts";
 
@@ -114,25 +113,7 @@ export async function generateFeedbackMessage(match: Match) {
   }
   console.log(systemMessage);
 
-  const [chats, release] = await getChats();
-  try {
-    const parentMessageId = chats[match.player.playerConfig.name]?.[reviewer.name];
-
-    const res = await chatGpt.sendMessage(basePrompt, {
-      systemMessage: systemMessage,
-      ...{
-        ...(parentMessageId ? { parentMessageId: parentMessageId } : {}),
-      },
-    });
-
-    chats[match.player.playerConfig.name] = {
-      ...chats[match.player.playerConfig.name],
-      [reviewer.name]: res.id,
-    };
-
-    await writeChats(chats);
-    return { name: reviewer.name, message: res.text };
-  } finally {
-    await release();
-  }
+  await chatGpt.sendMessage(basePrompt, {
+    systemMessage: systemMessage,
+  });
 }

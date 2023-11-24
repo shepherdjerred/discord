@@ -3,6 +3,5 @@
         "astro-build.astro-vscode",
         "earthly.earthfile-syntax-highlighting",
         "tamasfe.even-better-toml",
-        "prisma.prisma"
     ]
 }

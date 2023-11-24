@@ -1,4 +1,3 @@
-use prisma instead of JSON files
 deploy to local k8s cluster
 detect duos
 add support for flex

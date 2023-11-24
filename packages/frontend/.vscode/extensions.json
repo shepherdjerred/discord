@@ -4,7 +4,6 @@
     "esbenp.prettier-vscode",
     "earthly.earthfile-syntax-highlighting",
     "tamasfe.even-better-toml",
-    "prisma.prisma",
     "bradlc.vscode-tailwindcss"
   ]
 }

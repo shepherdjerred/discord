@@ -4,7 +4,6 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "earthly.earthfile-syntax-highlighting",
-    "tamasfe.even-better-toml",
-    "prisma.prisma"
+    "tamasfe.even-better-toml"
   ]
 }

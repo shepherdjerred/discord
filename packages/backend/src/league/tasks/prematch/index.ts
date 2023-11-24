@@ -7,15 +7,13 @@ import { createDiscordMessage } from "./discord.js";
 import { send } from "../../discord/channel.js";
 import { getCurrentRank } from "../../rank.js";
 import { getPlayerConfigs } from "../../playerConfig.js";
-import { getState, writeState } from "../../state.js";
+import { getState, setState } from "../../state.js";
 
 export async function checkPreMatch() {
   const players = await getPlayerConfigs();
-  let [state, release] = await getState();
-  await release();
 
   console.log("filtering out players in game");
-  const playersNotInGame = getPlayersNotInGame(players, state);
+  const playersNotInGame = getPlayersNotInGame(players, getState());
 
   console.log("calling spectator API");
   const playerStatus = await Promise.all(_.map(playersNotInGame, getCurrentSoloQueueGame));
@@ -29,7 +27,7 @@ export async function checkPreMatch() {
   // TODO: prune any old games
   console.log("removing games already seen");
   const newGames = _.reject(playersInGame, ([_player, game]) =>
-    _.chain(state.gamesStarted)
+    _.chain(getState().gamesStarted)
       .map((game) => game.matchId)
       .some((candidate) => candidate === game.gameId)
       .value(),
@@ -54,12 +52,10 @@ export async function checkPreMatch() {
         };
 
         console.log("saving state");
-        [state, release] = await getState();
-        await writeState({
-          ...state,
-          gamesStarted: _.concat(state.gamesStarted, entry),
+        setState({
+          ...getState(),
+          gamesStarted: _.concat(getState().gamesStarted, entry),
         });
-        await release();
       })
       .value(),
   );
