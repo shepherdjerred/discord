@@ -171,6 +171,17 @@ if (isWithinInterval(now, { start: todayAtNoon, end: tomorrowAtNoon })) {
   next = todayAtNoon;
 }
 
+function gameCount(leaderboard: HistoricalLeaderboardEntry): number | undefined {
+  if (leaderboard.previous === undefined) {
+    return undefined;
+  }
+  return (
+    leaderboard.current.player.currentRank.wins -
+    leaderboard.previous.player.currentRank.wins +
+    (leaderboard.current.player.currentRank.losses - leaderboard.previous.player.currentRank.losses)
+  );
+}
+
 export function LeaderboardComponent() {
   const [currentLeaderboard, setCurrentLeaderboard] = useState<Leaderboard | undefined>(undefined);
   const [leaderboard, setLeaderboard] = useState<HistoricalLeaderboard | undefined>(undefined);
@@ -230,7 +241,17 @@ export function LeaderboardComponent() {
           return [];
         }
       });
-      setEvents([...promotions, ...demotions].sort());
+      const games = _.flatMap(historical, (entry) => {
+        const count = gameCount(entry);
+        if (count === undefined) {
+          return [];
+        }
+        if (count > 10) {
+          return [`${entry.current.player.config.name} played ${count} games`];
+        }
+        return [];
+      });
+      setEvents([...promotions, ...demotions, ...games].sort());
 
       setLeaderboard(historical);
     })();
@@ -250,7 +271,7 @@ export function LeaderboardComponent() {
 
   return (
     <>
-      <div className="container mx-auto flex">
+      <div className="flex flex-col md:flex-row">
         <div className="p-4">
           <hgroup className="">
             <h1 className="text-3xl">Leaderboard</h1>
@@ -298,7 +319,9 @@ export function LeaderboardComponent() {
           </table>
         </div>
         <div className="p-4">
-          <h2 className="text-3xl">Events</h2>
+          <hgroup>
+            <h2 className="text-3xl">Recent Events</h2>
+          </hgroup>
           <ul className="list-disc list-inside">
             {events.map((event) => (
               <li>{event}</li>
