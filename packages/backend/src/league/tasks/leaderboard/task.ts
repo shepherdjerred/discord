@@ -22,7 +22,8 @@ export async function postLeaderboardMessage() {
   const copyCommand = new CopyObjectCommand({
     Bucket: configuration.s3BucketName,
     CopySource: `${configuration.s3BucketName}/leaderboard.json`,
-    Key: `leaderboards/previous.json`,
+    Key: `previous.json`,
+    ContentType: "application/json",
   });
   await s3.send(copyCommand);
 
