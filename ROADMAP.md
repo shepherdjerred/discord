@@ -1,7 +1,6 @@
 deploy to local k8s cluster
 detect duos
 add support for flex
-prompt engineering
 show when someone gets promoted/demoted
 
 image:
