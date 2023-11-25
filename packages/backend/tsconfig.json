@@ -8,6 +8,7 @@
     "experimentalDecorators": true,
     "jsx": "react",
     "resolveJsonModule": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "declaration": true
   }
 }
