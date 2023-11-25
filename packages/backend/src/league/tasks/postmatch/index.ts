@@ -5,7 +5,7 @@ import { z } from "zod";
 import { api } from "../../api/api.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
 import { matchToImage } from "../../image/html/index.js";
-import { GameState, Match, rankToLeaguePoints, wasPromoted } from "@glitter-boys/data";
+import { GameState, Match, rankToLeaguePoints } from "@glitter-boys/data";
 import { send } from "../../discord/channel.js";
 import { s3 } from "../../s3.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
