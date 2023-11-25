@@ -3,7 +3,7 @@ import { Player } from "@glitter-boys/data";
 import { Team, parseTeam } from "@glitter-boys/data";
 import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
-import { createChampionObject } from "../champion.js";
+import { createChampionObject } from "./champion.js";
 
 export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpChange: number): Match {
   const playerParticipant = _.chain(dto.info.participants)

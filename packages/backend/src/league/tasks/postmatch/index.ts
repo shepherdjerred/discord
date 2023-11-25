@@ -12,7 +12,7 @@ import { PutObjectCommand } from "@aws-sdk/client-s3";
 import configuration from "../../../configuration.js";
 import { getPlayer } from "../../player.js";
 import { getCurrentRank } from "../../rank.js";
-import { createMatchObject } from "../match.js";
+import { createMatchObject } from "../../match.js";
 import { getState, setState } from "../../state.js";
 
 async function checkMatch(game: GameState) {

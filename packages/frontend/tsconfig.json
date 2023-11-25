@@ -2,6 +2,7 @@
   "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
     "jsx": "react",
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "declarationMap": true
   }
 }

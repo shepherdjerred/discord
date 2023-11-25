@@ -4,7 +4,7 @@ import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import exampleMatch from "../image/html/match.json" assert { type: "json" };
 import { Player } from "@glitter-boys/data";
 import { PlayerConfigEntry } from "@glitter-boys/data";
-import { createMatchObject } from "../tasks/match.js";
+import { createMatchObject } from "../match.js";
 
 describe(
   "feedback",
