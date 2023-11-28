@@ -37,3 +37,14 @@ export function getPlayersInGame(players: PlayerConfig, state: State) {
     )
   );
 }
+
+export function getPlayersNotInGame(players: PlayerConfig, state: State) {
+  return _.reject(players, (player) =>
+    _.some(
+      state.gamesStarted,
+      (game) =>
+        game.player.league.leagueAccount.accountId ===
+        player.league.leagueAccount.accountId
+    )
+  );
+}

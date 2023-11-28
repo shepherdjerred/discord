@@ -4,7 +4,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   type Relation,
-} from "npm:typeorm";
+} from "npm:typeorm@0.3.17";
 import { Person } from "./Person.ts";
 
 @Entity()

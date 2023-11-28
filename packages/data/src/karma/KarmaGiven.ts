@@ -1,4 +1,4 @@
-import { ViewColumn, DataSource, ViewEntity } from "npm:typeorm";
+import { ViewColumn, DataSource, ViewEntity } from "npm:typeorm@0.3.17";
 import { Karma } from "./Karma.ts";
 
 @ViewEntity({
