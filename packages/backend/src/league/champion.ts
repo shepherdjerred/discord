@@ -1,6 +1,6 @@
 import { Champion } from "@glitter-boys/data";
 import { parseLane } from "@glitter-boys/data";
-import { MatchV5DTOs } from "https://esm.sh/twisted/dist/models-dto/index.js";
+import { MatchV5DTOs } from "https://esm.sh/twisted@1.55.0/dist/models-dto/index.js";
 
 export function createChampionObject(
   dto: MatchV5DTOs.ParticipantDto

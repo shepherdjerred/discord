@@ -5,7 +5,7 @@ import {
   Leaderboard,
 } from "@glitter-boys/data";
 // @deno-types="npm:@types/lodash"
-import _ from "npm:lodash";
+import _ from "npm:lodash@4.17.21";
 
 export function toLeaderboard(players: Player[]): Leaderboard {
   let position = 0;

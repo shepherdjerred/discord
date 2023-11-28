@@ -1,5 +1,5 @@
 // @deno-types="npm:@types/lodash"
-import _ from "npm:lodash";
+import _ from "npm:lodash@4.17.21";
 import { toLeaderboard } from "./index.ts";
 import { getPlayer } from "../../player.ts";
 import {
@@ -11,7 +11,7 @@ import { s3 } from "../../s3.ts";
 import { getPlayerConfigs } from "../../playerConfig.ts";
 import { format } from "https://esm.sh/date-fns";
 import { send } from "../../discord/channel.ts";
-import { leaderboardToDiscordMessage } from "https://esm.sh/discord.js";
+import { leaderboardToDiscordMessage } from "./discord.ts";
 
 const link = "https://glitter-boys.com/leaderboard/";
 

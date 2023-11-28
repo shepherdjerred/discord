@@ -1,7 +1,4 @@
-import {
-  MessagePayload,
-  MessageCreateOptions,
-} from "https://esm.sh/discord.js";
+import { MessagePayload, MessageCreateOptions } from "npm:discord.js@14.14.1";
 import configuration from "../../configuration.ts";
 import client from "../../discord/client.ts";
 

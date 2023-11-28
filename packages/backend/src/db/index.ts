@@ -1,5 +1,6 @@
 // required for type orm
-import "https://esm.sh/reflect-metadata";
+import "npm:reflect-metadata@0.1.13";
+import sqlite3 from "./shim/index.ts";
 import { DataSource } from "npm:typeorm";
 import {
   Karma,
@@ -18,6 +19,7 @@ export const dataSource = new DataSource({
   entities: [Karma, Person, KarmaGiven, KarmaReceived, KarmaCounts],
   subscribers: [],
   migrations: [],
+  driver: sqlite3,
 });
 
 await dataSource.initialize();

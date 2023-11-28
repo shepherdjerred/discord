@@ -2,7 +2,7 @@ import React from "https://esm.sh/react";
 import { renderItems } from "./item.tsx";
 import { palette } from "../assets/colors.ts";
 // @deno-types="npm:@types/lodash"
-import _ from "npm:lodash";
+import _ from "npm:lodash@4.17.21";
 import { laneToString } from "@glitter-boys/data";
 import summoner from "../assets/summoner.json" assert { type: "json" };
 import { Champion } from "@glitter-boys/data";

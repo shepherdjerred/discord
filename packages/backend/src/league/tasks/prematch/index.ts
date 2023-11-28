@@ -1,10 +1,14 @@
-import { CurrentGameInfoDTO } from "https://esm.sh/twisted/dist/models-dto/index.js";
+import { CurrentGameInfoDTO } from "https://esm.sh/twisted@1.55.0/dist/models-dto/index.js";
 // @deno-types="npm:@types/lodash"
-import _ from "npm:lodash";
-import * as uuid from "https://esm.sh/uuid";
-import { PlayerConfigEntry, getPlayersNotInGame } from "@glitter-boys/data";
+import _ from "npm:lodash@4.17.21";
+import * as uuid from "https://esm.sh/uuid@9.0.1";
+import {
+  PlayerConfigEntry,
+  getPlayersNotInGame,
+  type MatchState,
+} from "@glitter-boys/data";
 import { getCurrentSoloQueueGame } from "../../api/index.ts";
-import { createDiscordMessage } from "https://esm.sh/discord.js";
+import { createDiscordMessage } from "./discord.ts";
 import { send } from "../../discord/channel.ts";
 import { getCurrentRank } from "../../rank.ts";
 import { getPlayerConfigs } from "../../playerConfig.ts";
@@ -46,12 +50,13 @@ export async function checkPreMatch() {
         const currentRank = await getCurrentRank(player);
 
         console.log("creating new state entries");
-        const entry = {
+        const entry: MatchState = {
           added: new Date(game.gameStartTime),
           matchId: game.gameId,
           uuid: uuid.v4(),
           player,
           rank: currentRank,
+          queue: "solo",
         };
 
         console.log("saving state");

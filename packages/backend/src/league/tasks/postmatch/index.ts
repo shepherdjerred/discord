@@ -1,16 +1,16 @@
-import { Constants } from "https://esm.sh/twisted";
+import { Constants } from "https://esm.sh/twisted@1.55.0";
 // @deno-types="npm:@types/lodash"
-import _ from "npm:lodash";
-import { MatchV5DTOs } from "https://esm.sh/twisted/dist/models-dto/index.js";
-import { z } from "https://esm.sh/zod";
+import _ from "npm:lodash@4.17.21";
+import { MatchV5DTOs } from "https://esm.sh/twisted@1.55.0/dist/models-dto/index.js";
+import { z } from "https://esm.sh/zod@3.22.4";
 import { api } from "../../api/api.ts";
 import {
   AttachmentBuilder,
   EmbedBuilder,
   userMention,
-} from "https://esm.sh/discord.js";
+} from "npm:discord.js@14.14.1";
 import { matchToImage } from "../../image/html/index.tsx";
-import { GameState, Match, rankToLeaguePoints } from "@glitter-boys/data";
+import { MatchState, Match, rankToLeaguePoints } from "@glitter-boys/data";
 import { send } from "../../discord/channel.ts";
 import { s3 } from "../../s3.ts";
 import { PutObjectCommand } from "https://esm.sh/@aws-sdk/client-s3";
@@ -20,7 +20,7 @@ import { getCurrentRank } from "../../rank.ts";
 import { createMatchObject } from "../../match.ts";
 import { getState, setState } from "../../state.ts";
 
-async function checkMatch(game: GameState) {
+async function checkMatch(game: MatchState) {
   try {
     const response = await api.MatchV5.get(
       `NA1_${game.matchId}`,
@@ -59,7 +59,7 @@ async function getImage(
   return [attachment, embed];
 }
 
-async function createMatchObj(state: GameState, match: MatchV5DTOs.MatchDto) {
+async function createMatchObj(state: MatchState, match: MatchV5DTOs.MatchDto) {
   const player = _.chain(match.info.participants)
     .filter(
       (participant) =>
@@ -92,7 +92,7 @@ export async function checkPostMatch() {
   const finishedGames = _.chain(state.gamesStarted)
     .zip(games)
     .filter(([_game, match]) => match != undefined)
-    .value() as [GameState, MatchV5DTOs.MatchDto][];
+    .value() as [MatchState, MatchV5DTOs.MatchDto][];
 
   // TODO: send duo queue message
   console.log("sending messages");

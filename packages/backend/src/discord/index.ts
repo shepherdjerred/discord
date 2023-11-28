@@ -1,4 +1,4 @@
-import { Events } from "https://esm.sh/discord.js";
+import { Events } from "npm:discord.js@14.14.1";
 import { handleKarma } from "../karma/commands.ts";
 import "./rest.ts";
 import client from "./client.ts";

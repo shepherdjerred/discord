@@ -1,5 +1,5 @@
 // @deno-types="npm:@types/lodash"
-import _ from "npm:lodash";
+import _ from "npm:lodash@4.17.21";
 import satori from "https://esm.sh/satori";
 import { Resvg } from "npm:@resvg/resvg-js";
 import React from "https://esm.sh/react";

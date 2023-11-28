@@ -1,5 +1,5 @@
 // @deno-types="npm:@types/lodash"
-import _ from "npm:lodash";
+import _ from "npm:lodash@4.17.21";
 import { chatGpt } from "./api.ts";
 import { Match } from "@glitter-boys/data";
 

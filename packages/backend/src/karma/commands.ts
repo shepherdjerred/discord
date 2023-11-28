@@ -7,10 +7,10 @@ import {
   userMention,
   inlineCode,
   bold,
-} from "https://esm.sh/discord.js";
+} from "npm:discord.js@14.14.1";
 import { dataSource } from "../db/index.ts";
 // @deno-types="npm:@types/lodash"
-import _ from "npm:lodash";
+import _ from "npm:lodash@4.17.21";
 import client from "../discord/client.ts";
 
 const karmaCommand = new SlashCommandBuilder()

@@ -1,7 +1,7 @@
 import React from "https://esm.sh/react";
 import { renderChampion } from "./champion.tsx";
 // @deno-types="npm:@types/lodash"
-import _ from "npm:lodash";
+import _ from "npm:lodash@4.17.21";
 import { palette } from "../assets/colors.ts";
 import { font } from "../assets/index.ts";
 import { Roster } from "@glitter-boys/data";

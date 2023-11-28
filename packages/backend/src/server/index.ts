@@ -1,15 +1,13 @@
-import express from "https://esm.sh/express";
-import type { Request, Response } from "https://esm.sh/express";
 import configuration from "../configuration.ts";
-import cors from "https://esm.sh/cors";
+import { serve } from "https://deno.land/std@0.116.0/http/server.ts";
+import staticFiles from "https://deno.land/x/static_files@1.1.6/mod.ts";
 
-const app = express();
-const port = process.env["PORT"] || 8000;
+const port = Deno.env.get("PORT") || 8000;
 
-app.use(cors());
-app.get("/", function (_: Request, res: Response) {
-  res.send("Hey there :)");
-});
+const serveFiles = (req: Request) =>
+  staticFiles(configuration.dataDir)({
+    request: req,
+    respondWith: (r: Response) => r,
+  });
 
-app.use(express.static(configuration.dataDir));
-app.listen(port);
+serve((req) => serveFiles(req), { addr: `:${port}` });

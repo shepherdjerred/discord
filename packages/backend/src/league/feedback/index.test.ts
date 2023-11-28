@@ -1,6 +1,6 @@
 import { describe, it } from "vitest";
 import { generateFeedbackMessage as generateFeedbackMessage } from "./index.ts";
-import { MatchV5DTOs } from "twisted/dist/models-dto/index.ts";
+import { MatchV5DTOs } from "https://esm.sh/twisted@1.55.0/dist/models-dto/index.js";
 import exampleMatch from "../image/html/match.json" assert { type: "json" };
 import { Player } from "@glitter-boys/data";
 import { PlayerConfigEntry } from "@glitter-boys/data";

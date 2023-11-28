@@ -1,4 +1,4 @@
-import { LolApi } from "https://esm.sh/twisted";
+import { LolApi } from "https://esm.sh/twisted@1.55.0";
 import configuration from "../../configuration.ts";
 
 export const api = new LolApi({

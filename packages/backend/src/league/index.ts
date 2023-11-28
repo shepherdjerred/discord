@@ -1,4 +1,4 @@
-import { CronJob } from "https://esm.sh/cron";
+import { CronJob } from "https://esm.sh/cron@3.1.6";
 import { postLeaderboardMessage } from "./tasks/leaderboard/task.ts";
 import { checkPostMatch } from "./tasks/postmatch/index.ts";
 import { checkPreMatch } from "./tasks/prematch/index.ts";

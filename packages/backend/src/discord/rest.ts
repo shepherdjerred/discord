@@ -1,4 +1,4 @@
-import { REST, Routes } from "https://esm.sh/discord.js";
+import { REST, Routes } from "npm:discord.js@14.14.1";
 import Configuration from "../configuration.ts";
 import { karmaCommand } from "../karma/commands.ts";
 
