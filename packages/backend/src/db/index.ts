@@ -1,7 +1,7 @@
 // required for type orm
 import "npm:reflect-metadata@0.1.13";
 import sqlite3 from "./shim/index.ts";
-import { DataSource } from "npm:typeorm";
+import { DataSource } from "npm:typeorm@0.3.17";
 import {
   Karma,
   KarmaCounts,

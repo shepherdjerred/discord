@@ -1,4 +1,4 @@
-import React from "https://esm.sh/react";
+import React from "https://esm.sh/react@18.2.0";
 import { renderItems } from "./item.tsx";
 import { palette } from "../assets/colors.ts";
 // @deno-types="npm:@types/lodash"

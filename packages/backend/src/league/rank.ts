@@ -5,7 +5,7 @@ import { TierSchema } from "@glitter-boys/data";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { api } from "./api/api.ts";
-import { Constants } from "https://esm.sh/twisted@1.55.0";
+import { Constants } from "npm:twisted@1.55.0";
 
 export async function getCurrentRank(player: PlayerConfigEntry): Promise<Rank> {
   const response = await api.League.bySummoner(

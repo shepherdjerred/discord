@@ -1,9 +1,8 @@
-import { describe, test } from "vitest";
 import { matchToImage } from "./index.ts";
 import { PlayerConfigEntry } from "@glitter-boys/data";
 import { Player } from "@glitter-boys/data";
 import exampleMatch from "./match.json" assert { type: "json" };
-import { MatchV5DTOs } from "https://esm.sh/twisted@1.55.0/dist/models-dto/index.js";
+import { MatchV5DTOs } from "npm:twisted@1.55.0/dist/models-dto/index.js";
 import { createMatchObject } from "../../match.ts";
 
 describe("index", () => {

@@ -1,6 +1,6 @@
-import { ChatGPTAPI } from "chatgpt";
+import { ChatGPTAPI } from "https://esm.sh/chatgpt@5.2.5";
 import configuration from "../../configuration.ts";
-import Keyv from "keyv";
+import Keyv from "https://esm.sh/keyv@4.5.4";
 
 const keyv = new Keyv("sqlite://chatgpt.sqlite");
 

@@ -1,8 +1,8 @@
 import { userMention } from "npm:discord.js@14.14.1";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import { getChampionName } from "https://esm.sh/twisted@1.55.0/dist/constants/champions.js";
-import { CurrentGameInfoDTO } from "https://esm.sh/twisted@1.55.0/dist/models-dto/index.js";
+import { getChampionName } from "npm:twisted@1.55.0/dist/constants/champions.js";
+import { CurrentGameInfoDTO } from "npm:twisted@1.55.0/dist/models-dto/index.js";
 import { findParticipant } from "../../api/index.ts";
 import { PlayerConfigEntry } from "@glitter-boys/data";
 export function createDiscordMessage([player, game]: [

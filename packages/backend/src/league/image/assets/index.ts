@@ -1,4 +1,4 @@
-import { Font } from "https://esm.sh/satori";
+import { Font } from "https://esm.sh/satori@0.10.11";
 
 const fontPath = "src/league/image/assets/fonts";
 

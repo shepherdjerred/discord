@@ -5,11 +5,11 @@ import { getPlayer } from "../../player.ts";
 import {
   CopyObjectCommand,
   PutObjectCommand,
-} from "https://esm.sh/@aws-sdk/client-s3";
+} from "https://esm.sh/@aws-sdk/client-s3@3.461.0";
 import configuration from "../../../configuration.ts";
 import { s3 } from "../../s3.ts";
 import { getPlayerConfigs } from "../../playerConfig.ts";
-import { format } from "https://esm.sh/date-fns";
+import { format } from "https://esm.sh/date-fns@2.30.0";
 import { send } from "../../discord/channel.ts";
 import { leaderboardToDiscordMessage } from "./discord.ts";
 

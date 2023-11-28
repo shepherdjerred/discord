@@ -3,7 +3,7 @@ import { Player } from "@glitter-boys/data";
 import { Team, parseTeam } from "@glitter-boys/data";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import { MatchV5DTOs } from "https://esm.sh/twisted@1.55.0/dist/models-dto/index.js";
+import { MatchV5DTOs } from "npm:twisted@1.55.0/dist/models-dto/index.js";
 import { createChampionObject } from "./champion.ts";
 
 export function createMatchObject(
