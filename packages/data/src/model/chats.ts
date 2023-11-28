@@ -1,5 +1,5 @@
 // @deno-types="npm:@types/lodash"
-import _ from "npm:lodash";
+import _ from "npm:lodash@4.17.21";
 import { z } from "https://esm.sh/zod@3.22.4";
 
 // the chat for one player

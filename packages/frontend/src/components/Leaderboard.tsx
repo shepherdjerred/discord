@@ -21,7 +21,7 @@ import {
 } from "@glitter-boys/data";
 import { P, match } from "https://esm.sh/ts-pattern";
 // @deno-types="npm:@types/lodash"
-import _ from "npm:lodash";
+import _ from "npm:lodash@4.17.21";
 import {
   addDays,
   formatDistance,

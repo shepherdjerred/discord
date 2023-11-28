@@ -1,23 +1,26 @@
 VERSION 0.7
 
 deno:
-  FROM denoland/deno:lts
+  FROM denoland/deno
+  CACHE $DENO_DIR
   WORKDIR /workspace
 
-build.backend:
+prep.backend:
   FROM +deno
-  COPY packages/backend/deno.json packages/backend/deno.lock packages/backend/
-  RUN deno cache
-  COPY packages/backend packages/backend
-  COPY packages/data packages/data
+  COPY --dir packages/backend packages/data packages
   WORKDIR packages/backend
-  RUN deno compile src/index.ts
+  RUN deno cache src/index.ts
+
+test.backend:
+  FROM +prep.backend
+  RUN deno check src/index.ts
+  RUN deno lint
+  RUN deno test -A --unstable
 
 build.frontend:
   FROM +deno
-  COPY packages/backend/deno.json packages/backend/deno.lock packages/backend/
   RUN deno cache
-  COPY packages/backend packages/backend
+  COPY packages/frontend packages/frontend
   COPY packages/data packages/data
   # TODO: build with Astro
 
@@ -27,13 +30,14 @@ litefs:
 
 image.backend:
   ARG --required stage
-  FROM +build.backend
-  # or for debian/ubuntu-based images
+  FROM +prep.backend
+  # install litefs dependencies
+  # these are used by fly.io for replicating our sqlite database
   RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite3
   COPY +litefs/litefs /usr/local/bin/litefs
   COPY litefs.yaml /etc/litefs.yml
   # TODO: check this
-  RUN deno install npm:@resvg/resvg-js-linux-x64-gnu
+  # RUN deno install npm:@resvg/resvg-js-linux-x64-gnu
   COPY packages/backend/players.$stage.json players.json
   ENTRYPOINT litefs mount
   SAVE IMAGE glitter/backend:latest

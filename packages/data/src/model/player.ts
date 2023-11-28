@@ -2,7 +2,7 @@ import { z } from "https://esm.sh/zod@3.22.4";
 import { RankSchema } from "./rank.ts";
 import { PlayerConfigEntrySchema } from "./playerConfigEntry.ts";
 // @deno-types="npm:@types/lodash"
-import _ from "npm:lodash";
+import _ from "npm:lodash@4.17.21";
 import { rankToLeaguePoints } from "./leaguePoints.ts";
 
 export type Player = z.infer<typeof PlayerSchema>;

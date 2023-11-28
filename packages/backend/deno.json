@@ -1,5 +1,7 @@
 {
-  "tasks": {},
+  "tasks": {
+    "test:update": "deno test -A --unstable -- --update"
+  },
   "imports": {
     "@glitter-boys/data": "../data/src/index.ts"
   },

@@ -2,7 +2,7 @@ import { z } from "https://esm.sh/zod@3.22.4";
 import { PlayerConfigEntrySchema } from "./playerConfigEntry.ts";
 import { RankSchema } from "./rank.ts";
 // @deno-types="npm:@types/lodash"
-import _ from "npm:lodash";
+import _ from "npm:lodash@4.17.21";
 import { PlayerConfig } from "./playerConfig.ts";
 
 export type QueueType = z.infer<typeof QueueTypeSchema>;

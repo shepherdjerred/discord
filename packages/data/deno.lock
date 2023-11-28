@@ -4,6 +4,7 @@
     "specifiers": {
       "npm:@types/lodash": "npm:@types/lodash@4.14.202",
       "npm:lodash": "npm:lodash@4.17.21",
+      "npm:lodash@4.17.21": "npm:lodash@4.17.21",
       "npm:typeorm@0.3.17": "npm:typeorm@0.3.17"
     },
     "npm": {

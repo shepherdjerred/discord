@@ -9,6 +9,12 @@ import { renderTeam } from "./team.tsx";
 import { Match, lpDiffToString } from "@glitter-boys/data";
 
 export async function matchToImage(match: Match) {
+  const svg = await matchToSvg(match);
+  const png = await svgToPng(svg);
+  return png;
+}
+
+export async function matchToSvg(match: Match) {
   const minutes = _.round(match.durationInSeconds / 60);
 
   if (!match.teams.red || !match.teams.blue) {
@@ -88,6 +94,10 @@ export async function matchToImage(match: Match) {
     height: 3500,
     fonts,
   });
+  return svg;
+}
+
+export function svgToPng(svg: string) {
   const resvg = new Resvg(svg, {
     dpi: 600,
     shapeRendering: 2,
