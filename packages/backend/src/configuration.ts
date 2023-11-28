@@ -4,6 +4,7 @@ import env from "https://esm.sh/env-var@7.4.1";
 dotenv.config();
 
 export default {
+  port: env.get("PORT").asPortNumber(),
   discordToken: env.get("DISCORD_TOKEN").required().asString(),
   applicationId: env.get("APPLICATION_ID").required().asString(),
   guildId: env.get("GUILD_ID").required().asString(),
