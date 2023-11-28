@@ -1,7 +1,5 @@
 {
-  "tasks": {
-    "dev": "deno run --watch main.ts"
-  },
+  "tasks": {},
   "imports": {
     "@glitter-boys/data": "../data/src/index.ts"
   },

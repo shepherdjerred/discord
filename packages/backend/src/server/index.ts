@@ -7,4 +7,9 @@ const serveFiles = (req: Request) =>
     respondWith: (r: Response) => r,
   });
 
-Deno.serve({ port: configuration.port || 8000 }, (req) => serveFiles(req));
+Deno.serve({ port: configuration.port || 8000 }, (req) => {
+  if (new URL(req.url).pathname === "/") {
+    return new Response("Hello :)");
+  }
+  return serveFiles(req);
+});
