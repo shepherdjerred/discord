@@ -1,5 +1,5 @@
-import { Entity, PrimaryColumn, OneToMany, type Relation } from "typeorm";
-import { Karma } from "./Karma.js";
+import { Entity, PrimaryColumn, OneToMany, type Relation } from "npm:typeorm";
+import { Karma } from "./Karma.ts";
 
 @Entity()
 export class Person {

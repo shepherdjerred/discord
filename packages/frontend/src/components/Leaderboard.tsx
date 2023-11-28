@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "https://esm.sh/react";
 
 import {
   createColumnHelper,
@@ -19,10 +19,15 @@ import {
   rankToLeaguePoints,
   type Player,
 } from "@glitter-boys/data";
-import { P, match } from "ts-pattern";
-import _ from "lodash";
-import { addDays, formatDistance, isWithinInterval } from "date-fns";
-import { useState, useEffect } from "react";
+import { P, match } from "https://esm.sh/ts-pattern";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import {
+  addDays,
+  formatDistance,
+  isWithinInterval,
+} from "https://esm.sh/date-fns";
+import { useState, useEffect } from "https://esm.sh/react";
 import classnames from "classnames";
 
 type HistoricalLeaderboard = HistoricalLeaderboardEntry[];
@@ -61,7 +66,9 @@ const columns = [
       if (previous === undefined) {
         return "-";
       }
-      return match(info.getValue().current.leaguePointsDelta - previous.leaguePointsDelta)
+      return match(
+        info.getValue().current.leaguePointsDelta - previous.leaguePointsDelta
+      )
         .with(0, () => "-")
         .with(P.number.positive(), (value) => `+${value}`)
         .with(P.number.negative(), (value) => `${value}`)
@@ -76,7 +83,8 @@ const columns = [
         return info.current.leaguePointsDelta - previous.leaguePointsDelta;
       };
       return (
-        getVal(a.getValue("lp-difference-since-last-update")) - getVal(b.getValue("lp-difference-since-last-update"))
+        getVal(a.getValue("lp-difference-since-last-update")) -
+        getVal(b.getValue("lp-difference-since-last-update"))
       );
     },
     id: "lp-difference-since-last-update",
@@ -85,14 +93,17 @@ const columns = [
     header: "Rank",
     cell: (info) => rankToString(info.getValue()),
     id: "rank",
-    sortingFn: (a, b) => rankToLeaguePoints(a.getValue("rank")) - rankToLeaguePoints(b.getValue("rank")),
+    sortingFn: (a, b) =>
+      rankToLeaguePoints(a.getValue("rank")) -
+      rankToLeaguePoints(b.getValue("rank")),
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Games",
     cell: (info) =>
       info.getValue().currentRank.wins -
       info.getValue().config.league.initialRank.wins +
-      (info.getValue().currentRank.losses - info.getValue().config.league.initialRank.losses),
+      (info.getValue().currentRank.losses -
+        info.getValue().config.league.initialRank.losses),
     id: "games",
     sortingFn: (a, b) => {
       const getVal = (info: Player) => {
@@ -107,7 +118,9 @@ const columns = [
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Wins",
-    cell: (info) => info.getValue().currentRank.wins - info.getValue().config.league.initialRank.wins,
+    cell: (info) =>
+      info.getValue().currentRank.wins -
+      info.getValue().config.league.initialRank.wins,
     id: "wins",
     sortingFn: (a, b) => {
       const getVal = (info: Player) => {
@@ -118,7 +131,9 @@ const columns = [
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Losses",
-    cell: (info) => info.getValue().currentRank.losses - info.getValue().config.league.initialRank.losses,
+    cell: (info) =>
+      info.getValue().currentRank.losses -
+      info.getValue().config.league.initialRank.losses,
     id: "losses",
     sortingFn: (a, b) => {
       const getVal = (info: Player) => {
@@ -131,11 +146,13 @@ const columns = [
     header: "Win Rate",
     cell: (info) => {
       const percent = _.round(
-        ((info.getValue().currentRank.wins - info.getValue().config.league.initialRank.wins) /
+        ((info.getValue().currentRank.wins -
+          info.getValue().config.league.initialRank.wins) /
           (info.getValue().currentRank.wins -
             info.getValue().config.league.initialRank.wins +
-            (info.getValue().currentRank.losses - info.getValue().config.league.initialRank.losses))) *
-          100,
+            (info.getValue().currentRank.losses -
+              info.getValue().config.league.initialRank.losses))) *
+          100
       );
       return percent ? `${percent}%` : "-";
     },
@@ -146,8 +163,9 @@ const columns = [
           ((info.currentRank.wins - info.config.league.initialRank.wins) /
             (info.currentRank.wins -
               info.config.league.initialRank.wins +
-              (info.currentRank.losses - info.config.league.initialRank.losses))) *
-            100,
+              (info.currentRank.losses -
+                info.config.league.initialRank.losses))) *
+            100
         );
         return percent ? percent : -9999;
       };
@@ -158,7 +176,14 @@ const columns = [
 
 const now = new Date();
 // TODO: this should be PST
-const todayAtNoon = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
+const todayAtNoon = new Date(
+  now.getFullYear(),
+  now.getMonth(),
+  now.getDate(),
+  12,
+  0,
+  0
+);
 const tomorrowAtNoon = addDays(todayAtNoon, 1);
 // 3am CT
 const end = new Date(2024, 1, 3, 3, 0, 0);
@@ -171,20 +196,27 @@ if (isWithinInterval(now, { start: todayAtNoon, end: tomorrowAtNoon })) {
   next = todayAtNoon;
 }
 
-function gameCount(leaderboard: HistoricalLeaderboardEntry): number | undefined {
+function gameCount(
+  leaderboard: HistoricalLeaderboardEntry
+): number | undefined {
   if (leaderboard.previous === undefined) {
     return undefined;
   }
   return (
     leaderboard.current.player.currentRank.wins -
     leaderboard.previous.player.currentRank.wins +
-    (leaderboard.current.player.currentRank.losses - leaderboard.previous.player.currentRank.losses)
+    (leaderboard.current.player.currentRank.losses -
+      leaderboard.previous.player.currentRank.losses)
   );
 }
 
 export function LeaderboardComponent() {
-  const [currentLeaderboard, setCurrentLeaderboard] = useState<Leaderboard | undefined>(undefined);
-  const [leaderboard, setLeaderboard] = useState<HistoricalLeaderboard | undefined>(undefined);
+  const [currentLeaderboard, setCurrentLeaderboard] = useState<
+    Leaderboard | undefined
+  >(undefined);
+  const [leaderboard, setLeaderboard] = useState<
+    HistoricalLeaderboard | undefined
+  >(undefined);
   const [events, setEvents] = useState<string[]>([]);
   const [sorting, setSorting] = useState<SortingState>([
     {
@@ -195,17 +227,26 @@ export function LeaderboardComponent() {
 
   useEffect(() => {
     (async () => {
-      let result = await fetch("https://prod.bucket.glitter-boys.com/leaderboard.json");
+      let result = await fetch(
+        "https://prod.bucket.glitter-boys.com/leaderboard.json"
+      );
       const currentLeaderboard = LeaderboardSchema.parse(await result.json());
       setCurrentLeaderboard(currentLeaderboard);
 
-      result = await fetch("https://prod.bucket.glitter-boys.com/previous.json");
+      result = await fetch(
+        "https://prod.bucket.glitter-boys.com/previous.json"
+      );
       const previousLeaderboard = LeaderboardSchema.parse(await result.json());
 
-      const historical: HistoricalLeaderboardEntry[] = _.chain(currentLeaderboard.contents)
+      const historical: HistoricalLeaderboardEntry[] = _.chain(
+        currentLeaderboard.contents
+      )
         .map((entry) => {
           const player = entry.player.config.name;
-          const previous = _.find(previousLeaderboard.contents, (entry) => entry.player.config.name === player);
+          const previous = _.find(
+            previousLeaderboard.contents,
+            (entry) => entry.player.config.name === player
+          );
           return {
             current: entry,
             previous,
@@ -217,10 +258,17 @@ export function LeaderboardComponent() {
         if (entry.previous === undefined) {
           return [];
         }
-        if (wasPromoted(entry.previous.player.currentRank, entry.current.player.currentRank)) {
+        if (
+          wasPromoted(
+            entry.previous.player.currentRank,
+            entry.current.player.currentRank
+          )
+        ) {
           return [
-            `${entry.current.player.config.name} was promoted: ${rankToSimpleString(
-              entry.previous.player.currentRank,
+            `${
+              entry.current.player.config.name
+            } was promoted: ${rankToSimpleString(
+              entry.previous.player.currentRank
             )} -> ${rankToSimpleString(entry.current.player.currentRank)}`,
           ];
         } else {
@@ -231,10 +279,17 @@ export function LeaderboardComponent() {
         if (entry.previous === undefined) {
           return [];
         }
-        if (wasDemoted(entry.previous.player.currentRank, entry.current.player.currentRank)) {
+        if (
+          wasDemoted(
+            entry.previous.player.currentRank,
+            entry.current.player.currentRank
+          )
+        ) {
           return [
-            `${entry.current.player.config.name} was demoted: ${rankToSimpleString(
-              entry.previous.player.currentRank,
+            `${
+              entry.current.player.config.name
+            } was demoted: ${rankToSimpleString(
+              entry.previous.player.currentRank
             )} -> ${rankToSimpleString(entry.current.player.currentRank)}`,
           ];
         } else {
@@ -276,8 +331,12 @@ export function LeaderboardComponent() {
           <hgroup className="">
             <h1 className="text-3xl">Leaderboard</h1>
             <p>
-              Updated {currentLeaderboard?.date !== undefined ? formatDistance(currentLeaderboard.date, now) : ""} ago.
-              Next update in {formatDistance(now, next)}. Competition ends in {formatDistance(now, end)}.
+              Updated{" "}
+              {currentLeaderboard?.date !== undefined
+                ? formatDistance(currentLeaderboard.date, now)
+                : ""}{" "}
+              ago. Next update in {formatDistance(now, next)}. Competition ends
+              in {formatDistance(now, end)}.
             </p>
           </hgroup>
           <table className="overflow-auto text-left">
@@ -285,15 +344,23 @@ export function LeaderboardComponent() {
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <th key={header.id} className="p-2 bg-gray-100 dark:bg-black">
+                    <th
+                      key={header.id}
+                      className="p-2 bg-gray-100 dark:bg-black"
+                    >
                       {header.isPlaceholder ? null : (
                         <div
                           {...{
-                            className: header.column.getCanSort() ? "cursor-pointer select-none" : "",
+                            className: header.column.getCanSort()
+                              ? "cursor-pointer select-none"
+                              : "",
                             onClick: header.column.getToggleSortingHandler(),
                           }}
                         >
-                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                           {{
                             asc: " 🔼",
                             desc: " 🔽",
@@ -309,8 +376,14 @@ export function LeaderboardComponent() {
               {table.getRowModel().rows.map((row) => (
                 <tr key={row.id}>
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className={classnames({ "p-2": true, border: true })}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    <td
+                      key={cell.id}
+                      className={classnames({ "p-2": true, border: true })}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </td>
                   ))}
                 </tr>

@@ -1,5 +1,5 @@
-import { match } from "ts-pattern";
-import { z } from "zod";
+import { match } from "https://esm.sh/ts-pattern";
+import { z } from "https://esm.sh/zod";
 
 export type Team = z.infer<typeof TeamSchema>;
 export const TeamSchema = z.enum(["red", "blue"]);

@@ -1,13 +1,14 @@
-import { CurrentGameInfoDTO } from "twisted/dist/models-dto/index.js";
-import _ from "lodash";
-import * as uuid from "uuid";
+import { CurrentGameInfoDTO } from "https://esm.sh/twisted/dist/models-dto/index.js";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import * as uuid from "https://esm.sh/uuid";
 import { PlayerConfigEntry, getPlayersNotInGame } from "@glitter-boys/data";
-import { getCurrentSoloQueueGame } from "../../api/index.js";
-import { createDiscordMessage } from "./discord.js";
-import { send } from "../../discord/channel.js";
-import { getCurrentRank } from "../../rank.js";
-import { getPlayerConfigs } from "../../playerConfig.js";
-import { getState, setState } from "../../state.js";
+import { getCurrentSoloQueueGame } from "../../api/index.ts";
+import { createDiscordMessage } from "https://esm.sh/discord.js";
+import { send } from "../../discord/channel.ts";
+import { getCurrentRank } from "../../rank.ts";
+import { getPlayerConfigs } from "../../playerConfig.ts";
+import { getState, setState } from "../../state.ts";
 
 export async function checkPreMatch() {
   const players = await getPlayerConfigs();
@@ -16,7 +17,9 @@ export async function checkPreMatch() {
   const playersNotInGame = getPlayersNotInGame(players, getState());
 
   console.log("calling spectator API");
-  const playerStatus = await Promise.all(_.map(playersNotInGame, getCurrentSoloQueueGame));
+  const playerStatus = await Promise.all(
+    _.map(playersNotInGame, getCurrentSoloQueueGame)
+  );
 
   console.log("filtering players not in game");
   const playersInGame = _.chain(playersNotInGame)
@@ -30,7 +33,7 @@ export async function checkPreMatch() {
     _.chain(getState().gamesStarted)
       .map((game) => game.matchId)
       .some((candidate) => candidate === game.gameId)
-      .value(),
+      .value()
   );
 
   console.log("sending messages");
@@ -57,6 +60,6 @@ export async function checkPreMatch() {
           gamesStarted: _.concat(getState().gamesStarted, entry),
         });
       })
-      .value(),
+      .value()
   );
 }

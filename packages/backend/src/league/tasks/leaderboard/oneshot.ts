@@ -1,5 +1,5 @@
-import client from "../../../discord/client.js";
-import { postLeaderboardMessage } from "./task.js";
+import client from "../../../discord/client.ts";
+import { postLeaderboardMessage } from "./task.ts";
 
 await postLeaderboardMessage();
 await client.destroy();

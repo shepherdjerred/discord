@@ -7,10 +7,11 @@ import {
   userMention,
   inlineCode,
   bold,
-} from "discord.js";
-import { dataSource } from "../db/index.js";
-import _ from "lodash";
-import client from "../discord/client.js";
+} from "https://esm.sh/discord.js";
+import { dataSource } from "../db/index.ts";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import client from "../discord/client.ts";
 
 const karmaCommand = new SlashCommandBuilder()
   .setName("karma")
@@ -20,22 +21,33 @@ const karmaCommand = new SlashCommandBuilder()
       .setName("give")
       .setDescription("Give karma to someone")
       .addUserOption((option) =>
-        option.setName("target").setDescription("The person you'd like to give karma to").setRequired(true),
+        option
+          .setName("target")
+          .setDescription("The person you'd like to give karma to")
+          .setRequired(true)
       )
       .addStringOption((option) =>
-        option.setName("reason").setDescription("An optional reason about why they deserve karma").setMaxLength(200),
-      ),
+        option
+          .setName("reason")
+          .setDescription("An optional reason about why they deserve karma")
+          .setMaxLength(200)
+      )
   )
   .addSubcommand((subcommand) =>
-    subcommand.setName("leaderboard").setDescription("See karma values for everyone on the server"),
+    subcommand
+      .setName("leaderboard")
+      .setDescription("See karma values for everyone on the server")
   )
   .addSubcommand((subcommand) =>
     subcommand
       .setName("history")
       .setDescription("View recent changes to a person's karma")
       .addUserOption((option) =>
-        option.setName("target").setDescription("The person whose karma history you'd like to view").setRequired(true),
-      ),
+        option
+          .setName("target")
+          .setDescription("The person whose karma history you'd like to view")
+          .setRequired(true)
+      )
   );
 
 async function getOrCreate(id: string): Promise<Person> {
@@ -43,7 +55,14 @@ async function getOrCreate(id: string): Promise<Person> {
     where: {
       id,
     },
-    relations: ["received", "given", "given.receiver", "given.giver", "received.receiver", "received.giver"],
+    relations: [
+      "received",
+      "given",
+      "given.receiver",
+      "given.giver",
+      "received.receiver",
+      "received.giver",
+    ],
   });
   if (!person) {
     person = new Person();
@@ -55,7 +74,12 @@ async function getOrCreate(id: string): Promise<Person> {
   return person;
 }
 
-async function modifyKarma(giverId: string, receiverId: string, amount: number, reason?: string) {
+async function modifyKarma(
+  giverId: string,
+  receiverId: string,
+  amount: number,
+  reason?: string
+) {
   const giver = await getOrCreate(giverId);
   const receiver = await getOrCreate(receiverId);
 
@@ -86,37 +110,50 @@ async function handleKarmaGive(interaction: CommandInteraction) {
 
   if (receiverUser.bot) {
     await interaction.reply({
-      content: `You can't give karma to ${userMention(receiverUser.id)} because they're a bot`,
+      content: `You can't give karma to ${userMention(
+        receiverUser.id
+      )} because they're a bot`,
       ephemeral: true,
     });
     return;
   }
 
   if (receiverUser.id === giverUser.id) {
-    await modifyKarma(giverUser.id, receiverUser.id, -1, "tried altering their own karma");
+    await modifyKarma(
+      giverUser.id,
+      receiverUser.id,
+      -1,
+      "tried altering their own karma"
+    );
     const newKarma = await getKarma(receiverUser.id);
     await interaction.reply({
-      content: `${userMention(giverUser.id)} tried altering their karma. SMH my head. ${bold(
-        "-1",
+      content: `${userMention(
+        giverUser.id
+      )} tried altering their karma. SMH my head. ${bold(
+        "-1"
       )} karma. They now have ${bold(newKarma.toString())} karma.`,
     });
     return;
   }
 
-  const reason = interaction.options.get("reason", false)?.value as string | undefined;
+  const reason = interaction.options.get("reason", false)?.value as
+    | string
+    | undefined;
   await modifyKarma(giverUser.id, receiverUser.id, 1, reason);
   const newReceiverKarma = await getKarma(receiverUser.id);
   if (reason) {
     await interaction.reply(
-      `${userMention(giverUser.id)} gave karma to ${userMention(receiverUser.id)} because ${inlineCode(
-        reason,
-      )}. They now have ${bold(newReceiverKarma.toString())} karma.`,
+      `${userMention(giverUser.id)} gave karma to ${userMention(
+        receiverUser.id
+      )} because ${inlineCode(reason)}. They now have ${bold(
+        newReceiverKarma.toString()
+      )} karma.`
     );
   } else {
     await interaction.reply(
-      `${userMention(giverUser.id)} gave karma to ${userMention(receiverUser.id)}. They now have ${bold(
-        newReceiverKarma.toString(),
-      )} karma.`,
+      `${userMention(giverUser.id)} gave karma to ${userMention(
+        receiverUser.id
+      )}. They now have ${bold(newReceiverKarma.toString())} karma.`
     );
   }
 }
@@ -144,7 +181,8 @@ async function handleKarmaLeaderboard(interaction: CommandInteraction) {
         prev = value.karmaReceived;
 
         // mention the user who called the leaderboard command
-        let user = (await client.users.fetch(value.id, { cache: true })).username;
+        let user = (await client.users.fetch(value.id, { cache: true }))
+          .username;
         if (interaction.user.id === value.id) {
           user = userMention(interaction.user.id);
         }
@@ -156,10 +194,12 @@ async function handleKarmaLeaderboard(interaction: CommandInteraction) {
         }
 
         return `${rankString}: ${user} (${value.karmaReceived} karma)`;
-      }),
+      })
     )
   ).join("\n");
-  await interaction.editReply({ content: `Karma Leaderboard:\n${leaderboard}` });
+  await interaction.editReply({
+    content: `Karma Leaderboard:\n${leaderboard}`,
+  });
 }
 
 async function handleKarmaHistory(interaction: CommandInteraction) {
@@ -171,18 +211,18 @@ async function handleKarmaHistory(interaction: CommandInteraction) {
     .slice(0, 10)
     .map((item) => {
       if (target.id === item.giver.id) {
-        let message = `${time(item.datetime)} Gave ${bold(item.amount.toString())} karma to ${userMention(
-          item.receiver.id,
-        )}`;
+        let message = `${time(item.datetime)} Gave ${bold(
+          item.amount.toString()
+        )} karma to ${userMention(item.receiver.id)}`;
         if (item.reason) {
           message += ` for ${inlineCode(item.reason)}`;
         }
         return message;
       }
       if (target.id === item.receiver.id) {
-        let message = `${time(item.datetime)} Received ${bold(item.amount.toString())} karma from ${userMention(
-          item.giver.id,
-        )}`;
+        let message = `${time(item.datetime)} Received ${bold(
+          item.amount.toString()
+        )} karma from ${userMention(item.giver.id)}`;
         if (item.reason) {
           message += ` for ${inlineCode(item.reason)}`;
         }
@@ -191,7 +231,10 @@ async function handleKarmaHistory(interaction: CommandInteraction) {
       return "Unknown";
     })
     .join("\n");
-  await interaction.reply({ content: `${userMention(target.id)}'s Karma History:\n${str}`, ephemeral: true });
+  await interaction.reply({
+    content: `${userMention(target.id)}'s Karma History:\n${str}`,
+    ephemeral: true,
+  });
 }
 
 async function handleKarma(interaction: ChatInputCommandInteraction) {

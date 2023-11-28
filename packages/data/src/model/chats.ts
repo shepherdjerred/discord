@@ -1,5 +1,6 @@
-import _ from "lodash";
-import { z } from "zod";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import { z } from "https://esm.sh/zod";
 
 // the chat for one player
 // the key is the reviewer, the value is the parent message id

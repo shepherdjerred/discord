@@ -1,7 +1,7 @@
-import { Events } from "discord.js";
-import { handleKarma } from "../karma/commands.js";
-import "./rest.js";
-import client from "./client.js";
+import { Events } from "https://esm.sh/discord.js";
+import { handleKarma } from "../karma/commands.ts";
+import "./rest.ts";
+import client from "./client.ts";
 
 client.on(Events.InteractionCreate, async (interaction) => {
   try {

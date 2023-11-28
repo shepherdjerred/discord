@@ -1,5 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, type Relation } from "typeorm";
-import { Person } from "./Person.js";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  type Relation,
+} from "npm:typeorm";
+import { Person } from "./Person.ts";
 
 @Entity()
 export class Karma {

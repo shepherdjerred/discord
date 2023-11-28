@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { chatGpt } from "./api.js";
-import { readFile } from "fs/promises";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import { chatGpt } from "./api.ts";
 import { Match } from "@glitter-boys/data";
 
 const promptPath = "src/league/feedback/prompts";
@@ -13,10 +13,25 @@ type Bios = {
 };
 
 const bios: Bios[] = [
-  { name: "Aaron", file: "aaron.txt", champions: ["Aatrox", "Yone", "Yasou"], lanes: ["top"] },
-  { name: "Brian", file: "brian.txt", champions: ["Evelyn", "Senna"], lanes: ["Jungle"] },
+  {
+    name: "Aaron",
+    file: "aaron.txt",
+    champions: ["Aatrox", "Yone", "Yasou"],
+    lanes: ["top"],
+  },
+  {
+    name: "Brian",
+    file: "brian.txt",
+    champions: ["Evelyn", "Senna"],
+    lanes: ["Jungle"],
+  },
   { name: "Irfan", file: "irfan.txt", champions: ["Zayah"], lanes: ["ADC"] },
-  { name: "Neko Ryan", file: "nekoryan.txt", champions: ["Vayne", "Akali", "Ahri"], lanes: ["Mid"] },
+  {
+    name: "Neko Ryan",
+    file: "nekoryan.txt",
+    champions: ["Vayne", "Akali", "Ahri"],
+    lanes: ["Mid"],
+  },
 ];
 
 export async function generateFeedbackMessage(match: Match) {
@@ -36,11 +51,19 @@ export async function generateFeedbackMessage(match: Match) {
     player = { name: "Generic", file: "generic.txt", champions: [], lanes: [] };
   }
 
-  const rawSystemMessage = (await readFile(`${promptPath}/system_message.txt`)).toString();
-  const rawBasePrompt = (await readFile(`${promptPath}/base.txt`)).toString();
-  const reviewerBioPrompt = (await readFile(`${promptPath}/bios/${reviewer.file}`)).toString();
-  const reviewerInstructionsPrompt = (await readFile(`${promptPath}/instructions/${reviewer.file}`)).toString();
-  const playerBioPrompt = (await readFile(`${promptPath}/bios/${player.file}`)).toString();
+  const rawSystemMessage = await Deno.readTextFile(
+    `${promptPath}/system_message.txt`
+  );
+  const rawBasePrompt = await Deno.readTextFile(`${promptPath}/base.txt`);
+  const reviewerBioPrompt = await Deno.readTextFile(
+    `${promptPath}/bios/${reviewer.file}`
+  );
+  const reviewerInstructionsPrompt = await Deno.readTextFile(
+    `${promptPath}/instructions/${reviewer.file}`
+  );
+  const playerBioPrompt = await Deno.readTextFile(
+    `${promptPath}/bios/${player.file}`
+  );
 
   const replacements = [
     {
@@ -93,7 +116,9 @@ export async function generateFeedbackMessage(match: Match) {
     },
     {
       placeholder: "<OPPONENT CHAMPION>",
-      replacement: match.player.laneOpponent ? match.player.laneOpponent.championName : "unknown",
+      replacement: match.player.laneOpponent
+        ? match.player.laneOpponent.championName
+        : "unknown",
     },
     {
       placeholder: "<MATCH REPORT>",
@@ -103,13 +128,19 @@ export async function generateFeedbackMessage(match: Match) {
 
   let basePrompt = rawBasePrompt;
   for (const replacement of replacements) {
-    basePrompt = basePrompt.replaceAll(replacement.placeholder, replacement.replacement);
+    basePrompt = basePrompt.replaceAll(
+      replacement.placeholder,
+      replacement.replacement
+    );
   }
   console.log(basePrompt);
 
   let systemMessage = rawSystemMessage;
   for (const replacement of replacements) {
-    systemMessage = systemMessage.replaceAll(replacement.placeholder, replacement.replacement);
+    systemMessage = systemMessage.replaceAll(
+      replacement.placeholder,
+      replacement.replacement
+    );
   }
   console.log(systemMessage);
 

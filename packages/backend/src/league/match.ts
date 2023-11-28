@@ -1,13 +1,21 @@
 import { Match } from "@glitter-boys/data";
 import { Player } from "@glitter-boys/data";
 import { Team, parseTeam } from "@glitter-boys/data";
-import _ from "lodash";
-import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
-import { createChampionObject } from "./champion.js";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import { MatchV5DTOs } from "https://esm.sh/twisted/dist/models-dto/index.js";
+import { createChampionObject } from "./champion.ts";
 
-export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpChange: number): Match {
+export function createMatchObject(
+  player: Player,
+  dto: MatchV5DTOs.MatchDto,
+  lpChange: number
+): Match {
   const playerParticipant = _.chain(dto.info.participants)
-    .filter((participant) => participant.puuid === player.config.league.leagueAccount.puuid)
+    .filter(
+      (participant) =>
+        participant.puuid === player.config.league.leagueAccount.puuid
+    )
     .first()
     .value();
 
@@ -26,7 +34,9 @@ export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpC
 
   const team = parseTeam(playerParticipant.teamId);
   if (team == undefined) {
-    throw new Error(`invalid team: ${JSON.stringify(playerParticipant.teamId)}`);
+    throw new Error(
+      `invalid team: ${JSON.stringify(playerParticipant.teamId)}`
+    );
   }
 
   const lane = createChampionObject(playerParticipant).lane;
@@ -52,8 +62,10 @@ export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpC
     player: {
       playerConfig: player.config,
       leaguePointsDelta: lpChange,
-      tournamentWins: player.currentRank.wins - player.config.league.initialRank.wins,
-      tournamentLosses: player.currentRank.losses - player.config.league.initialRank.losses,
+      tournamentWins:
+        player.currentRank.wins - player.config.league.initialRank.wins,
+      tournamentLosses:
+        player.currentRank.losses - player.config.league.initialRank.losses,
       champion: createChampionObject(playerParticipant),
       outcome,
       team,

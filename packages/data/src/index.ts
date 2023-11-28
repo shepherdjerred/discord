@@ -1,2 +1,2 @@
-export * from "./karma/index.js";
-export * from "./model/index.js";
+export * from "./karma/index.ts";
+export * from "./model/index.ts";

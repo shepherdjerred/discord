@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "https://esm.sh/zod";
 
 export type LeagueAccount = z.infer<typeof LeagueAcccountSchema>;
 export const LeagueAcccountSchema = z.strictObject({

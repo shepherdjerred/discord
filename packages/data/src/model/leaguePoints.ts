@@ -1,8 +1,8 @@
-import { match, P } from "ts-pattern";
-import { z } from "zod";
-import { numberOfDivisions } from "./division.js";
-import { Rank } from "./rank.js";
-import { Tier } from "./tier.js";
+import { match, P } from "https://esm.sh/ts-pattern";
+import { z } from "https://esm.sh/zod";
+import { numberOfDivisions } from "./division.ts";
+import { Rank } from "./rank.ts";
+import { Tier } from "./tier.ts";
 
 export type LeaguePoints = z.infer<typeof LeaguePointsSchema>;
 export const LeaguePointsSchema = z.number().brand("League Points");
@@ -10,7 +10,8 @@ export const LeaguePointsSchema = z.number().brand("League Points");
 export const leaguePointsPerDivision = 100;
 
 export function rankToLeaguePoints(rank: Rank): LeaguePoints {
-  const divisionLp = (numberOfDivisions - rank.division) * leaguePointsPerDivision;
+  const divisionLp =
+    (numberOfDivisions - rank.division) * leaguePointsPerDivision;
   const tierLp = tierToLeaguePoints(rank.tier);
   return LeaguePointsSchema.parse(divisionLp + tierLp + rank.lp);
 }
@@ -32,7 +33,9 @@ export function tierToOrdinal(tier: Tier): number {
 
 function tierToLeaguePoints(tier: Tier): LeaguePoints {
   const multiplier = tierToOrdinal(tier);
-  return LeaguePointsSchema.parse(multiplier * numberOfDivisions * leaguePointsPerDivision);
+  return LeaguePointsSchema.parse(
+    multiplier * numberOfDivisions * leaguePointsPerDivision
+  );
 }
 
 export function lpDiffToString(input: number): string {

@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-import env from "env-var";
+import dotenv from "https://esm.sh/dotenv";
+import env from "https://esm.sh/env-var";
 
 dotenv.config();
 

@@ -1,8 +1,9 @@
-import { z } from "zod";
-import { RankSchema } from "./rank.js";
-import { PlayerConfigEntrySchema } from "./playerConfigEntry.js";
-import _ from "lodash";
-import { rankToLeaguePoints } from "./leaguePoints.js";
+import { z } from "https://esm.sh/zod";
+import { RankSchema } from "./rank.ts";
+import { PlayerConfigEntrySchema } from "./playerConfigEntry.ts";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import { rankToLeaguePoints } from "./leaguePoints.ts";
 
 export type Player = z.infer<typeof PlayerSchema>;
 export const PlayerSchema = z.strictObject({
@@ -11,7 +12,10 @@ export const PlayerSchema = z.strictObject({
 });
 
 export function getLeaguePointsDelta(player: Player) {
-  return rankToLeaguePoints(player.currentRank) - rankToLeaguePoints(player.config.league.initialRank);
+  return (
+    rankToLeaguePoints(player.currentRank) -
+    rankToLeaguePoints(player.config.league.initialRank)
+  );
 }
 
 export function sortPlayers(players: Player[]) {

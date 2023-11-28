@@ -1,8 +1,14 @@
 // required for type orm
-import "reflect-metadata";
-import { DataSource } from "typeorm";
-import { Karma, KarmaCounts, KarmaGiven, KarmaReceived, Person } from "@glitter-boys/data";
-import configuration from "../configuration.js";
+import "https://esm.sh/reflect-metadata";
+import { DataSource } from "npm:typeorm";
+import {
+  Karma,
+  KarmaCounts,
+  KarmaGiven,
+  KarmaReceived,
+  Person,
+} from "@glitter-boys/data";
+import configuration from "../configuration.ts";
 
 export const dataSource = new DataSource({
   type: "sqlite",

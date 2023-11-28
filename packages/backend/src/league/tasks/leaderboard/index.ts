@@ -1,5 +1,11 @@
-import { Player, sortPlayers, getLeaguePointsDelta, Leaderboard } from "@glitter-boys/data";
-import _ from "lodash";
+import {
+  Player,
+  sortPlayers,
+  getLeaguePointsDelta,
+  Leaderboard,
+} from "@glitter-boys/data";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
 
 export function toLeaderboard(players: Player[]): Leaderboard {
   let position = 0;

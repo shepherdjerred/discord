@@ -1,5 +1,5 @@
-import { ViewColumn, DataSource, ViewEntity } from "typeorm";
-import { Karma } from "./Karma.js";
+import { ViewColumn, DataSource, ViewEntity } from "npm:typeorm";
+import { Karma } from "./Karma.ts";
 
 @ViewEntity({
   expression: (dataSource: DataSource) =>

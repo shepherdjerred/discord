@@ -1,12 +1,18 @@
-import React from "react";
-import { renderChampion } from "./champion.js";
-import _ from "lodash";
-import { palette } from "../assets/colors.js";
-import { font } from "../assets/index.js";
+import React from "https://esm.sh/react";
+import { renderChampion } from "./champion.tsx";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import { palette } from "../assets/colors.ts";
+import { font } from "../assets/index.ts";
 import { Roster } from "@glitter-boys/data";
 import { Team } from "@glitter-boys/data";
 
-export function renderTeam(team: Roster, side: Team, highlight: string, durationInMinutes: number) {
+export function renderTeam(
+  team: Roster,
+  side: Team,
+  highlight: string,
+  durationInMinutes: number
+) {
   const teamKills = _.sumBy(team, (champion) => champion.kills);
   const teamDeaths = _.sumBy(team, (champion) => champion.deaths);
   const teamAssists = _.sumBy(team, (champion) => champion.assists);
@@ -31,10 +37,17 @@ export function renderTeam(team: Roster, side: Team, highlight: string, duration
         <span style={{ fontWeight: 700 }}>
           {teamKills} / {teamDeaths} / {teamAssists}
         </span>
-        <span style={{ fontWeight: 700 }}>{teamGold.toLocaleString()} gold</span>
+        <span style={{ fontWeight: 700 }}>
+          {teamGold.toLocaleString()} gold
+        </span>
       </div>
       {_.map(team, (champion) =>
-        renderChampion(champion, champion.championName === highlight, durationInMinutes, mostDamage),
+        renderChampion(
+          champion,
+          champion.championName === highlight,
+          durationInMinutes,
+          mostDamage
+        )
       )}
     </div>
   );

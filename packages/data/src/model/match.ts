@@ -1,10 +1,11 @@
-import _ from "lodash";
-import { z } from "zod";
-import { ChampionSchema } from "./champion.js";
-import { PlayerConfigEntrySchema } from "./playerConfigEntry.js";
-import { RosterSchema } from "./roster.js";
-import { TeamSchema } from "./team.js";
-import { LaneSchema } from "./lane.js";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import { z } from "https://esm.sh/zod";
+import { ChampionSchema } from "./champion.ts";
+import { PlayerConfigEntrySchema } from "./playerConfigEntry.ts";
+import { RosterSchema } from "./roster.ts";
+import { TeamSchema } from "./team.ts";
+import { LaneSchema } from "./lane.ts";
 
 export type Match = z.infer<typeof MatchSchema>;
 export const MatchSchema = z.strictObject({

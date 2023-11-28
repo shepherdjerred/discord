@@ -1,8 +1,9 @@
-import { z } from "zod";
-import { DivisionSchema, divisionToString } from "./division.js";
-import { TierSchema } from "./tier.js";
-import _ from "lodash";
-import { tierToOrdinal } from "./leaguePoints.js";
+import { z } from "https://esm.sh/zod";
+import { DivisionSchema, divisionToString } from "./division.ts";
+import { TierSchema } from "./tier.ts";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import { tierToOrdinal } from "./leaguePoints.ts";
 
 export type Rank = z.infer<typeof RankSchema>;
 export const RankSchema = z.strictObject({
@@ -14,7 +15,9 @@ export const RankSchema = z.strictObject({
 });
 
 export function rankToString(rank: Rank): string {
-  return `${_.startCase(rank.tier)} ${divisionToString(rank.division)}, ${rank.lp}LP`;
+  return `${_.startCase(rank.tier)} ${divisionToString(rank.division)}, ${
+    rank.lp
+  }LP`;
 }
 
 export function rankToSimpleString(rank: Rank): string {

@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { PlayerSchema } from "./player.js";
+import { z } from "https://esm.sh/zod";
+import { PlayerSchema } from "./player.ts";
 
 export type LeaderboardEntry = z.infer<typeof LeaderboardEntrySchema>;
 export const LeaderboardEntrySchema = z.strictObject({

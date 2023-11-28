@@ -1,5 +1,5 @@
-import { match } from "ts-pattern";
-import { z } from "zod";
+import { match } from "https://esm.sh/ts-pattern";
+import { z } from "https://esm.sh/zod";
 
 export type Lane = z.infer<typeof LaneSchema>;
 export const LaneSchema = z.enum(["top", "jungle", "middle", "adc", "support"]);

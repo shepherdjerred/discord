@@ -1,13 +1,17 @@
-import _ from "lodash";
-import { toLeaderboard } from "./index.js";
-import { getPlayer } from "../../player.js";
-import { CopyObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
-import configuration from "../../../configuration.js";
-import { s3 } from "../../s3.js";
-import { getPlayerConfigs } from "../../playerConfig.js";
-import { format } from "date-fns";
-import { send } from "../../discord/channel.js";
-import { leaderboardToDiscordMessage } from "./discord.js";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import { toLeaderboard } from "./index.ts";
+import { getPlayer } from "../../player.ts";
+import {
+  CopyObjectCommand,
+  PutObjectCommand,
+} from "https://esm.sh/@aws-sdk/client-s3";
+import configuration from "../../../configuration.ts";
+import { s3 } from "../../s3.ts";
+import { getPlayerConfigs } from "../../playerConfig.ts";
+import { format } from "https://esm.sh/date-fns";
+import { send } from "../../discord/channel.ts";
+import { leaderboardToDiscordMessage } from "https://esm.sh/discord.js";
 
 const link = "https://glitter-boys.com/leaderboard/";
 

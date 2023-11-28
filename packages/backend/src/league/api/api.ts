@@ -1,5 +1,5 @@
-import { LolApi } from "twisted";
-import configuration from "../../configuration.js";
+import { LolApi } from "https://esm.sh/twisted";
+import configuration from "../../configuration.ts";
 
 export const api = new LolApi({
   key: configuration.riotApiToken,

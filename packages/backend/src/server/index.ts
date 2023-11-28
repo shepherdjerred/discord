@@ -1,7 +1,7 @@
-import express from "express";
-import type { Request, Response } from "express";
-import configuration from "../configuration.js";
-import cors from "cors";
+import express from "https://esm.sh/express";
+import type { Request, Response } from "https://esm.sh/express";
+import configuration from "../configuration.ts";
+import cors from "https://esm.sh/cors";
 
 const app = express();
 const port = process.env["PORT"] || 8000;

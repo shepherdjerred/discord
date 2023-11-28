@@ -1,9 +1,9 @@
-import { z } from "zod";
-
-import { PlayerConfigEntrySchema } from "./playerConfigEntry.js";
-import { RankSchema } from "./rank.js";
-import _ from "lodash";
-import { PlayerConfig } from "./playerConfig.js";
+import { z } from "https://esm.sh/zod";
+import { PlayerConfigEntrySchema } from "./playerConfigEntry.ts";
+import { RankSchema } from "./rank.ts";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import { PlayerConfig } from "./playerConfig.ts";
 
 export type QueueType = z.infer<typeof QueueTypeSchema>;
 export const QueueTypeSchema = z.enum(["solo", "flex"]);
@@ -21,7 +21,7 @@ export const MatchStateSchema = z.strictObject({
     z.object({
       player: PlayerConfigEntrySchema,
       rank: RankSchema,
-    }),
+    })
   ),
   queue: QueueTypeSchema,
 });
@@ -37,8 +37,10 @@ export function getPlayersInGame(players: PlayerConfig, state: State) {
   return _.filter(players, (player) =>
     _.some(
       state.gamesStarted,
-      (game) => game.player.league.leagueAccount.accountId === player.league.leagueAccount.accountId,
-    ),
+      (game) =>
+        game.player.league.leagueAccount.accountId ===
+        player.league.leagueAccount.accountId
+    )
   );
 }
 
@@ -46,7 +48,9 @@ export function getPlayersNotInGame(players: PlayerConfig, state: State) {
   return _.reject(players, (player) =>
     _.some(
       state.gamesStarted,
-      (game) => game.player.league.leagueAccount.accountId === player.league.leagueAccount.accountId,
-    ),
+      (game) =>
+        game.player.league.leagueAccount.accountId ===
+        player.league.leagueAccount.accountId
+    )
   );
 }

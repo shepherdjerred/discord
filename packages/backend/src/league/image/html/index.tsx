@@ -1,17 +1,20 @@
-import _ from "lodash";
-import satori from "satori";
-import { Resvg } from "@resvg/resvg-js";
-import React from "react";
-import { loadFonts } from "../assets/index.js";
-import { palette } from "../assets/colors.js";
-import { renderTeam } from "./team.js";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import satori from "https://esm.sh/satori";
+import { Resvg } from "npm:@resvg/resvg-js";
+import React from "https://esm.sh/react";
+import { loadFonts } from "../assets/index.ts";
+import { palette } from "../assets/colors.ts";
+import { renderTeam } from "./team.tsx";
 import { Match, lpDiffToString } from "@glitter-boys/data";
 
 export async function matchToImage(match: Match) {
   const minutes = _.round(match.durationInSeconds / 60);
 
   if (!match.teams.red || !match.teams.blue) {
-    throw new Error(`Match must have both teams: ${JSON.stringify(match.teams)}`);
+    throw new Error(
+      `Match must have both teams: ${JSON.stringify(match.teams)}`
+    );
   }
 
   // this variable will store the content of the "svg" variable below, but as JSX
@@ -43,18 +46,38 @@ export async function matchToImage(match: Match) {
         }}
       >
         <span style={{ color: palette.gold[4] }}>{match.player.outcome}</span>
-        <div style={{ fontSize: "6rem", display: "flex", marginBottom: "1rem" }}>
+        <div
+          style={{ fontSize: "6rem", display: "flex", marginBottom: "1rem" }}
+        >
           {minutes}min {match.durationInSeconds % 60}s
         </div>
-        <div style={{ display: "flex", gap: "2rem", fontSize: "4rem", color: palette.grey[1], marginBottom: "1.5rem" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "2rem",
+            fontSize: "4rem",
+            color: palette.grey[1],
+            marginBottom: "1.5rem",
+          }}
+        >
           <span>{lpDiffToString(match.player.leaguePointsDelta)}</span>
           <span>W: {match.player.tournamentWins}</span>
           <span>L: {match.player.tournamentLosses}</span>
         </div>
       </div>
       <div style={{ display: "flex", gap: "6rem", flexDirection: "column" }}>
-        {renderTeam(match.teams.blue, "blue", match.player.champion.championName, match.durationInSeconds / 60)}
-        {renderTeam(match.teams.red, "red", match.player.champion.championName, match.durationInSeconds / 60)}
+        {renderTeam(
+          match.teams.blue,
+          "blue",
+          match.player.champion.championName,
+          match.durationInSeconds / 60
+        )}
+        {renderTeam(
+          match.teams.red,
+          "red",
+          match.player.champion.championName,
+          match.durationInSeconds / 60
+        )}
       </div>
     </div>
   );
@@ -65,7 +88,12 @@ export async function matchToImage(match: Match) {
     height: 3500,
     fonts,
   });
-  const resvg = new Resvg(svg, { dpi: 600, shapeRendering: 2, textRendering: 2, imageRendering: 0 });
+  const resvg = new Resvg(svg, {
+    dpi: 600,
+    shapeRendering: 2,
+    textRendering: 2,
+    imageRendering: 0,
+  });
   const pngData = resvg.render();
   return pngData.asPng();
 }

@@ -1,5 +1,6 @@
-import _ from "lodash";
-import { z } from "zod";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import { z } from "https://esm.sh/zod";
 
 export type Tier = z.infer<typeof TierSchema>;
 export const TierSchema = z.enum([

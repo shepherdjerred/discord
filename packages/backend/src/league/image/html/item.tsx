@@ -1,7 +1,8 @@
-import _ from "lodash";
-import React from "react";
-import { currentPatch } from "../../api/index.js";
-import { palette } from "../assets/colors.js";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash";
+import React from "https://esm.sh/react";
+import { currentPatch } from "../../api/index.ts";
+import { palette } from "../assets/colors.ts";
 
 const dimension = 120;
 
@@ -9,7 +10,10 @@ export function renderItem(item: number) {
   return (
     <img
       src={`https://ddragon.leagueoflegends.com/cdn/${currentPatch}/img/item/${item.toString()}.png`}
-      style={{ backgroundColor: palette.blue[5], border: `1px solid ${palette.gold.bright}` }}
+      style={{
+        backgroundColor: palette.blue[5],
+        border: `1px solid ${palette.gold.bright}`,
+      }}
       width={dimension}
       height={dimension}
     />
@@ -28,7 +32,13 @@ export function renderItems(items: number[], visionScore: number) {
     throw new Error(`Last item must exist: ${items.toString()}`);
   }
   const visionItem = (
-    <div style={{ display: "flex", width: `${dimension}px`, height: `${dimension}px` }}>
+    <div
+      style={{
+        display: "flex",
+        width: `${dimension}px`,
+        height: `${dimension}px`,
+      }}
+    >
       {renderItem(lastItem)}
       <span
         style={{

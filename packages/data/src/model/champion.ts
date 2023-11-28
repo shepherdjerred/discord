@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { LaneSchema } from "./lane.js";
+import { z } from "https://esm.sh/zod";
+import { LaneSchema } from "./lane.ts";
 
 export type Champion = z.infer<typeof ChampionSchema>;
 export const ChampionSchema = z.strictObject({
