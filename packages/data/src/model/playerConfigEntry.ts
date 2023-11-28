@@ -1,9 +1,9 @@
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash";
-import { z } from "https://esm.sh/zod";
-import { DiscordSchema } from "https://esm.sh/discord.js";
+import { z } from "https://esm.sh/zod@3.22.4";
 import { LeagueAcccountSchema } from "./leagueAccount.ts";
 import { RankSchema } from "./rank.ts";
+import { DiscordSchema } from "./discord.ts";
 
 export type PlayerConfigEntry = z.infer<typeof PlayerConfigEntrySchema>;
 export const PlayerConfigEntrySchema = z.strictObject({

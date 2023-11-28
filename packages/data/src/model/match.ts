@@ -1,6 +1,6 @@
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash";
-import { z } from "https://esm.sh/zod";
+import { z } from "https://esm.sh/zod@3.22.4";
 import { ChampionSchema } from "./champion.ts";
 import { PlayerConfigEntrySchema } from "./playerConfigEntry.ts";
 import { RosterSchema } from "./roster.ts";

@@ -1,4 +1,4 @@
-import { z } from "https://esm.sh/zod";
+import { z } from "https://esm.sh/zod@3.22.4";
 import { DivisionSchema, divisionToString } from "./division.ts";
 import { TierSchema } from "./tier.ts";
 // @deno-types="npm:@types/lodash"

@@ -1,4 +1,4 @@
-import { z } from "https://esm.sh/zod";
+import { z } from "https://esm.sh/zod@3.22.4";
 import { PlayerConfigEntrySchema } from "./playerConfigEntry.ts";
 import { RankSchema } from "./rank.ts";
 // @deno-types="npm:@types/lodash"
@@ -17,12 +17,8 @@ export const MatchStateSchema = z.strictObject({
   added: z.string().pipe(z.coerce.date()),
   // the match id from the Riot API
   matchId: z.number(),
-  players: z.array(
-    z.object({
-      player: PlayerConfigEntrySchema,
-      rank: RankSchema,
-    })
-  ),
+  player: PlayerConfigEntrySchema,
+  rank: RankSchema,
   queue: QueueTypeSchema,
 });
 
@@ -32,20 +28,7 @@ export const StateSchema = z.strictObject({
 });
 
 export function getPlayersInGame(players: PlayerConfig, state: State) {
-  const allPlayers = _.flatMap(state.gamesStarted, (game) => game.players);
-
   return _.filter(players, (player) =>
-    _.some(
-      state.gamesStarted,
-      (game) =>
-        game.player.league.leagueAccount.accountId ===
-        player.league.leagueAccount.accountId
-    )
-  );
-}
-
-export function getPlayersNotInGame(players: PlayerConfig, state: State) {
-  return _.reject(players, (player) =>
     _.some(
       state.gamesStarted,
       (game) =>

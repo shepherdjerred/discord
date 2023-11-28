@@ -1,4 +1,4 @@
-import { z } from "https://esm.sh/zod";
+import { z } from "https://esm.sh/zod@3.22.4";
 import { RankSchema } from "./rank.ts";
 import { PlayerConfigEntrySchema } from "./playerConfigEntry.ts";
 // @deno-types="npm:@types/lodash"

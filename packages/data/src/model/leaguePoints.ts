@@ -1,5 +1,5 @@
-import { match, P } from "https://esm.sh/ts-pattern";
-import { z } from "https://esm.sh/zod";
+import { match, P } from "https://esm.sh/ts-pattern@5.0.5";
+import { z } from "https://esm.sh/zod@3.22.4";
 import { numberOfDivisions } from "./division.ts";
 import { Rank } from "./rank.ts";
 import { Tier } from "./tier.ts";

@@ -1,6 +1,6 @@
 export * from "./champion.ts";
 export * from "./chats.ts";
-export * from "https://esm.sh/discord.js";
+export * from "./discord.ts";
 export * from "./division.ts";
 export * from "./lane.ts";
 export * from "./leaderboard.ts";
