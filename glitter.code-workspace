@@ -26,7 +26,17 @@
     "testing.automaticallyOpenPeekView": "never",
     "deno.enable": true,
     "deno.lint": true,
-    "deno.unstable": false
+    "deno.unstable": false,
+    "deno.cacheOnSave": true,
+    "deno.codeLens.implementations": true,
+    "deno.codeLens.references": true,
+    "deno.codeLens.referencesAllFunctions": true,
+    "deno.codeLens.test": true,
+    "deno.enablePaths": [
+      "packages/backend/",
+      "packages/data/",
+      "packages/frontend/"
+    ]
   },
   "launch": {
     "configurations": [

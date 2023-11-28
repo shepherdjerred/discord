@@ -11,7 +11,7 @@ build.backend:
   COPY packages/backend packages/backend
   COPY packages/data packages/data
   WORKDIR packages/backend
-  RUN deno cache src/index.ts
+  RUN deno compile src/index.ts
 
 build.frontend:
   FROM +deno
