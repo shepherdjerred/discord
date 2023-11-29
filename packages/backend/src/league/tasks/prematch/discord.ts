@@ -7,15 +7,17 @@ import { findParticipant } from "../../api/index.ts";
 import { PlayerConfigEntry } from "@glitter-boys/data";
 export function createDiscordMessage([player, game]: [
   PlayerConfigEntry,
-  CurrentGameInfoDTO
+  CurrentGameInfoDTO,
 ]): string {
   const participant = findParticipant(player, game.participants);
 
   if (participant === undefined) {
     throw new Error(
-      `unable to find participant ${JSON.stringify(player)}, ${JSON.stringify(
-        game
-      )}`
+      `unable to find participant ${JSON.stringify(player)}, ${
+        JSON.stringify(
+          game,
+        )
+      }`,
     );
   }
 
@@ -23,7 +25,9 @@ export function createDiscordMessage([player, game]: [
   // TODO: call API to get prope champion name
   const championName = getChampionName(participant.championId);
 
-  return `${mention} started a solo queue game as ${_.startCase(
-    championName.replaceAll("_", " ").toLowerCase()
-  )}`;
+  return `${mention} started a solo queue game as ${
+    _.startCase(
+      championName.replaceAll("_", " ").toLowerCase(),
+    )
+  }`;
 }

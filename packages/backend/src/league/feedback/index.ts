@@ -52,17 +52,17 @@ export async function generateFeedbackMessage(match: Match) {
   }
 
   const rawSystemMessage = await Deno.readTextFile(
-    `${promptPath}/system_message.txt`
+    `${promptPath}/system_message.txt`,
   );
   const rawBasePrompt = await Deno.readTextFile(`${promptPath}/base.txt`);
   const reviewerBioPrompt = await Deno.readTextFile(
-    `${promptPath}/bios/${reviewer.file}`
+    `${promptPath}/bios/${reviewer.file}`,
   );
   const reviewerInstructionsPrompt = await Deno.readTextFile(
-    `${promptPath}/instructions/${reviewer.file}`
+    `${promptPath}/instructions/${reviewer.file}`,
   );
   const playerBioPrompt = await Deno.readTextFile(
-    `${promptPath}/bios/${player.file}`
+    `${promptPath}/bios/${player.file}`,
   );
 
   const replacements = [
@@ -130,7 +130,7 @@ export async function generateFeedbackMessage(match: Match) {
   for (const replacement of replacements) {
     basePrompt = basePrompt.replaceAll(
       replacement.placeholder,
-      replacement.replacement
+      replacement.replacement,
     );
   }
   console.log(basePrompt);
@@ -139,7 +139,7 @@ export async function generateFeedbackMessage(match: Match) {
   for (const replacement of replacements) {
     systemMessage = systemMessage.replaceAll(
       replacement.placeholder,
-      replacement.replacement
+      replacement.replacement,
     );
   }
   console.log(systemMessage);

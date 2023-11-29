@@ -62,7 +62,7 @@ const columns = [
         return "-";
       }
       return match(
-        info.getValue().current.leaguePointsDelta - previous.leaguePointsDelta
+        info.getValue().current.leaguePointsDelta - previous.leaguePointsDelta,
       )
         .with(0, () => "-")
         .with(P.number.positive(), (value) => `+${value}`)
@@ -147,7 +147,7 @@ const columns = [
             info.getValue().config.league.initialRank.wins +
             (info.getValue().currentRank.losses -
               info.getValue().config.league.initialRank.losses))) *
-          100
+          100,
       );
       return percent ? `${percent}%` : "-";
     },
@@ -160,7 +160,7 @@ const columns = [
               info.config.league.initialRank.wins +
               (info.currentRank.losses -
                 info.config.league.initialRank.losses))) *
-            100
+            100,
         );
         return percent ? percent : -9999;
       };
@@ -177,7 +177,7 @@ const todayAtNoon = new Date(
   now.getDate(),
   12,
   0,
-  0
+  0,
 );
 const tomorrowAtNoon = addDays(todayAtNoon, 1);
 // 3am CT
@@ -192,7 +192,7 @@ if (isWithinInterval(now, { start: todayAtNoon, end: tomorrowAtNoon })) {
 }
 
 function gameCount(
-  leaderboard: HistoricalLeaderboardEntry
+  leaderboard: HistoricalLeaderboardEntry,
 ): number | undefined {
   if (leaderboard.previous === undefined) {
     return undefined;
@@ -223,24 +223,24 @@ export function LeaderboardComponent() {
   useEffect(() => {
     (async () => {
       let result = await fetch(
-        "https://prod.bucket.glitter-boys.com/leaderboard.json"
+        "https://prod.bucket.glitter-boys.com/leaderboard.json",
       );
       const currentLeaderboard = LeaderboardSchema.parse(await result.json());
       setCurrentLeaderboard(currentLeaderboard);
 
       result = await fetch(
-        "https://prod.bucket.glitter-boys.com/previous.json"
+        "https://prod.bucket.glitter-boys.com/previous.json",
       );
       const previousLeaderboard = LeaderboardSchema.parse(await result.json());
 
       const historical: HistoricalLeaderboardEntry[] = _.chain(
-        currentLeaderboard.contents
+        currentLeaderboard.contents,
       )
         .map((entry) => {
           const player = entry.player.config.name;
           const previous = _.find(
             previousLeaderboard.contents,
-            (entry) => entry.player.config.name === player
+            (entry) => entry.player.config.name === player,
           );
           return {
             current: entry,
@@ -256,14 +256,14 @@ export function LeaderboardComponent() {
         if (
           wasPromoted(
             entry.previous.player.currentRank,
-            entry.current.player.currentRank
+            entry.current.player.currentRank,
           )
         ) {
           return [
             `${
               entry.current.player.config.name
             } was promoted: ${rankToSimpleString(
-              entry.previous.player.currentRank
+              entry.previous.player.currentRank,
             )} -> ${rankToSimpleString(entry.current.player.currentRank)}`,
           ];
         } else {
@@ -277,14 +277,14 @@ export function LeaderboardComponent() {
         if (
           wasDemoted(
             entry.previous.player.currentRank,
-            entry.current.player.currentRank
+            entry.current.player.currentRank,
           )
         ) {
           return [
             `${
               entry.current.player.config.name
             } was demoted: ${rankToSimpleString(
-              entry.previous.player.currentRank
+              entry.previous.player.currentRank,
             )} -> ${rankToSimpleString(entry.current.player.currentRank)}`,
           ];
         } else {
@@ -354,7 +354,7 @@ export function LeaderboardComponent() {
                         >
                           {flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                           {{
                             asc: " 🔼",
@@ -377,7 +377,7 @@ export function LeaderboardComponent() {
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </td>
                   ))}

@@ -1,7 +1,7 @@
 import {
   Entity,
-  PrimaryColumn,
   OneToMany,
+  PrimaryColumn,
   type Relation,
 } from "npm:typeorm@0.3.14";
 import { Karma } from "./Karma.ts";

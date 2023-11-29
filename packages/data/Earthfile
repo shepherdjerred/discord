@@ -18,3 +18,13 @@ build:
   WORKDIR packages/data
   RUN deno task build
   SAVE ARTIFACT dist
+
+src:
+  FROM +deno-node
+  COPY . .
+  SAVE ARTIFACT *
+
+check:
+  FROM +src
+  RUN deno check src/index.ts
+  RUN deno lint

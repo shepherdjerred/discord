@@ -27,7 +27,7 @@ Deno.test("image matches", async (t) => {
       currentRank: { division: 1, tier: "gold", lp: 4, wins: 50, losses: 30 },
     } as Player,
     exampleMatch as unknown as MatchV5DTOs.MatchDto,
-    27
+    27,
   );
   const result = await matchToSvg(matchObj);
   await assertSnapshot(t, result);

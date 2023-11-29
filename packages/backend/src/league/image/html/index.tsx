@@ -6,7 +6,7 @@ import React from "https://esm.sh/react@18.2.0";
 import { loadFonts } from "../assets/index.ts";
 import { palette } from "../assets/colors.ts";
 import { renderTeam } from "./team.tsx";
-import { Match, lpDiffToString } from "@glitter-boys/data";
+import { lpDiffToString, Match } from "@glitter-boys/data";
 
 export async function matchToImage(match: Match) {
   const svg = await matchToSvg(match);
@@ -19,7 +19,7 @@ export async function matchToSvg(match: Match) {
 
   if (!match.teams.red || !match.teams.blue) {
     throw new Error(
-      `Match must have both teams: ${JSON.stringify(match.teams)}`
+      `Match must have both teams: ${JSON.stringify(match.teams)}`,
     );
   }
 
@@ -30,7 +30,8 @@ export async function matchToSvg(match: Match) {
         width: "100%",
         height: "100%",
         color: palette.grey[1],
-        background: `linear-gradient(90deg, ${palette.blue.gradient.dark.start} 0%, ${palette.blue.gradient.dark.end} 50%, ${palette.blue.gradient.dark.start} 100%)`,
+        background:
+          `linear-gradient(90deg, ${palette.blue.gradient.dark.start} 0%, ${palette.blue.gradient.dark.end} 50%, ${palette.blue.gradient.dark.start} 100%)`,
         display: "flex",
         flexDirection: "column",
         paddingLeft: "5rem",
@@ -76,13 +77,13 @@ export async function matchToSvg(match: Match) {
           match.teams.blue,
           "blue",
           match.player.champion.championName,
-          match.durationInSeconds / 60
+          match.durationInSeconds / 60,
         )}
         {renderTeam(
           match.teams.red,
           "red",
           match.player.champion.championName,
-          match.durationInSeconds / 60
+          match.durationInSeconds / 60,
         )}
       </div>
     </div>

@@ -1,8 +1,8 @@
 import {
-  Player,
-  sortPlayers,
   getLeaguePointsDelta,
   Leaderboard,
+  Player,
+  sortPlayers,
 } from "@glitter-boys/data";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";

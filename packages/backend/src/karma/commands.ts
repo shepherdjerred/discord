@@ -1,12 +1,17 @@
-import { Karma, KarmaCounts, KarmaReceived, Person } from "../db/karma/index.ts";
 import {
-  SlashCommandBuilder,
+  Karma,
+  KarmaCounts,
+  KarmaReceived,
+  Person,
+} from "../db/karma/index.ts";
+import {
+  bold,
   type ChatInputCommandInteraction,
   CommandInteraction,
+  inlineCode,
+  SlashCommandBuilder,
   time,
   userMention,
-  inlineCode,
-  bold,
 } from "npm:discord.js@14.14.1";
 import { dataSource } from "../db/index.ts";
 // @deno-types="npm:@types/lodash"
@@ -78,7 +83,7 @@ async function modifyKarma(
   giverId: string,
   receiverId: string,
   amount: number,
-  reason?: string
+  reason?: string,
 ) {
   const giver = await getOrCreate(giverId);
   const receiver = await getOrCreate(receiverId);
@@ -110,9 +115,11 @@ async function handleKarmaGive(interaction: CommandInteraction) {
 
   if (receiverUser.bot) {
     await interaction.reply({
-      content: `You can't give karma to ${userMention(
-        receiverUser.id
-      )} because they're a bot`,
+      content: `You can't give karma to ${
+        userMention(
+          receiverUser.id,
+        )
+      } because they're a bot`,
       ephemeral: true,
     });
     return;
@@ -123,15 +130,19 @@ async function handleKarmaGive(interaction: CommandInteraction) {
       giverUser.id,
       receiverUser.id,
       -1,
-      "tried altering their own karma"
+      "tried altering their own karma",
     );
     const newKarma = await getKarma(receiverUser.id);
     await interaction.reply({
-      content: `${userMention(
-        giverUser.id
-      )} tried altering their karma. SMH my head. ${bold(
-        "-1"
-      )} karma. They now have ${bold(newKarma.toString())} karma.`,
+      content: `${
+        userMention(
+          giverUser.id,
+        )
+      } tried altering their karma. SMH my head. ${
+        bold(
+          "-1",
+        )
+      } karma. They now have ${bold(newKarma.toString())} karma.`,
     });
     return;
   }
@@ -143,17 +154,23 @@ async function handleKarmaGive(interaction: CommandInteraction) {
   const newReceiverKarma = await getKarma(receiverUser.id);
   if (reason) {
     await interaction.reply(
-      `${userMention(giverUser.id)} gave karma to ${userMention(
-        receiverUser.id
-      )} because ${inlineCode(reason)}. They now have ${bold(
-        newReceiverKarma.toString()
-      )} karma.`
+      `${userMention(giverUser.id)} gave karma to ${
+        userMention(
+          receiverUser.id,
+        )
+      } because ${inlineCode(reason)}. They now have ${
+        bold(
+          newReceiverKarma.toString(),
+        )
+      } karma.`,
     );
   } else {
     await interaction.reply(
-      `${userMention(giverUser.id)} gave karma to ${userMention(
-        receiverUser.id
-      )}. They now have ${bold(newReceiverKarma.toString())} karma.`
+      `${userMention(giverUser.id)} gave karma to ${
+        userMention(
+          receiverUser.id,
+        )
+      }. They now have ${bold(newReceiverKarma.toString())} karma.`,
     );
   }
 }
@@ -194,7 +211,7 @@ async function handleKarmaLeaderboard(interaction: CommandInteraction) {
         }
 
         return `${rankString}: ${user} (${value.karmaReceived} karma)`;
-      })
+      }),
     )
   ).join("\n");
   await interaction.editReply({
@@ -211,18 +228,22 @@ async function handleKarmaHistory(interaction: CommandInteraction) {
     .slice(0, 10)
     .map((item) => {
       if (target.id === item.giver.id) {
-        let message = `${time(item.datetime)} Gave ${bold(
-          item.amount.toString()
-        )} karma to ${userMention(item.receiver.id)}`;
+        let message = `${time(item.datetime)} Gave ${
+          bold(
+            item.amount.toString(),
+          )
+        } karma to ${userMention(item.receiver.id)}`;
         if (item.reason) {
           message += ` for ${inlineCode(item.reason)}`;
         }
         return message;
       }
       if (target.id === item.receiver.id) {
-        let message = `${time(item.datetime)} Received ${bold(
-          item.amount.toString()
-        )} karma from ${userMention(item.giver.id)}`;
+        let message = `${time(item.datetime)} Received ${
+          bold(
+            item.amount.toString(),
+          )
+        } karma from ${userMention(item.giver.id)}`;
         if (item.reason) {
           message += ` for ${inlineCode(item.reason)}`;
         }
@@ -250,4 +271,4 @@ async function handleKarma(interaction: ChatInputCommandInteraction) {
   }
 }
 
-export { karmaCommand, handleKarma };
+export { handleKarma, karmaCommand };

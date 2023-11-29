@@ -1,8 +1,8 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
+  Entity,
   ManyToOne,
+  PrimaryGeneratedColumn,
   type Relation,
 } from "npm:typeorm@0.3.14";
 import { Person } from "./Person.ts";

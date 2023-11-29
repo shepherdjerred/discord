@@ -14,12 +14,12 @@ export const currentPatch = "13.22.1";
 export const soloQueueConfigId = 420;
 
 export async function getCurrentSoloQueueGame(
-  player: PlayerConfigEntry
+  player: PlayerConfigEntry,
 ): Promise<undefined | CurrentGameInfoDTO> {
   try {
     const response = await api.Spectator.activeGame(
       player.league.leagueAccount.id,
-      Constants.Regions.AMERICA_NORTH
+      Constants.Regions.AMERICA_NORTH,
     );
     if (response instanceof SpectatorNotAvailableDTO) {
       return undefined;
@@ -42,11 +42,12 @@ export async function getCurrentSoloQueueGame(
 
 export function findParticipant(
   player: PlayerConfigEntry,
-  participants: CurrentGameParticipantDTO[]
+  participants: CurrentGameParticipantDTO[],
 ): CurrentGameParticipantDTO | undefined {
   return _.chain(participants)
     .filter(
-      (participant) => participant.summonerId === player.league.leagueAccount.id
+      (participant) =>
+        participant.summonerId === player.league.leagueAccount.id,
     )
     .first()
     .value();

@@ -13,7 +13,7 @@ export function startCronJobs() {
     true,
     "America/Los_Angeles",
     undefined,
-    false
+    false,
   );
 
   // check spectate status every minute
@@ -24,7 +24,7 @@ export function startCronJobs() {
     true,
     "America/Los_Angeles",
     undefined,
-    true
+    true,
   );
 
   // check match status every minute, offset by 30 seconds
@@ -36,6 +36,6 @@ export function startCronJobs() {
     true,
     "America/Los_Angeles",
     undefined,
-    true
+    true,
   );
 }

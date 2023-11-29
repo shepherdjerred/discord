@@ -19,7 +19,7 @@ export class Database extends _Database {
   constructor(
     path: string | URL,
     mode?: number | Callback,
-    callback?: Callback
+    callback?: Callback,
   ) {
     const options: DatabaseOpenOptions = {};
 
@@ -88,12 +88,12 @@ export class Database extends _Database {
 
   get<T>(
     sql: string,
-    callback?: (this: Statement, err: Error | null, row: T) => void
+    callback?: (this: Statement, err: Error | null, row: T) => void,
   ): this;
   get<T>(
     sql: string,
     params: any,
-    callback?: (this: Statement, err: Error | null, row: T) => void
+    callback?: (this: Statement, err: Error | null, row: T) => void,
   ): this;
   get(sql: string, ...params: any[]): this {
     const statement = new Statement(this, sql);
@@ -114,12 +114,12 @@ export class Database extends _Database {
 
   all<T>(
     sql: string,
-    callback?: (this: Statement, err: Error | null, rows: T[]) => void
+    callback?: (this: Statement, err: Error | null, rows: T[]) => void,
   ): this;
   all<T>(
     sql: string,
     params: any,
-    callback?: (this: Statement, err: Error | null, rows: T[]) => void
+    callback?: (this: Statement, err: Error | null, rows: T[]) => void,
   ): this;
   all(sql: string, ...params: any[]): this {
     const statement = new Statement(this, sql);
@@ -141,13 +141,13 @@ export class Database extends _Database {
   each<T>(
     sql: string,
     callback?: (this: Statement, err: Error | null, row: T) => void,
-    complete?: (err: Error | null, count: number) => void
+    complete?: (err: Error | null, count: number) => void,
   ): this;
   each<T>(
     sql: string,
     params: any,
     callback?: (this: Statement, err: Error | null, row: T) => void,
-    complete?: (err: Error | null, count: number) => void
+    complete?: (err: Error | null, count: number) => void,
   ): this;
   each(sql: string, ...params: any[]): this {
     const statement = new Statement(this, sql);
@@ -188,12 +188,12 @@ export class Database extends _Database {
 
   prepare(
     sql: string,
-    callback?: (this: Statement, err: Error | null) => void
+    callback?: (this: Statement, err: Error | null) => void,
   ): Statement;
   prepare(
     sql: string,
     params: any,
-    callback?: (this: Statement, err: Error | null) => void
+    callback?: (this: Statement, err: Error | null) => void,
   ): Statement;
   prepare(sql: string, ...params: any[]): Statement {
     let statement: Statement | null = null;

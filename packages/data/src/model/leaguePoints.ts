@@ -10,8 +10,8 @@ export const LeaguePointsSchema = z.number().brand("League Points");
 export const leaguePointsPerDivision = 100;
 
 export function rankToLeaguePoints(rank: Rank): LeaguePoints {
-  const divisionLp =
-    (numberOfDivisions - rank.division) * leaguePointsPerDivision;
+  const divisionLp = (numberOfDivisions - rank.division) *
+    leaguePointsPerDivision;
   const tierLp = tierToLeaguePoints(rank.tier);
   return LeaguePointsSchema.parse(divisionLp + tierLp + rank.lp);
 }
@@ -34,7 +34,7 @@ export function tierToOrdinal(tier: Tier): number {
 function tierToLeaguePoints(tier: Tier): LeaguePoints {
   const multiplier = tierToOrdinal(tier);
   return LeaguePointsSchema.parse(
-    multiplier * numberOfDivisions * leaguePointsPerDivision
+    multiplier * numberOfDivisions * leaguePointsPerDivision,
   );
 }
 
