@@ -17,13 +17,6 @@ test.backend:
   RUN deno lint
   RUN deno test -A --unstable
 
-build.frontend:
-  FROM +deno
-  RUN deno cache
-  COPY packages/frontend packages/frontend
-  COPY packages/data packages/data
-  # TODO: build with Astro
-
 litefs:
   FROM flyio/litefs:0.5
   SAVE ARTIFACT /usr/local/bin/litefs

@@ -1,4 +1,4 @@
-import * as React from "https://esm.sh/react";
+import * as React from "react";
 
 import {
   createColumnHelper,
@@ -19,15 +19,10 @@ import {
   rankToLeaguePoints,
   type Player,
 } from "@glitter-boys/data";
-import { P, match } from "https://esm.sh/ts-pattern";
-// @deno-types="npm:@types/lodash"
-import _ from "npm:lodash@4.17.21";
-import {
-  addDays,
-  formatDistance,
-  isWithinInterval,
-} from "https://esm.sh/date-fns";
-import { useState, useEffect } from "https://esm.sh/react";
+import { P, match } from "ts-pattern";
+import _ from "lodash";
+import { addDays, formatDistance, isWithinInterval } from "date-fns";
+import { useState, useEffect } from "react";
 import classnames from "classnames";
 
 type HistoricalLeaderboard = HistoricalLeaderboardEntry[];
