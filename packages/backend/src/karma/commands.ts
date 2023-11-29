@@ -1,4 +1,4 @@
-import { Karma, KarmaCounts, KarmaReceived, Person } from "@glitter-boys/data";
+import { Karma, KarmaCounts, KarmaReceived, Person } from "../db/karma/index.ts";
 import {
   SlashCommandBuilder,
   type ChatInputCommandInteraction,

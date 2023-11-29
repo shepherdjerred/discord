@@ -8,7 +8,7 @@ import {
   KarmaGiven,
   KarmaReceived,
   Person,
-} from "@glitter-boys/data";
+} from "./karma/index.ts";
 import configuration from "../configuration.ts";
 
 export const dataSource = new DataSource({
