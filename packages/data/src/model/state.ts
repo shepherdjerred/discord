@@ -17,12 +17,8 @@ export const MatchStateSchema = z.strictObject({
   added: z.string().pipe(z.coerce.date()),
   // the match id from the Riot API
   matchId: z.number(),
-  players: z.array(
-    z.object({
       player: PlayerConfigEntrySchema,
       rank: RankSchema,
-    }),
-  ),
   queue: QueueTypeSchema,
 });
 
@@ -32,8 +28,6 @@ export const StateSchema = z.strictObject({
 });
 
 export function getPlayersInGame(players: PlayerConfig, state: State) {
-  const allPlayers = _.flatMap(state.gamesStarted, (game) => game.players);
-
   return _.filter(players, (player) =>
     _.some(
       state.gamesStarted,

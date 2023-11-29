@@ -1,7 +1,7 @@
 import { CurrentGameInfoDTO } from "twisted/dist/models-dto/index.js";
 import _ from "lodash";
 import * as uuid from "uuid";
-import { PlayerConfigEntry, getPlayersNotInGame } from "@glitter-boys/data";
+import {MatchState, PlayerConfigEntry, getPlayersNotInGame } from "@glitter-boys/data";
 import { getCurrentSoloQueueGame } from "../../api/index.js";
 import { createDiscordMessage } from "./discord.js";
 import { send } from "../../discord/channel.js";
@@ -43,12 +43,13 @@ export async function checkPreMatch() {
         const currentRank = await getCurrentRank(player);
 
         console.log("creating new state entries");
-        const entry = {
+        const entry: MatchState = {
           added: new Date(game.gameStartTime),
           matchId: game.gameId,
           uuid: uuid.v4(),
           player,
           rank: currentRank,
+            queue:"solo"
         };
 
         console.log("saving state");

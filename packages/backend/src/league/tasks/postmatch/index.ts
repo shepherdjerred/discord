@@ -5,7 +5,7 @@ import { z } from "zod";
 import { api } from "../../api/api.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
 import { matchToImage } from "../../image/html/index.js";
-import { GameState, Match, rankToLeaguePoints } from "@glitter-boys/data";
+import { MatchState, Match, rankToLeaguePoints } from "@glitter-boys/data";
 import { send } from "../../discord/channel.js";
 import { s3 } from "../../s3.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
@@ -15,7 +15,7 @@ import { getCurrentRank } from "../../rank.js";
 import { createMatchObject } from "../../match.js";
 import { getState, setState } from "../../state.js";
 
-async function checkMatch(game: GameState) {
+async function checkMatch(game: MatchState) {
   try {
     const response = await api.MatchV5.get(`NA1_${game.matchId}`, Constants.RegionGroups.AMERICAS);
     return response.response;
@@ -49,7 +49,7 @@ async function getImage(match: Match): Promise<[AttachmentBuilder, EmbedBuilder]
   return [attachment, embed];
 }
 
-async function createMatchObj(state: GameState, match: MatchV5DTOs.MatchDto) {
+async function createMatchObj(state: MatchState, match: MatchV5DTOs.MatchDto) {
   const player = _.chain(match.info.participants)
     .filter((participant) => participant.puuid === state.player.league.leagueAccount.puuid)
     .first()
@@ -76,7 +76,7 @@ export async function checkPostMatch() {
   const finishedGames = _.chain(state.gamesStarted)
     .zip(games)
     .filter(([_game, match]) => match != undefined)
-    .value() as [GameState, MatchV5DTOs.MatchDto][];
+    .value() as [MatchState, MatchV5DTOs.MatchDto][];
 
   // TODO: send duo queue message
   console.log("sending messages");
