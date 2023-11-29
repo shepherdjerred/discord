@@ -43,6 +43,8 @@ jobs:
       url: https://prod.glitter-boys.com
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
       - uses: earthly/actions-setup@v1.0.7
         with:
