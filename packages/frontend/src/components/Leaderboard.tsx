@@ -24,6 +24,7 @@ import _ from "lodash";
 import { addDays, formatDistance, isWithinInterval } from "date-fns";
 import { useState, useEffect } from "react";
 import classnames from "classnames";
+import { ChartComponent } from "./Chart";
 
 type HistoricalLeaderboard = HistoricalLeaderboardEntry[];
 type HistoricalLeaderboardEntry = {
@@ -327,6 +328,8 @@ export function LeaderboardComponent() {
               <li key={event}>{event}</li>
             ))}
           </ul>
+          <h3 className="text-xl">LP gains graph</h3>
+          <ChartComponent />
         </div>
       </div>
     </>
