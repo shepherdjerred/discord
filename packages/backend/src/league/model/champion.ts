@@ -2,21 +2,17 @@ import { Champion } from "@glitter-boys/data";
 import { parseLane } from "@glitter-boys/data";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 
-export function createChampionObject(dto: MatchV5DTOs.ParticipantDto): Champion {
-  const lane = parseLane(dto.teamPosition);
-
+export function participantToChampion(dto: MatchV5DTOs.ParticipantDto): Champion {
   return {
     summonerName: dto.summonerName,
     championName: dto.championName,
     kills: dto.kills,
     deaths: dto.deaths,
     assists: dto.assists,
-    // TODO translate these to item names
     items: [dto.item0, dto.item1, dto.item2, dto.item3, dto.item4, dto.item5, dto.item6],
-    // TODO translate these to spell names
     spells: [dto.summoner1Id, dto.summoner2Id],
     runes: [],
-    lane,
+    lane: parseLane(dto.teamPosition),
     creepScore: dto.totalMinionsKilled + dto.neutralMinionsKilled,
     visionScore: dto.visionScore,
     damage: dto.totalDamageDealtToChampions,

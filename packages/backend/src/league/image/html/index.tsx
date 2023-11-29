@@ -13,7 +13,7 @@ export async function matchToImage(match: Match) {
   return png;
 }
 
-export async function matchToSvg(match: Match) {
+async function matchToSvg(match: Match) {
   const minutes = _.round(match.durationInSeconds / 60);
 
   if (!match.teams.red || !match.teams.blue) {
@@ -74,7 +74,7 @@ export async function matchToSvg(match: Match) {
   return svg;
 }
 
-export function svgToPng(svg: string) {
+function svgToPng(svg: string) {
   const resvg = new Resvg(svg, { dpi: 600, shapeRendering: 2, textRendering: 2, imageRendering: 0 });
   const pngData = resvg.render();
   return pngData.asPng();

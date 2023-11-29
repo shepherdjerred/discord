@@ -1,10 +1,8 @@
 import { readFile } from "fs/promises";
 import { describe, expect, test } from "vitest";
-import { matchToSvg, svgToPng } from "./index.js";
-import { PlayerConfigEntry } from "@glitter-boys/data";
-import { Player } from "@glitter-boys/data";
+import { matchToImage } from "./index.js";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
-import { createMatchObject } from "../../match.js";
+import { toMatch } from "../../model/match.js";
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 
 declare module "vitest" {
@@ -19,25 +17,34 @@ const testdataPath = "src/league/image/html/testdata/match.json";
 
 describe("index", () => {
   test("test", async () => {
-    const exampleMatch = JSON.parse((await readFile(testdataPath)).toString());
+    const exampleMatch = JSON.parse((await readFile(testdataPath)).toString()) as MatchV5DTOs.MatchDto;
 
-    const matchObj = createMatchObject(
+    const matchObj = toMatch(
       {
         config: {
+          name: "name",
           league: {
-            leagueAccount: { puuid: "XtEsV464OFaO3c0_q9REa6wYF0HpC2LK4laLnyM7WhfAVeuDz9biieJ5ZRD049AUCBjLjyBeeezTaw" },
+            leagueAccount: {
+              puuid: "XtEsV464OFaO3c0_q9REa6wYF0HpC2LK4laLnyM7WhfAVeuDz9biieJ5ZRD049AUCBjLjyBeeezTaw",
+              accountId: "accountId",
+              id: "id",
+            },
             initialRank: { division: 4, tier: "gold", lp: 11, wins: 10, losses: 20 },
           },
-        } as unknown as PlayerConfigEntry,
-        currentRank: { division: 1, tier: "gold", lp: 4, wins: 50, losses: 30 },
-      } as Player,
-      exampleMatch as MatchV5DTOs.MatchDto,
+          discordAccount: {
+            id: "discord id",
+          },
+        },
+        ranks: {
+          solo: { division: 4, tier: "gold", lp: 11, wins: 10, losses: 20 },
+          flex: { division: 1, tier: "gold", lp: 4, wins: 50, losses: 30 },
+        },
+      },
+      exampleMatch,
       { division: 4, tier: "gold", lp: 11, wins: 10, losses: 20 },
       { division: 1, tier: "gold", lp: 4, wins: 50, losses: 30 },
     );
-    const result = await matchToSvg(matchObj);
-    const img = svgToPng(result);
-    expect(result).toMatchFileSnapshot("__snapshots__/test.svg");
-    expect(img).toMatchImageSnapshot();
+    const result = await matchToImage(matchObj);
+    expect(result).toMatchImageSnapshot();
   }, 20000);
 });

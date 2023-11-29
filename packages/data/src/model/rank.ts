@@ -13,6 +13,12 @@ export const RankSchema = z.strictObject({
   losses: z.number().nonnegative(),
 });
 
+export type Ranks = z.infer<typeof RanksSchema>;
+export const RanksSchema = z.object({
+  solo: RankSchema,
+  flex: RankSchema,
+});
+
 export function rankToString(rank: Rank): string {
   return `${_.startCase(rank.tier)} ${divisionToString(rank.division)}, ${rank.lp}LP`;
 }

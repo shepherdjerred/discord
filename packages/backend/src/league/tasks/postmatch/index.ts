@@ -4,16 +4,15 @@ import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
 import { api } from "../../api/api.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
-import { matchToSvg } from "../../image/html/index.js";
 import { MatchState, Match, wasPromoted, wasDemoted } from "@glitter-boys/data";
 import { send } from "../../discord/channel.js";
 import { s3 } from "../../s3.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import configuration from "../../../configuration.js";
-import { getPlayer } from "../../player.js";
-import { getCurrentRank } from "../../rank.js";
-import { createMatchObject } from "../../match.js";
-import { getState, setState } from "../../state.js";
+import { getPlayer } from "../../model/player.js";
+import { toMatch } from "../../model/match.js";
+import { getState, setState } from "../../model/state.js";
+import { matchToImage } from "../../image/html/index.js";
 
 async function checkMatch(game: MatchState) {
   try {
@@ -43,7 +42,7 @@ async function saveMatch(match: MatchV5DTOs.MatchDto) {
 }
 
 async function getImage(match: Match): Promise<[AttachmentBuilder, EmbedBuilder]> {
-  const image = await matchToSvg(match);
+  const image = await matchToImage(match);
   const attachment = new AttachmentBuilder(image).setName("match.png");
   const embed = new EmbedBuilder().setImage(`attachment://${attachment.name}`);
   return [attachment, embed];
@@ -59,10 +58,8 @@ async function createMatchObj(state: MatchState, match: MatchV5DTOs.MatchDto) {
     throw new Error(`unable to find player ${JSON.stringify(state)}, ${JSON.stringify(match)}`);
   }
 
-  const currentRank = await getCurrentRank(state.player);
-
   const fullPlayer = await getPlayer(state.player);
-  return createMatchObject(fullPlayer, match, state.rank, currentRank);
+  return toMatch(fullPlayer, match, state.rank, fullPlayer.ranks.solo);
 }
 
 export async function checkPostMatch() {

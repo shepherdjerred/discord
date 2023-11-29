@@ -5,9 +5,9 @@ import { MatchState, PlayerConfigEntry, getPlayersNotInGame } from "@glitter-boy
 import { getCurrentSoloQueueGame } from "../../api/index.js";
 import { createDiscordMessage } from "./discord.js";
 import { send } from "../../discord/channel.js";
-import { getCurrentRank } from "../../rank.js";
-import { getPlayerConfigs } from "../../playerConfig.js";
-import { getState, setState } from "../../state.js";
+import { getRanks } from "../../model/rank.js";
+import { getPlayerConfigs } from "../../model/playerConfig.js";
+import { getState, setState } from "../../model/state.js";
 
 export async function checkPreMatch() {
   const players = await getPlayerConfigs();
@@ -39,7 +39,7 @@ export async function checkPreMatch() {
         const message = createDiscordMessage([player, game]);
         await send(message);
 
-        const currentRank = await getCurrentRank(player);
+        const currentRank = await getRanks(player);
 
         console.log("creating new state entries");
         const entry: MatchState = {
@@ -47,7 +47,8 @@ export async function checkPreMatch() {
           matchId: game.gameId,
           uuid: uuid.v4(),
           player,
-          rank: currentRank,
+          // TODO: use the correct ranked based on this being on solo or duo queue
+          rank: currentRank.solo,
           queue: "solo",
         };
 

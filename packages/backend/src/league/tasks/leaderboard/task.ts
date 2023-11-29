@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { toLeaderboard } from "./index.js";
-import { getPlayer } from "../../player.js";
-import { getPlayerConfigs } from "../../playerConfig.js";
+import { getPlayer } from "../../model/player.js";
+import { getPlayerConfigs } from "../../model/playerConfig.js";
 import { leaderboardToDiscordMessage, setKing } from "./discord.js";
 import { CopyObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { format } from "date-fns";
