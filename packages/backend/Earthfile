@@ -27,7 +27,7 @@ build:
   COPY litefs.yaml /etc/litefs.yml
   # TODO: check this
   # RUN deno install npm:@resvg/resvg-js-linux-x64-gnu
-  COPY packages/backend/players.$stage.json players.json
+  COPY players.$stage.json players.json
   ENTRYPOINT litefs mount
   SAVE IMAGE glitter/backend:latest
 
