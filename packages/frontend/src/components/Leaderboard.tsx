@@ -324,7 +324,7 @@ export function LeaderboardComponent() {
           </hgroup>
           <ul className="list-disc list-inside">
             {events.map((event) => (
-              <li>{event}</li>
+              <li key={event}>{event}</li>
             ))}
           </ul>
         </div>

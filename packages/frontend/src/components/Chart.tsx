@@ -3,12 +3,34 @@ import * as React from "react";
 import { type Leaderboard, LeaderboardSchema, type LeaderboardEntry } from "@glitter-boys/data";
 import _ from "lodash";
 import { useState, useEffect } from "react";
-import { scaleTime, scaleLinear } from "@visx/scale";
+import { scaleTime } from "@visx/scale";
 import * as allCurves from "@visx/curve";
 import { Group } from "@visx/group";
 import { LinePath } from "@visx/shape";
 import { extent } from "d3-array";
+import { timeFormat } from "d3-time-format";
+import { Axis, Orientation } from "@visx/axis";
+import { scaleUtc, scaleLinear, coerceNumber } from "@visx/scale";
 
+const width = 300;
+const svgHeight = 300;
+const scaleHeight = svgHeight - 30;
+const lineHeight = svgHeight / 1;
+
+export const backgroundColor = "#da7cff";
+const axisColor = "#000";
+export const labelColor = "#340098";
+const tickLabelProps = {
+  fill: "#000",
+  fontSize: 12,
+  fontFamily: "sans-serif",
+  textAnchor: "middle",
+} as const;
+
+const getMinMax = (vals: (number | { valueOf(): number })[]) => {
+  const numericVals = vals.map(coerceNumber);
+  return [Math.min(...numericVals), Math.max(...numericVals)];
+};
 const dates = ["2023-11-23", "2023-11-24", "2023-11-25", "2023-11-26", "2023-11-27", "2023-11-28"];
 
 export function ChartComponent() {
@@ -56,12 +78,18 @@ export function ChartComponent() {
     domain: extent(allData, getY) as [number, number],
   });
 
-  const width = 200;
-  const svgHeight = 300;
-  const lineHeight = svgHeight / 1;
-
   xScale.range([0, width]);
   yScale.range([lineHeight - 2, 0]);
+
+  const xAxis = {
+    scale: scaleUtc({
+      domain: getMinMax(_.map(allData, getX)),
+      range: [0, width],
+    }),
+    values: _.chain(allData).map(getX).uniq().value(),
+    tickFormat: (v: Date, i: number) => (i === 3 ? "🎉" : width > 400 || i % 2 === 0 ? timeFormat("%b %d")(v) : ""),
+    label: "time",
+  };
 
   return (
     <>
@@ -76,12 +104,35 @@ export function ChartComponent() {
                 stroke="#333"
                 strokeWidth={2}
                 markerMid="url(#marker-arrow)"
-                x={(d) => xScale(getX(d)) ?? 0}
-                y={(d) => yScale(getY(d)) ?? 0}
+                x={(d) => xScale(getX(d))}
+                y={(d) => yScale(getY(d))}
               />
             </Group>
           );
         })}
+        <Axis
+          orientation={Orientation.bottom}
+          top={scaleHeight}
+          scale={xAxis.scale}
+          stroke={axisColor}
+          tickStroke={axisColor}
+          tickLabelProps={tickLabelProps}
+          tickValues={xAxis.values}
+          tickFormat={xAxis.tickFormat}
+          numTicks={1}
+          label={""}
+          labelProps={{
+            x: 0,
+            y: 0,
+            fill: labelColor,
+            fontSize: 18,
+            strokeWidth: 1,
+            stroke: "#000",
+            paintOrder: "stroke",
+            fontFamily: "sans-serif",
+            textAnchor: "start",
+          }}
+        />
       </svg>
     </>
   );
