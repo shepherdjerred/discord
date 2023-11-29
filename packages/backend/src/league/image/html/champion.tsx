@@ -3,8 +3,9 @@ import { renderItems } from "./item.js";
 import { palette } from "../assets/colors.js";
 import _ from "lodash";
 import { laneToString } from "@glitter-boys/data";
-import summoner from "../assets/summoner.json" assert { type: "json" };
 import { Champion } from "@glitter-boys/data";
+import { summoner } from "../../dataDragon/summoner.js";
+import { latestVersion } from "../../dataDragon/version.js";
 
 export function renderChampion(champion: Champion, highlight: boolean, durationInMinutes: number, damageMax: number) {
   const items = renderItems(champion.items, champion.visionScore);
@@ -25,7 +26,7 @@ export function renderChampion(champion: Champion, highlight: boolean, durationI
 
     return (
       <img
-        src={`https://ddragon.leagueoflegends.com/cdn/13.22.1/img/spell/${name}.png`}
+        src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/spell/${name}.png`}
         width="60"
         height="60"
         style={{ backgroundColor: palette.blue[5], border: `1px solid ${palette.gold.bright}` }}

@@ -1,10 +1,6 @@
 {
   "folders": [
     {
-      "name": "root",
-      "path": "."
-    },
-    {
       "path": "packages/backend"
     },
     {
@@ -12,6 +8,10 @@
     },
     {
       "path": "packages/frontend"
+    },
+    {
+      "name": "root",
+      "path": "."
     }
   ],
   "extensions": {
@@ -19,7 +19,7 @@
       "dbaeumer.vscode-eslint",
       "esbenp.prettier-vscode",
       "earthly.earthfile-syntax-highlighting",
-      "tamasfe.even-better-toml",
+      "tamasfe.even-better-toml"
     ]
   },
   "settings": {

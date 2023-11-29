@@ -4,7 +4,7 @@ import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
 import { api } from "../../api/api.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
-import { matchToImage } from "../../image/html/index.js";
+import { matchToSvg } from "../../image/html/index.js";
 import { MatchState, Match, wasPromoted, wasDemoted } from "@glitter-boys/data";
 import { send } from "../../discord/channel.js";
 import { s3 } from "../../s3.js";
@@ -43,7 +43,7 @@ async function saveMatch(match: MatchV5DTOs.MatchDto) {
 }
 
 async function getImage(match: Match): Promise<[AttachmentBuilder, EmbedBuilder]> {
-  const image = await matchToImage(match);
+  const image = await matchToSvg(match);
   const attachment = new AttachmentBuilder(image).setName("match.png");
   const embed = new EmbedBuilder().setImage(`attachment://${attachment.name}`);
   return [attachment, embed];

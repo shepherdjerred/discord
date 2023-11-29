@@ -1,19 +1,23 @@
 import _ from "lodash";
 import React from "react";
-import { currentPatch } from "../../api/index.js";
 import { palette } from "../assets/colors.js";
+import { latestVersion } from "../../dataDragon/version.js";
 
 const dimension = 120;
 
 export function renderItem(item: number) {
-  return (
-    <img
-      src={`https://ddragon.leagueoflegends.com/cdn/${currentPatch}/img/item/${item.toString()}.png`}
-      style={{ backgroundColor: palette.blue[5], border: `1px solid ${palette.gold.bright}` }}
-      width={dimension}
-      height={dimension}
-    />
-  );
+  if (item !== 0) {
+    return (
+      <img
+        src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/item/${item.toString()}.png`}
+        style={{ backgroundColor: palette.blue[5], border: `1px solid ${palette.gold.bright}` }}
+        width={dimension}
+        height={dimension}
+      />
+    );
+  } else {
+    return <span style={{ width: dimension, height: dimension }} />;
+  }
 }
 
 export function renderItems(items: number[], visionScore: number) {
