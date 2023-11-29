@@ -7,9 +7,9 @@ interface Props {
 
 const { title } = Astro.props;
 const index = Astro.props.index || true;
-const description = Astro.props.description || "Glitter Boys"
+const description = Astro.props.description || "Glitter Boys";
 
-import "../styles/links.scss"
+import "../styles/links.scss";
 ---
 
 <!doctype html>
@@ -22,9 +22,9 @@ import "../styles/links.scss"
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <link rel="sitemap" href="/sitemap-index.xml" />
-    { !index && <meta name="robots" content="noindex">}
+    {!index && <meta name="robots" content="noindex" />}
   </head>
-  <body class="dark:bg-black">
+  <body class="dark:bg-black dark:text-white">
     <slot />
   </body>
 </html>

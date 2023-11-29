@@ -1,14 +1,49 @@
-import _ from "lodash";
-import { getPlayer } from "../../model/player.js";
-import { getPlayerConfigs } from "../../model/playerConfig.js";
-import { leaderboardToDiscordMessage } from "./discord.js";
-import { toLeaderboard } from "./index.js";
-import { send } from "../../discord/channel.js";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash@4.17.21";
+import { toLeaderboard } from "./index.ts";
+import { getPlayer } from "../../player.ts";
+import {
+  CopyObjectCommand,
+  PutObjectCommand,
+} from "https://esm.sh/@aws-sdk/client-s3@3.461.0";
+import configuration from "../../../configuration.ts";
+import { s3 } from "../../s3.ts";
+import { getPlayerConfigs } from "../../playerConfig.ts";
+import { format } from "https://esm.sh/date-fns@2.30.0";
+import { send } from "../../discord/channel.ts";
+import { leaderboardToDiscordMessage } from "./discord.ts";
+
+const link = "https://glitter-boys.com/leaderboard/";
 
 export async function postLeaderboardMessage() {
   const playerConfigs = await getPlayerConfigs();
   const players = await Promise.all(_.map(playerConfigs, getPlayer));
   const leaderboard = toLeaderboard(players);
   const message = leaderboardToDiscordMessage(leaderboard);
-  await send(message);
+  const messageWithLink = `View more details at ${link}\n${message}`;
+  await send(messageWithLink);
+
+  const copyCommand = new CopyObjectCommand({
+    Bucket: configuration.s3BucketName,
+    CopySource: `${configuration.s3BucketName}/leaderboard.json`,
+    Key: `previous.json`,
+    ContentType: "application/json",
+  });
+  await s3.send(copyCommand);
+
+  let putCommand = new PutObjectCommand({
+    Bucket: configuration.s3BucketName,
+    Key: `leaderboard.json`,
+    Body: JSON.stringify(leaderboard),
+    ContentType: "application/json",
+  });
+  await s3.send(putCommand);
+  const date = format(new Date(), "yyyy-MM-dd");
+  putCommand = new PutObjectCommand({
+    Bucket: configuration.s3BucketName,
+    Key: `leaderboards/${date}.json`,
+    Body: JSON.stringify(leaderboard),
+    ContentType: "application/json",
+  });
+  await s3.send(putCommand);
 }

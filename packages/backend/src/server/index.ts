@@ -1,15 +1,15 @@
-import express from "express";
-import type { Request, Response } from "express";
-import configuration from "../configuration.js";
-import cors from "cors";
+import configuration from "../configuration.ts";
+import staticFiles from "https://deno.land/x/static_files@1.1.6/mod.ts";
 
-const app = express();
-const port = process.env["PORT"] || 8080;
+const serveFiles = (req: Request) =>
+  staticFiles(configuration.dataDir)({
+    request: req,
+    respondWith: (r: Response) => r,
+  });
 
-app.use(cors());
-app.get("/", function (_: Request, res: Response) {
-  res.send("Hey there :)");
+Deno.serve({ port: configuration.port || 8000 }, (req) => {
+  if (new URL(req.url).pathname === "/") {
+    return new Response("Hello :)");
+  }
+  return serveFiles(req);
 });
-
-app.use(express.static(configuration.dataDir));
-app.listen(port);

@@ -1,6 +1,10 @@
 {
   "folders": [
     {
+      "name": "root",
+      "path": "."
+    },
+    {
       "path": "packages/backend"
     },
     {
@@ -11,9 +15,37 @@
     }
   ],
   "extensions": {
-    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "earthly.earthfile-syntax-highlighting",
+      "tamasfe.even-better-toml"
+    ]
   },
   "settings": {
-    "testing.automaticallyOpenPeekView": "never"
+    "testing.automaticallyOpenPeekView": "never",
+    "deno.enable": true,
+    "deno.lint": true,
+    "deno.unstable": false,
+    "deno.cacheOnSave": true,
+    "deno.codeLens.implementations": true,
+    "deno.codeLens.references": true,
+    "deno.codeLens.referencesAllFunctions": true,
+    "deno.codeLens.test": true,
+    "deno.enablePaths": [
+      "packages/backend/",
+      "packages/data/",
+      "packages/frontend/"
+    ]
+  },
+  "launch": {
+    "configurations": [
+      {
+        "type": "chrome",
+        "name": "https://localhost:4321",
+        "request": "launch",
+        "url": "https://localhost:4321"
+      }
+    ]
   }
 }

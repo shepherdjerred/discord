@@ -1,22 +1,31 @@
-import { Constants } from "twisted";
-import _ from "lodash";
-import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
-import { z } from "zod";
-import { api } from "../../league/api.js";
-import { GameState, getState, writeState } from "../../model/state.js";
-import { AttachmentBuilder, EmbedBuilder, bold, userMention } from "discord.js";
-import { matchToImage } from "./image/html/index.js";
-import { generateFeedbackMessage } from "./feedback/index.js";
-import { rankToLeaguePoints } from "../../model/leaguePoints.js";
-import { getCurrentRank } from "../../model/playerConfigEntry.js";
-import { mkdir, writeFile } from "fs/promises";
-import { getPlayer } from "../../model/player.js";
-import { Match, createMatchObject } from "../../model/match.js";
-import { send } from "../../discord/channel.js";
+import { Constants } from "npm:twisted@1.55.0";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash@4.17.21";
+import { MatchV5DTOs } from "npm:twisted@1.55.0/dist/models-dto/index.js";
+import { z } from "https://esm.sh/zod@3.22.4";
+import { api } from "../../api/api.ts";
+import {
+  AttachmentBuilder,
+  EmbedBuilder,
+  userMention,
+} from "npm:discord.js@14.14.1";
+import { matchToImage } from "../../image/html/index.tsx";
+import { Match, MatchState, rankToLeaguePoints } from "@glitter-boys/data";
+import { send } from "../../discord/channel.ts";
+import { s3 } from "../../s3.ts";
+import { PutObjectCommand } from "https://esm.sh/@aws-sdk/client-s3";
+import configuration from "../../../configuration.ts";
+import { getPlayer } from "../../player.ts";
+import { getCurrentRank } from "../../rank.ts";
+import { createMatchObject } from "../../match.ts";
+import { getState, setState } from "../../state.ts";
 
-async function checkMatch(game: GameState) {
+async function checkMatch(game: MatchState) {
   try {
-    const response = await api.MatchV5.get(`NA1_${game.matchId}`, Constants.RegionGroups.AMERICAS);
+    const response = await api.MatchV5.get(
+      `NA1_${game.matchId}`,
+      Constants.RegionGroups.AMERICAS,
+    );
     return response.response;
   } catch (e) {
     const result = z.object({ status: z.number() }).safeParse(e);
@@ -32,49 +41,51 @@ async function checkMatch(game: GameState) {
 }
 
 async function saveMatch(match: MatchV5DTOs.MatchDto) {
-  try {
-    await mkdir("matches");
-  } catch (e) {
-    // noop
-  }
-  await writeFile(`matches/${match.info.gameId}`, JSON.stringify(match));
+  const command = new PutObjectCommand({
+    Bucket: configuration.s3BucketName,
+    Key: `matches/${match.info.gameId}.json`,
+    Body: JSON.stringify(match),
+    ContentType: "application/json",
+  });
+  await s3.send(command);
 }
 
-async function getImage(match: Match): Promise<[AttachmentBuilder, EmbedBuilder]> {
+async function getImage(
+  match: Match,
+): Promise<[AttachmentBuilder, EmbedBuilder]> {
   const image = await matchToImage(match);
   const attachment = new AttachmentBuilder(image).setName("match.png");
   const embed = new EmbedBuilder().setImage(`attachment://${attachment.name}`);
   return [attachment, embed];
 }
 
-async function getAiMessage(match: Match) {
-  const { name, message } = await generateFeedbackMessage(match);
-  return `${bold("AI " + name)} says: ${message.replace(
-    match.player.playerConfig.name,
-    userMention(match.player.playerConfig.discordAccount.id),
-  )}`;
-}
-
-async function createMatchObj(state: GameState, match: MatchV5DTOs.MatchDto) {
+async function createMatchObj(state: MatchState, match: MatchV5DTOs.MatchDto) {
   const player = _.chain(match.info.participants)
-    .filter((participant) => participant.puuid === state.player.league.leagueAccount.puuid)
+    .filter(
+      (participant) =>
+        participant.puuid === state.player.league.leagueAccount.puuid,
+    )
     .first()
     .value();
 
   if (player == undefined) {
-    throw new Error(`unable to find player ${JSON.stringify(state)}, ${JSON.stringify(match)}`);
+    throw new Error(
+      `unable to find player ${JSON.stringify(state)}, ${
+        JSON.stringify(match)
+      }`,
+    );
   }
 
   const currentRank = await getCurrentRank(state.player);
-  const lpChange = rankToLeaguePoints(currentRank) - rankToLeaguePoints(state.rank);
+  const lpChange = rankToLeaguePoints(currentRank) -
+    rankToLeaguePoints(state.rank);
 
   const fullPlayer = await getPlayer(state.player);
   return createMatchObject(fullPlayer, match, lpChange);
 }
 
 export async function checkPostMatch() {
-  let [state, release] = await getState();
-  await release();
+  const state = getState();
 
   console.log("checking match api");
   const games = await Promise.all(_.map(state.gamesStarted, checkMatch));
@@ -83,7 +94,7 @@ export async function checkPostMatch() {
   const finishedGames = _.chain(state.gamesStarted)
     .zip(games)
     .filter(([_game, match]) => match != undefined)
-    .value() as [GameState, MatchV5DTOs.MatchDto][];
+    .value() as [MatchState, MatchV5DTOs.MatchDto][];
 
   // TODO: send duo queue message
   console.log("sending messages");
@@ -92,24 +103,30 @@ export async function checkPostMatch() {
       await saveMatch(match);
 
       const matchObj = await createMatchObj(state, match);
-      const discordMessage = await getAiMessage(matchObj);
+
+      const discordMessage = userMention(
+        matchObj.player.playerConfig.discordAccount.id,
+      );
       const [attachment, embed] = await getImage(matchObj);
-      await send({ content: discordMessage, embeds: [embed], files: [attachment] });
+      await send({
+        content: discordMessage,
+        embeds: [embed],
+        files: [attachment],
+      });
+
+      console.log("calculating new state");
+      const newState = getState();
+      const newMatches = _.differenceBy(
+        newState.gamesStarted,
+        _.map(finishedGames, (game) => game[0]),
+        (state) => state.uuid,
+      );
+
+      console.log("saving state files");
+      setState({
+        ...state,
+        gamesStarted: newMatches,
+      });
     }),
   );
-
-  console.log("calculating new state");
-  [state, release] = await getState();
-  const newMatches = _.differenceBy(
-    state.gamesStarted,
-    _.map(finishedGames, (game) => game[0]),
-    (state) => state.uuid,
-  );
-
-  console.log("saving state files");
-  await writeState({
-    ...state,
-    gamesStarted: newMatches,
-  });
-  await release();
 }

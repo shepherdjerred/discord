@@ -1,0 +1,30 @@
+app = "glitter-boys-beta"
+primary_region = "sea"
+
+[build]
+  image = "glitter/backend:latest"
+
+[[services]]
+  internal_port = 8000
+  protocol = "tcp"
+  [[services.ports]]
+    handlers = ["http"]
+    port = "80"
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "443"
+  [[services.http_checks]]
+    interval = 10000
+    grace_period = "5s"
+    method = "get"
+    path = "/"
+    protocol = "http"
+    restart_limit = 0
+    timeout = 2000
+
+[env]
+  DATA_DIR="/litefs"
+
+[mounts]
+  source = "litefs"
+  destination = "/var/lib/litefs"

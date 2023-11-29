@@ -1,5 +1,5 @@
-import Configuration from "../configuration.js";
-import { Client } from "discord.js";
+import Configuration from "../configuration.ts";
+import { Client } from "npm:discord.js@14.14.1";
 
 const client = new Client({ intents: [] });
 

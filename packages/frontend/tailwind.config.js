@@ -1,6 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 
-import { blue, black, purple, white, yellow, pink, orange, slate } from "tailwindcss/colors";
+import {
+  blue,
+  black,
+  purple,
+  white,
+  yellow,
+  pink,
+  orange,
+  slate,
+} from "tailwindcss/colors";
 
 import typography from "@tailwindcss/typography";
 
