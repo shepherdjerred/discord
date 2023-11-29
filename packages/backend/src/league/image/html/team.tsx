@@ -47,8 +47,7 @@ export function renderTeam(
           champion.championName === highlight,
           durationInMinutes,
           mostDamage,
-        ),
-      )}
+        ))}
     </div>
   );
 }

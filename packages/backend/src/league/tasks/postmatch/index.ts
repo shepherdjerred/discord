@@ -70,15 +70,17 @@ async function createMatchObj(state: MatchState, match: MatchV5DTOs.MatchDto) {
 
   if (player == undefined) {
     throw new Error(
-      `unable to find player ${JSON.stringify(state)}, ${JSON.stringify(
-        match,
-      )}`,
+      `unable to find player ${JSON.stringify(state)}, ${
+        JSON.stringify(
+          match,
+        )
+      }`,
     );
   }
 
   const currentRank = await getCurrentRank(state.player);
-  const lpChange =
-    rankToLeaguePoints(currentRank) - rankToLeaguePoints(state.rank);
+  const lpChange = rankToLeaguePoints(currentRank) -
+    rankToLeaguePoints(state.rank);
 
   const fullPlayer = await getPlayer(state.player);
   return createMatchObject(fullPlayer, match, lpChange);

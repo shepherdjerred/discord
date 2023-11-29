@@ -62,10 +62,10 @@ export function createMatchObject(
     player: {
       playerConfig: player.config,
       leaguePointsDelta: lpChange,
-      tournamentWins:
-        player.currentRank.wins - player.config.league.initialRank.wins,
-      tournamentLosses:
-        player.currentRank.losses - player.config.league.initialRank.losses,
+      tournamentWins: player.currentRank.wins -
+        player.config.league.initialRank.wins,
+      tournamentLosses: player.currentRank.losses -
+        player.config.league.initialRank.losses,
       champion: createChampionObject(playerParticipant),
       outcome,
       team,
