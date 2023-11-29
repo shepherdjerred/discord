@@ -33,13 +33,11 @@ export async function checkPreMatch() {
 
   // TODO: prune any old games
   console.log("removing games already seen");
-  const newGames = _.reject(
-    playersInGame,
-    ([_player, game]) =>
-      _.chain(getState().gamesStarted)
-        .map((game) => game.matchId)
-        .some((candidate) => candidate === game.gameId)
-        .value(),
+  const newGames = _.reject(playersInGame, ([_player, game]) =>
+    _.chain(getState().gamesStarted)
+      .map((game) => game.matchId)
+      .some((candidate) => candidate === game.gameId)
+      .value(),
   );
 
   console.log("sending messages");

@@ -15,9 +15,9 @@ export const RankSchema = z.strictObject({
 });
 
 export function rankToString(rank: Rank): string {
-  return `${_.startCase(rank.tier)} ${
-    divisionToString(rank.division)
-  }, ${rank.lp}LP`;
+  return `${_.startCase(rank.tier)} ${divisionToString(rank.division)}, ${
+    rank.lp
+  }LP`;
 }
 
 export function rankToSimpleString(rank: Rank): string {

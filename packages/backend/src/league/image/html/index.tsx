@@ -30,8 +30,7 @@ export async function matchToSvg(match: Match) {
         width: "100%",
         height: "100%",
         color: palette.grey[1],
-        background:
-          `linear-gradient(90deg, ${palette.blue.gradient.dark.start} 0%, ${palette.blue.gradient.dark.end} 50%, ${palette.blue.gradient.dark.start} 100%)`,
+        background: `linear-gradient(90deg, ${palette.blue.gradient.dark.start} 0%, ${palette.blue.gradient.dark.end} 50%, ${palette.blue.gradient.dark.start} 100%)`,
         display: "flex",
         flexDirection: "column",
         paddingLeft: "5rem",

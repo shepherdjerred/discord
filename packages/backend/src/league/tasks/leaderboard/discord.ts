@@ -25,9 +25,7 @@ function leaderboardEntryToDiscordMessage({
     positionString = bold(positionString);
   }
 
-  return `${positionString}: ${
-    userMention(
-      player.config.discordAccount.id,
-    )
-  } ${bold(lpDiffToString(leaguePointsDelta))}`;
+  return `${positionString}: ${userMention(
+    player.config.discordAccount.id,
+  )} ${bold(lpDiffToString(leaguePointsDelta))}`;
 }
