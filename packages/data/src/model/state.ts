@@ -17,8 +17,8 @@ export const MatchStateSchema = z.strictObject({
   added: z.string().pipe(z.coerce.date()),
   // the match id from the Riot API
   matchId: z.number(),
-      player: PlayerConfigEntrySchema,
-      rank: RankSchema,
+  player: PlayerConfigEntrySchema,
+  rank: RankSchema,
   queue: QueueTypeSchema,
 });
 

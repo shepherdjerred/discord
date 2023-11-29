@@ -1,7 +1,7 @@
 import { CurrentGameInfoDTO } from "twisted/dist/models-dto/index.js";
 import _ from "lodash";
 import * as uuid from "uuid";
-import {MatchState, PlayerConfigEntry, getPlayersNotInGame } from "@glitter-boys/data";
+import { MatchState, PlayerConfigEntry, getPlayersNotInGame } from "@glitter-boys/data";
 import { getCurrentSoloQueueGame } from "../../api/index.js";
 import { createDiscordMessage } from "./discord.js";
 import { send } from "../../discord/channel.js";
@@ -24,7 +24,6 @@ export async function checkPreMatch() {
     .filter(([_player, game]) => game != undefined)
     .value() as [PlayerConfigEntry, CurrentGameInfoDTO][];
 
-  // TODO: prune any old games
   console.log("removing games already seen");
   const newGames = _.reject(playersInGame, ([_player, game]) =>
     _.chain(getState().gamesStarted)
@@ -49,7 +48,7 @@ export async function checkPreMatch() {
           uuid: uuid.v4(),
           player,
           rank: currentRank,
-            queue:"solo"
+          queue: "solo",
         };
 
         console.log("saving state");
