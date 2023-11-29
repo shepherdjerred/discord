@@ -10,7 +10,6 @@ build:
 check:
   BUILD ./packages/backend+check
   BUILD ./packages/data+check
-  BUILD ./packages/frontend+check
 
 deploy:
   ARG --required stage

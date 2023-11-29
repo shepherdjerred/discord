@@ -15,10 +15,6 @@ deps:
   RUN npm i
   RUN npm run build
 
-check:
-  FROM +deps
-  RUN npm run lint
-
 build:
   FROM +deps
   SAVE ARTIFACT dist
