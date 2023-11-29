@@ -1,11 +1,11 @@
-import { Match } from "@glitter-boys/data";
+import { Match, Rank } from "@glitter-boys/data";
 import { Player } from "@glitter-boys/data";
 import { Team, parseTeam } from "@glitter-boys/data";
 import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import { createChampionObject } from "./champion.js";
 
-export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpChange: number): Match {
+export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, oldRank: Rank, newRank: Rank): Match {
   const playerParticipant = _.chain(dto.info.participants)
     .filter((participant) => participant.puuid === player.config.league.leagueAccount.puuid)
     .first()
@@ -51,7 +51,8 @@ export function createMatchObject(player: Player, dto: MatchV5DTOs.MatchDto, lpC
   return {
     player: {
       playerConfig: player.config,
-      leaguePointsDelta: lpChange,
+      oldRank,
+      newRank,
       tournamentWins: player.currentRank.wins - player.config.league.initialRank.wins,
       tournamentLosses: player.currentRank.losses - player.config.league.initialRank.losses,
       champion: createChampionObject(playerParticipant),

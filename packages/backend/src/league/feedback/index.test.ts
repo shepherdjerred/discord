@@ -24,7 +24,8 @@ describe(
           currentRank: { division: 1, tier: "gold", lp: 4, wins: 50, losses: 30 },
         } as Player,
         exampleMatch as MatchV5DTOs.MatchDto,
-        27,
+        { division: 4, tier: "gold", lp: 11, wins: 10, losses: 20 },
+        { division: 1, tier: "gold", lp: 4, wins: 50, losses: 30 },
       );
       const response = await generateFeedbackMessage(matchObj);
       console.log(response);

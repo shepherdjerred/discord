@@ -5,7 +5,7 @@ import { z } from "zod";
 import { api } from "../../api/api.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
 import { matchToImage } from "../../image/html/index.js";
-import { MatchState, Match, rankToLeaguePoints } from "@glitter-boys/data";
+import { MatchState, Match, wasPromoted, wasDemoted } from "@glitter-boys/data";
 import { send } from "../../discord/channel.js";
 import { s3 } from "../../s3.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
@@ -60,10 +60,9 @@ async function createMatchObj(state: MatchState, match: MatchV5DTOs.MatchDto) {
   }
 
   const currentRank = await getCurrentRank(state.player);
-  const lpChange = rankToLeaguePoints(currentRank) - rankToLeaguePoints(state.rank);
 
   const fullPlayer = await getPlayer(state.player);
-  return createMatchObject(fullPlayer, match, lpChange);
+  return createMatchObject(fullPlayer, match, state.rank, currentRank);
 }
 
 export async function checkPostMatch() {
@@ -81,12 +80,19 @@ export async function checkPostMatch() {
   // TODO: send duo queue message
   console.log("sending messages");
   await Promise.all(
-    _.map(finishedGames, async ([state, match]) => {
-      await saveMatch(match);
+    _.map(finishedGames, async ([state, matchDto]) => {
+      await saveMatch(matchDto);
 
-      const matchObj = await createMatchObj(state, match);
+      const matchObj = await createMatchObj(state, matchDto);
 
-      const discordMessage = userMention(matchObj.player.playerConfig.discordAccount.id);
+      let discordMessage: string = userMention(matchObj.player.playerConfig.discordAccount.id);
+
+      if (wasPromoted(matchObj.player.oldRank, matchObj.player.newRank)) {
+        discordMessage = `${discordMessage} was promoted to ${matchObj.player.newRank.tier} ${matchObj.player.newRank.division}!`;
+      } else if (wasDemoted(matchObj.player.oldRank, matchObj.player.newRank)) {
+        discordMessage = `${discordMessage} was demoted to ${matchObj.player.newRank.tier} ${matchObj.player.newRank.division}!`;
+      }
+
       const [attachment, embed] = await getImage(matchObj);
       await send({ content: discordMessage, embeds: [embed], files: [attachment] });
 
