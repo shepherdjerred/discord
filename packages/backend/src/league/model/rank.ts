@@ -37,6 +37,12 @@ export async function getRanks(player: PlayerConfigEntry): Promise<Ranks> {
 
   return {
     solo: getRank(response.response, solo),
-    flex: getRank(response.response, flex),
+    flex: {
+      tier: "iron",
+      losses: 0,
+      wins: 0,
+      lp: 0,
+      division: 1,
+    },
   };
 }
