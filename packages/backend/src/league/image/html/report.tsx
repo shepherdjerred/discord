@@ -2,8 +2,8 @@ import { Match, leaguePointsDelta, lpDiffToString } from "@glitter-boys/data";
 import _ from "lodash";
 import "react";
 import { palette } from "../assets/colors.js";
-import { RankedBadge } from "./ranked/index.jsx";
-import { renderTeam } from "./team.jsx";
+import { RankedBadge } from "./ranked/index.js";
+import { renderTeam } from "./team.js";
 
 export function Report({ match }: { match: Match }) {
   const minutes = _.round(match.durationInSeconds / 60);
