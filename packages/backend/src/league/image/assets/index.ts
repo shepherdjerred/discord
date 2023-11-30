@@ -1,10 +1,10 @@
 import { readFile } from "fs/promises";
 import { Font } from "satori";
 
-const fontPath = "src/league/image/assets/fonts";
+const fontPath = new URL("fonts", import.meta.url);
 
 export const font = {
-  title: "Beaufort",
+  title: "Beaufort for LOL",
   body: "Spiegel",
 };
 
@@ -12,98 +12,98 @@ export const font = {
 export async function loadFonts(): Promise<Font[]> {
   return [
     {
-      name: "Beaufort",
-      data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Light.ttf`),
+      name: "Beaufort for LOL",
+      data: await readFile(`${fontPath.toString()}/BeaufortForLoL-TTF/BeaufortforLOL-Light.ttf`),
       weight: 300,
       style: "normal",
     },
     {
-      name: "Beaufort",
-      data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-LightItalic.ttf`),
+      name: "Beaufort for LOL",
+      data: await readFile(`${fontPath.toString()}/BeaufortForLoL-TTF/BeaufortforLOL-LightItalic.ttf`),
       weight: 300,
       style: "italic",
     },
     {
-      name: "Beaufort",
-      data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Regular.ttf`),
+      name: "Beaufort for LOL",
+      data: await readFile(`${fontPath.toString()}/BeaufortForLoL-TTF/BeaufortforLOL-Regular.ttf`),
       weight: 400,
       style: "normal",
     },
     {
-      name: "Beaufort",
-      data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Italic.ttf`),
+      name: "Beaufort for LOL",
+      data: await readFile(`${fontPath.toString()}/BeaufortForLoL-TTF/BeaufortforLOL-Italic.ttf`),
       weight: 400,
       style: "italic",
     },
     {
-      name: "Beaufort",
-      data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Medium.ttf`),
+      name: "Beaufort for LOL",
+      data: await readFile(`${fontPath.toString()}/BeaufortForLoL-TTF/BeaufortforLOL-Medium.ttf`),
       weight: 500,
       style: "normal",
     },
     {
-      name: "Beaufort",
-      data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-MediumItalic.ttf`),
+      name: "Beaufort for LOL",
+      data: await readFile(`${fontPath.toString()}/BeaufortForLoL-TTF/BeaufortforLOL-MediumItalic.ttf`),
       weight: 500,
       style: "italic",
     },
     {
-      name: "Beaufort",
-      data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Bold.ttf`),
+      name: "Beaufort for LOL",
+      data: await readFile(`${fontPath.toString()}/BeaufortForLoL-TTF/BeaufortforLOL-Bold.ttf`),
       weight: 700,
       style: "normal",
     },
     {
-      name: "Beaufort",
-      data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-BoldItalic.ttf`),
+      name: "Beaufort for LOL",
+      data: await readFile(`${fontPath.toString()}/BeaufortForLoL-TTF/BeaufortforLOL-BoldItalic.ttf`),
       weight: 700,
       style: "italic",
     },
     {
-      name: "Beaufort",
-      data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Heavy.ttf`),
+      name: "Beaufort for LOL",
+      data: await readFile(`${fontPath.toString()}/BeaufortForLoL-TTF/BeaufortforLOL-Heavy.ttf`),
       weight: 800,
       style: "normal",
     },
     {
-      name: "Beaufort",
-      data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-HeavyItalic.ttf`),
+      name: "Beaufort for LOL",
+      data: await readFile(`${fontPath.toString()}/BeaufortForLoL-TTF/BeaufortforLOL-HeavyItalic.ttf`),
       weight: 800,
       style: "italic",
     },
     {
       name: "Spiegel",
-      data: await readFile(`${fontPath}/Spiegel-TTF/Spiegel_TT_Regular.ttf`),
+      data: await readFile(`${fontPath.toString()}/Spiegel-TTF/Spiegel_TT_Regular.ttf`),
       weight: 400,
       style: "normal",
     },
     {
       name: "Spiegel",
-      data: await readFile(`${fontPath}/Spiegel-TTF/Spiegel_TT_Regular_Italic.ttf`),
+      data: await readFile(`${fontPath.toString()}/Spiegel-TTF/Spiegel_TT_Regular_Italic.ttf`),
       weight: 400,
       style: "italic",
     },
     {
       name: "Spiegel",
-      data: await readFile(`${fontPath}/Spiegel-TTF/Spiegel_TT_SemiBold.ttf`),
+      data: await readFile(`${fontPath.toString()}/Spiegel-TTF/Spiegel_TT_SemiBold.ttf`),
       weight: 500,
       style: "normal",
     },
     {
       name: "Spiegel",
-      data: await readFile(`${fontPath}/Spiegel-TTF/Spiegel_TT_SemiBold_Italic.ttf`),
+      data: await readFile(`${fontPath.toString()}/Spiegel-TTF/Spiegel_TT_SemiBold_Italic.ttf`),
       weight: 500,
       style: "italic",
     },
     {
       name: "Spiegel",
-      data: await readFile(`${fontPath}/Spiegel-TTF/Spiegel_TT_Bold.ttf`),
+      data: await readFile(`${fontPath.toString()}/Spiegel-TTF/Spiegel_TT_Bold.ttf`),
       weight: 700,
       style: "normal",
     },
     {
       name: "Spiegel",
-      data: await readFile(`${fontPath}/Spiegel-TTF/Spiegel_TT_Bold_Italic.ttf`),
+      data: await readFile(`${fontPath.toString()}/Spiegel-TTF/Spiegel_TT_Bold_Italic.ttf`),
       weight: 700,
       style: "italic",
     },

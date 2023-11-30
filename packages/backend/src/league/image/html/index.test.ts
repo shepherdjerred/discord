@@ -13,7 +13,7 @@ declare module "vitest" {
 
 expect.extend({ toMatchImageSnapshot });
 
-const testdataPath = "src/league/image/html/testdata/match.json";
+const testdataPath = new URL("testdata/match.json", import.meta.url);
 
 describe("index", () => {
   test("test", async () => {

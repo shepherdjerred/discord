@@ -1,0 +1,19 @@
+{
+  "name": "@glitter-boys/preview",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "type": "module",
+  "dependencies": {
+    "@astrojs/check": "^0.3.1",
+    "@astrojs/react": "^3.0.6",
+    "astro": "^3.6.3",
+    "typescript": "^5.3.2"
+  }
+}

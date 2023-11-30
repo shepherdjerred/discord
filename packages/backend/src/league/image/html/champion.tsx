@@ -9,7 +9,10 @@ import { latestVersion } from "../../dataDragon/version.js";
 
 export function renderChampion(champion: Champion, highlight: boolean, durationInMinutes: number, damageMax: number) {
   const items = renderItems(champion.items, champion.visionScore);
-  const kdaRatio = _.round((champion.kills + champion.assists) / champion.deaths, 1);
+  const kdaRatio =
+    champion.deaths === 0
+      ? champion.kills + champion.deaths
+      : _.round((champion.kills + champion.assists) / champion.deaths, 1);
   const lane = champion.lane ? laneToString(champion.lane) : "?";
   const damagePercent = _.round((champion.damage / damageMax) * 100);
 
@@ -41,22 +44,53 @@ export function renderChampion(champion: Champion, highlight: boolean, durationI
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        gap: "2rem",
       }}
     >
-      <div style={{ display: "flex" }}>
-        <span style={{ width: "20rem" }}>{lane}</span>
-        <span style={{ fontWeight: 700, width: "10rem" }}>{champion.level}</span>
-      </div>
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          color: highlight ? palette.gold.bright : "",
-          width: "50rem",
         }}
       >
-        <span style={{ fontWeight: 700 }}>{champion.summonerName}</span>
-        <span>{champion.championName}</span>
+        <div
+          style={{
+            display: "flex",
+            background: `linear-gradient(
+              to right,
+              rgba(10, 20, 40, .7),
+              rgba(10, 20, 40, .7),
+              rgba(9, 20, 40, .8),
+              rgba(9, 20, 40, 1)
+            ),url("https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.championName}_0.jpg")`,
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            height: "100%",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              color: "",
+            }}
+          >
+            <span style={{ width: "20rem", display: "flex", justifyContent: "center" }}>{lane}</span>
+            <span style={{ fontWeight: 700, width: "10rem" }}>{champion.level}</span>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              color: highlight ? palette.gold.bright : "",
+              width: "50rem",
+            }}
+          >
+            <span style={{ fontWeight: 700 }}>{champion.summonerName}</span>
+            <span>{champion.championName}</span>
+          </div>
+        </div>
       </div>
 
       <div style={{ display: "flex", gap: "3rem" }}>
@@ -91,7 +125,7 @@ export function renderChampion(champion: Champion, highlight: boolean, durationI
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "30rem" }}>
-        <span style={{ fontWeight: 700 }}>{champion.creepScore.toLocaleString()} cs</span>
+        <span style={{ fontWeight: 700 }}>{champion.creepScore.toLocaleString()} CS</span>
         <span>{_.round(champion.creepScore / durationInMinutes, 2).toLocaleString()} / min</span>
       </div>
     </div>
