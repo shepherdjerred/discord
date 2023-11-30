@@ -1,8 +1,8 @@
 import React from "react";
-import { Rank, Tier, wasPromoted } from "@glitter-boys/data";
 import { readFile } from "fs/promises";
 import _ from "lodash";
 import { palette } from "../../assets/colors.js";
+import { Tier, Rank, wasPromoted } from "../../../index.js";
 
 const assets = "src/league/image/html/ranked/assets";
 

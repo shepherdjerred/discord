@@ -2,10 +2,10 @@ import React from "react";
 import { renderItems } from "./item.js";
 import { palette } from "../assets/colors.js";
 import _ from "lodash";
-import { laneToString } from "@glitter-boys/data";
-import { Champion } from "@glitter-boys/data";
 import { summoner } from "../../dataDragon/summoner.js";
 import { latestVersion } from "../../dataDragon/version.js";
+import { Champion } from "../../model/champion.js";
+import { laneToString } from "../../model/index.js";
 
 export function renderChampion(champion: Champion, highlight: boolean, durationInMinutes: number, damageMax: number) {
   const items = renderItems(champion.items, champion.visionScore);

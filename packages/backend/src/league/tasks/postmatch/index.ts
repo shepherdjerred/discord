@@ -12,7 +12,7 @@ import configuration from "../../../configuration.js";
 import { getPlayer } from "../../model/player.js";
 import { toMatch } from "../../model/match.js";
 import { getState, setState } from "../../model/state.js";
-import { matchToImage } from "../../image/html/index.js";
+import { matchToImage } from "@glitter-boys/data";
 
 async function checkMatch(game: MatchState) {
   try {

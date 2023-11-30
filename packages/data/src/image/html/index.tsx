@@ -5,8 +5,8 @@ import React from "react";
 import { loadFonts } from "../assets/index.js";
 import { palette } from "../assets/colors.js";
 import { renderTeam } from "./team.js";
-import { Match, leaguePointsDelta, lpDiffToString } from "@glitter-boys/data";
 import { RankedBadge } from "./ranked/index.js";
+import { Match, lpDiffToString, leaguePointsDelta } from "../../index.js";
 
 export async function matchToImage(match: Match) {
   const svg = await matchToSvg(match);
