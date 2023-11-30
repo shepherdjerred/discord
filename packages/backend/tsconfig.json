@@ -11,5 +11,6 @@
     "declarationMap": true,
     "declaration": true,
     "jsxImportSource": "react"
-  }
+  },
+  "exclude": ["src/dev/", "dist/"]
 }

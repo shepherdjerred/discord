@@ -1,4 +1,4 @@
-import React from "react";
+import "react";
 import { renderChampion } from "./champion.js";
 import _ from "lodash";
 import { palette } from "../assets/colors.js";

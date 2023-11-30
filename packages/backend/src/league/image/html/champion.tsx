@@ -1,4 +1,4 @@
-import React from "react";
+import "react";
 import { renderItems } from "./item.js";
 import { palette } from "../assets/colors.js";
 import _ from "lodash";

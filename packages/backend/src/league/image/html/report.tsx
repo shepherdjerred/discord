@@ -1,6 +1,6 @@
 import { Match, leaguePointsDelta, lpDiffToString } from "@glitter-boys/data";
 import _ from "lodash";
-import React from "react";
+import "react";
 import { palette } from "../assets/colors.js";
 import { RankedBadge } from "./ranked/index.jsx";
 import { renderTeam } from "./team.jsx";

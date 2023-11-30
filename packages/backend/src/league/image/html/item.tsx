@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React from "react";
+import "react";
 import { palette } from "../assets/colors.js";
 import { latestVersion } from "../../dataDragon/version.js";
 

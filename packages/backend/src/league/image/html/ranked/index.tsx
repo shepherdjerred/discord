@@ -1,4 +1,4 @@
-import React from "react";
+import "react";
 import { Rank, Tier, divisionToString, wasPromoted } from "@glitter-boys/data";
 import { readFile } from "fs/promises";
 import _ from "lodash";

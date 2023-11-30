@@ -1,7 +1,7 @@
 import _ from "lodash";
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
-import React from "react";
+import "react";
 import { loadFonts } from "../assets/index.js";
 import { Match } from "@glitter-boys/data";
 import { Report } from "./report.jsx";
