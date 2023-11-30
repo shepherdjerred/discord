@@ -4,7 +4,7 @@ import { Resvg } from "@resvg/resvg-js";
 import "react";
 import { loadFonts } from "../assets/index.js";
 import { Match } from "@glitter-boys/data";
-import { Report } from "./report.jsx";
+import { Report } from "./report.js";
 
 export async function matchToImage(match: Match) {
   const svg = await matchToSvg(match);
