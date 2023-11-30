@@ -9,7 +9,7 @@ import { SummonerLeagueDto } from "twisted/dist/models-dto/index.js";
 import assert from "assert";
 
 const solo = "RANKED_SOLO_5x5";
-const flex = "RANKED_TEAM_5x5";
+// const flex = "RANKED_TEAM_5x5";
 
 export function getDto(dto: SummonerLeagueDto[], queue: string): SummonerLeagueDto {
   return _.chain(dto)
@@ -37,6 +37,7 @@ export async function getRanks(player: PlayerConfigEntry): Promise<Ranks> {
 
   return {
     solo: getRank(response.response, solo),
+    // TODO
     flex: {
       tier: "iron",
       losses: 0,
