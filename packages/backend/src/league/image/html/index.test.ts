@@ -29,14 +29,14 @@ describe("index", () => {
               accountId: "accountId",
               id: "id",
             },
-            initialRank: { division: 4, tier: "gold", lp: 11, wins: 10, losses: 20 },
+            initialRank: { division: 4, tier: "gold", lp: 11, wins: 0, losses: 0 },
           },
           discordAccount: {
             id: "discord id",
           },
         },
         ranks: {
-          solo: { division: 4, tier: "gold", lp: 11, wins: 10, losses: 20 },
+          solo: { division: 3, tier: "gold", lp: 11, wins: 10, losses: 20 },
           flex: { division: 1, tier: "gold", lp: 4, wins: 50, losses: 30 },
         },
       },

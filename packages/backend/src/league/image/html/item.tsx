@@ -16,7 +16,16 @@ export function renderItem(item: number) {
       />
     );
   } else {
-    return <span style={{ width: dimension, height: dimension }} />;
+    return (
+      <span
+        style={{
+          width: dimension,
+          height: dimension,
+          backgroundColor: palette.blue[5],
+          border: `1px solid ${palette.gold.bright}`,
+        }}
+      />
+    );
   }
 }
 

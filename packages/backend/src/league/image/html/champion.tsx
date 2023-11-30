@@ -73,7 +73,7 @@ export function renderChampion(champion: Champion, highlight: boolean, durationI
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2rem", width: "40rem" }}>
         <div style={{ display: "flex", gap: "2rem", fontWeight: 700 }}>{champion.damage.toLocaleString()} dmg</div>
-        <span style={{ width: "20rem", height: "2rem", backgroundColor: palette.grey[1] }}>
+        <span style={{ width: "20rem", height: "1.5rem", backgroundColor: palette.grey[1] }}>
           <span
             style={{
               width: `${damagePercent}%`,
@@ -87,6 +87,11 @@ export function renderChampion(champion: Champion, highlight: boolean, durationI
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "30rem" }}>
         <span style={{ fontWeight: 700 }}>{champion.gold.toLocaleString()} gold</span>
         <span>{_.round(champion.gold / durationInMinutes).toLocaleString()} / min</span>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "30rem" }}>
+        <span style={{ fontWeight: 700 }}>{champion.creepScore.toLocaleString()} cs</span>
+        <span>{_.round(champion.creepScore / durationInMinutes, 2).toLocaleString()} / min</span>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 
 export function participantToChampion(dto: MatchV5DTOs.ParticipantDto): Champion {
   return {
-    summonerName: dto.summonerName,
+    summonerName: dto.riotIdName || dto.summonerName,
     championName: dto.championName,
     kills: dto.kills,
     deaths: dto.deaths,

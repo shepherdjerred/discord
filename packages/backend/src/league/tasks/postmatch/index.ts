@@ -4,7 +4,7 @@ import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
 import { api } from "../../api/api.js";
 import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
-import { MatchState, Match, wasPromoted, wasDemoted } from "@glitter-boys/data";
+import { MatchState, Match } from "@glitter-boys/data";
 import { send } from "../../discord/channel.js";
 import { s3 } from "../../s3.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
@@ -82,13 +82,7 @@ export async function checkPostMatch() {
 
       const matchObj = await createMatchObj(state, matchDto);
 
-      let discordMessage: string = userMention(matchObj.player.playerConfig.discordAccount.id);
-
-      if (wasPromoted(matchObj.player.oldRank, matchObj.player.newRank)) {
-        discordMessage = `${discordMessage} was promoted to ${matchObj.player.newRank.tier} ${matchObj.player.newRank.division}!`;
-      } else if (wasDemoted(matchObj.player.oldRank, matchObj.player.newRank)) {
-        discordMessage = `${discordMessage} was demoted to ${matchObj.player.newRank.tier} ${matchObj.player.newRank.division}!`;
-      }
+      const discordMessage: string = userMention(matchObj.player.playerConfig.discordAccount.id);
 
       const [attachment, embed] = await getImage(matchObj);
       await send({ content: discordMessage, embeds: [embed], files: [attachment] });
