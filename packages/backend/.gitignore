@@ -2,5 +2,4 @@
 *.env
 chats.json
 state.json
-*.png
 matches

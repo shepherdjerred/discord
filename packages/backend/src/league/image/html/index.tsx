@@ -10,7 +10,7 @@ import { RankedBadge } from "./ranked/index.js";
 
 export async function matchToImage(match: Match) {
   const svg = await matchToSvg(match);
-  const png = await svgToPng(svg);
+  const png = svgToPng(svg);
   return png;
 }
 
