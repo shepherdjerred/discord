@@ -4,7 +4,7 @@ import { Font } from "satori";
 const fontPath = "src/league/image/assets/fonts";
 
 export const font = {
-  title: "Beautfort",
+  title: "Beaufort",
   body: "Spiegel",
 };
 
@@ -12,61 +12,61 @@ export const font = {
 export async function loadFonts(): Promise<Font[]> {
   return [
     {
-      name: "Beautfort",
+      name: "Beaufort",
       data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Light.ttf`),
       weight: 300,
       style: "normal",
     },
     {
-      name: "Beautfort",
+      name: "Beaufort",
       data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-LightItalic.ttf`),
       weight: 300,
       style: "italic",
     },
     {
-      name: "Beautfort",
+      name: "Beaufort",
       data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Regular.ttf`),
       weight: 400,
       style: "normal",
     },
     {
-      name: "Beautfort",
+      name: "Beaufort",
       data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Italic.ttf`),
       weight: 400,
       style: "italic",
     },
     {
-      name: "Beautfort",
+      name: "Beaufort",
       data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Medium.ttf`),
       weight: 500,
       style: "normal",
     },
     {
-      name: "Beautfort",
+      name: "Beaufort",
       data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-MediumItalic.ttf`),
       weight: 500,
       style: "italic",
     },
     {
-      name: "Beautfort",
+      name: "Beaufort",
       data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Bold.ttf`),
       weight: 700,
       style: "normal",
     },
     {
-      name: "Beautfort",
+      name: "Beaufort",
       data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-BoldItalic.ttf`),
       weight: 700,
       style: "italic",
     },
     {
-      name: "Beautfort",
+      name: "Beaufort",
       data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Heavy.ttf`),
       weight: 800,
       style: "normal",
     },
     {
-      name: "Beautfort",
+      name: "Beaufort",
       data: await readFile(`${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-HeavyItalic.ttf`),
       weight: 800,
       style: "italic",

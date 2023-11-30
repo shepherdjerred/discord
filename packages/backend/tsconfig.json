@@ -6,9 +6,10 @@
     "outDir": "dist",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "resolveJsonModule": true,
     "declarationMap": true,
-    "declaration": true
+    "declaration": true,
+    "jsxImportSource": "react"
   }
 }

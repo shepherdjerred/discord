@@ -27,8 +27,8 @@ export function renderChampion(champion: Champion, highlight: boolean, durationI
     return (
       <img
         src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/spell/${name}.png`}
-        width="60"
-        height="60"
+        width="59"
+        height="59"
         style={{ backgroundColor: palette.blue[5], border: `1px solid ${palette.gold.bright}` }}
       />
     );
@@ -76,6 +76,7 @@ export function renderChampion(champion: Champion, highlight: boolean, durationI
         <span style={{ width: "20rem", height: "1.5rem", backgroundColor: palette.grey[1] }}>
           <span
             style={{
+              display: "flex",
               width: `${damagePercent}%`,
               height: "100%",
               backgroundColor: highlight ? palette.gold.bright : palette.white[1],

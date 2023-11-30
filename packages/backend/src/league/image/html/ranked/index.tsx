@@ -1,5 +1,5 @@
 import React from "react";
-import { Rank, Tier, wasPromoted } from "@glitter-boys/data";
+import { Rank, Tier, divisionToString, wasPromoted } from "@glitter-boys/data";
 import { readFile } from "fs/promises";
 import _ from "lodash";
 import { palette } from "../../assets/colors.js";
@@ -24,11 +24,15 @@ export function RankedBadge({ oldRank, newRank }: { oldRank: Rank; newRank: Rank
   const showPromoted = wasPromoted(oldRank, newRank);
   const showDemoted = wasPromoted(newRank, oldRank);
   return (
-    <span style={{ color: palette.gold[1], fontSize: "6rem" }}>
-      {showPromoted && `Promoted!`}
-      {showDemoted && `Demoted!`}
-      <img src={`data:image/png;base64,${badge}`} style={{ width: "12rem", height: "12rem" }} />
-      {newRank.division}
-    </span>
+    <div style={{ color: palette.gold[1], fontSize: "6rem", display: "flex", alignItems: "flex-end", gap: "4rem" }}>
+      <div style={{ display: "flex", position: "absolute", alignItems: "center", right: "30rem", top: "10rem" }}>
+        {showPromoted && `Promoted`}
+        {showDemoted && `Demoted`}
+        <span style={{}}>
+          <img src={`data:image/png;base64,${badge}`} style={{ width: "24rem", height: "rem" }} />
+          <span style={{ position: "absolute", top: "15rem", right: "2rem" }}>{divisionToString(4)}</span>
+        </span>
+      </div>
+    </div>
   );
 }
