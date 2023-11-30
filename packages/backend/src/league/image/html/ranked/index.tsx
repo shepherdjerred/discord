@@ -25,11 +25,11 @@ export function RankedBadge({ oldRank, newRank }: { oldRank: Rank; newRank: Rank
   const showDemoted = wasPromoted(newRank, oldRank);
   return (
     <div style={{ color: palette.gold[1], fontSize: "6rem", display: "flex", alignItems: "flex-end", gap: "4rem" }}>
-      <div style={{ display: "flex", position: "absolute", alignItems: "center", right: "30rem", top: "10rem" }}>
+      <div style={{ display: "flex", position: "absolute", alignItems: "center", right: "0rem", top: "-15rem" }}>
         {showPromoted && `Promoted`}
         {showDemoted && `Demoted`}
         <span style={{}}>
-          <img src={`data:image/png;base64,${badge}`} style={{ width: "24rem", height: "rem" }} />
+          <img src={`data:image/png;base64,${badge}`} style={{ width: "24rem" }} />
           <span style={{ position: "absolute", top: "15rem", right: "2rem" }}>{divisionToString(4)}</span>
         </span>
       </div>
