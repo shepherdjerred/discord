@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node dist/index.js",
-    "build": "tsc",
+    "compile": "tsc",
+    "copy": "cp -R src/league/image/assets/fonts/ dist/league/image/assets/fonts/ && cp -R src/league/image/html/ranked/assets/ dist/league/image/html/ranked/assets/",
+    "build": "npm run compile && npm run copy",
     "watch": "tsc --watch",
     "eslint:check": "eslint src/",
     "prettier:check": "prettier --check .",
