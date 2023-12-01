@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Rank, RanksSchema } from "./rank.js";
+import { Rank, RankSchema, RanksSchema } from "./rank.js";
 import { PlayerConfigEntrySchema } from "./playerConfigEntry.js";
 import _ from "lodash";
 import { rankToLeaguePoints } from "./leaguePoints.js";
@@ -10,14 +10,27 @@ export const PlayerSchema = z.strictObject({
   ranks: RanksSchema,
 });
 
-export function getLeaguePointsDelta(oldRank: Rank, newRank: Rank) {
-  return rankToLeaguePoints(oldRank) - rankToLeaguePoints(newRank);
+export type PlayerWithSoloQueueRank = z.infer<typeof PlayerWithSoloQueueRankSchema>;
+export const PlayerWithSoloQueueRankSchema = PlayerSchema.extend({
+  ranks: RanksSchema.extend({
+    solo: RankSchema,
+  }),
+});
+
+export function filterPlayersWithSoloQueueRank(players: Player[]): PlayerWithSoloQueueRank[] {
+  return _.chain(players)
+    .flatMap((player) => (player.ranks.solo ? [player as PlayerWithSoloQueueRank] : []))
+    .value();
 }
 
-export function getSoloQueueLeaguePointsDelta(player: Player) {
-  return getLeaguePointsDelta(player.config.league.initialRank, player.ranks.solo);
+export function getLeaguePointsDelta(oldRank: Rank, newRank: Rank): number {
+  return rankToLeaguePoints(newRank) - rankToLeaguePoints(oldRank);
 }
 
-export function sortPlayersBySoloQueueRank(players: Player[]) {
-  return _.chain(players).sortBy(getSoloQueueLeaguePointsDelta).reverse().value();
+export function sortPlayersBySoloQueueRank(players: Player[]): PlayerWithSoloQueueRank[] {
+  const playersWithSoloQueueRank = filterPlayersWithSoloQueueRank(players);
+  return _.chain(playersWithSoloQueueRank)
+    .sortBy((player) => getLeaguePointsDelta(player.config.league.initialRank, player.ranks.solo))
+    .reverse()
+    .value();
 }

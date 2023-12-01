@@ -67,12 +67,14 @@ export function Report({ match }: { match: Match }) {
                 marginBottom: "1.5rem",
               }}
             >
-              <span>{lpDiffToString(leaguePointsDelta(match.player.oldRank, match.player.newRank))}</span>
+              <span>
+                {lpDiffToString(leaguePointsDelta(match.player.rankBeforeMatch, match.player.rankAfterMatch))}
+              </span>
               <span>Wins: {match.player.tournamentWins}</span>
               <span>Losses: {match.player.tournamentLosses}</span>
             </div>
           </div>
-          <RankedBadge oldRank={match.player.oldRank} newRank={match.player.newRank} />
+          <RankedBadge oldRank={match.player.rankBeforeMatch} newRank={match.player.rankAfterMatch} />
         </div>
         <div style={{ width: "100%", display: "flex", gap: "6rem", flexDirection: "column" }}>
           {renderTeam(match.teams.blue, "blue", match.player.champion.championName, match.durationInSeconds / 60)}

@@ -13,6 +13,7 @@ import { getPlayer } from "../../model/player.js";
 import { toMatch } from "../../model/match.js";
 import { getState, setState } from "../../model/state.js";
 import { matchToImage } from "../../image/html/index.js";
+import assert from "assert";
 
 async function checkMatch(game: MatchState) {
   try {
@@ -59,6 +60,11 @@ async function createMatchObj(state: MatchState, match: MatchV5DTOs.MatchDto) {
   }
 
   const fullPlayer = await getPlayer(state.player);
+
+  // it should be impossible for this to be undefined after a game
+  assert(fullPlayer.ranks.solo != undefined);
+
+  // TODO use correct rank
   return toMatch(fullPlayer, match, state.rank, fullPlayer.ranks.solo);
 }
 

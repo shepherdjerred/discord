@@ -16,11 +16,12 @@
   "type": "module",
   "dependencies": {
     "reflect-metadata": "^0.1.13",
+    "ts-pattern": "^5.0.5",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/node": "^20.10.1",
     "@tsconfig/strictest": "^2.0.2",
+    "@types/node": "^20.10.1",
     "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.13.1",
     "eslint": "^8.54.0",

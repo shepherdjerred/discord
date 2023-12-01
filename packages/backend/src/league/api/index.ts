@@ -4,12 +4,10 @@ import {
   SpectatorNotAvailableDTO,
 } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
-import { PlayerConfigEntry } from "@glitter-boys/data";
+import { PlayerConfigEntry, soloQueueConfigId } from "@glitter-boys/data";
 import { api } from "./api.js";
 import { Constants } from "twisted";
 import _ from "lodash";
-
-export const soloQueueConfigId = 420;
 
 export async function getCurrentSoloQueueGame(player: PlayerConfigEntry): Promise<undefined | CurrentGameInfoDTO> {
   try {

@@ -16,6 +16,7 @@ export async function checkPreMatch() {
   const playersNotInGame = getPlayersNotInGame(players, getState());
 
   console.log("calling spectator API");
+  // TODO: also get flex games
   const playerStatus = await Promise.all(_.map(playersNotInGame, getCurrentSoloQueueGame));
 
   console.log("filtering players not in game");

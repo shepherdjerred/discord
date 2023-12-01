@@ -9,18 +9,24 @@ import { SummonerLeagueDto } from "twisted/dist/models-dto/index.js";
 import assert from "assert";
 
 const solo = "RANKED_SOLO_5x5";
-// const flex = "RANKED_TEAM_5x5";
+const flex = "RANKED_TEAM_5x5";
 
-export function getDto(dto: SummonerLeagueDto[], queue: string): SummonerLeagueDto {
+export function getDto(dto: SummonerLeagueDto[], queue: string): SummonerLeagueDto | undefined {
   return _.chain(dto)
     .filter((entry) => entry.queueType === queue)
     .first()
     .value();
 }
 
-export function getRank(dto: SummonerLeagueDto[], queue: string): Rank {
+export function getRank(dto: SummonerLeagueDto[], queue: string): Rank | undefined {
   const entry = getDto(dto, queue);
+
+  if (entry == undefined) {
+    return undefined;
+  }
+
   const division = parseDivision(entry.rank);
+
   assert(division !== undefined);
 
   return {
@@ -37,13 +43,6 @@ export async function getRanks(player: PlayerConfigEntry): Promise<Ranks> {
 
   return {
     solo: getRank(response.response, solo),
-    // TODO
-    flex: {
-      tier: "iron",
-      losses: 0,
-      wins: 0,
-      lp: 0,
-      division: 1,
-    },
+    flex: getRank(response.response, flex),
   };
 }

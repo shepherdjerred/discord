@@ -4,9 +4,22 @@ import { PlayerConfigEntrySchema } from "./playerConfigEntry.js";
 import { RankSchema } from "./rank.js";
 import _ from "lodash";
 import { PlayerConfig } from "./playerConfig.js";
+import { match } from "ts-pattern";
 
 export type QueueType = z.infer<typeof QueueTypeSchema>;
 export const QueueTypeSchema = z.enum(["solo", "flex"]);
+
+// TODO get these from https://static.developer.riotgames.com/docs/lol/queues.json
+export const soloQueueConfigId = 420;
+export const flexQueueConfigId = 440;
+
+export function parseQueueType(input: number): QueueType | undefined {
+  return match(input)
+    .returnType<QueueType | undefined>()
+    .with(soloQueueConfigId, () => "solo")
+    .with(flexQueueConfigId, () => "flex")
+    .otherwise(() => undefined);
+}
 
 export type MatchState = z.infer<typeof MatchStateSchema>;
 export const MatchStateSchema = z.strictObject({
@@ -18,7 +31,7 @@ export const MatchStateSchema = z.strictObject({
   // the match id from the Riot API
   matchId: z.number(),
   player: PlayerConfigEntrySchema,
-  rank: RankSchema,
+  rank: RankSchema.optional(),
   queue: QueueTypeSchema,
 });
 

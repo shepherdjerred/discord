@@ -1,5 +1,5 @@
 import "react";
-import { Rank, Tier, divisionToString, wasPromoted } from "@glitter-boys/data";
+import { Rank, Tier, divisionToString, wasDemoted, wasPromoted } from "@glitter-boys/data";
 import { readFile } from "fs/promises";
 import _ from "lodash";
 import { palette } from "../../assets/colors.js";
@@ -17,10 +17,10 @@ const images: Record<Tier, string> = {
   challenger: await readFile(new URL("assets/Rank=Challenger.png", import.meta.url), "base64"),
 };
 
-export function RankedBadge({ oldRank, newRank }: { oldRank: Rank; newRank: Rank }) {
+export function RankedBadge({ oldRank, newRank }: { oldRank: Rank | undefined; newRank: Rank }) {
   const badge = images[newRank.tier];
   const showPromoted = wasPromoted(oldRank, newRank);
-  const showDemoted = wasPromoted(newRank, oldRank);
+  const showDemoted = wasDemoted(oldRank, newRank);
   return (
     <div
       style={{

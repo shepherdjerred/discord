@@ -1,5 +1,4 @@
-import { Champion, Match, Rank, invertTeam } from "@glitter-boys/data";
-import { Player } from "@glitter-boys/data";
+import { Champion, Match, Player, Rank, invertTeam, parseQueueType } from "@glitter-boys/data";
 import { parseTeam } from "@glitter-boys/data";
 import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
@@ -37,7 +36,12 @@ function getTeams(participants: MatchV5DTOs.ParticipantDto[]) {
   };
 }
 
-export function toMatch(player: Player, matchDto: MatchV5DTOs.MatchDto, oldRank: Rank, newRank: Rank): Match {
+export function toMatch(
+  player: Player,
+  matchDto: MatchV5DTOs.MatchDto,
+  rankBeforeMatch: Rank | undefined,
+  rankAfterMatch: Rank,
+): Match {
   const participant = findParticipant(player.config.league.leagueAccount.puuid, matchDto.info.participants);
   const champion = participantToChampion(participant);
   const team = parseTeam(participant.teamId);
@@ -48,12 +52,15 @@ export function toMatch(player: Player, matchDto: MatchV5DTOs.MatchDto, oldRank:
   const enemyTeam = invertTeam(team);
 
   return {
+    queueType: parseQueueType(matchDto.info.queueId),
     player: {
       playerConfig: player.config,
-      oldRank,
-      newRank,
-      tournamentWins: player.ranks.solo.wins - player.config.league.initialRank.wins,
-      tournamentLosses: player.ranks.solo.losses - player.config.league.initialRank.losses,
+      rankBeforeMatch,
+      rankAfterMatch,
+      tournamentWins: player.ranks.solo?.wins ? player.ranks.solo.wins - player.config.league.initialRank.wins : 0,
+      tournamentLosses: player.ranks.solo?.losses
+        ? player.ranks.solo.losses - player.config.league.initialRank.losses
+        : 0,
       champion,
       outcome: getOutcome(participant),
       team: team,
