@@ -1,6 +1,12 @@
 import * as React from "react";
 
-import { type Leaderboard, LeaderboardSchema, type LeaderboardEntry } from "@glitter-boys/data";
+import {
+  type Leaderboard,
+  LeaderboardSchema,
+  type LeaderboardEntry,
+  OldLeaderboardSchema,
+  convertOldLeaderboard,
+} from "@glitter-boys/data";
 import _ from "lodash";
 import { useState, useEffect } from "react";
 import { scaleTime } from "@visx/scale";
@@ -31,7 +37,16 @@ const getMinMax = (vals: (number | { valueOf(): number })[]) => {
   const numericVals = vals.map(coerceNumber);
   return [Math.min(...numericVals), Math.max(...numericVals)];
 };
-const dates = ["2023-11-23", "2023-11-24", "2023-11-25", "2023-11-26", "2023-11-27", "2023-11-28"];
+const dates = [
+  "2023-11-23",
+  "2023-11-24",
+  "2023-11-25",
+  "2023-11-26",
+  "2023-11-27",
+  "2023-11-28",
+  "2023-11-29",
+  "2023-11-30",
+];
 
 export function ChartComponent() {
   const [leaderboards, setLeaderboards] = useState<Leaderboard[]>([]);
@@ -39,10 +54,14 @@ export function ChartComponent() {
   useEffect(() => {
     (async () => {
       const leaderboards = await Promise.all(
-        _.map(dates, async (date) => {
-          return LeaderboardSchema.parse(
-            await (await fetch(`https://prod.bucket.glitter-boys.com/leaderboards/${date}.json`)).json(),
-          );
+        _.map(dates, async (date): Promise<Leaderboard> => {
+          const json = await (await fetch(`https://prod.bucket.glitter-boys.com/leaderboards/${date}.json`)).json();
+          const result = LeaderboardSchema.safeParse(json);
+          if (result.success) {
+            return result.data;
+          } else {
+            return convertOldLeaderboard(OldLeaderboardSchema.parse(json));
+          }
         }),
       );
       setLeaderboards(leaderboards);

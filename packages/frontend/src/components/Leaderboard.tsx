@@ -17,7 +17,7 @@ import {
   wasDemoted,
   rankToSimpleString,
   rankToLeaguePoints,
-  type Player,
+  type PlayerWithSoloQueueRank,
 } from "@glitter-boys/data";
 import { P, match } from "ts-pattern";
 import _ from "lodash";
@@ -82,7 +82,7 @@ const columns = [
     },
     id: "lp-difference-since-last-update",
   }),
-  columnHelper.accessor((row) => row.current.player.currentRank, {
+  columnHelper.accessor((row) => row.current.player.ranks.solo, {
     header: "Rank",
     cell: (info) => rankToString(info.getValue()),
     id: "rank",
@@ -91,16 +91,16 @@ const columns = [
   columnHelper.accessor((row) => row.current.player, {
     header: "Games",
     cell: (info) =>
-      info.getValue().currentRank.wins -
+      info.getValue().ranks.solo.wins -
       info.getValue().config.league.initialRank.wins +
-      (info.getValue().currentRank.losses - info.getValue().config.league.initialRank.losses),
+      (info.getValue().ranks.solo.losses - info.getValue().config.league.initialRank.losses),
     id: "games",
     sortingFn: (a, b) => {
-      const getVal = (info: Player) => {
+      const getVal = (info: PlayerWithSoloQueueRank) => {
         return (
-          info.currentRank.wins -
+          info.ranks.solo.wins -
           info.config.league.initialRank.wins +
-          (info.currentRank.losses - info.config.league.initialRank.losses)
+          (info.ranks.solo.losses - info.config.league.initialRank.losses)
         );
       };
       return getVal(a.getValue("games")) - getVal(b.getValue("games"));
@@ -108,22 +108,22 @@ const columns = [
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Wins",
-    cell: (info) => info.getValue().currentRank.wins - info.getValue().config.league.initialRank.wins,
+    cell: (info) => info.getValue().ranks.solo.wins - info.getValue().config.league.initialRank.wins,
     id: "wins",
     sortingFn: (a, b) => {
-      const getVal = (info: Player) => {
-        return info.currentRank.wins - info.config.league.initialRank.wins;
+      const getVal = (info: PlayerWithSoloQueueRank) => {
+        return info.ranks.solo.wins - info.config.league.initialRank.wins;
       };
       return getVal(a.getValue("wins")) - getVal(b.getValue("wins"));
     },
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Losses",
-    cell: (info) => info.getValue().currentRank.losses - info.getValue().config.league.initialRank.losses,
+    cell: (info) => info.getValue().ranks.solo.losses - info.getValue().config.league.initialRank.losses,
     id: "losses",
     sortingFn: (a, b) => {
-      const getVal = (info: Player) => {
-        return info.currentRank.losses - info.config.league.initialRank.losses;
+      const getVal = (info: PlayerWithSoloQueueRank) => {
+        return info.ranks.solo.losses - info.config.league.initialRank.losses;
       };
       return getVal(a.getValue("losses")) - getVal(b.getValue("losses"));
     },
@@ -132,22 +132,22 @@ const columns = [
     header: "Win Rate",
     cell: (info) => {
       const percent = _.round(
-        ((info.getValue().currentRank.wins - info.getValue().config.league.initialRank.wins) /
-          (info.getValue().currentRank.wins -
+        ((info.getValue().ranks.solo.wins - info.getValue().config.league.initialRank.wins) /
+          (info.getValue().ranks.solo.wins -
             info.getValue().config.league.initialRank.wins +
-            (info.getValue().currentRank.losses - info.getValue().config.league.initialRank.losses))) *
+            (info.getValue().ranks.solo.losses - info.getValue().config.league.initialRank.losses))) *
           100,
       );
       return percent ? `${percent}%` : "-";
     },
     id: "win-rate",
     sortingFn: (a, b) => {
-      const getVal = (info: Player) => {
+      const getVal = (info: PlayerWithSoloQueueRank) => {
         const percent = _.round(
-          ((info.currentRank.wins - info.config.league.initialRank.wins) /
-            (info.currentRank.wins -
+          ((info.ranks.solo.wins - info.config.league.initialRank.wins) /
+            (info.ranks.solo.wins -
               info.config.league.initialRank.wins +
-              (info.currentRank.losses - info.config.league.initialRank.losses))) *
+              (info.ranks.solo.losses - info.config.league.initialRank.losses))) *
             100,
         );
         return percent ? percent : -9999;
@@ -177,9 +177,9 @@ function gameCount(leaderboard: HistoricalLeaderboardEntry): number | undefined 
     return undefined;
   }
   return (
-    leaderboard.current.player.currentRank.wins -
-    leaderboard.previous.player.currentRank.wins +
-    (leaderboard.current.player.currentRank.losses - leaderboard.previous.player.currentRank.losses)
+    leaderboard.current.player.ranks.solo.wins -
+    leaderboard.previous.player.ranks.solo.wins +
+    (leaderboard.current.player.ranks.solo.losses - leaderboard.previous.player.ranks.solo.losses)
   );
 }
 
@@ -218,11 +218,11 @@ export function LeaderboardComponent() {
         if (entry.previous === undefined) {
           return [];
         }
-        if (wasPromoted(entry.previous.player.currentRank, entry.current.player.currentRank)) {
+        if (wasPromoted(entry.previous.player.ranks.solo, entry.current.player.ranks.solo)) {
           return [
             `${entry.current.player.config.name} was promoted: ${rankToSimpleString(
-              entry.previous.player.currentRank,
-            )} -> ${rankToSimpleString(entry.current.player.currentRank)}`,
+              entry.previous.player.ranks.solo,
+            )} -> ${rankToSimpleString(entry.current.player.ranks.solo)}`,
           ];
         } else {
           return [];
@@ -232,11 +232,11 @@ export function LeaderboardComponent() {
         if (entry.previous === undefined) {
           return [];
         }
-        if (wasDemoted(entry.previous.player.currentRank, entry.current.player.currentRank)) {
+        if (wasDemoted(entry.previous.player.ranks.solo, entry.current.player.ranks.solo)) {
           return [
             `${entry.current.player.config.name} was demoted: ${rankToSimpleString(
-              entry.previous.player.currentRank,
-            )} -> ${rankToSimpleString(entry.current.player.currentRank)}`,
+              entry.previous.player.ranks.solo,
+            )} -> ${rankToSimpleString(entry.current.player.ranks.solo)}`,
           ];
         } else {
           return [];

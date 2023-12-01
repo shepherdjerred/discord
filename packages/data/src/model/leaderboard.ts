@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { PlayerSchema } from "./player.js";
+import { PlayerWithSoloQueueRankSchema } from "./player.js";
 
 export type LeaderboardEntry = z.infer<typeof LeaderboardEntrySchema>;
 export const LeaderboardEntrySchema = z.strictObject({
-  player: PlayerSchema,
+  player: PlayerWithSoloQueueRankSchema,
   position: z.number().nonnegative(),
   leaguePointsDelta: z.number(),
 });

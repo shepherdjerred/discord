@@ -2,7 +2,7 @@ import { z } from "zod";
 import { DivisionSchema, divisionToString } from "./division.js";
 import { TierSchema } from "./tier.js";
 import _ from "lodash";
-import { tierToOrdinal } from "./leaguePoints.js";
+import { rankToLeaguePoints, tierToOrdinal } from "./leaguePoints.js";
 
 export type Rank = z.infer<typeof RankSchema>;
 export const RankSchema = z.strictObject({
@@ -67,4 +67,8 @@ export function wasPromoted(previous: Rank | undefined, current: Rank): boolean 
   }
 
   return false;
+}
+
+export function getLeaguePointsDelta(oldRank: Rank, newRank: Rank): number {
+  return rankToLeaguePoints(newRank) - rankToLeaguePoints(oldRank);
 }
