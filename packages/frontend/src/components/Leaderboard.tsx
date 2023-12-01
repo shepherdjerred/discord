@@ -18,6 +18,8 @@ import {
   rankToSimpleString,
   rankToLeaguePoints,
   type PlayerWithSoloQueueRank,
+  OldLeaderboardSchema,
+  convertOldLeaderboard,
 } from "@glitter-boys/data";
 import { P, match } from "ts-pattern";
 import _ from "lodash";
@@ -201,7 +203,14 @@ export function LeaderboardComponent() {
       setCurrentLeaderboard(currentLeaderboard);
 
       result = await fetch("https://prod.bucket.glitter-boys.com/previous.json");
-      const previousLeaderboard = LeaderboardSchema.parse(await result.json());
+      const previousJson = await result.json();
+      const parseStatus = LeaderboardSchema.safeParse(previousJson);
+      let previousLeaderboard: Leaderboard;
+      if (parseStatus.success) {
+        previousLeaderboard = parseStatus.data;
+      } else {
+        previousLeaderboard = convertOldLeaderboard(OldLeaderboardSchema.parse(previousJson));
+      }
 
       const historical: HistoricalLeaderboardEntry[] = _.chain(currentLeaderboard.contents)
         .map((entry) => {
