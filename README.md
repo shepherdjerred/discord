@@ -1,19 +1,15 @@
 # Glitter Boys
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/3cc65fd7-3f90-4046-a8a9-1f7cece21f11/deploy-status)](https://app.netlify.com/sites/glitter-boys/deploys) [![CI](https://github.com/shepherdjerred/glitter-boys/actions/workflows/ci.yml/badge.svg)](https://github.com/shepherdjerred/glitter-boys/actions/workflows/ci.yml)
+[![Deploy](https://github.com/shepherdjerred/glitter-boys/actions/workflows/deploy.yml/badge.svg)](https://github.com/shepherdjerred/glitter-boys/actions/workflows/deploy.yml)
 
-## Setup
+This repository contains projects related to a Discord server that I share with my friends.
 
-### Backend
+It contains several projects:
+* A bot that allows you to give "karma" to other users
+* A bot that posts when friends enters matches of League of Legends complete with post-match reports and leaderboards posted to Discord
+* A front-end that contains documentation and a leaderboard
 
-The backend is intended to be hosted on [fly.io](https://fly.io/), although there is no reason it cannot be deployed elsewhere. The following need to be setup before deployment:
-
-- A persistent data volume should be mounted at `/data`, which will host the SQLite database
-- The environment variable `APPLICATION_ID` should be set
-- The environment variable `DISCORD_TOKEN` should be set
-
-## Deploy
-
-```bash
-earthly -P +deploy.backend --stage=beta
-```
+![Discord message when someone enters a game](./assets/prematch.png)
+![Post-match report when someone finishes a game](./assets/postmatch.png)
+[![The leaderboard site](./assets/leaderboard_site.png)](https://glitter-boys.com/leaderboard/)
+![The leaderboard as a Discord message](./assets/leaderboard_message.png)
