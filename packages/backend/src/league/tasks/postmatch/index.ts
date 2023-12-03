@@ -3,7 +3,7 @@ import _ from "lodash";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import { z } from "zod";
 import { api } from "../../api/api.js";
-import { AttachmentBuilder, EmbedBuilder, userMention } from "discord.js";
+import { AttachmentBuilder, EmbedBuilder } from "discord.js";
 import { MatchState, Match } from "@glitter-boys/data";
 import { send } from "../../discord/channel.js";
 import { s3 } from "../../s3.js";
