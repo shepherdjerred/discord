@@ -88,10 +88,8 @@ export async function checkPostMatch() {
 
       const matchObj = await createMatchObj(state, matchDto);
 
-      const discordMessage: string = userMention(matchObj.player.playerConfig.discordAccount.id);
-
       const [attachment, embed] = await getImage(matchObj);
-      await send({ content: discordMessage, embeds: [embed], files: [attachment] });
+      await send({ embeds: [embed], files: [attachment] });
 
       console.log("calculating new state");
       const newState = getState();
