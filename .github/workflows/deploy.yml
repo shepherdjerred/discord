@@ -7,8 +7,9 @@ on:
     inputs:
       skip_beta:
         description: "Skip deploying to beta"
+        type: boolean
         required: false
-        default: "false"
+        default: false
       ref:
         description: "The ref to deploy"
         required: true
@@ -30,6 +31,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.ref }}
       - name: deploy
         run: earthly --ci --sat glitter-boys --org sjerred --secret FLY_API_TOKEN -P +deploy.backend --stage=beta
   prod:
@@ -49,5 +52,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.ref }}
       - name: deploy
         run: earthly --ci --sat glitter-boys --org sjerred --secret FLY_API_TOKEN -P +deploy.backend --stage=prod
