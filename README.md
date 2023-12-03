@@ -9,7 +9,16 @@ It contains several projects:
 * A bot that posts when friends enters matches of League of Legends complete with post-match reports and leaderboards posted to Discord
 * A front-end that contains documentation and a leaderboard
 
+## Screenshots
+
 ![Discord message when someone enters a game](./assets/prematch.png)
+
 ![Post-match report when someone finishes a game](./assets/postmatch.png)
+
 [![The leaderboard site](./assets/leaderboard_site.png)](https://glitter-boys.com/leaderboard/)
+
 ![The leaderboard as a Discord message](./assets/leaderboard_message.png)
+
+![Giving karma](./assets/karma_give.png)
+![Karma history](./assets/karma_history.png)
+![Karma leaderboard](./assets/karma_leaderboard.png)
