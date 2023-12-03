@@ -12,13 +12,22 @@ It contains several projects:
 ## Screenshots
 
 ![Discord message when someone enters a game](./assets/prematch.png)
+> Messages are posted when someone enters a match of League of Legends.
 
 ![Post-match report when someone finishes a game](./assets/postmatch.png)
+> After a match is complete, an inline post-match report image is posted to Discord.
 
 [![The leaderboard site](./assets/leaderboard_site.png)](https://glitter-boys.com/leaderboard/)
+> The leaderboard site shows the status of competitions with sorting.
 
 ![The leaderboard as a Discord message](./assets/leaderboard_message.png)
+> A simpler leaderboard is also posted as a Discord message.
 
 ![Giving karma](./assets/karma_give.png)
+> Karma is given with an optional reason
+
 ![Karma history](./assets/karma_history.png)
+> Karma history is tracked
+
 ![Karma leaderboard](./assets/karma_leaderboard.png)
+> A leaderboard shows who has the most karma
