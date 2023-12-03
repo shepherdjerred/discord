@@ -1,7 +1,7 @@
 import _ from "lodash";
 import "react";
-import { palette } from "../assets/colors.js";
-import { latestVersion } from "../../dataDragon/version.js";
+import { palette } from "../../assets/colors.js";
+import { latestVersion } from "../../../dataDragon/version.js";
 
 const dimension = 120;
 

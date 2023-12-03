@@ -31,7 +31,6 @@ export function Report({ match }: { match: Match }) {
           justifyContent: "center",
           alignItems: "center",
           fontFamily: "Beaufort for LOL",
-          border: `1rem solid ${palette.gold.bright}`,
         }}
       >
         <div

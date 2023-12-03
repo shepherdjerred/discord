@@ -1,5 +1,5 @@
 import "react";
-import { renderChampion } from "./champion.js";
+import { renderChampion } from "./champion/champion.js";
 import _ from "lodash";
 import { palette } from "../assets/colors.js";
 import { font } from "../assets/index.js";
