@@ -20,7 +20,7 @@
     "@aws-sdk/client-s3": "^3.465.0",
     "@glitter-boys/data": "*",
     "@resvg/resvg-js": "^2.6.0",
-    "@resvg/resvg-js-darwin-arm64": "^2.6.0",
+    "@resvg/resvg-js-linux-x64-gnu": "^2.6.0",
     "cors": "^2.8.5",
     "cron": "^3.1.6",
     "date-fns": "^2.30.0",
