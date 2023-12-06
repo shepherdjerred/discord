@@ -8,6 +8,7 @@
     "copy": "cp -R src/league/image/assets/fonts/ dist/league/image/assets/fonts/ && cp -R src/league/image/html/ranked/assets/ dist/league/image/html/ranked/assets/ && cp -R src/league/image/html/lane/assets/ dist/league/image/html/lane/assets/",
     "build": "npm run compile && npm run copy",
     "watch": "tsc --watch",
+    "dev": "npx tsc-watch --onSuccess 'npm run start'",
     "eslint:check": "eslint src/",
     "prettier:check": "prettier --check .",
     "lint": "npm run lint:check",
