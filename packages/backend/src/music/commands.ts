@@ -149,6 +149,8 @@ async function handleStopMusic(interaction: ChatInputCommandInteraction) {
         console.error(`node is undefined`);
       }
 
+      channel = undefined;
+
       await interaction.reply(`${userMention(interaction.user.id)} stopped the music.`);
     }
   } else {
