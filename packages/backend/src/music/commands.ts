@@ -285,42 +285,42 @@ async function handlePlayMusic(interaction: ChatInputCommandInteraction) {
         channelId: channel.id,
         shardId: 0,
       });
+
+      player.on("end", (_data) => {
+        if (player === undefined) {
+          console.error(`player is undefined at the end of a song`);
+        } else {
+          const next = queue.pop();
+          current = next;
+          if (next === undefined) {
+            if (textChannel === undefined) {
+              console.error(`textChannel is undefined at the end of a song`);
+            } else {
+              void textChannel.send("The queue is empty.");
+            }
+          } else {
+            player.playTrack({
+              track: next.track,
+            });
+            if (textChannel === undefined) {
+              console.error(`textChannel is undefined at the end of a song`);
+            } else {
+              void textChannel.send(`Now playing: ${next.info.title} by ${next.info.author} - ${next.info.uri}`);
+            }
+          }
+        }
+      });
+    } else {
+      queue.push(metadata);
+      await interaction.reply(
+        `Added ${metadata.info.title} by ${metadata.info.author} - ${metadata.info.uri} to the queue.`,
+      );
     }
 
     player.playTrack({
       track: metadata.track,
     });
     await interaction.reply(`Now playing: ${metadata.info.title} by ${metadata.info.author} - ${metadata.info.uri}`);
-
-    player.on("end", (_data) => {
-      if (player === undefined) {
-        console.error(`player is undefined at the end of a song`);
-      } else {
-        const next = queue.pop();
-        current = next;
-        if (next === undefined) {
-          if (textChannel === undefined) {
-            console.error(`textChannel is undefined at the end of a song`);
-          } else {
-            void textChannel.send("The queue is empty.");
-          }
-        } else {
-          player.playTrack({
-            track: next.track,
-          });
-          if (textChannel === undefined) {
-            console.error(`textChannel is undefined at the end of a song`);
-          } else {
-            void textChannel.send(`Now playing: ${next.info.title} by ${next.info.author} - ${next.info.uri}`);
-          }
-        }
-      }
-    });
-  } else {
-    queue.push(metadata);
-    await interaction.reply(
-      `Added ${metadata.info.title} by ${metadata.info.author} - ${metadata.info.uri} to the queue.`,
-    );
   }
 }
 
