@@ -12,10 +12,11 @@ import { Player, Track } from "shoukaku";
 import _ from "lodash";
 
 let queue: Track[] = [];
-let current: Track | undefined;
+let currentSong: Track | undefined;
 let player: Player | undefined;
-let channel: VoiceBasedChannel | undefined;
-let textChannel: TextBasedChannel | undefined;
+let musicChannel: VoiceBasedChannel | undefined;
+// the text channel that the first play command was sent in
+let commandTextChannel: TextBasedChannel | undefined;
 
 const musicCommand = new SlashCommandBuilder()
   .setName("music")
@@ -131,25 +132,25 @@ async function handleResumeMusic(interaction: ChatInputCommandInteraction) {
 
 async function handleStopMusic(interaction: ChatInputCommandInteraction) {
   if (player) {
-    if (current === undefined) {
+    if (currentSong === undefined) {
       await interaction.reply({ ephemeral: true, content: "Nothing is playing." });
     } else {
       player.stopTrack();
       player = undefined;
       queue = [];
-      current = undefined;
+      currentSong = undefined;
 
       const node = shoukaku.getNode();
 
       if (node) {
-        if (channel) {
-          node.leaveChannel(channel.guild.id);
+        if (musicChannel) {
+          node.leaveChannel(musicChannel.guild.id);
         }
       } else {
         console.error(`node is undefined`);
       }
 
-      channel = undefined;
+      musicChannel = undefined;
 
       await interaction.reply(`${userMention(interaction.user.id)} stopped the music.`);
     }
@@ -160,8 +161,8 @@ async function handleStopMusic(interaction: ChatInputCommandInteraction) {
 
 async function handleSkipMusic(interaction: ChatInputCommandInteraction) {
   if (player) {
-    if (current !== undefined) {
-      const currentCopy = current;
+    if (currentSong !== undefined) {
+      const currentCopy = currentSong;
       player.stopTrack();
       await interaction.reply(`${userMention(interaction.user.id)} skipped ${currentCopy.info.title}`);
     } else {
@@ -208,9 +209,9 @@ async function handleSeekMusic(interaction: ChatInputCommandInteraction) {
 }
 
 async function handleNowPlayingMusic(interaction: ChatInputCommandInteraction) {
-  if (player && current !== undefined) {
+  if (player && currentSong !== undefined) {
     await interaction.reply({
-      content: `Now playing: ${current.info.title} by ${current.info.author} - ${current.info.uri}`,
+      content: `Now playing: ${currentSong.info.title} by ${currentSong.info.author} - ${currentSong.info.uri}`,
       ephemeral: true,
     });
   } else {
@@ -236,25 +237,24 @@ async function getVoiceChannel(interaction: ChatInputCommandInteraction): Promis
   return member.voice.channel;
 }
 
+async function findSong(song: string): Promise<Track | undefined> {
+  const search = `ytsearch:${song}`;
+  const node = shoukaku.getNode();
+  if (!node) {
+    console.error(`node is undefined`);
+    return undefined;
+  }
+  const result = await node.rest.resolve(search);
+  const track = result?.tracks.shift();
+  return track;
+}
+
 async function handlePlayMusic(interaction: ChatInputCommandInteraction) {
   const song = interaction.options.getString("song", true);
-  const node = shoukaku.getNode();
 
-  if (!node) {
-    await interaction.reply({ ephemeral: true, content: "No node available" });
-    return;
-  }
-
-  let search = song;
-
-  if (!song.startsWith("http") && !song.startsWith("https")) {
-    search = `ytsearch:${song}`;
-  }
-
-  const result = await node.rest.resolve(search);
-  const metadata = result?.tracks.shift();
+  const metadata = await findSong(song);
   if (!metadata) {
-    await interaction.reply({ ephemeral: true, content: `No track matches \`${search}\`` });
+    await interaction.reply({ ephemeral: true, content: `No track matches \`${song}\`` });
     return;
   }
 
@@ -264,8 +264,11 @@ async function handlePlayMusic(interaction: ChatInputCommandInteraction) {
     return;
   }
 
-  if (channel?.id !== undefined && channel.id !== playerChannel.id) {
-    await interaction.reply({ ephemeral: true, content: `Music is already playing in ${channelMention(channel.id)}` });
+  if (musicChannel?.id !== undefined && musicChannel.id !== playerChannel.id) {
+    await interaction.reply({
+      ephemeral: true,
+      content: `Music is already playing in ${channelMention(musicChannel.id)}`,
+    });
     return;
   }
 
@@ -274,53 +277,60 @@ async function handlePlayMusic(interaction: ChatInputCommandInteraction) {
     return;
   }
 
-  if (current === undefined) {
-    textChannel = interaction.channel;
-    channel = playerChannel;
-    current = metadata;
-
-    if (player === undefined) {
-      player = await node.joinChannel({
-        guildId: channel.guild.id,
-        channelId: channel.id,
-        shardId: 0,
-      });
-
-      player.on("end", (_data) => {
-        if (player === undefined) {
-          console.error(`player is undefined at the end of a song`);
-        } else {
-          const next = queue.pop();
-          current = next;
-          if (next === undefined) {
-            if (textChannel === undefined) {
-              console.error(`textChannel is undefined at the end of a song`);
-            } else {
-              void textChannel.send("The queue is empty.");
-            }
-          } else {
-            player.playTrack({
-              track: next.track,
-            });
-            if (textChannel === undefined) {
-              console.error(`textChannel is undefined at the end of a song`);
-            } else {
-              void textChannel.send(`Now playing: ${next.info.title} by ${next.info.author} - ${next.info.uri}`);
-            }
-          }
-        }
-      });
-    } else {
-      queue.push(metadata);
-      await interaction.reply(
-        `Added ${metadata.info.title} by ${metadata.info.author} - ${metadata.info.uri} to the queue.`,
-      );
+  if (player === undefined) {
+    const node = shoukaku.getNode();
+    if (!node) {
+      return undefined;
     }
+
+    player = await node.joinChannel({
+      guildId: playerChannel.guild.id,
+      channelId: playerChannel.id,
+      shardId: 0,
+    });
+
+    player.on("end", handleSongEnd);
+  }
+
+  if (currentSong === undefined) {
+    commandTextChannel = interaction.channel;
+    musicChannel = playerChannel;
+    currentSong = metadata;
 
     player.playTrack({
       track: metadata.track,
     });
     await interaction.reply(`Now playing: ${metadata.info.title} by ${metadata.info.author} - ${metadata.info.uri}`);
+  } else {
+    queue.push(metadata);
+    await interaction.reply(
+      `Added ${metadata.info.title} by ${metadata.info.author} - ${metadata.info.uri} to the queue.`,
+    );
+  }
+}
+
+function handleSongEnd() {
+  if (player === undefined) {
+    console.error(`player is undefined at the end of a song`);
+  } else {
+    const next = queue.pop();
+    currentSong = next;
+    if (next === undefined) {
+      if (commandTextChannel === undefined) {
+        console.error(`textChannel is undefined at the end of a song`);
+      } else {
+        void commandTextChannel.send("The queue is empty.");
+      }
+    } else {
+      player.playTrack({
+        track: next.track,
+      });
+      if (commandTextChannel === undefined) {
+        console.error(`textChannel is undefined at the end of a song`);
+      } else {
+        void commandTextChannel.send(`Now playing: ${next.info.title} by ${next.info.author} - ${next.info.uri}`);
+      }
+    }
   }
 }
 
