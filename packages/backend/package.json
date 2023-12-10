@@ -18,7 +18,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.465.0",
+    "@aws-sdk/client-s3": "^3.470.0",
     "@glitter-boys/data": "*",
     "@resvg/resvg-js": "^2.6.0",
     "@resvg/resvg-js-linux-x64-gnu": "^2.6.0",
