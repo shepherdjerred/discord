@@ -5,7 +5,7 @@ import { musicCommand } from "../music/commands.js";
 
 // the commands API is rate limited.
 // we only need to update commands when the interfaces have changed.
-const updateCommands = false;
+const updateCommands = true;
 
 const rest = new REST({ version: "10" }).setToken(Configuration.discordToken);
 

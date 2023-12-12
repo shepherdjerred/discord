@@ -51,7 +51,8 @@ const musicCommand = new SlashCommandBuilder()
       ),
   )
   .addSubcommand((subcommand) => subcommand.setName("nowplaying").setDescription("Show the currently playing song"))
-  .addSubcommand((subcommand) => subcommand.setName("reset").setDescription("Reset the music filters"));
+  .addSubcommand((subcommand) => subcommand.setName("reset").setDescription("Reset the music filters"))
+  .addSubcommand((subcommand) => subcommand.setName("debug").setDescription("Print bot state"));
 
 async function handleMusic(interaction: ChatInputCommandInteraction) {
   switch (interaction.options.getSubcommand()) {
@@ -91,7 +92,22 @@ async function handleMusic(interaction: ChatInputCommandInteraction) {
     case "reset":
       await handleResetMusic(interaction);
       break;
+    case "debug":
+      await handleDebugMusic(interaction);
   }
+}
+
+async function handleDebugMusic(interaction: ChatInputCommandInteraction) {
+  const state = {
+    queue,
+    currentSong,
+    player,
+    musicChannel,
+  };
+  await interaction.reply({
+    content: `${JSON.stringify(state)}`,
+    ephemeral: true,
+  });
 }
 
 async function handleResetMusic(interaction: ChatInputCommandInteraction) {
