@@ -105,8 +105,13 @@ async function handleDebugMusic(interaction: ChatInputCommandInteraction) {
     musicChannel,
   };
   await interaction.reply({
-    content: `${JSON.stringify(state)}`,
-    ephemeral: true,
+    files: [
+      {
+        contentType: "application/json",
+        attachment: Buffer.from(JSON.stringify(state, null, 2)),
+        name: "state.json",
+      },
+    ],
   });
 }
 
