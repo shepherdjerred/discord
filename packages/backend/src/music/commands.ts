@@ -101,8 +101,9 @@ async function handleDebugMusic(interaction: ChatInputCommandInteraction) {
   const state = {
     queue,
     currentSong,
-    player,
-    musicChannel,
+  player: player === undefined,
+    musicChannel: musicChannel === undefined ? undefined : musicChannel.id,
+    commandTextChannel: commandTextChannel === undefined ? undefined : commandTextChannel.id,
   };
   await interaction.reply({
     files: [
