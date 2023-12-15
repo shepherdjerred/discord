@@ -101,7 +101,7 @@ async function handleInit(interaction: ChatInputCommandInteraction) {
   reset();
   host = interaction.user.id;
   players = [interaction.user.id];
-  await interaction.reply({ content: `${host} has initialized a new customs match.` });
+  await interaction.reply({ content: `${userMention(host)} has initialized a new customs match.` });
 }
 
 function reset() {
@@ -228,9 +228,9 @@ async function handlePick(interaction: ChatInputCommandInteraction) {
     return await interaction.reply({
       content: `${userMention(
         user.id,
-      )} has been picked for the ${team} team. It's now the ${turn} turn. The following players are up for draft: ${players.join(
-        "\n",
-      )}`,
+      )} has been picked for the ${team} team. It's now the ${turn} turn. The following players are up for draft: ${players
+        .map((player) => userMention(player))
+        .join("\n")}`,
     });
   }
 }
@@ -310,7 +310,7 @@ async function handleLeaderRandom(interaction: ChatInputCommandInteraction) {
   teams = { red: [red], blue: [blue] };
 
   await interaction.reply({
-    content: `Team leaders have been randomly picked. Red: ${red}, Blue: ${blue}`,
+    content: `Team leaders have been randomly picked. Red: ${userMention(red)}, Blue: ${userMention(blue)}`,
     ephemeral: true,
   });
 }
