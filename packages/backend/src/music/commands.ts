@@ -157,28 +157,24 @@ async function handleResumeMusic(interaction: ChatInputCommandInteraction) {
 
 async function handleStopMusic(interaction: ChatInputCommandInteraction) {
   if (player) {
-    if (currentSong === undefined) {
-      await interaction.reply({ ephemeral: true, content: "Nothing is playing." });
-    } else {
-      player.stopTrack();
-      player = undefined;
-      queue = [];
-      currentSong = undefined;
+    player.stopTrack();
+    player = undefined;
+    queue = [];
+    currentSong = undefined;
 
-      const node = shoukaku.getNode();
+    const node = shoukaku.getNode();
 
-      if (node) {
-        if (musicChannel) {
-          node.leaveChannel(musicChannel.guild.id);
-        }
-      } else {
-        console.error(`node is undefined`);
+    if (node) {
+      if (musicChannel) {
+        node.leaveChannel(musicChannel.guild.id);
       }
-
-      musicChannel = undefined;
-
-      await interaction.reply(`${userMention(interaction.user.id)} stopped the music.`);
+    } else {
+      console.error(`node is undefined`);
     }
+
+    musicChannel = undefined;
+
+    await interaction.reply(`${userMention(interaction.user.id)} stopped the music.`);
   } else {
     await interaction.reply({ ephemeral: true, content: "Nothing is playing." });
   }
