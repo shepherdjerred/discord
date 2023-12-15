@@ -7,7 +7,7 @@ const customsCommand = new SlashCommandBuilder()
     group
       .setName("leader")
       .setDescription("manage team leaders")
-      .addSubcommand((subcommand) => subcommand.setName("random"))
+      .addSubcommand((subcommand) => subcommand.setName("random").setDescription("set random team leaders"))
       .addSubcommand((subcommand) =>
         subcommand
           .setName("set")
