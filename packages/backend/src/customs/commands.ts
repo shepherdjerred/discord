@@ -11,6 +11,7 @@ const customsCommand = new SlashCommandBuilder()
       .addSubcommand((subcommand) =>
         subcommand
           .setName("set")
+          .setDescription("set team leaders")
           .addUserOption((option) => option.setName("red").setDescription("red team leader").setRequired(true))
           .addUserOption((option) => option.setName("blue").setDescription("blue team leader").setRequired(true)),
       ),
@@ -31,7 +32,7 @@ const customsCommand = new SlashCommandBuilder()
       .addUserOption((option) => option.setName("user").setDescription("user to pick").setRequired(true)),
   )
   .addSubcommand((subcommand) => subcommand.setName("start").setDescription("start the match"))
-  .addSubcommand((subcommand) => subcommand.setName("debug").setDescription("debug"));
+  .addSubcommand((subcommand) => subcommand.setName("debug").setDescription("print debug information"));
 
 async function handleCustoms(interaction: ChatInputCommandInteraction) {
   switch (interaction.options.getSubcommandGroup()) {
