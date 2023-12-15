@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder, userMention } from "discord.js";
 
 const customsCommand = new SlashCommandBuilder()
   .setName("customs")
@@ -148,9 +148,9 @@ async function handleKick(interaction: ChatInputCommandInteraction) {
   const user = interaction.options.getUser("user", true);
   if (players.includes(user.id)) {
     players = players.filter((player) => player !== user.id);
-    await interaction.reply({ content: `${user} has been kicked from the player pool.` });
+    await interaction.reply({ content: `${userMention(user.id)} has been kicked from the player pool.` });
   } else {
-    await interaction.reply({ content: `${user} is not in the player pool.`, ephemeral: true });
+    await interaction.reply({ content: `${userMention(user.id)} is not in the player pool.`, ephemeral: true });
   }
 }
 
@@ -217,11 +217,17 @@ async function handlePick(interaction: ChatInputCommandInteraction) {
   players = players.filter((player) => player !== user.id);
   if (turn === 8) {
     return await interaction.reply({
-      content: `${user} has been picked for the ${team} team. Teams are now complete. Use \`/customs start\` to start the match.`,
+      content: `${userMention(
+        user.id,
+      )} has been picked for the ${team} team. Teams are now complete. Use \`/customs start\` to start the match.`,
     });
   } else {
     return await interaction.reply({
-      content: `${user} has been picked for the ${team} team. It's now the ${turn} turn.`,
+      content: `${userMention(
+        user.id,
+      )} has been picked for the ${team} team. It's now the ${turn} turn. The following players are up for draft: ${players.join(
+        "\n",
+      )}`,
     });
   }
 }
@@ -315,24 +321,27 @@ async function handleLeaderSet(interaction: ChatInputCommandInteraction) {
   const blue = interaction.options.getUser("blue", true);
 
   if (players.includes(red.id)) {
-    players = players.filter((player) => player !== red.id);
+    // do nothing
   } else {
-    await interaction.reply({ content: `${red} is not in the player pool.`, ephemeral: true });
+    await interaction.reply({ content: `${userMention(red.id)} is not in the player pool.`, ephemeral: true });
     return;
   }
 
   if (players.includes(blue.id)) {
-    players = players.filter((player) => player !== blue.id);
+    // do nothing
   } else {
-    await interaction.reply({ content: `${blue} is not in the player pool.`, ephemeral: true });
+    await interaction.reply({ content: `${userMention(blue.id)} is not in the player pool.`, ephemeral: true });
     return;
   }
+
+  players = players.filter((player) => player !== red.id);
+  players = players.filter((player) => player !== blue.id);
 
   leaders = { red: red.id, blue: blue.id };
   teams = { red: [red.id], blue: [blue.id] };
 
   await interaction.reply({
-    content: `Team leaders have been picked. Red: ${red}, Blue: ${blue}`,
+    content: `Team leaders have been picked. Red: ${userMention(red.id)}, Blue: ${userMention(blue.id)}`,
   });
 }
 
