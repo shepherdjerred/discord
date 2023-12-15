@@ -242,7 +242,9 @@ async function handleInit(interaction: ChatInputCommandInteraction) {
   }
 
   state = { name: "pool", host: interaction.user.id, players: [interaction.user.id] };
-  await interaction.reply({ content: `${userMention(state.host)} has initialized a new customs match.` });
+  await interaction.reply({
+    content: `${userMention(state.host)} has initialized a new customs match. Use \`/customs pool join\` to join.`,
+  });
 }
 
 async function handlePoolJoin(interaction: ChatInputCommandInteraction) {
