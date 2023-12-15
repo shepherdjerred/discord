@@ -114,6 +114,15 @@ function reset() {
 
 async function handleJoin(interaction: ChatInputCommandInteraction) {
   if (teams === undefined) {
+    // don't allow a player to join twice
+    if (players.includes(interaction.user.id)) {
+      await interaction.reply({
+        content: "You are already in the player pool.",
+        ephemeral: true,
+      });
+      return;
+    }
+
     if (players.length <= 10) {
       players.push(interaction.user.id);
       if (players.length === 10) {
