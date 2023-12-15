@@ -1,5 +1,7 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, userMention } from "discord.js";
 
+// TODO: add leave command
+// TODO: add list command
 const customsCommand = new SlashCommandBuilder()
   .setName("customs")
   .setDescription("League customs")
@@ -120,7 +122,7 @@ async function handleJoin(interaction: ChatInputCommandInteraction) {
         });
       } else {
         await interaction.reply({
-          content: `${interaction.user.id} joined the player pool. ${players.length - 10} more players needed.`,
+          content: `${interaction.user.id} joined the player pool. ${10 - players.length} more players needed.`,
         });
       }
     } else {
