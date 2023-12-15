@@ -53,7 +53,7 @@ function getCurrentPick(teams: PartialTeams): TeamName | undefined {
   }
   const team = order[turn];
   if (team === undefined) {
-    throw new Error("unreachable");
+    throw new Error(`unreachable, ${JSON.stringify(state)}`);
   } else {
     return team;
   }
@@ -130,7 +130,7 @@ async function handleCustoms(interaction: ChatInputCommandInteraction) {
           await handleCaptainSet(interaction);
           break;
         default:
-          throw new Error("unreachable");
+          throw new Error(`unreachable: ${JSON.stringify(interaction)}`);
       }
       break;
     case "pool":
@@ -147,6 +147,8 @@ async function handleCustoms(interaction: ChatInputCommandInteraction) {
         case "leave":
           await handlePoolLeave(interaction);
           break;
+        default:
+          throw new Error(`unreachable: ${JSON.stringify(interaction)}`);
       }
       break;
     case "team":
@@ -157,6 +159,8 @@ async function handleCustoms(interaction: ChatInputCommandInteraction) {
         case "list":
           await handleTeamList(interaction);
           break;
+        default:
+          throw new Error(`unreachable: ${JSON.stringify(interaction)}`);
       }
   }
   switch (interaction.options.getSubcommand()) {
@@ -173,7 +177,7 @@ async function handleCustoms(interaction: ChatInputCommandInteraction) {
       await handleDebug(interaction);
       break;
     default:
-      throw new Error("unreachable");
+      throw new Error(`unreachable: ${JSON.stringify(interaction)}`);
   }
 }
 
@@ -422,6 +426,9 @@ async function handleCaptainRandom(interaction: ChatInputCommandInteraction) {
   state.players = state.players.filter((player) => player !== blue);
 
   if (red === undefined || blue === undefined) {
+    await interaction.reply({
+      content: `invalid state: ${JSON.stringify(state)}`,
+    });
     throw new Error("unreachable");
   }
 
