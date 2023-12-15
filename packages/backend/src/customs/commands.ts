@@ -127,11 +127,13 @@ async function handleJoin(interaction: ChatInputCommandInteraction) {
       players.push(interaction.user.id);
       if (players.length === 10) {
         await interaction.reply({
-          content: `${interaction.user.id} joined the player pool. The player pool is now full.`,
+          content: `${userMention(interaction.user.id)} joined the player pool. The player pool is now full.`,
         });
       } else {
         await interaction.reply({
-          content: `${interaction.user.id} joined the player pool. ${10 - players.length} more players needed.`,
+          content: `${userMention(interaction.user.id)} joined the player pool. ${
+            10 - players.length
+          } more players needed.`,
         });
       }
     } else {
