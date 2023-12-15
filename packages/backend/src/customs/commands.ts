@@ -94,6 +94,7 @@ const customsCommand = new SlashCommandBuilder()
   .addSubcommandGroup((group) =>
     group
       .setName("pool")
+      .setDescription("Manage the player pool")
       .addSubcommand((subcommand) => subcommand.setName("join").setDescription("Join the player pool"))
       .addSubcommand((subcommand) => subcommand.setName("leave").setDescription("Leave the player pool"))
       .addSubcommand((subcommand) => subcommand.setName("list").setDescription("List the player pool"))
