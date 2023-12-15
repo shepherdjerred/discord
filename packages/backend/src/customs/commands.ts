@@ -87,10 +87,8 @@ const customsCommand = new SlashCommandBuilder()
         subcommand
           .setName("set")
           .setDescription("Set explicit team captains")
-          .addUserOption((option) => option.setName("red captain").setDescription("red team captain").setRequired(true))
-          .addUserOption((option) =>
-            option.setName("blue captain").setDescription("blue team captain").setRequired(true),
-          ),
+          .addUserOption((option) => option.setName("red").setDescription("red team captain").setRequired(true))
+          .addUserOption((option) => option.setName("blue").setDescription("blue team captain").setRequired(true)),
       ),
   )
   .addSubcommandGroup((group) =>
