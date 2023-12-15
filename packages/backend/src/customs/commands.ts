@@ -48,8 +48,6 @@ async function handleCustoms(interaction: ChatInputCommandInteraction) {
           throw new Error("unreachable");
       }
       break;
-    default:
-      throw new Error("unreachable");
   }
   switch (interaction.options.getSubcommand()) {
     case "init":
