@@ -94,6 +94,9 @@ async function handleMusic(interaction: ChatInputCommandInteraction) {
       break;
     case "debug":
       await handleDebugMusic(interaction);
+      break;
+    default:
+      throw new Error("unreachable");
   }
 }
 
@@ -101,7 +104,7 @@ async function handleDebugMusic(interaction: ChatInputCommandInteraction) {
   const state = {
     queue,
     currentSong,
-  player: player === undefined,
+    player: player === undefined,
     musicChannel: musicChannel === undefined ? undefined : musicChannel.id,
     commandTextChannel: commandTextChannel === undefined ? undefined : commandTextChannel.id,
   };
