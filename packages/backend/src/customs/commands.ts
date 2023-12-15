@@ -98,6 +98,7 @@ async function handleDebug(interaction: ChatInputCommandInteraction) {
 async function handleInit(interaction: ChatInputCommandInteraction) {
   reset();
   host = interaction.user.id;
+  players = [interaction.user.id];
   await interaction.reply({ content: `${host} has initialized a new customs match.` });
 }
 
@@ -269,6 +270,10 @@ async function handleStart(interaction: ChatInputCommandInteraction) {
     });
     return;
   }
+
+  // TODO: put teams in the correct channels
+
+  reset();
 
   await interaction.reply({ content: "Customs match started.", ephemeral: true });
 }
