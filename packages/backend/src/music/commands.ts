@@ -11,7 +11,7 @@ import client from "../discord/client.js";
 import { Player, Track } from "shoukaku";
 import _ from "lodash";
 
-let state: State;
+let state: State = { name: "init" };
 
 type State = InitState | IdleState | ActiveState;
 type InitState = {
