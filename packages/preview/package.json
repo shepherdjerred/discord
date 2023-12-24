@@ -12,7 +12,7 @@
   "type": "module",
   "dependencies": {
     "@astrojs/check": "^0.3.1",
-    "@astrojs/react": "^3.0.6",
+    "@astrojs/react": "^3.0.8",
     "astro": "^3.6.4",
     "typescript": "^5.3.2"
   }
