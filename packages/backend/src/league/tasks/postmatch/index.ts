@@ -14,6 +14,7 @@ import { toMatch } from "../../model/match.js";
 import { getState, setState } from "../../model/state.js";
 import { matchToImage } from "../../image/html/index.js";
 import assert from "assert";
+import { postLeaderboardMessage } from "../leaderboard/task.js";
 
 async function checkMatch(game: MatchState) {
   try {
@@ -104,6 +105,8 @@ export async function checkPostMatch() {
         ...state,
         gamesStarted: newMatches,
       });
+
+      await postLeaderboardMessage();
     }),
   );
 }
