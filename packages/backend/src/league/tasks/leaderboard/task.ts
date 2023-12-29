@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { toLeaderboard } from "./index.js";
 import { getPlayer } from "../../model/player.js";
-import { getPlayerConfigs } from "../../model/playerConfig.js";
+import { getDoubleXp, getPlayerConfigs } from "../../model/playerConfig.js";
 import { leaderboardToDiscordMessage, setKing } from "./discord.js";
 import { CopyObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { format } from "date-fns";
@@ -40,8 +40,9 @@ async function uploadLeaderboard(leaderboard: Leaderboard) {
 
 export async function postLeaderboardMessage() {
   const playerConfigs = await getPlayerConfigs();
+  const doubleXp = await getDoubleXp();
   const players = await Promise.all(_.map(playerConfigs, getPlayer));
-  const leaderboard = toLeaderboard(players);
+  const leaderboard = toLeaderboard(players, doubleXp);
   const message = leaderboardToDiscordMessage(leaderboard);
   const messageWithLink = `View more details at ${link}\n${message}`;
   await send(messageWithLink);
