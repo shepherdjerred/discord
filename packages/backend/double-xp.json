@@ -460,8 +460,8 @@
         },
         "ranks": { "solo": { "division": 4, "tier": "gold", "lp": 38, "wins": 93, "losses": 112 } }
       },
-      "leaguePointsDelta": -70,
-      "position": 23
+      "leaguePointsDelta": 38,
+      "position": 24
     }
   ]
 }
