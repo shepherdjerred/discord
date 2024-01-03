@@ -164,7 +164,7 @@ const now = new Date();
 const todayAtNoon = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
 const tomorrowAtNoon = addDays(todayAtNoon, 1);
 // 3am CT
-const end = new Date(2024, 0, 3, 3, 0, 0);
+const end = new Date(2024, 0, 8, 12, 0, 0);
 
 let next: Date;
 
