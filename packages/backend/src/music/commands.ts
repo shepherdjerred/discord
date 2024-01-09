@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import { shoukaku } from "./index.js";
 import client from "../discord/client.js";
-import { Player, Track } from "shoukaku";
+import { LoadType, Player, Track } from "shoukaku";
 import _ from "lodash";
 
 let state: State = { name: "init" };
@@ -149,10 +149,10 @@ async function handleResumeMusic(interaction: ChatInputCommandInteraction) {
 async function handleStopMusic(interaction: ChatInputCommandInteraction) {
   if ("player" in state) {
     state.player.stopTrack();
-    const node = shoukaku.getNode();
+    const node = shoukaku.options.nodeResolver(shoukaku.nodes);
     if (node) {
       if (state.musicChannel) {
-        node.leaveChannel(state.musicChannel.guild.id);
+        shoukaku.leaveVoiceChannel(state.musicChannel.guild.id);
       }
     } else {
       console.error(`node is undefined`);
@@ -209,7 +209,7 @@ async function handleShuffleMusic(interaction: ChatInputCommandInteraction) {
 async function handleVolumeMusic(interaction: ChatInputCommandInteraction) {
   const volume = interaction.options.getInteger("volume", true);
   if ("player" in state) {
-    state.player.setVolume(volume);
+    state.player.setFilterVolume(volume);
     await interaction.reply(`${userMention(interaction.user.id)} set volume to ${volume}%`);
   } else {
     await interaction.reply({ ephemeral: true, content: "The music bot isn't active." });
@@ -256,15 +256,20 @@ async function getVoiceChannel(interaction: ChatInputCommandInteraction): Promis
 }
 
 async function findSong(song: string): Promise<Track | undefined> {
+  // TODO: allow spotify, etc.
   const search = `ytsearch:${song}`;
-  const node = shoukaku.getNode();
+  const node = shoukaku.options.nodeResolver(shoukaku.nodes);
   if (!node) {
     console.error(`node is undefined`);
     return undefined;
   }
   const result = await node.rest.resolve(search);
-  const track = result?.tracks.shift();
-  return track;
+  // TODO: add playlist support
+  if (result?.loadType === LoadType.TRACK) {
+    const track = result.data;
+    return track;
+  }
+  return undefined;
 }
 
 async function handlePlayMusic(interaction: ChatInputCommandInteraction) {
@@ -296,14 +301,14 @@ async function handlePlayMusic(interaction: ChatInputCommandInteraction) {
   }
 
   if (state.name === "init") {
-    const node = shoukaku.getNode();
+    const node = shoukaku.options.nodeResolver(shoukaku.nodes);
     if (!node) {
       return undefined;
     }
 
     state = {
       name: "idle",
-      player: await node.joinChannel({
+      player: await shoukaku.joinVoiceChannel({
         guildId: playerChannel.guild.id,
         channelId: playerChannel.id,
         shardId: 0,
@@ -326,7 +331,7 @@ async function handlePlayMusic(interaction: ChatInputCommandInteraction) {
     };
 
     state.player.playTrack({
-      track: metadata.track,
+      track: metadata.info.identifier,
     });
 
     await interaction.reply(`Now playing: ${metadata.info.title} by ${metadata.info.author} - ${metadata.info.uri}`);
@@ -354,7 +359,7 @@ function handleSongEnd() {
     } else {
       state.currentSong = next;
       state.player.playTrack({
-        track: next.track,
+        track: next.info.identifier,
       });
       if (state.commandTextChannel === undefined) {
         console.error(`textChannel is undefined at the end of a song`);
