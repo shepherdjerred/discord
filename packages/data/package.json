@@ -7,11 +7,11 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "eslint:check": "eslint .",
-    "prettier:check": "prettier --check .",
+    "eslint:check": "eslint src/",
+    "prettier:check": "prettier --check src/",
     "lint": "npm run lint:check",
     "lint:check": "npm run eslint:check && npm run prettier:check",
-    "prettier:fix": "prettier --write ."
+    "prettier:fix": "prettier --write src/"
   },
   "type": "module",
   "dependencies": {

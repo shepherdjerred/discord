@@ -11,7 +11,7 @@
     "packages/preview"
   ],
   "scripts": {
-    "lint": "prettier -w .",
+    "lint": "prettier -w . && npm run lint --workspaces",
     "build": "npm run build --workspaces"
   }
 }
