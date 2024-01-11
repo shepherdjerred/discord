@@ -112,7 +112,7 @@ async function handleMusic(interaction: ChatInputCommandInteraction) {
 
 async function handleResetMusic(interaction: ChatInputCommandInteraction) {
   if ("player" in state) {
-    state.player.clearFilters();
+    await state.player.clearFilters();
     await interaction.reply(`${userMention(interaction.user.id)} reset filters.`);
   } else {
     await interaction.reply({ ephemeral: true, content: "The music bot isn't active." });
@@ -125,7 +125,7 @@ async function handlePauseMusic(interaction: ChatInputCommandInteraction) {
       await interaction.reply({ ephemeral: true, content: "The music is already paused." });
       return;
     } else {
-      state.player.setPaused(true);
+      await state.player.setPaused(true);
       await interaction.reply(`${userMention(interaction.user.id)} paused the music.`);
     }
   } else {
@@ -136,7 +136,7 @@ async function handlePauseMusic(interaction: ChatInputCommandInteraction) {
 async function handleResumeMusic(interaction: ChatInputCommandInteraction) {
   if (state.name === "active") {
     if (state.player.paused) {
-      state.player.setPaused(false);
+      await state.player.setPaused(false);
       await interaction.reply(`${userMention(interaction.user.id)} resumed the music.`);
     } else {
       await interaction.reply({ ephemeral: true, content: "The music is not paused." });
@@ -148,11 +148,11 @@ async function handleResumeMusic(interaction: ChatInputCommandInteraction) {
 
 async function handleStopMusic(interaction: ChatInputCommandInteraction) {
   if ("player" in state) {
-    state.player.stopTrack();
+    await state.player.stopTrack();
     const node = shoukaku.options.nodeResolver(shoukaku.nodes);
     if (node) {
       if (state.musicChannel) {
-        shoukaku.leaveVoiceChannel(state.musicChannel.guild.id);
+        await shoukaku.leaveVoiceChannel(state.musicChannel.guild.id);
       }
     } else {
       console.error(`node is undefined`);
@@ -169,7 +169,7 @@ async function handleStopMusic(interaction: ChatInputCommandInteraction) {
 async function handleSkipMusic(interaction: ChatInputCommandInteraction) {
   if (state.name === "active") {
     const currentCopy = state.currentSong;
-    state.player.stopTrack();
+    await state.player.stopTrack();
     await interaction.reply(`${userMention(interaction.user.id)} skipped ${currentCopy.info.title}.`);
   } else {
     await interaction.reply({ ephemeral: true, content: "Nothing is playing." });
@@ -209,7 +209,7 @@ async function handleShuffleMusic(interaction: ChatInputCommandInteraction) {
 async function handleVolumeMusic(interaction: ChatInputCommandInteraction) {
   const volume = interaction.options.getInteger("volume", true);
   if ("player" in state) {
-    state.player.setFilterVolume(volume);
+    await state.player.setFilterVolume(volume);
     await interaction.reply(`${userMention(interaction.user.id)} set volume to ${volume}%`);
   } else {
     await interaction.reply({ ephemeral: true, content: "The music bot isn't active." });
@@ -219,7 +219,7 @@ async function handleVolumeMusic(interaction: ChatInputCommandInteraction) {
 async function handleSeekMusic(interaction: ChatInputCommandInteraction) {
   const position = interaction.options.getInteger("position", true);
   if (state.name === "active") {
-    state.player.seekTo(position * 1000);
+    await state.player.seekTo(position * 1000);
     await interaction.reply(`${userMention(interaction.user.id)} seeked to ${position} seconds.`);
   } else {
     await interaction.reply({ ephemeral: true, content: "Nothing is playing." });
@@ -265,8 +265,8 @@ async function findSong(song: string): Promise<Track | undefined> {
   }
   const result = await node.rest.resolve(search);
   // TODO: add playlist support
-  if (result?.loadType === LoadType.TRACK) {
-    const track = result.data;
+  if (result?.loadType === LoadType.SEARCH) {
+    const track = result.data.shift();
     return track;
   }
   return undefined;
@@ -330,7 +330,7 @@ async function handlePlayMusic(interaction: ChatInputCommandInteraction) {
       queue: [],
     };
 
-    state.player.playTrack({
+    await state.player.playTrack({
       track: metadata.info.identifier,
     });
 
@@ -344,30 +344,34 @@ async function handlePlayMusic(interaction: ChatInputCommandInteraction) {
 }
 
 function handleSongEnd() {
-  if (state.name !== "active") {
-    console.error(`state was not active at the end of a song`);
-  } else {
-    const next = state.queue.pop();
-    if (next === undefined) {
-      state = {
-        name: "idle",
-        player: state.player,
-        musicChannel: state.musicChannel,
-        commandTextChannel: state.commandTextChannel,
-      };
-      void state.commandTextChannel.send("The queue is empty.");
+  void (async () => {
+    if (state.name !== "active") {
+      console.error(`state was not active at the end of a song`);
     } else {
-      state.currentSong = next;
-      state.player.playTrack({
-        track: next.info.identifier,
-      });
-      if (state.commandTextChannel === undefined) {
-        console.error(`textChannel is undefined at the end of a song`);
+      const next = state.queue.pop();
+      if (next === undefined) {
+        state = {
+          name: "idle",
+          player: state.player,
+          musicChannel: state.musicChannel,
+          commandTextChannel: state.commandTextChannel,
+        };
+        void state.commandTextChannel.send("The queue is empty.");
       } else {
-        void state.commandTextChannel.send(`Now playing: ${next.info.title} by ${next.info.author} - ${next.info.uri}`);
+        state.currentSong = next;
+        await state.player.playTrack({
+          track: next.info.identifier,
+        });
+        if (state.commandTextChannel === undefined) {
+          console.error(`textChannel is undefined at the end of a song`);
+        } else {
+          void state.commandTextChannel.send(
+            `Now playing: ${next.info.title} by ${next.info.author} - ${next.info.uri}`,
+          );
+        }
       }
     }
-  }
+  })();
 }
 
 export { musicCommand, handleMusic };
