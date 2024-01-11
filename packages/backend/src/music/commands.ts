@@ -265,6 +265,10 @@ async function findSong(song: string): Promise<Track | undefined> {
   if (result?.loadType === LoadType.SEARCH) {
     const track = result.data.shift();
     return track;
+  } else if (result?.loadType === LoadType.TRACK) {
+    return result.data;
+  } else if (result?.loadType === LoadType.PLAYLIST) {
+    return result.data.tracks.shift();
   }
   return undefined;
 }
