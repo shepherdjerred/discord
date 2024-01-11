@@ -149,13 +149,8 @@ async function handleResumeMusic(interaction: ChatInputCommandInteraction) {
 async function handleStopMusic(interaction: ChatInputCommandInteraction) {
   if ("player" in state) {
     await state.player.stopTrack();
-    const node = shoukaku.options.nodeResolver(shoukaku.nodes);
-    if (node) {
-      if (state.musicChannel) {
-        await shoukaku.leaveVoiceChannel(state.musicChannel.guild.id);
-      }
-    } else {
-      console.error(`node is undefined`);
+    if (state.musicChannel) {
+      await shoukaku.leaveVoiceChannel(state.musicChannel.guild.id);
     }
 
     state = { name: "init" };
@@ -258,6 +253,7 @@ async function getVoiceChannel(interaction: ChatInputCommandInteraction): Promis
 async function findSong(song: string): Promise<Track | undefined> {
   // TODO: allow spotify, etc.
   const search = `ytsearch:${song}`;
+
   const node = shoukaku.options.nodeResolver(shoukaku.nodes);
   if (!node) {
     console.error(`node is undefined`);

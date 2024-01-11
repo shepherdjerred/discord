@@ -2,7 +2,7 @@ app = "lavalink-prod"
 primary_region = "sea"
 
 [build]
-  image = "ghcr.io/lavalink-devs/lavalink:3"
+  image = "ghcr.io/lavalink-devs/lavalink:4"
 
 [[services]]
   internal_port = 2333
