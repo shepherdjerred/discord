@@ -251,8 +251,9 @@ async function getVoiceChannel(interaction: ChatInputCommandInteraction): Promis
 }
 
 async function findSong(song: string): Promise<Track | undefined> {
-  // TODO: allow spotify, etc.
   const search = `ytsearch:${song}`;
+  // TODO: don't prepend ytsearch: if the song is a url
+  // TODO: add spotify credentials, hook up spotify
 
   const node = shoukaku.options.nodeResolver(shoukaku.nodes);
   if (!node) {
