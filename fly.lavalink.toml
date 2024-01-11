@@ -13,14 +13,6 @@ primary_region = "sea"
   [[services.ports]]
     handlers = ["tls", "http"]
     port = "443"
-#   [[services.http_checks]]
-#     interval = 10000
-#     grace_period = "5s"
-#     method = "get"
-#     path = "/"
-#     protocol = "http"
-#     restart_limit = 0
-#     timeout = 2000
 
 [env]
   SERVER_PORT=2333

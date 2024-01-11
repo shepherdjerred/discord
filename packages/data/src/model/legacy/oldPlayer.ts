@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { RankSchema } from "../rank.js";
 import { PlayerConfigEntrySchema } from "../playerConfigEntry.js";
-import _ from "lodash";
 import { PlayerWithSoloQueueRank } from "../player.js";
 
 export type OldPlayer = z.infer<typeof OldPlayerSchema>;

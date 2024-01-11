@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { z } from "zod";
 import { DiscordSchema } from "./discord.js";
 import { LeagueAcccountSchema } from "./leagueAccount.js";
