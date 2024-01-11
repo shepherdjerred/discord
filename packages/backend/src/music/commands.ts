@@ -332,7 +332,7 @@ async function handlePlayMusic(interaction: ChatInputCommandInteraction) {
     };
 
     await state.player.playTrack({
-      track: metadata.info.identifier,
+      track: metadata.encoded,
     });
 
     await interaction.reply(`Now playing: ${metadata.info.title} by ${metadata.info.author} - ${metadata.info.uri}`);
@@ -361,7 +361,7 @@ function handleSongEnd() {
       } else {
         state.currentSong = next;
         await state.player.playTrack({
-          track: next.info.identifier,
+          track: next.encoded,
         });
         if (state.commandTextChannel === undefined) {
           console.error(`textChannel is undefined at the end of a song`);
