@@ -15,7 +15,7 @@
     "@astrojs/tailwind": "^5.1.0",
     "@glitter-boys/data": "*",
     "@tailwindcss/typography": "^0.5.10",
-    "@tanstack/react-table": "^8.11.3",
+    "@tanstack/react-table": "^8.11.6",
     "@visx/axis": "^3.5.0",
     "@visx/group": "^3.3.0",
     "@visx/legend": "^3.5.0",
