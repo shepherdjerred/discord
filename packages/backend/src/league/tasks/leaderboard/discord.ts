@@ -1,6 +1,6 @@
 import { bold, userMention } from "discord.js";
 import _ from "lodash";
-import { Leaderboard, LeaderboardEntry, PlayerConfigEntry, lpDiffToString } from "@glitter-boys/data";
+import { Leaderboard, LeaderboardEntry, PlayerConfigEntry, rankToString } from "@glitter-boys/data";
 import client from "../../../discord/client.js";
 import configuration from "../../../configuration.js";
 
@@ -8,16 +8,14 @@ export function leaderboardToDiscordMessage(leaderboard: Leaderboard): string {
   return _.chain(leaderboard.contents).map(leaderboardEntryToDiscordMessage).join("\n").value();
 }
 
-function leaderboardEntryToDiscordMessage({ position, leaguePointsDelta, player }: LeaderboardEntry): string {
+function leaderboardEntryToDiscordMessage({ position, player }: LeaderboardEntry): string {
   let positionString = `#${position.toString()}`;
   // top 3 are better than everyone else
   if (position <= 3) {
     positionString = bold(positionString);
   }
 
-  return `${positionString}: ${userMention(player.config.discordAccount.id)} ${bold(
-    lpDiffToString(leaguePointsDelta),
-  )}`;
+  return `${positionString}: ${userMention(player.config.discordAccount.id)} ${bold(rankToString(player.ranks.solo))}`;
 }
 
 export async function setKing(king: PlayerConfigEntry) {

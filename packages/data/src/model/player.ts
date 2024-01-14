@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { RankSchema, RanksSchema, getLeaguePointsDelta } from "./rank.js";
+import { RankSchema, RanksSchema } from "./rank.js";
 import { PlayerConfigEntrySchema } from "./playerConfigEntry.js";
 import _ from "lodash";
 import { rankToLeaguePoints } from "./leaguePoints.js";

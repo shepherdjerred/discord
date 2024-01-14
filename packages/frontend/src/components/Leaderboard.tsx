@@ -47,16 +47,6 @@ const columns = [
     cell: (info) => info.getValue(),
     id: "name",
   }),
-  columnHelper.accessor("current.leaguePointsDelta", {
-    header: "LP Difference",
-    cell: (info) =>
-      match(info.getValue())
-        .with(0, () => "-")
-        .with(P.number.positive(), (value) => `+${value}`)
-        .with(P.number.negative(), (value) => `${value}`)
-        .run(),
-    id: "lp-difference",
-  }),
   columnHelper.accessor((row) => row, {
     header: "Change since last update",
     cell: (info) => {
@@ -92,40 +82,33 @@ const columns = [
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Games",
-    cell: (info) =>
-      info.getValue().ranks.solo.wins -
-      info.getValue().config.league.initialRank.wins +
-      (info.getValue().ranks.solo.losses - info.getValue().config.league.initialRank.losses),
+    cell: (info) => info.getValue().ranks.solo.wins + info.getValue().ranks.solo.losses,
     id: "games",
     sortingFn: (a, b) => {
       const getVal = (info: PlayerWithSoloQueueRank) => {
-        return (
-          info.ranks.solo.wins -
-          info.config.league.initialRank.wins +
-          (info.ranks.solo.losses - info.config.league.initialRank.losses)
-        );
+        return info.ranks.solo.wins + info.ranks.solo.losses;
       };
       return getVal(a.getValue("games")) - getVal(b.getValue("games"));
     },
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Wins",
-    cell: (info) => info.getValue().ranks.solo.wins - info.getValue().config.league.initialRank.wins,
+    cell: (info) => info.getValue().ranks.solo.wins,
     id: "wins",
     sortingFn: (a, b) => {
       const getVal = (info: PlayerWithSoloQueueRank) => {
-        return info.ranks.solo.wins - info.config.league.initialRank.wins;
+        return info.ranks.solo.wins;
       };
       return getVal(a.getValue("wins")) - getVal(b.getValue("wins"));
     },
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Losses",
-    cell: (info) => info.getValue().ranks.solo.losses - info.getValue().config.league.initialRank.losses,
+    cell: (info) => info.getValue().ranks.solo.losses,
     id: "losses",
     sortingFn: (a, b) => {
       const getVal = (info: PlayerWithSoloQueueRank) => {
-        return info.ranks.solo.losses - info.config.league.initialRank.losses;
+        return info.ranks.solo.losses;
       };
       return getVal(a.getValue("losses")) - getVal(b.getValue("losses"));
     },
@@ -134,24 +117,14 @@ const columns = [
     header: "Win Rate",
     cell: (info) => {
       const percent = _.round(
-        ((info.getValue().ranks.solo.wins - info.getValue().config.league.initialRank.wins) /
-          (info.getValue().ranks.solo.wins -
-            info.getValue().config.league.initialRank.wins +
-            (info.getValue().ranks.solo.losses - info.getValue().config.league.initialRank.losses))) *
-          100,
+        (info.getValue().ranks.solo.wins / (info.getValue().ranks.solo.wins - info.getValue().ranks.solo.losses)) * 100,
       );
       return percent ? `${percent}%` : "-";
     },
     id: "win-rate",
     sortingFn: (a, b) => {
       const getVal = (info: PlayerWithSoloQueueRank) => {
-        const percent = _.round(
-          ((info.ranks.solo.wins - info.config.league.initialRank.wins) /
-            (info.ranks.solo.wins -
-              info.config.league.initialRank.wins +
-              (info.ranks.solo.losses - info.config.league.initialRank.losses))) *
-            100,
-        );
+        const percent = _.round((info.ranks.solo.wins / (info.ranks.solo.wins - info.ranks.solo.losses)) * 100);
         return percent ? percent : -9999;
       };
       return getVal(a.getValue("win-rate")) - getVal(b.getValue("win-rate"));
