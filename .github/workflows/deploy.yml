@@ -16,6 +16,20 @@ on:
         default: "main"
 
 jobs:
+  build:
+    name: CI
+    runs-on: ubuntu-latest
+    env:
+      EARTHLY_TOKEN: ${{ secrets.EARTHLY_TOKEN }}
+    steps:
+      - uses: earthly/actions-setup@v1.0.7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.ref }}
+      - name: build image
+        run: earthly --ci --sat glitter-boys --org sjerred -P +ci
   beta:
     name: Deploy to Beta
     runs-on: ubuntu-latest

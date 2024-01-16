@@ -1,5 +1,10 @@
 VERSION 0.7
 
+ci:
+  BUILD +lint
+  BUILD +image.backend
+  BUILD +build.frontend
+
 node:
   FROM node:lts
   RUN npm install -g npm@latest
@@ -20,7 +25,6 @@ prepare:
 lint:
   FROM +prepare
   RUN npm run lint --workspace packages/backend
-  RUN npm run lint --workspace packages/lint
   RUN npm run lint --workspace packages/data
 
 litefs:
