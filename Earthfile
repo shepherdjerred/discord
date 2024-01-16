@@ -2,7 +2,7 @@ VERSION 0.7
 
 ci:
   BUILD +lint
-  BUILD +image.backend
+  BUILD +image.backend --stage=beta
   BUILD +build.frontend
 
 node:
