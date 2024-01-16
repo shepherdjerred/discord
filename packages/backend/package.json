@@ -37,7 +37,7 @@
     "shoukaku": "^4.0.1",
     "sqlite3": "^5.1.7",
     "ts-pattern": "^5.0.6",
-    "twisted": "^1.55.0",
+    "twisted": "^1.56.2",
     "typeorm": "^0.3.19",
     "uuid": "^9.0.1",
     "vitest": "^1.1.3",
