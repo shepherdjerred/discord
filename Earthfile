@@ -37,7 +37,7 @@ build.backend:
   SAVE ARTIFACT packages/backend/dist AS LOCAL packages/backend/dist
 
 build.frontend:
-  FROM +prepare
+  FROM +build.data
   RUN npm run build --workspace packages/frontend
 
 build.data:
