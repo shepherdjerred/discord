@@ -11,12 +11,14 @@ node:
   WORKDIR /workspace
 
 deps:
+  ARG TARGETARCH
   FROM +node
   COPY package*.json .
   COPY packages/backend/package*.json packages/backend/
   COPY packages/frontend/package*.json packages/frontend/
   COPY packages/data/package*.json packages/data/
   RUN npm i --workspaces
+  RUN npm i rollup
 
 prepare:
   FROM +deps

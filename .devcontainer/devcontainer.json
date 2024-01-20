@@ -1,7 +1,7 @@
 {
   "name": "Development",
   "build": {
-    "dockerfile": "Dockerfile"
+    "dockerfile": "Dockerfile",
   },
   "postCreateCommand": "./.devcontainer/postCreate.sh",
   "features": {
@@ -19,7 +19,7 @@
     "ghcr.io/lukewiwa/features/shellcheck:0": {},
     "ghcr.io/devcontainers-contrib/features/asdf-package:1": {},
     "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/dhoeric/features/flyctl:1": {}
+    "ghcr.io/dhoeric/features/flyctl:1": {},
   },
   "customizations": {
     "vscode": {
@@ -36,14 +36,14 @@
         "arahata.linter-actionlint",
         "dbaeumer.vscode-eslint",
         "bradlc.vscode-tailwindcss",
-        "lightyen.tailwindcss-intellisense-twin"
+        "lightyen.tailwindcss-intellisense-twin",
       ],
       "settings": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "[shellscript]": {
-          "editor.defaultFormatter": "mkhl.shfmt"
-        }
-      }
-    }
-  }
+          "editor.defaultFormatter": "mkhl.shfmt",
+        },
+      },
+    },
+  },
 }

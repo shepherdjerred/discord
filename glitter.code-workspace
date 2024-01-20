@@ -1,21 +1,21 @@
 {
   "folders": [
     {
-      "path": "packages/backend"
+      "path": "packages/backend",
     },
     {
-      "path": "packages/data"
+      "path": "packages/data",
     },
     {
-      "path": "packages/frontend"
+      "path": "packages/frontend",
     },
     {
-      "path": "packages/preview"
+      "path": "packages/preview",
     },
     {
       "name": "root",
-      "path": "."
-    }
+      "path": ".",
+    },
   ],
   "extensions": {
     "recommendations": [
@@ -23,11 +23,11 @@
       "esbenp.prettier-vscode",
       "earthly.earthfile-syntax-highlighting",
       "tamasfe.even-better-toml",
-      "github.vscode-github-actions"
-    ]
+      "github.vscode-github-actions",
+    ],
   },
   "settings": {
-    "testing.automaticallyOpenPeekView": "never"
+    "testing.automaticallyOpenPeekView": "never",
   },
   "launch": {
     "configurations": [
@@ -35,8 +35,8 @@
         "type": "chrome",
         "name": "https://localhost:4321",
         "request": "launch",
-        "url": "https://localhost:4321"
-      }
-    ]
-  }
+        "url": "https://localhost:4321",
+      },
+    ],
+  },
 }

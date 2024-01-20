@@ -10,8 +10,8 @@
     "resolveJsonModule": true,
     "declarationMap": true,
     "declaration": true,
-    "jsxImportSource": "react"
+    "jsxImportSource": "react",
   },
   "exclude": ["src/dev/"],
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
 }
