@@ -54,7 +54,7 @@ image.backend:
   COPY +litefs/litefs /usr/local/bin/litefs
   COPY litefs.yaml /etc/litefs.yml
   # this library doesn't seem to be installed by the package.json for some reason
-  IF TARGETARCH = "x86_64"
+  IF [ $TARGETARCH = "amd64" ]
     RUN npm i @resvg/resvg-js-linux-x64-gnu
   ELSE
     RUN npm i @resvg/resvg-js-linux-$TARGETARCH-gnu
