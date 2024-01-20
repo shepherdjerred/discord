@@ -11,14 +11,12 @@ node:
   WORKDIR /workspace
 
 deps:
-  ARG TARGETARCH
   FROM +node
   COPY package*.json .
   COPY packages/backend/package*.json packages/backend/
   COPY packages/frontend/package*.json packages/frontend/
   COPY packages/data/package*.json packages/data/
   RUN npm i --workspaces
-  RUN npm i rollup
 
 prepare:
   FROM +deps
@@ -26,8 +24,8 @@ prepare:
 
 lint:
   FROM +prepare
-  RUN npm run lint --workspace packages/backend
-  RUN npm run lint --workspace packages/data
+  COPY .eslint* .prettier* .
+  RUN npm run lint --workspaces
 
 litefs:
   FROM flyio/litefs:0.5
@@ -48,14 +46,19 @@ build.data:
   SAVE ARTIFACT packages/data/dist AS LOCAL packages/data/dist
 
 image.backend:
+  ARG TARGETARCH
   ARG --required stage
   FROM +build.backend
   WORKDIR /workspace/packages/backend
-  # or for debian/ubuntu-based images
   RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite3
   COPY +litefs/litefs /usr/local/bin/litefs
   COPY litefs.yaml /etc/litefs.yml
-  RUN npm i @resvg/resvg-js-linux-x64-gnu
+  # this library doesn't seem to be installed by the package.json for some reason
+  IF TARGETARCH = "x86_64"
+    RUN npm i @resvg/resvg-js-linux-x64-gnu
+  ELSE
+    RUN npm i @resvg/resvg-js-linux-$TARGETARCH-gnu
+  END
   COPY packages/backend/players.$stage.json players.json
   ENTRYPOINT litefs mount
   SAVE IMAGE glitter/backend:latest
