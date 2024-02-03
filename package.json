@@ -7,8 +7,7 @@
   "workspaces": [
     "packages/data",
     "packages/backend",
-    "packages/frontend",
-    "packages/preview"
+    "packages/frontend"
   ],
   "scripts": {
     "lint": "prettier -w . && npm run lint --workspaces",
