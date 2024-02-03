@@ -1,15 +1,9 @@
 import * as React from "react";
 
-import {
-  type Leaderboard,
-  LeaderboardSchema,
-  type LeaderboardEntry,
-  OldLeaderboardSchema,
-  convertOldLeaderboard,
-} from "@glitter-boys/data";
+import { LeaderboardSchema, type LeaderboardEntry, type Leaderboard } from "@glitter-boys/data";
 import _ from "lodash";
 import { useState, useEffect } from "react";
-import { scaleTime } from "@visx/scale";
+import { scaleTime, type ScaleInput, type D3Scale } from "@visx/scale";
 import * as allCurves from "@visx/curve";
 import { Group } from "@visx/group";
 import { LinePath } from "@visx/shape";
@@ -37,25 +31,37 @@ const getMinMax = (vals: (number | { valueOf(): number })[]) => {
   const numericVals = vals.map(coerceNumber);
   return [Math.min(...numericVals), Math.max(...numericVals)];
 };
-const dates = ["2024-01-10", "2024-01-11", "2024-01-12"];
 
 export function ChartComponent() {
   const [leaderboards, setLeaderboards] = useState<Leaderboard[]>([]);
 
+  const firstDay = new Date("2024-01-10");
+  const dates: string[] = [];
+  // add all days between firstDay and today to dates
+  for (let d = firstDay; d <= new Date(); d.setDate(d.getDate() + 1)) {
+    // convert the date to a string in the format "YYYY-MM-DD"
+    const str = d.toISOString().split("T")[0];
+    if (str !== undefined) {
+      dates.push(str);
+    } else {
+      console.error("date string is undefined");
+    }
+  }
+
   useEffect(() => {
     (async () => {
       const leaderboards = await Promise.all(
-        _.map(dates, async (date): Promise<Leaderboard> => {
+        _.map(dates, async (date): Promise<Leaderboard | undefined> => {
           const json = await (await fetch(`https://prod.bucket.glitter-boys.com/leaderboards/${date}.json`)).json();
           const result = LeaderboardSchema.safeParse(json);
           if (result.success) {
             return result.data;
           } else {
-            return convertOldLeaderboard(OldLeaderboardSchema.parse(json));
+            return undefined;
           }
         }),
       );
-      setLeaderboards(leaderboards);
+      setLeaderboards(leaderboards.filter((x): x is Leaderboard => x !== undefined));
     })();
   }, []);
 
@@ -79,7 +85,7 @@ export function ChartComponent() {
   const allData: ChartEntry[] = _.chain(grouped).values().flatMap().value();
 
   const getX = (d: ChartEntry): Date => d.date;
-  const getY = (d: ChartEntry): number => d.content.leaguePointsDelta;
+  const getY = (d: ChartEntry): number => d.content.leaguePoints;
 
   const xScale = scaleTime<number>({
     domain: extent(allData, getX) as [Date, Date],
@@ -97,7 +103,9 @@ export function ChartComponent() {
       range: [0, width],
     }),
     values: _.chain(allData).map(getX).uniq().value(),
-    tickFormat: (v: Date, i: number) => (i === 3 ? "🎉" : width > 400 || i % 2 === 0 ? timeFormat("%b %d")(v) : ""),
+    tickFormat: (v: ScaleInput<D3Scale<Date>>, i: number) =>
+      // TODO: remove this assertion
+      i === 3 ? "🎉" : width > 400 || i % 2 === 0 ? timeFormat("%b %d")(v as Date) : "",
     label: "time",
   };
 

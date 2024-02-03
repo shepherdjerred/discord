@@ -1,4 +1,4 @@
-import { Player, sortPlayersBySoloQueueRank, Leaderboard, getLeaguePointsDelta } from "@glitter-boys/data";
+import { Player, sortPlayersBySoloQueueRank, Leaderboard, rankToLeaguePoints } from "@glitter-boys/data";
 import _ from "lodash";
 
 export function toLeaderboard(players: Player[]): Leaderboard {
@@ -8,16 +8,16 @@ export function toLeaderboard(players: Player[]): Leaderboard {
   const playersSorted = sortPlayersBySoloQueueRank(players);
 
   const entries = _.map(playersSorted, (player) => {
-    const leaguePointsDelta = getLeaguePointsDelta(player.config.league.initialRank, player.ranks.solo);
+    const leaguePoints = rankToLeaguePoints(player.ranks.solo);
 
     // account for ties
-    if (leaguePointsDelta !== previous) {
+    if (leaguePoints !== previous) {
       position++;
     }
 
     return {
       player,
-      leaguePointsDelta,
+      leaguePoints,
       position,
     };
   });

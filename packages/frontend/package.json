@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "true",
+    "lint": "astro check",
     "update": "npx npm-check-updates -u"
   },
   "dependencies": {

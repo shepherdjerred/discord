@@ -18,8 +18,6 @@ import {
   rankToSimpleString,
   rankToLeaguePoints,
   type PlayerWithSoloQueueRank,
-  OldLeaderboardSchema,
-  convertOldLeaderboard,
 } from "@glitter-boys/data";
 import { P, match } from "ts-pattern";
 import _ from "lodash";
@@ -54,7 +52,7 @@ const columns = [
       if (previous === undefined) {
         return "-";
       }
-      return match(info.getValue().current.leaguePointsDelta - previous.leaguePointsDelta)
+      return match(info.getValue().current.leaguePoints - previous.leaguePoints)
         .with(0, () => "-")
         .with(P.number.positive(), (value) => `+${value}`)
         .with(P.number.negative(), (value) => `${value}`)
@@ -66,7 +64,7 @@ const columns = [
         if (previous === undefined) {
           return -9999;
         }
-        return info.current.leaguePointsDelta - previous.leaguePointsDelta;
+        return info.current.leaguePoints - previous.leaguePoints;
       };
       return (
         getVal(a.getValue("lp-difference-since-last-update")) - getVal(b.getValue("lp-difference-since-last-update"))
@@ -178,11 +176,10 @@ export function LeaderboardComponent() {
       result = await fetch("https://prod.bucket.glitter-boys.com/previous.json");
       const previousJson = await result.json();
       const parseStatus = LeaderboardSchema.safeParse(previousJson);
+      // TODO: handle the case where the previous leaderboard is missing
       let previousLeaderboard: Leaderboard;
       if (parseStatus.success) {
         previousLeaderboard = parseStatus.data;
-      } else {
-        previousLeaderboard = convertOldLeaderboard(OldLeaderboardSchema.parse(previousJson));
       }
 
       const historical: HistoricalLeaderboardEntry[] = _.chain(currentLeaderboard.contents)

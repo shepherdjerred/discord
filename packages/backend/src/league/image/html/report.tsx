@@ -69,8 +69,8 @@ export function Report({ match }: { match: Match }) {
               <span>
                 {lpDiffToString(leaguePointsDelta(match.player.rankBeforeMatch, match.player.rankAfterMatch))}
               </span>
-              <span>Wins: {match.player.tournamentWins}</span>
-              <span>Losses: {match.player.tournamentLosses}</span>
+              <span>Wins: {match.player.wins}</span>
+              <span>Losses: {match.player.losses}</span>
             </div>
           </div>
           <RankedBadge oldRank={match.player.rankBeforeMatch} newRank={match.player.rankAfterMatch} />

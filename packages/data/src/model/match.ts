@@ -14,8 +14,8 @@ export const MatchSchema = z.strictObject({
   // this field stores data specific to the player we care about
   player: z.strictObject({
     playerConfig: PlayerConfigEntrySchema,
-    tournamentWins: z.number().nonnegative(),
-    tournamentLosses: z.number().nonnegative(),
+    wins: z.number().nonnegative(),
+    losses: z.number().nonnegative(),
     outcome: z.enum(["Victory", "Defeat", "Surrender"]),
     champion: ChampionSchema,
     team: TeamSchema,

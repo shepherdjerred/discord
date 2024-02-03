@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "true",
+    "lint": "astro check",
     "update": "npx npm-check-updates -u"
   },
   "type": "module",

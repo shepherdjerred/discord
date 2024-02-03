@@ -16,4 +16,3 @@ export * from "./roster.js";
 export * from "./state.js";
 export * from "./team.js";
 export * from "./tier.js";
-export * from "./legacy/index.js";

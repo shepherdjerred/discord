@@ -5,7 +5,7 @@ export type LeaderboardEntry = z.infer<typeof LeaderboardEntrySchema>;
 export const LeaderboardEntrySchema = z.strictObject({
   player: PlayerWithSoloQueueRankSchema,
   position: z.number().nonnegative(),
-  leaguePointsDelta: z.number(),
+  leaguePoints: z.number(),
 });
 
 export type Leaderboard = z.infer<typeof LeaderboardSchema>;

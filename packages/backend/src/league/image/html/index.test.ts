@@ -29,7 +29,6 @@ describe("index", () => {
               accountId: "accountId",
               id: "id",
             },
-            initialRank: { division: 4, tier: "gold", lp: 11, wins: 0, losses: 0 },
           },
           discordAccount: {
             id: "discord id",

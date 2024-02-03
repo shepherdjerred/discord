@@ -57,10 +57,8 @@ export function toMatch(
       playerConfig: player.config,
       rankBeforeMatch,
       rankAfterMatch,
-      tournamentWins: player.ranks.solo?.wins ? player.ranks.solo.wins - player.config.league.initialRank.wins : 0,
-      tournamentLosses: player.ranks.solo?.losses
-        ? player.ranks.solo.losses - player.config.league.initialRank.losses
-        : 0,
+      wins: player.ranks.solo?.wins || 0,
+      losses: player.ranks.solo?.losses || 0,
       champion,
       outcome: getOutcome(participant),
       team: team,
