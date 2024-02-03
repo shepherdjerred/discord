@@ -135,7 +135,7 @@ const now = new Date();
 const todayAtNoon = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
 const tomorrowAtNoon = addDays(todayAtNoon, 1);
 // 3am CT
-const end = new Date(2024, 0, 8, 12, 0, 0);
+// const end = new Date(2024, 0, 8, 12, 0, 0);
 
 let next: Date;
 
@@ -254,10 +254,12 @@ export function LeaderboardComponent() {
       <div className="flex flex-col md:flex-row">
         <div className="p-4">
           <hgroup className="">
-            <h1 className="text-3xl">Leaderboard</h1>
+            <h1 className="text-3xl">Tournament Leaderboard</h1>
             <p>
               Updated {currentLeaderboard?.date !== undefined ? formatDistance(currentLeaderboard.date, now) : ""} ago.
-              Next update in {formatDistance(now, next)}. Competition ends in {formatDistance(now, end)}.
+              Next update in {formatDistance(now, next)}. Competition lasts until the end of Season 14 Split 1.
+              <br />
+              Prize: $200
             </p>
           </hgroup>
           <table className="overflow-auto text-left">
@@ -303,9 +305,7 @@ export function LeaderboardComponent() {
             <h2 className="text-3xl">Recent Events</h2>
           </hgroup>
           <ul className="list-disc list-inside">
-            {events.map((event) => (
-              <li key={event}>{event}</li>
-            ))}
+            {events.length ? events.map((event) => <li key={event}>{event}</li>) : "No recent events."}
           </ul>
           <h3 className="text-xl">LP gains graph</h3>
           <ChartComponent />
