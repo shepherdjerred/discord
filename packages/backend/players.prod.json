@@ -262,5 +262,16 @@
       }
     },
     "discordAccount": { "id": "1016111302453768196" }
+  },
+  {
+    "name": "Sean",
+    "league": {
+      "leagueAccount": {
+        "id": "EuNtjpJ3MeGk0FlNeCacXH7--osods1zZ0_NzqpTn5zqB8Q",
+        "accountId": "N2CMkF6N1OANuGWgG6uERDVdTeTMKqEb_d-ql73_T2LUTdI",
+        "puuid": "iW0QqUuzfP54yuoV_XmZUZDBp4BGRLp9xZmo72Gb0Dk9GWIYoLMOpAik4re3D9KGMsSgroM6UibW6g"
+      }
+    },
+    "discordAccount": { "id": "328301941048344577" }
   }
 ]
