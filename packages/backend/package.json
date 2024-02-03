@@ -39,7 +39,7 @@
     "twisted": "^1.56.3",
     "typeorm": "^0.3.19",
     "uuid": "^9.0.1",
-    "vitest": "^1.2.1",
+    "vitest": "^1.2.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
