@@ -7,6 +7,7 @@ export const PlayerConfigEntrySchema = z.strictObject({
   name: z.string(),
   league: z.strictObject({
     leagueAccount: LeagueAcccountSchema,
+    initialRank: z.unknown().optional(),
   }),
   discordAccount: DiscordSchema,
 });

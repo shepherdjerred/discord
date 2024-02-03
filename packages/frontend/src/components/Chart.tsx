@@ -1,6 +1,12 @@
 import * as React from "react";
 
-import { LeaderboardSchema, type LeaderboardEntry, type Leaderboard } from "@glitter-boys/data";
+import {
+  LeaderboardSchema,
+  type LeaderboardEntry,
+  type Leaderboard,
+  OldLeaderboardSchema,
+  convertOldLeaderboard,
+} from "@glitter-boys/data";
 import _ from "lodash";
 import { useState, useEffect } from "react";
 import { scaleTime, type ScaleInput, type D3Scale } from "@visx/scale";
@@ -39,8 +45,33 @@ export function ChartComponent() {
   const dates: string[] = [];
   // add all days between firstDay and today to dates
   for (let d = firstDay; d <= new Date(); d.setDate(d.getDate() + 1)) {
+    // skip today
+    // issue with timezones
+    if (d.toISOString().split("T")[0] === new Date().toISOString().split("T")[0]) {
+      continue;
+    }
+
+    // skip weekends
+    if (d.getDay() === 0 || d.getDay() === 6) {
+      continue;
+    }
     // convert the date to a string in the format "YYYY-MM-DD"
     const str = d.toISOString().split("T")[0];
+
+    // skip 2024-01-13
+    // skip 2024-01-20
+    // skip 2024-01-27
+
+    if (d.toISOString().split("T")[0] === "2024-01-13") {
+      continue;
+    }
+    if (d.toISOString().split("T")[0] === "2024-01-20") {
+      continue;
+    }
+    if (d.toISOString().split("T")[0] === "2024-01-27") {
+      continue;
+    }
+
     if (str !== undefined) {
       dates.push(str);
     } else {
@@ -52,15 +83,27 @@ export function ChartComponent() {
     (async () => {
       const leaderboards = await Promise.all(
         _.map(dates, async (date): Promise<Leaderboard | undefined> => {
-          const json = await (await fetch(`https://prod.bucket.glitter-boys.com/leaderboards/${date}.json`)).json();
-          const result = LeaderboardSchema.safeParse(json);
-          if (result.success) {
-            return result.data;
-          } else {
+          try {
+            const json = await (await fetch(`https://prod.bucket.glitter-boys.com/leaderboards/${date}.json`)).json();
+            const result = LeaderboardSchema.safeParse(json);
+            if (result.success) {
+              return result.data;
+            } else {
+              // try old leaderboard
+              const result = OldLeaderboardSchema.safeParse(json);
+              if (result.success) {
+                return convertOldLeaderboard(result.data);
+              } else {
+                return undefined;
+              }
+            }
+          } catch (e) {
+            console.error(`failed to fetch leaderboard for date: ${date}`);
             return undefined;
           }
         }),
       );
+
       setLeaderboards(leaderboards.filter((x): x is Leaderboard => x !== undefined));
     })();
   }, []);
@@ -105,7 +148,7 @@ export function ChartComponent() {
     values: _.chain(allData).map(getX).uniq().value(),
     tickFormat: (v: ScaleInput<D3Scale<Date>>, i: number) =>
       // TODO: remove this assertion
-      i === 3 ? "🎉" : width > 400 || i % 2 === 0 ? timeFormat("%b %d")(v as Date) : "",
+      width > 400 || i % 2 === 0 ? timeFormat("%b %d")(v as Date) : "",
     label: "time",
   };
 

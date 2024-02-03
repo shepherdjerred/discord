@@ -79,7 +79,7 @@ const columns = [
     sortingFn: (a, b) => rankToLeaguePoints(a.getValue("rank")) - rankToLeaguePoints(b.getValue("rank")),
   }),
   columnHelper.accessor((row) => row.current.player, {
-    header: "Games",
+    header: "Games Played",
     cell: (info) => info.getValue().ranks.solo.wins + info.getValue().ranks.solo.losses,
     id: "games",
     sortingFn: (a, b) => {
@@ -115,8 +115,11 @@ const columns = [
     header: "Win Rate",
     cell: (info) => {
       const percent = _.round(
-        (info.getValue().ranks.solo.wins / (info.getValue().ranks.solo.wins - info.getValue().ranks.solo.losses)) * 100,
+        (info.getValue().ranks.solo.wins / (info.getValue().ranks.solo.wins + info.getValue().ranks.solo.losses)) * 100,
       );
+      if (percent === 50) {
+        return "INFINITY%";
+      }
       return percent ? `${percent}%` : "-";
     },
     id: "win-rate",
