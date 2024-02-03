@@ -14,5 +14,10 @@
     "lint": "prettier -w . && npm run lint --workspaces",
     "build": "npm run build --workspaces",
     "update": "npm run update --workspaces"
+  },
+  "engineStrict": true,
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
   }
 }

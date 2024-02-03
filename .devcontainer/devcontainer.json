@@ -21,29 +21,4 @@
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/dhoeric/features/flyctl:1": {},
   },
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "earthly.earthfile-syntax-highlighting",
-        "esbenp.prettier-vscode",
-        "golang.Go",
-        "DavidAnson.vscode-markdownlint",
-        "ms-azuretools.vscode-docker",
-        "earthly.earthfile-syntax-highlighting",
-        "timonwong.shellcheck",
-        "mkhl.shfmt",
-        "redhat.vscode-yaml",
-        "arahata.linter-actionlint",
-        "dbaeumer.vscode-eslint",
-        "bradlc.vscode-tailwindcss",
-        "lightyen.tailwindcss-intellisense-twin",
-      ],
-      "settings": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "[shellscript]": {
-          "editor.defaultFormatter": "mkhl.shfmt",
-        },
-      },
-    },
-  },
 }

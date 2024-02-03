@@ -9,8 +9,10 @@ It contains several projects:
 - A bot that allows you to give "karma" to other users
 - A bot that posts when friends enters matches of League of Legends complete with post-match reports and leaderboards posted to Discord
 - A front-end that contains documentation and a leaderboard
+- A small website for sharing knowledge and hosting events
+- A bot that plays music in Discord
 
-## Screenshots
+## League of Legends
 
 ![Discord message when someone enters a game](./assets/prematch.png)
 
@@ -27,6 +29,8 @@ It contains several projects:
 ![The leaderboard as a Discord message](./assets/leaderboard_message.png)
 
 > A simpler leaderboard is also posted as a Discord message.
+
+## Karma
 
 ![Giving karma](./assets/karma_give.png)
 
