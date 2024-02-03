@@ -6,15 +6,19 @@ updates:
     schedule:
       interval: "weekly"
       day: "sunday"
-    assignees: shepherdjerred
-    reviewers: shepherdjerred
+    assignees:
+    - shepherdjerred
+    reviewers:
+    - shepherdjerred
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
       day: "sunday"
-    assignees: shepherdjerred
-    reviewers: shepherdjerred
+    assignees:
+    - shepherdjerred
+    reviewers:
+    - shepherdjerred
     groups:
       production-dependencies:
         dependency-type: "production"
@@ -25,8 +29,10 @@ updates:
     schedule:
       interval: "weekly"
       day: "sunday"
-    assignees: shepherdjerred
-    reviewers: shepherdjerred
+    assignees:
+    - shepherdjerred
+    reviewers:
+    - shepherdjerred
     groups:
       production-dependencies:
         dependency-type: "production"
@@ -37,8 +43,10 @@ updates:
     schedule:
       interval: "weekly"
       day: "sunday"
-    assignees: shepherdjerred
-    reviewers: shepherdjerred
+    assignees:
+    - shepherdjerred
+    reviewers:
+    - shepherdjerred
     groups:
       production-dependencies:
         dependency-type: "production"
@@ -49,8 +57,10 @@ updates:
     schedule:
       interval: "weekly"
       day: "sunday"
-    assignees: shepherdjerred
-    reviewers: shepherdjerred
+    assignees:
+    - shepherdjerred
+    reviewers:
+    - shepherdjerred
     groups:
       production-dependencies:
         dependency-type: "production"
@@ -61,8 +71,10 @@ updates:
     schedule:
       interval: "weekly"
       day: "sunday"
-    assignees: shepherdjerred
-    reviewers: shepherdjerred
+    assignees:
+    - shepherdjerred
+    reviewers:
+    - shepherdjerred
     groups:
       production-dependencies:
         dependency-type: "production"
