@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "lint": "prettier -w . && npm run lint --workspaces",
-    "build": "npm run build --workspaces"
+    "build": "npm run build --workspaces",
+    "update": "npm run update --workspaces"
   }
 }
