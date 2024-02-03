@@ -1,13 +1,14 @@
-VERSION 0.7
+VERSION 0.8
 
 ci:
   BUILD +lint
-  BUILD +image.backend --stage=beta
+  BUILD +image --stage=beta
   BUILD +build.frontend
 
 node:
   FROM node:lts
-  RUN npm install -g npm@latest
+  DO +SETUP_NPM_CACHE
+  RUN npm i -g npm@latest
   WORKDIR /workspace
 
 deps:
@@ -16,14 +17,16 @@ deps:
   COPY packages/backend/package*.json packages/backend/
   COPY packages/frontend/package*.json packages/frontend/
   COPY packages/data/package*.json packages/data/
-  RUN npm i --workspaces
+
+  DO +SETUP_NPM_CACHE
+  RUN npm ci --workspaces
 
 prepare:
   FROM +deps
   COPY packages packages
 
 lint:
-  FROM +prepare
+  FROM +build.data
   COPY .eslint* .prettier* .
   RUN npm run lint --workspaces
 
@@ -45,30 +48,29 @@ build.data:
   RUN npm run build --workspace packages/data
   SAVE ARTIFACT packages/data/dist AS LOCAL packages/data/dist
 
-image.backend:
+image:
   ARG TARGETARCH
   ARG --required stage
   FROM +build.backend
   WORKDIR /workspace/packages/backend
-  RUN apt-get update -y && apt-get install -y ca-certificates fuse3 sqlite3
+  CACHE /var/cache/apt/
+  RUN apt update -y && apt install -y ca-certificates fuse3 sqlite3
   COPY +litefs/litefs /usr/local/bin/litefs
   COPY litefs.yaml /etc/litefs.yml
-  # this library doesn't seem to be installed by the package.json for some reason
-  IF [ $TARGETARCH = "amd64" ]
-    RUN npm i @resvg/resvg-js-linux-x64-gnu
-  ELSE
-    RUN npm i @resvg/resvg-js-linux-$TARGETARCH-gnu
-  END
   COPY packages/backend/players.$stage.json players.json
   ENTRYPOINT litefs mount
   SAVE IMAGE glitter/backend:latest
 
-deploy.backend:
+deploy:
   ARG --required stage
   FROM earthly/dind:ubuntu
   RUN curl -L https://fly.io/install.sh | sh
   ENV PATH=$PATH:/root/.fly/bin
   COPY fly.$stage.toml .
-  WITH DOCKER --load=(+image.backend --stage=$stage)
+  WITH DOCKER --load=(+image --stage=$stage)
     RUN --no-cache --secret FLY_API_TOKEN fly deploy --local-only --config fly.$stage.toml
   END
+
+SETUP_NPM_CACHE:
+  FUNCTION
+  CACHE --sharing=shared --id=npm ~/.npm/_cacache/
