@@ -2,7 +2,7 @@ VERSION 0.8
 
 ci:
   BUILD +lint
-  BUILD +image --stage=beta
+  BUILD +image
   BUILD +build.frontend
 
 node:
@@ -30,10 +30,6 @@ lint:
   COPY .eslint* .prettier* .
   RUN npm run lint --workspaces
 
-litefs:
-  FROM flyio/litefs:0.5
-  SAVE ARTIFACT /usr/local/bin/litefs
-
 build.backend:
   FROM +build.data
   RUN npm run build --workspace packages/backend
@@ -49,27 +45,13 @@ build.data:
   SAVE ARTIFACT packages/data/dist AS LOCAL packages/data/dist
 
 image:
+  ARG version=latest
   ARG TARGETARCH
-  ARG --required stage
   FROM +build.backend
   WORKDIR /workspace/packages/backend
-  CACHE /var/cache/apt/
-  RUN apt update -y && apt install -y ca-certificates fuse3 sqlite3
-  COPY +litefs/litefs /usr/local/bin/litefs
-  COPY litefs.yaml /etc/litefs.yml
-  COPY packages/backend/players.$stage.json players.json
-  ENTRYPOINT litefs mount
+  ENTRYPOINT node dist/index.js
   SAVE IMAGE glitter/backend:latest
-
-deploy:
-  ARG --required stage
-  FROM earthly/dind:ubuntu
-  RUN curl -L https://fly.io/install.sh | sh
-  ENV PATH=$PATH:/root/.fly/bin
-  COPY fly.$stage.toml .
-  WITH DOCKER --load=(+image --stage=$stage)
-    RUN --no-cache --secret FLY_API_TOKEN fly deploy --local-only --config fly.$stage.toml
-  END
+  SAVE IMAGE --push ghcr.io/shepherdjerred/glitter-boys:$version
 
 SETUP_NPM_CACHE:
   FUNCTION
