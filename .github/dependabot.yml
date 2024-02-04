@@ -80,11 +80,3 @@ updates:
         dependency-type: "production"
       development-dependencies:
         dependency-type: "development"
-  - package-ecosystem: "devcontainers"
-    directory: "/"
-    schedule:
-      interval: weekly
-    assignees:
-      - shepherdjerred
-    reviewers:
-      - shepherdjerred
