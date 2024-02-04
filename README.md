@@ -1,6 +1,6 @@
 # Glitter Boys
 
-[![Deploy](https://github.com/shepherdjerred/glitter-boys/actions/workflows/deploy.yml/badge.svg)](https://github.com/shepherdjerred/glitter-boys/actions/workflows/deploy.yml)
+[![CI](https://github.com/shepherdjerred/glitter-boys/actions/workflows/ci.yml/badge.svg)](https://github.com/shepherdjerred/glitter-boys/actions/workflows/ci.yml)
 
 This repository contains projects related to a Discord server that I share with my friends.
 
