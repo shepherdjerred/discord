@@ -46,7 +46,6 @@ build.data:
 
 image:
   ARG version=latest
-  ARG TARGETARCH
   FROM +build.backend
   WORKDIR /workspace/packages/backend
   ENTRYPOINT node dist/index.js

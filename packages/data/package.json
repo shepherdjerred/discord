@@ -17,14 +17,14 @@
   "type": "module",
   "dependencies": {
     "reflect-metadata": "^0.2.1",
-    "ts-pattern": "^5.0.6",
+    "ts-pattern": "^5.0.8",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.3",
-    "@types/node": "^20.11.17",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
+    "@types/node": "^20.11.19",
+    "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "@typescript-eslint/parser": "^7.0.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",

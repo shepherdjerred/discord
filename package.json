@@ -12,7 +12,7 @@
   "scripts": {
     "lint": "prettier -w . && npm run lint --workspaces",
     "build": "npm run build --workspaces",
-    "update": "npm run update --workspaces"
+    "update": "npm run update --workspaces && cd packages/preview; npx npm-check-updates -u"
   },
   "engineStrict": true,
   "engines": {
