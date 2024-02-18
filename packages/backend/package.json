@@ -50,7 +50,7 @@
     "@types/jest-image-snapshot": "^6.4.0",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.11.19",
-    "@types/react": "^18.2.55",
+    "@types/react": "^18.2.56",
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^7.0.1",
     "@typescript-eslint/parser": "^7.0.1",
