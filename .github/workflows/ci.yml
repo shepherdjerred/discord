@@ -15,7 +15,7 @@ jobs:
     name: CI
     runs-on: ubuntu-latest
     steps:
-      - uses: earthly/actions-setup@v1.0.9
+      - uses: earthly/actions-setup@v1.0.10
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v3
