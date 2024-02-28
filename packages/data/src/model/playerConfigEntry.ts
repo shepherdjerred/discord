@@ -2,7 +2,6 @@
 import _ from "npm:lodash@4.17.21";
 import { z } from "https://esm.sh/zod@3.22.4";
 import { LeagueAcccountSchema } from "./leagueAccount.ts";
-import { RankSchema } from "./rank.ts";
 import { DiscordSchema } from "./discord.ts";
 
 export type PlayerConfigEntry = z.infer<typeof PlayerConfigEntrySchema>;

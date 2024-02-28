@@ -1,5 +1,4 @@
 export * from "./champion.ts";
-export * from "./chats.ts";
 export * from "./discord.ts";
 export * from "./division.ts";
 export * from "./lane.ts";

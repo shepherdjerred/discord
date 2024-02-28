@@ -1,5 +1,16 @@
 {
   "version": "3",
+  "packages": {
+    "specifiers": {
+      "npm:lodash@4.17.21": "npm:lodash@4.17.21"
+    },
+    "npm": {
+      "lodash@4.17.21": {
+        "integrity": "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==",
+        "dependencies": {}
+      }
+    }
+  },
   "redirects": {
     "https://deno.land/x/dnt/mod.ts": "https://deno.land/x/dnt@0.39.0/mod.ts"
   },
@@ -77,6 +88,10 @@
     "https://deno.land/x/ts_morph@20.0.0/common/ts_morph_common.js": "2325f94f61dc5f3f98a1dab366dc93048d11b1433d718b10cfc6ee5a1cfebe8f",
     "https://deno.land/x/ts_morph@20.0.0/common/typescript.js": "b9edf0a451685d13e0467a7ed4351d112b74bd1e256b915a2b941054e31c1736",
     "https://deno.land/x/wasmbuild@0.15.1/cache.ts": "9d01b5cb24e7f2a942bbd8d14b093751fa690a6cde8e21709ddc97667e6669ed",
-    "https://deno.land/x/wasmbuild@0.15.1/loader.ts": "8c2fc10e21678e42f84c5135d8ab6ab7dc92424c3f05d2354896a29ccfd02a63"
+    "https://deno.land/x/wasmbuild@0.15.1/loader.ts": "8c2fc10e21678e42f84c5135d8ab6ab7dc92424c3f05d2354896a29ccfd02a63",
+    "https://esm.sh/ts-pattern@5.0.5": "248bd637724edc10339cac795a8f584b47b06f2f338a7da356202a90023eab46",
+    "https://esm.sh/v135/ts-pattern@5.0.5/denonext/ts-pattern.mjs": "cb88b9b005fdd512f6b988e99e3271f345c8fdfff0a4c65db6c56ae597aa6289",
+    "https://esm.sh/v135/zod@3.22.4/denonext/zod.mjs": "660128af5d1e921745c4d452472d103d9f2fc5afa508bbf233b83d35a272ad67",
+    "https://esm.sh/zod@3.22.4": "f7bfaf7e78bc8fa39e67e07c0dacd651925e889f5a4ef02b3ef6bab3925a8384"
   }
 }

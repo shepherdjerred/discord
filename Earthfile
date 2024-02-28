@@ -1,9 +1,9 @@
 VERSION 0.8
 
-ci:
-  BUILD +lint
-  BUILD +image
-  BUILD +build.frontend
+# ci:
+#   BUILD +lint
+#   BUILD +image
+#   BUILD +build.frontend
 
 ci:
   BUILD +check
