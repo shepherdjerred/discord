@@ -3,6 +3,8 @@
   "compilerOptions": {
     "jsx": "react",
     "verbatimModuleSyntax": true,
-    "emitDecoratorMetadata": true
-  }
+    "emitDecoratorMetadata": true,
+    "declarationMap": true,
+    "declaration": true,
+  },
 }

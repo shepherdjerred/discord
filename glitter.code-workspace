@@ -1,10 +1,6 @@
 {
   "folders": [
     {
-      "name": "root",
-      "path": "."
-    },
-    {
       "path": "packages/backend"
     },
     {
@@ -12,6 +8,13 @@
     },
     {
       "path": "packages/frontend"
+    },
+    {
+      "path": "packages/preview"
+    },
+    {
+      "name": "root",
+      "path": "."
     }
   ],
   "extensions": {

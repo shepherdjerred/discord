@@ -5,10 +5,8 @@ import { getChampionName } from "npm:twisted@1.55.0/dist/constants/champions.js"
 import { CurrentGameInfoDTO } from "npm:twisted@1.55.0/dist/models-dto/index.js";
 import { findParticipant } from "../../api/index.ts";
 import { PlayerConfigEntry } from "@glitter-boys/data";
-export function createDiscordMessage([player, game]: [
-  PlayerConfigEntry,
-  CurrentGameInfoDTO,
-]): string {
+
+export function createDiscordMessage([player, game]: [PlayerConfigEntry, CurrentGameInfoDTO]): string {
   const participant = findParticipant(player, game.participants);
 
   if (participant === undefined) {
@@ -21,13 +19,8 @@ export function createDiscordMessage([player, game]: [
     );
   }
 
-  const mention = userMention(player.discordAccount.id);
-  // TODO: call API to get prope champion name
+  // TODO: call API to get proper champion name
   const championName = getChampionName(participant.championId);
 
-  return `${mention} started a solo queue game as ${
-    _.startCase(
-      championName.replaceAll("_", " ").toLowerCase(),
-    )
-  }`;
+  return `${player.name} started a solo queue game as ${_.startCase(championName.replaceAll("_", " ").toLowerCase())}`;
 }

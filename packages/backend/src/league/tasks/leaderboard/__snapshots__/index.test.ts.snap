@@ -1,0 +1,303 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Leaderboard > should return a correct leaderboard 1`] = `
+{
+  "contents": [
+    {
+      "leaguePointsDelta": 4000,
+      "player": {
+        "config": {
+          "discordAccount": {
+            "id": "test",
+          },
+          "league": {
+            "initialRank": {
+              "division": 4,
+              "losses": 10,
+              "lp": 0,
+              "tier": "iron",
+              "wins": 10,
+            },
+            "leagueAccount": {
+              "accountId": "test",
+              "id": "test",
+              "puuid": "test",
+            },
+          },
+          "name": "top of the leaderboard",
+        },
+        "ranks": {
+          "flex": {
+            "division": 1,
+            "losses": 10,
+            "lp": 100,
+            "tier": "challenger",
+            "wins": 10,
+          },
+          "solo": {
+            "division": 1,
+            "losses": 10,
+            "lp": 100,
+            "tier": "challenger",
+            "wins": 10,
+          },
+        },
+      },
+      "position": 1,
+    },
+    {
+      "leaguePointsDelta": 300,
+      "player": {
+        "config": {
+          "discordAccount": {
+            "id": "test",
+          },
+          "league": {
+            "initialRank": {
+              "division": 2,
+              "losses": 10,
+              "lp": 50,
+              "tier": "bronze",
+              "wins": 10,
+            },
+            "leagueAccount": {
+              "accountId": "test",
+              "id": "test",
+              "puuid": "test",
+            },
+          },
+          "name": "positive",
+        },
+        "ranks": {
+          "flex": {
+            "division": 3,
+            "losses": 10,
+            "lp": 50,
+            "tier": "silver",
+            "wins": 10,
+          },
+          "solo": {
+            "division": 3,
+            "losses": 10,
+            "lp": 50,
+            "tier": "silver",
+            "wins": 10,
+          },
+        },
+      },
+      "position": 2,
+    },
+    {
+      "leaguePointsDelta": 200,
+      "player": {
+        "config": {
+          "discordAccount": {
+            "id": "test",
+          },
+          "league": {
+            "initialRank": {
+              "division": 3,
+              "losses": 10,
+              "lp": 50,
+              "tier": "silver",
+              "wins": 10,
+            },
+            "leagueAccount": {
+              "accountId": "test",
+              "id": "test",
+              "puuid": "test",
+            },
+          },
+          "name": "tied with next player",
+        },
+        "ranks": {
+          "flex": {
+            "division": 1,
+            "losses": 10,
+            "lp": 50,
+            "tier": "silver",
+            "wins": 10,
+          },
+          "solo": {
+            "division": 1,
+            "losses": 10,
+            "lp": 50,
+            "tier": "silver",
+            "wins": 10,
+          },
+        },
+      },
+      "position": 3,
+    },
+    {
+      "leaguePointsDelta": 0,
+      "player": {
+        "config": {
+          "discordAccount": {
+            "id": "test",
+          },
+          "league": {
+            "initialRank": {
+              "division": 3,
+              "losses": 10,
+              "lp": 50,
+              "tier": "silver",
+              "wins": 10,
+            },
+            "leagueAccount": {
+              "accountId": "test",
+              "id": "test",
+              "puuid": "test",
+            },
+          },
+          "name": "no change",
+        },
+        "ranks": {
+          "flex": {
+            "division": 3,
+            "losses": 10,
+            "lp": 50,
+            "tier": "silver",
+            "wins": 10,
+          },
+          "solo": {
+            "division": 3,
+            "losses": 10,
+            "lp": 50,
+            "tier": "silver",
+            "wins": 10,
+          },
+        },
+      },
+      "position": 4,
+    },
+    {
+      "leaguePointsDelta": -200,
+      "player": {
+        "config": {
+          "discordAccount": {
+            "id": "test",
+          },
+          "league": {
+            "initialRank": {
+              "division": 1,
+              "losses": 10,
+              "lp": 50,
+              "tier": "silver",
+              "wins": 10,
+            },
+            "leagueAccount": {
+              "accountId": "test",
+              "id": "test",
+              "puuid": "test",
+            },
+          },
+          "name": "tied with previous player",
+        },
+        "ranks": {
+          "flex": {
+            "division": 3,
+            "losses": 10,
+            "lp": 50,
+            "tier": "silver",
+            "wins": 10,
+          },
+          "solo": {
+            "division": 3,
+            "losses": 10,
+            "lp": 50,
+            "tier": "silver",
+            "wins": 10,
+          },
+        },
+      },
+      "position": 5,
+    },
+    {
+      "leaguePointsDelta": -300,
+      "player": {
+        "config": {
+          "discordAccount": {
+            "id": "test",
+          },
+          "league": {
+            "initialRank": {
+              "division": 3,
+              "losses": 10,
+              "lp": 50,
+              "tier": "silver",
+              "wins": 10,
+            },
+            "leagueAccount": {
+              "accountId": "test",
+              "id": "test",
+              "puuid": "test",
+            },
+          },
+          "name": "negative",
+        },
+        "ranks": {
+          "flex": {
+            "division": 2,
+            "losses": 10,
+            "lp": 50,
+            "tier": "bronze",
+            "wins": 10,
+          },
+          "solo": {
+            "division": 2,
+            "losses": 10,
+            "lp": 50,
+            "tier": "bronze",
+            "wins": 10,
+          },
+        },
+      },
+      "position": 6,
+    },
+    {
+      "leaguePointsDelta": -4000,
+      "player": {
+        "config": {
+          "discordAccount": {
+            "id": "test",
+          },
+          "league": {
+            "initialRank": {
+              "division": 1,
+              "losses": 10,
+              "lp": 100,
+              "tier": "challenger",
+              "wins": 10,
+            },
+            "leagueAccount": {
+              "accountId": "test",
+              "id": "test",
+              "puuid": "test",
+            },
+          },
+          "name": "bottom of the leaderboard",
+        },
+        "ranks": {
+          "flex": {
+            "division": 4,
+            "losses": 10,
+            "lp": 0,
+            "tier": "iron",
+            "wins": 10,
+          },
+          "solo": {
+            "division": 4,
+            "losses": 10,
+            "lp": 0,
+            "tier": "iron",
+            "wins": 10,
+          },
+        },
+      },
+      "position": 7,
+    },
+  ],
+  "date": Any<Date>,
+}
+`;

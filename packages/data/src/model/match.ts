@@ -10,17 +10,19 @@ import { LaneSchema } from "./lane.ts";
 export type Match = z.infer<typeof MatchSchema>;
 export const MatchSchema = z.strictObject({
   durationInSeconds: z.number().nonnegative(),
+  queueType: QueueTypeSchema.optional(),
   // this field stores data specific to the player we care about
   player: z.strictObject({
     playerConfig: PlayerConfigEntrySchema,
-    leaguePointsDelta: z.number(),
-    tournamentWins: z.number().nonnegative(),
-    tournamentLosses: z.number().nonnegative(),
+    wins: z.number().nonnegative(),
+    losses: z.number().nonnegative(),
     outcome: z.enum(["Victory", "Defeat", "Surrender"]),
     champion: ChampionSchema,
     team: TeamSchema,
     lane: LaneSchema.optional(),
     laneOpponent: ChampionSchema.optional(),
+    rankBeforeMatch: RankSchema.optional(),
+    rankAfterMatch: RankSchema,
   }),
   teams: z.strictObject({
     red: RosterSchema,

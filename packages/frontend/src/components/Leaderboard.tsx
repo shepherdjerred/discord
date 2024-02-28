@@ -17,13 +17,14 @@ import {
   wasDemoted,
   rankToSimpleString,
   rankToLeaguePoints,
-  type Player,
+  type PlayerWithSoloQueueRank,
 } from "@glitter-boys/data";
 import { P, match } from "ts-pattern";
 import _ from "lodash";
 import { addDays, formatDistance, isWithinInterval } from "date-fns";
 import { useState, useEffect } from "react";
 import classnames from "classnames";
+import { ChartComponent } from "./Chart";
 
 type HistoricalLeaderboard = HistoricalLeaderboardEntry[];
 type HistoricalLeaderboardEntry = {
@@ -44,16 +45,6 @@ const columns = [
     cell: (info) => info.getValue(),
     id: "name",
   }),
-  columnHelper.accessor("current.leaguePointsDelta", {
-    header: "LP Difference",
-    cell: (info) =>
-      match(info.getValue())
-        .with(0, () => "-")
-        .with(P.number.positive(), (value) => `+${value}`)
-        .with(P.number.negative(), (value) => `${value}`)
-        .run(),
-    id: "lp-difference",
-  }),
   columnHelper.accessor((row) => row, {
     header: "Change since last update",
     cell: (info) => {
@@ -61,9 +52,7 @@ const columns = [
       if (previous === undefined) {
         return "-";
       }
-      return match(
-        info.getValue().current.leaguePointsDelta - previous.leaguePointsDelta,
-      )
+      return match(info.getValue().current.leaguePoints - previous.leaguePoints)
         .with(0, () => "-")
         .with(P.number.positive(), (value) => `+${value}`)
         .with(P.number.negative(), (value) => `${value}`)
@@ -75,7 +64,7 @@ const columns = [
         if (previous === undefined) {
           return -9999;
         }
-        return info.current.leaguePointsDelta - previous.leaguePointsDelta;
+        return info.current.leaguePoints - previous.leaguePoints;
       };
       return (
         getVal(a.getValue("lp-difference-since-last-update")) -
@@ -84,7 +73,7 @@ const columns = [
     },
     id: "lp-difference-since-last-update",
   }),
-  columnHelper.accessor((row) => row.current.player.currentRank, {
+  columnHelper.accessor((row) => row.current.player.ranks.solo, {
     header: "Rank",
     cell: (info) => rankToString(info.getValue()),
     id: "rank",
@@ -93,46 +82,34 @@ const columns = [
       rankToLeaguePoints(b.getValue("rank")),
   }),
   columnHelper.accessor((row) => row.current.player, {
-    header: "Games",
-    cell: (info) =>
-      info.getValue().currentRank.wins -
-      info.getValue().config.league.initialRank.wins +
-      (info.getValue().currentRank.losses -
-        info.getValue().config.league.initialRank.losses),
+    header: "Games Played",
+    cell: (info) => info.getValue().ranks.solo.wins + info.getValue().ranks.solo.losses,
     id: "games",
     sortingFn: (a, b) => {
-      const getVal = (info: Player) => {
-        return (
-          info.currentRank.wins -
-          info.config.league.initialRank.wins +
-          (info.currentRank.losses - info.config.league.initialRank.losses)
-        );
+      const getVal = (info: PlayerWithSoloQueueRank) => {
+        return info.ranks.solo.wins + info.ranks.solo.losses;
       };
       return getVal(a.getValue("games")) - getVal(b.getValue("games"));
     },
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Wins",
-    cell: (info) =>
-      info.getValue().currentRank.wins -
-      info.getValue().config.league.initialRank.wins,
+    cell: (info) => info.getValue().ranks.solo.wins,
     id: "wins",
     sortingFn: (a, b) => {
-      const getVal = (info: Player) => {
-        return info.currentRank.wins - info.config.league.initialRank.wins;
+      const getVal = (info: PlayerWithSoloQueueRank) => {
+        return info.ranks.solo.wins;
       };
       return getVal(a.getValue("wins")) - getVal(b.getValue("wins"));
     },
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Losses",
-    cell: (info) =>
-      info.getValue().currentRank.losses -
-      info.getValue().config.league.initialRank.losses,
+    cell: (info) => info.getValue().ranks.solo.losses,
     id: "losses",
     sortingFn: (a, b) => {
-      const getVal = (info: Player) => {
-        return info.currentRank.losses - info.config.league.initialRank.losses;
+      const getVal = (info: PlayerWithSoloQueueRank) => {
+        return info.ranks.solo.losses;
       };
       return getVal(a.getValue("losses")) - getVal(b.getValue("losses"));
     },
@@ -141,27 +118,17 @@ const columns = [
     header: "Win Rate",
     cell: (info) => {
       const percent = _.round(
-        ((info.getValue().currentRank.wins -
-          info.getValue().config.league.initialRank.wins) /
-          (info.getValue().currentRank.wins -
-            info.getValue().config.league.initialRank.wins +
-            (info.getValue().currentRank.losses -
-              info.getValue().config.league.initialRank.losses))) *
-          100,
+        (info.getValue().ranks.solo.wins / (info.getValue().ranks.solo.wins + info.getValue().ranks.solo.losses)) * 100,
       );
+      if (percent === 50) {
+        return "INFINITY%";
+      }
       return percent ? `${percent}%` : "-";
     },
     id: "win-rate",
     sortingFn: (a, b) => {
-      const getVal = (info: Player) => {
-        const percent = _.round(
-          ((info.currentRank.wins - info.config.league.initialRank.wins) /
-            (info.currentRank.wins -
-              info.config.league.initialRank.wins +
-              (info.currentRank.losses -
-                info.config.league.initialRank.losses))) *
-            100,
-        );
+      const getVal = (info: PlayerWithSoloQueueRank) => {
+        const percent = _.round((info.ranks.solo.wins / (info.ranks.solo.wins - info.ranks.solo.losses)) * 100);
         return percent ? percent : -9999;
       };
       return getVal(a.getValue("win-rate")) - getVal(b.getValue("win-rate"));
@@ -181,7 +148,7 @@ const todayAtNoon = new Date(
 );
 const tomorrowAtNoon = addDays(todayAtNoon, 1);
 // 3am CT
-const end = new Date(2024, 1, 3, 3, 0, 0);
+// const end = new Date(2024, 0, 8, 12, 0, 0);
 
 let next: Date;
 
@@ -198,10 +165,9 @@ function gameCount(
     return undefined;
   }
   return (
-    leaderboard.current.player.currentRank.wins -
-    leaderboard.previous.player.currentRank.wins +
-    (leaderboard.current.player.currentRank.losses -
-      leaderboard.previous.player.currentRank.losses)
+    leaderboard.current.player.ranks.solo.wins -
+    leaderboard.previous.player.ranks.solo.wins +
+    (leaderboard.current.player.ranks.solo.losses - leaderboard.previous.player.ranks.solo.losses)
   );
 }
 
@@ -228,10 +194,14 @@ export function LeaderboardComponent() {
       const currentLeaderboard = LeaderboardSchema.parse(await result.json());
       setCurrentLeaderboard(currentLeaderboard);
 
-      result = await fetch(
-        "https://prod.bucket.glitter-boys.com/previous.json",
-      );
-      const previousLeaderboard = LeaderboardSchema.parse(await result.json());
+      result = await fetch("https://prod.bucket.glitter-boys.com/previous.json");
+      const previousJson = await result.json();
+      const parseStatus = LeaderboardSchema.safeParse(previousJson);
+      // TODO: handle the case where the previous leaderboard is missing
+      let previousLeaderboard: Leaderboard;
+      if (parseStatus.success) {
+        previousLeaderboard = parseStatus.data;
+      }
 
       const historical: HistoricalLeaderboardEntry[] = _.chain(
         currentLeaderboard.contents,
@@ -253,18 +223,11 @@ export function LeaderboardComponent() {
         if (entry.previous === undefined) {
           return [];
         }
-        if (
-          wasPromoted(
-            entry.previous.player.currentRank,
-            entry.current.player.currentRank,
-          )
-        ) {
+        if (wasPromoted(entry.previous.player.ranks.solo, entry.current.player.ranks.solo)) {
           return [
-            `${
-              entry.current.player.config.name
-            } was promoted: ${rankToSimpleString(
-              entry.previous.player.currentRank,
-            )} -> ${rankToSimpleString(entry.current.player.currentRank)}`,
+            `${entry.current.player.config.name} was promoted: ${rankToSimpleString(
+              entry.previous.player.ranks.solo,
+            )} -> ${rankToSimpleString(entry.current.player.ranks.solo)}`,
           ];
         } else {
           return [];
@@ -274,18 +237,11 @@ export function LeaderboardComponent() {
         if (entry.previous === undefined) {
           return [];
         }
-        if (
-          wasDemoted(
-            entry.previous.player.currentRank,
-            entry.current.player.currentRank,
-          )
-        ) {
+        if (wasDemoted(entry.previous.player.ranks.solo, entry.current.player.ranks.solo)) {
           return [
-            `${
-              entry.current.player.config.name
-            } was demoted: ${rankToSimpleString(
-              entry.previous.player.currentRank,
-            )} -> ${rankToSimpleString(entry.current.player.currentRank)}`,
+            `${entry.current.player.config.name} was demoted: ${rankToSimpleString(
+              entry.previous.player.ranks.solo,
+            )} -> ${rankToSimpleString(entry.current.player.ranks.solo)}`,
           ];
         } else {
           return [];
@@ -324,14 +280,12 @@ export function LeaderboardComponent() {
       <div className="flex flex-col md:flex-row">
         <div className="p-4">
           <hgroup className="">
-            <h1 className="text-3xl">Leaderboard</h1>
+            <h1 className="text-3xl">Tournament Leaderboard</h1>
             <p>
-              Updated{" "}
-              {currentLeaderboard?.date !== undefined
-                ? formatDistance(currentLeaderboard.date, now)
-                : ""}{" "}
-              ago. Next update in {formatDistance(now, next)}. Competition ends
-              in {formatDistance(now, end)}.
+              Updated {currentLeaderboard?.date !== undefined ? formatDistance(currentLeaderboard.date, now) : ""} ago.
+              Next update in {formatDistance(now, next)}. Competition lasts until the end of Season 14 Split 1.
+              <br />
+              Prize: $200
             </p>
           </hgroup>
           <table className="overflow-auto text-left">
@@ -391,10 +345,10 @@ export function LeaderboardComponent() {
             <h2 className="text-3xl">Recent Events</h2>
           </hgroup>
           <ul className="list-disc list-inside">
-            {events.map((event) => (
-              <li>{event}</li>
-            ))}
+            {events.length ? events.map((event) => <li key={event}>{event}</li>) : "No recent events."}
           </ul>
+          <h3 className="text-xl">LP gains graph</h3>
+          <ChartComponent />
         </div>
       </div>
     </>

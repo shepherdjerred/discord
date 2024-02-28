@@ -17,9 +17,6 @@ export const dataSource = new DataSource({
   synchronize: true,
   logging: true,
   entities: [Karma, Person, KarmaGiven, KarmaReceived, KarmaCounts],
-  subscribers: [],
-  migrations: [],
-  driver: sqlite3,
 });
 
 await dataSource.initialize();

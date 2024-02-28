@@ -21,9 +21,8 @@ export async function checkPreMatch() {
   const playersNotInGame = getPlayersNotInGame(players, getState());
 
   console.log("calling spectator API");
-  const playerStatus = await Promise.all(
-    _.map(playersNotInGame, getCurrentSoloQueueGame),
-  );
+  // TODO: also get flex games
+  const playerStatus = await Promise.all(_.map(playersNotInGame, getCurrentSoloQueueGame));
 
   console.log("filtering players not in game");
   const playersInGame = _.chain(playersNotInGame)
@@ -31,7 +30,6 @@ export async function checkPreMatch() {
     .filter(([_player, game]) => game != undefined)
     .value() as [PlayerConfigEntry, CurrentGameInfoDTO][];
 
-  // TODO: prune any old games
   console.log("removing games already seen");
   const newGames = _.reject(
     playersInGame,
@@ -49,7 +47,7 @@ export async function checkPreMatch() {
         const message = createDiscordMessage([player, game]);
         await send(message);
 
-        const currentRank = await getCurrentRank(player);
+        const currentRank = await getRanks(player);
 
         console.log("creating new state entries");
         const entry: MatchState = {
@@ -57,7 +55,8 @@ export async function checkPreMatch() {
           matchId: game.gameId,
           uuid: uuid.v4(),
           player,
-          rank: currentRank,
+          // TODO: use the correct ranked based on this being on solo or duo queue
+          rank: currentRank.solo,
           queue: "solo",
         };
 

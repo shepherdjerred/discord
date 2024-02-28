@@ -14,6 +14,12 @@ export const RankSchema = z.strictObject({
   losses: z.number().nonnegative(),
 });
 
+export type Ranks = z.infer<typeof RanksSchema>;
+export const RanksSchema = z.object({
+  solo: RankSchema.optional(),
+  flex: RankSchema.optional(),
+});
+
 export function rankToString(rank: Rank): string {
   return `${_.startCase(rank.tier)} ${
     divisionToString(rank.division)
@@ -24,7 +30,11 @@ export function rankToSimpleString(rank: Rank): string {
   return `${_.startCase(rank.tier)} ${divisionToString(rank.division)}`;
 }
 
-export function wasDemoted(previous: Rank, current: Rank): boolean {
+export function wasDemoted(previous: Rank | undefined, current: Rank): boolean {
+  if (previous == undefined) {
+    return false;
+  }
+
   const previousTier = tierToOrdinal(previous.tier);
   const currentTier = tierToOrdinal(current.tier);
   const previousDivision = previous.division;
@@ -41,7 +51,11 @@ export function wasDemoted(previous: Rank, current: Rank): boolean {
   return false;
 }
 
-export function wasPromoted(previous: Rank, current: Rank): boolean {
+export function wasPromoted(previous: Rank | undefined, current: Rank): boolean {
+  if (previous == undefined) {
+    return false;
+  }
+
   const previousTier = tierToOrdinal(previous.tier);
   const currentTier = tierToOrdinal(current.tier);
   const previousDivision = previous.division;
@@ -56,4 +70,8 @@ export function wasPromoted(previous: Rank, current: Rank): boolean {
   }
 
   return false;
+}
+
+export function getLeaguePointsDelta(oldRank: Rank, newRank: Rank): number {
+  return rankToLeaguePoints(newRank) - rankToLeaguePoints(oldRank);
 }

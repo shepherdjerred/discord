@@ -15,14 +15,7 @@ import { leaderboardToDiscordMessage } from "./discord.ts";
 
 const link = "https://glitter-boys.com/leaderboard/";
 
-export async function postLeaderboardMessage() {
-  const playerConfigs = await getPlayerConfigs();
-  const players = await Promise.all(_.map(playerConfigs, getPlayer));
-  const leaderboard = toLeaderboard(players);
-  const message = leaderboardToDiscordMessage(leaderboard);
-  const messageWithLink = `View more details at ${link}\n${message}`;
-  await send(messageWithLink);
-
+async function uploadLeaderboard(leaderboard: Leaderboard) {
   const copyCommand = new CopyObjectCommand({
     Bucket: configuration.s3BucketName,
     CopySource: `${configuration.s3BucketName}/leaderboard.json`,
@@ -46,4 +39,21 @@ export async function postLeaderboardMessage() {
     ContentType: "application/json",
   });
   await s3.send(putCommand);
+}
+
+export async function postLeaderboardMessage() {
+  const playerConfigs = await getPlayerConfigs();
+  const players = await Promise.all(_.map(playerConfigs, getPlayer));
+  const leaderboard = toLeaderboard(players);
+  const message = leaderboardToDiscordMessage(leaderboard);
+  const messageWithLink = `View more details at ${link}\n${message}`;
+  await send(messageWithLink);
+
+  await uploadLeaderboard(leaderboard);
+
+  const king = _.first(leaderboard.contents);
+
+  if (king !== undefined) {
+    await setKing(king.player.config);
+  }
 }

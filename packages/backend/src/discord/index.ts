@@ -12,6 +12,12 @@ client.on(Events.InteractionCreate, async (interaction) => {
       case "karma":
         await handleKarma(interaction);
         break;
+      case "music":
+        await handleMusic(interaction);
+        break;
+      case "customs":
+        await handleCustoms(interaction);
+        break;
     }
   } catch (e) {
     console.error(e);

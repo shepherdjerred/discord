@@ -10,12 +10,7 @@ import { Constants } from "npm:twisted@1.55.0";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 
-export const currentPatch = "13.22.1";
-export const soloQueueConfigId = 420;
-
-export async function getCurrentSoloQueueGame(
-  player: PlayerConfigEntry,
-): Promise<undefined | CurrentGameInfoDTO> {
+export async function getCurrentSoloQueueGame(player: PlayerConfigEntry): Promise<undefined | CurrentGameInfoDTO> {
   try {
     const response = await api.Spectator.activeGame(
       player.league.leagueAccount.id,

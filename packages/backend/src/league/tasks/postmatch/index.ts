@@ -78,12 +78,13 @@ async function createMatchObj(state: MatchState, match: MatchV5DTOs.MatchDto) {
     );
   }
 
-  const currentRank = await getCurrentRank(state.player);
-  const lpChange = rankToLeaguePoints(currentRank) -
-    rankToLeaguePoints(state.rank);
-
   const fullPlayer = await getPlayer(state.player);
-  return createMatchObject(fullPlayer, match, lpChange);
+
+  // it should be impossible for this to be undefined after a game
+  assert(fullPlayer.ranks.solo != undefined);
+
+  // TODO use correct rank
+  return toMatch(fullPlayer, match, state.rank, fullPlayer.ranks.solo);
 }
 
 export async function checkPostMatch() {
@@ -101,20 +102,13 @@ export async function checkPostMatch() {
   // TODO: send duo queue message
   console.log("sending messages");
   await Promise.all(
-    _.map(finishedGames, async ([state, match]) => {
-      await saveMatch(match);
+    _.map(finishedGames, async ([state, matchDto]) => {
+      await saveMatch(matchDto);
 
-      const matchObj = await createMatchObj(state, match);
+      const matchObj = await createMatchObj(state, matchDto);
 
-      const discordMessage = userMention(
-        matchObj.player.playerConfig.discordAccount.id,
-      );
       const [attachment, embed] = await getImage(matchObj);
-      await send({
-        content: discordMessage,
-        embeds: [embed],
-        files: [attachment],
-      });
+      await send({ embeds: [embed], files: [attachment] });
 
       console.log("calculating new state");
       const newState = getState();

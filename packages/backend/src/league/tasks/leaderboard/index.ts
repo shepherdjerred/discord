@@ -11,19 +11,19 @@ export function toLeaderboard(players: Player[]): Leaderboard {
   let position = 0;
   let previous: number;
 
-  const playersSorted = sortPlayers(players);
+  const playersSorted = sortPlayersBySoloQueueRank(players);
 
   const entries = _.map(playersSorted, (player) => {
-    const leaguePointsDelta = getLeaguePointsDelta(player);
+    const leaguePoints = rankToLeaguePoints(player.ranks.solo);
 
     // account for ties
-    if (leaguePointsDelta !== previous) {
+    if (leaguePoints !== previous) {
       position++;
     }
 
     return {
       player,
-      leaguePointsDelta,
+      leaguePoints,
       position,
     };
   });

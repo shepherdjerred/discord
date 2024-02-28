@@ -268,6 +268,9 @@ async function handleKarma(interaction: ChatInputCommandInteraction) {
       break;
     case "history":
       await handleKarmaHistory(interaction);
+      break;
+    default:
+      throw new Error("unreachable");
   }
 }
 
