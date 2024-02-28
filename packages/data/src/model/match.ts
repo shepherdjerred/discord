@@ -6,6 +6,8 @@ import { PlayerConfigEntrySchema } from "./playerConfigEntry.ts";
 import { RosterSchema } from "./roster.ts";
 import { TeamSchema } from "./team.ts";
 import { LaneSchema } from "./lane.ts";
+import { QueueTypeSchema } from "./state.ts";
+import { RankSchema } from "./rank.ts";
 
 export type Match = z.infer<typeof MatchSchema>;
 export const MatchSchema = z.strictObject({

@@ -4,6 +4,7 @@ import { RankSchema } from "./rank.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { PlayerConfig } from "./playerConfig.ts";
+import { match } from "https://esm.sh/ts-pattern@5.0.5";
 
 export type QueueType = z.infer<typeof QueueTypeSchema>;
 export const QueueTypeSchema = z.enum(["solo", "flex"]);
@@ -45,8 +46,8 @@ export function getPlayersInGame(players: PlayerConfig, state: State) {
       state.gamesStarted,
       (game) =>
         game.player.league.leagueAccount.accountId ===
-        player.league.leagueAccount.accountId,
-    ),
+        player.league.leagueAccount.accountId
+    )
   );
 }
 
@@ -56,7 +57,7 @@ export function getPlayersNotInGame(players: PlayerConfig, state: State) {
       state.gamesStarted,
       (game) =>
         game.player.league.leagueAccount.accountId ===
-        player.league.leagueAccount.accountId,
-    ),
+        player.league.leagueAccount.accountId
+    )
   );
 }

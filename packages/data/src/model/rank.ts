@@ -3,7 +3,7 @@ import { DivisionSchema, divisionToString } from "./division.ts";
 import { TierSchema } from "./tier.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import { tierToOrdinal } from "./leaguePoints.ts";
+import { rankToLeaguePoints, tierToOrdinal } from "./leaguePoints.ts";
 
 export type Rank = z.infer<typeof RankSchema>;
 export const RankSchema = z.strictObject({
@@ -21,9 +21,9 @@ export const RanksSchema = z.object({
 });
 
 export function rankToString(rank: Rank): string {
-  return `${_.startCase(rank.tier)} ${divisionToString(
-    rank.division,
-  )}, ${rank.lp}LP`;
+  return `${_.startCase(rank.tier)} ${divisionToString(rank.division)}, ${
+    rank.lp
+  }LP`;
 }
 
 export function rankToSimpleString(rank: Rank): string {
@@ -53,7 +53,7 @@ export function wasDemoted(previous: Rank | undefined, current: Rank): boolean {
 
 export function wasPromoted(
   previous: Rank | undefined,
-  current: Rank,
+  current: Rank
 ): boolean {
   if (previous == undefined) {
     return false;
