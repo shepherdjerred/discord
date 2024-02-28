@@ -4,19 +4,19 @@ import { palette } from "../assets/colors.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { laneToString } from "@glitter-boys/data";
-import summoner from "../assets/summoner.json" assert { type: "json" };
+// import summoner from "../assets/summoner.json" assert { type: "json" };
 import { Champion } from "@glitter-boys/data";
 
 export function renderChampion(
   champion: Champion,
   highlight: boolean,
   durationInMinutes: number,
-  damageMax: number,
+  damageMax: number
 ) {
   const items = renderItems(champion.items, champion.visionScore);
   const kdaRatio = _.round(
     (champion.kills + champion.assists) / champion.deaths,
-    1,
+    1
   );
   const lane = champion.lane ? laneToString(champion.lane) : "?";
   const damagePercent = _.round((champion.damage / damageMax) * 100);

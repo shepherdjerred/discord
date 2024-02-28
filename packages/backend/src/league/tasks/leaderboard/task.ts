@@ -1,7 +1,7 @@
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { toLeaderboard } from "./index.ts";
-import { getPlayer } from "../../player.ts";
+import { getPlayer } from "../../model/player.ts";
 import {
   CopyObjectCommand,
   PutObjectCommand,

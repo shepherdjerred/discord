@@ -15,16 +15,14 @@ import { send } from "../../discord/channel.ts";
 import { s3 } from "../../s3.ts";
 import { PutObjectCommand } from "https://esm.sh/@aws-sdk/client-s3";
 import configuration from "../../../configuration.ts";
-import { getPlayer } from "../../player.ts";
-import { getCurrentRank } from "../../rank.ts";
-import { createMatchObject } from "../../match.ts";
-import { getState, setState } from "../../state.ts";
+import { getPlayer } from "../../model/player.ts";
+import { getState, setState } from "../../model/state.ts";
 
 async function checkMatch(game: MatchState) {
   try {
     const response = await api.MatchV5.get(
       `NA1_${game.matchId}`,
-      Constants.RegionGroups.AMERICAS,
+      Constants.RegionGroups.AMERICAS
     );
     return response.response;
   } catch (e) {
@@ -51,7 +49,7 @@ async function saveMatch(match: MatchV5DTOs.MatchDto) {
 }
 
 async function getImage(
-  match: Match,
+  match: Match
 ): Promise<[AttachmentBuilder, EmbedBuilder]> {
   const image = await matchToImage(match);
   const attachment = new AttachmentBuilder(image).setName("match.png");
@@ -63,16 +61,14 @@ async function createMatchObj(state: MatchState, match: MatchV5DTOs.MatchDto) {
   const player = _.chain(match.info.participants)
     .filter(
       (participant) =>
-        participant.puuid === state.player.league.leagueAccount.puuid,
+        participant.puuid === state.player.league.leagueAccount.puuid
     )
     .first()
     .value();
 
   if (player == undefined) {
     throw new Error(
-      `unable to find player ${JSON.stringify(state)}, ${JSON.stringify(
-        match,
-      )}`,
+      `unable to find player ${JSON.stringify(state)}, ${JSON.stringify(match)}`
     );
   }
 
@@ -113,7 +109,7 @@ export async function checkPostMatch() {
       const newMatches = _.differenceBy(
         newState.gamesStarted,
         _.map(finishedGames, (game) => game[0]),
-        (state) => state.uuid,
+        (state) => state.uuid
       );
 
       console.log("saving state files");
@@ -121,6 +117,6 @@ export async function checkPostMatch() {
         ...state,
         gamesStarted: newMatches,
       });
-    }),
+    })
   );
 }

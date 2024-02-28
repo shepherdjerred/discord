@@ -10,9 +10,9 @@ import {
 import { getCurrentSoloQueueGame } from "../../api/index.ts";
 import { createDiscordMessage } from "./discord.ts";
 import { send } from "../../discord/channel.ts";
-import { getCurrentRank } from "../../rank.ts";
+import { getRanks } from "../../model/rank.ts";
 import { getPlayerConfigs } from "../../playerConfig.ts";
-import { getState, setState } from "../../state.ts";
+import { getState, setState } from "../../model/state.ts";
 
 export async function checkPreMatch() {
   const players = await getPlayerConfigs();
@@ -23,7 +23,7 @@ export async function checkPreMatch() {
   console.log("calling spectator API");
   // TODO: also get flex games
   const playerStatus = await Promise.all(
-    _.map(playersNotInGame, getCurrentSoloQueueGame),
+    _.map(playersNotInGame, getCurrentSoloQueueGame)
   );
 
   console.log("filtering players not in game");
@@ -37,7 +37,7 @@ export async function checkPreMatch() {
     _.chain(getState().gamesStarted)
       .map((game) => game.matchId)
       .some((candidate) => candidate === game.gameId)
-      .value(),
+      .value()
   );
 
   console.log("sending messages");
@@ -66,6 +66,6 @@ export async function checkPreMatch() {
           gamesStarted: _.concat(getState().gamesStarted, entry),
         });
       })
-      .value(),
+      .value()
   );
 }

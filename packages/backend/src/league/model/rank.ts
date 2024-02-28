@@ -2,23 +2,29 @@ import { Ranks, parseDivision } from "@glitter-boys/data";
 import { PlayerConfigEntry } from "@glitter-boys/data";
 import { Rank } from "@glitter-boys/data";
 import { TierSchema } from "@glitter-boys/data";
-import _ from "lodash";
-import { api } from "../api/api.js";
-import { Constants } from "twisted";
-import { SummonerLeagueDto } from "twisted/dist/models-dto/index.js";
-import assert from "assert";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash@4.17.21";
+import { api } from "../api/api.ts";
+import { Constants } from "npm:twisted@1.55.0";
+import { SummonerLeagueDto } from "npm:twisted@1.55.0/dist/models-dto/index.js";
 
 const solo = "RANKED_SOLO_5x5";
 const flex = "RANKED_TEAM_5x5";
 
-export function getDto(dto: SummonerLeagueDto[], queue: string): SummonerLeagueDto | undefined {
+export function getDto(
+  dto: SummonerLeagueDto[],
+  queue: string
+): SummonerLeagueDto | undefined {
   return _.chain(dto)
     .filter((entry) => entry.queueType === queue)
     .first()
     .value();
 }
 
-export function getRank(dto: SummonerLeagueDto[], queue: string): Rank | undefined {
+export function getRank(
+  dto: SummonerLeagueDto[],
+  queue: string
+): Rank | undefined {
   const entry = getDto(dto, queue);
 
   if (entry == undefined) {
@@ -26,8 +32,6 @@ export function getRank(dto: SummonerLeagueDto[], queue: string): Rank | undefin
   }
 
   const division = parseDivision(entry.rank);
-
-  assert(division !== undefined);
 
   return {
     division,
@@ -39,7 +43,10 @@ export function getRank(dto: SummonerLeagueDto[], queue: string): Rank | undefin
 }
 
 export async function getRanks(player: PlayerConfigEntry): Promise<Ranks> {
-  const response = await api.League.bySummoner(player.league.leagueAccount.id, Constants.Regions.AMERICA_NORTH);
+  const response = await api.League.bySummoner(
+    player.league.leagueAccount.id,
+    Constants.Regions.AMERICA_NORTH
+  );
 
   return {
     solo: getRank(response.response, solo),

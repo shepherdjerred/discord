@@ -1,9 +1,9 @@
 import { Player } from "@glitter-boys/data";
 import { PlayerConfigEntry } from "@glitter-boys/data";
-import { getCurrentRank } from "./rank.ts";
+import { getRanks } from "./rank.ts";
 
 export async function getPlayer(
-  playerConfig: PlayerConfigEntry,
+  playerConfig: PlayerConfigEntry
 ): Promise<Player> {
   return {
     config: playerConfig,
