@@ -1,6 +1,5 @@
 ## General
 
-- deploy to local k8s cluster
 - detect duos
 - add support for flex
 - save extra match statistics, like LP gained

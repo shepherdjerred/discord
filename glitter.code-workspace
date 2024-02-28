@@ -1,29 +1,39 @@
 {
   "folders": [
     {
-      "path": "packages/backend",
+      "path": "packages/backend"
     },
     {
-      "path": "packages/data",
+      "path": "packages/data"
     },
     {
-      "path": "packages/frontend",
+      "path": "packages/frontend"
     },
     {
-      "path": "packages/preview",
+      "path": "packages/preview"
     },
     {
       "name": "root",
-      "path": ".",
-    },
+      "path": "."
+    }
   ],
   "extensions": {
     "recommendations": [
-      "dbaeumer.vscode-eslint",
-      "esbenp.prettier-vscode",
+      "astro-build.astro-vscode",
       "earthly.earthfile-syntax-highlighting",
       "tamasfe.even-better-toml",
-    ],
+      "github.vscode-github-actions",
+      "esbenp.prettier-vscode",
+      "DavidAnson.vscode-markdownlint",
+      "ms-azuretools.vscode-docker",
+      "timonwong.shellcheck",
+      "mkhl.shfmt",
+      "redhat.vscode-yaml",
+      "arahata.linter-actionlint",
+      "dbaeumer.vscode-eslint",
+      "bradlc.vscode-tailwindcss",
+      "lightyen.tailwindcss-intellisense-twin"
+    ]
   },
   "settings": {
     "testing.automaticallyOpenPeekView": "never",
@@ -38,8 +48,8 @@
     "deno.enablePaths": [
       "packages/backend/",
       "packages/data/",
-      "packages/frontend/",
-    ],
+      "packages/frontend/"
+    ]
   },
   "launch": {
     "configurations": [
@@ -47,8 +57,8 @@
         "type": "chrome",
         "name": "https://localhost:4321",
         "request": "launch",
-        "url": "https://localhost:4321",
-      },
-    ],
-  },
+        "url": "https://localhost:4321"
+      }
+    ]
+  }
 }
