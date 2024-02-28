@@ -28,7 +28,9 @@ export const OldLeaderboardSchema = z.strictObject({
   contents: z.array(OldLeaderboardEntrySchema),
 });
 
-export function convertOldLeaderboard(oldLeaderboard: OldLeaderboard): Leaderboard {
+export function convertOldLeaderboard(
+  oldLeaderboard: OldLeaderboard,
+): Leaderboard {
   return {
     date: oldLeaderboard.date,
     contents: oldLeaderboard.contents.map((entry) => ({

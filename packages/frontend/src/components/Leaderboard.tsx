@@ -83,7 +83,8 @@ const columns = [
   }),
   columnHelper.accessor((row) => row.current.player, {
     header: "Games Played",
-    cell: (info) => info.getValue().ranks.solo.wins + info.getValue().ranks.solo.losses,
+    cell: (info) =>
+      info.getValue().ranks.solo.wins + info.getValue().ranks.solo.losses,
     id: "games",
     sortingFn: (a, b) => {
       const getVal = (info: PlayerWithSoloQueueRank) => {
@@ -118,7 +119,10 @@ const columns = [
     header: "Win Rate",
     cell: (info) => {
       const percent = _.round(
-        (info.getValue().ranks.solo.wins / (info.getValue().ranks.solo.wins + info.getValue().ranks.solo.losses)) * 100,
+        (info.getValue().ranks.solo.wins /
+          (info.getValue().ranks.solo.wins +
+            info.getValue().ranks.solo.losses)) *
+          100,
       );
       if (percent === 50) {
         return "INFINITY%";
@@ -128,7 +132,11 @@ const columns = [
     id: "win-rate",
     sortingFn: (a, b) => {
       const getVal = (info: PlayerWithSoloQueueRank) => {
-        const percent = _.round((info.ranks.solo.wins / (info.ranks.solo.wins - info.ranks.solo.losses)) * 100);
+        const percent = _.round(
+          (info.ranks.solo.wins /
+            (info.ranks.solo.wins - info.ranks.solo.losses)) *
+            100,
+        );
         return percent ? percent : -9999;
       };
       return getVal(a.getValue("win-rate")) - getVal(b.getValue("win-rate"));
@@ -167,7 +175,8 @@ function gameCount(
   return (
     leaderboard.current.player.ranks.solo.wins -
     leaderboard.previous.player.ranks.solo.wins +
-    (leaderboard.current.player.ranks.solo.losses - leaderboard.previous.player.ranks.solo.losses)
+    (leaderboard.current.player.ranks.solo.losses -
+      leaderboard.previous.player.ranks.solo.losses)
   );
 }
 
@@ -194,7 +203,9 @@ export function LeaderboardComponent() {
       const currentLeaderboard = LeaderboardSchema.parse(await result.json());
       setCurrentLeaderboard(currentLeaderboard);
 
-      result = await fetch("https://prod.bucket.glitter-boys.com/previous.json");
+      result = await fetch(
+        "https://prod.bucket.glitter-boys.com/previous.json",
+      );
       const previousJson = await result.json();
       const parseStatus = LeaderboardSchema.safeParse(previousJson);
       // TODO: handle the case where the previous leaderboard is missing
@@ -223,7 +234,12 @@ export function LeaderboardComponent() {
         if (entry.previous === undefined) {
           return [];
         }
-        if (wasPromoted(entry.previous.player.ranks.solo, entry.current.player.ranks.solo)) {
+        if (
+          wasPromoted(
+            entry.previous.player.ranks.solo,
+            entry.current.player.ranks.solo,
+          )
+        ) {
           return [
             `${entry.current.player.config.name} was promoted: ${rankToSimpleString(
               entry.previous.player.ranks.solo,
@@ -237,7 +253,12 @@ export function LeaderboardComponent() {
         if (entry.previous === undefined) {
           return [];
         }
-        if (wasDemoted(entry.previous.player.ranks.solo, entry.current.player.ranks.solo)) {
+        if (
+          wasDemoted(
+            entry.previous.player.ranks.solo,
+            entry.current.player.ranks.solo,
+          )
+        ) {
           return [
             `${entry.current.player.config.name} was demoted: ${rankToSimpleString(
               entry.previous.player.ranks.solo,
@@ -282,8 +303,12 @@ export function LeaderboardComponent() {
           <hgroup className="">
             <h1 className="text-3xl">Tournament Leaderboard</h1>
             <p>
-              Updated {currentLeaderboard?.date !== undefined ? formatDistance(currentLeaderboard.date, now) : ""} ago.
-              Next update in {formatDistance(now, next)}. Competition lasts until the end of Season 14 Split 1.
+              Updated{" "}
+              {currentLeaderboard?.date !== undefined
+                ? formatDistance(currentLeaderboard.date, now)
+                : ""}{" "}
+              ago. Next update in {formatDistance(now, next)}. Competition lasts
+              until the end of Season 14 Split 1.
               <br />
               Prize: $200
             </p>
@@ -345,7 +370,9 @@ export function LeaderboardComponent() {
             <h2 className="text-3xl">Recent Events</h2>
           </hgroup>
           <ul className="list-disc list-inside">
-            {events.length ? events.map((event) => <li key={event}>{event}</li>) : "No recent events."}
+            {events.length
+              ? events.map((event) => <li key={event}>{event}</li>)
+              : "No recent events."}
           </ul>
           <h3 className="text-xl">LP gains graph</h3>
           <ChartComponent />

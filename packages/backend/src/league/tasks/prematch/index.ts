@@ -22,7 +22,9 @@ export async function checkPreMatch() {
 
   console.log("calling spectator API");
   // TODO: also get flex games
-  const playerStatus = await Promise.all(_.map(playersNotInGame, getCurrentSoloQueueGame));
+  const playerStatus = await Promise.all(
+    _.map(playersNotInGame, getCurrentSoloQueueGame),
+  );
 
   console.log("filtering players not in game");
   const playersInGame = _.chain(playersNotInGame)
@@ -31,13 +33,11 @@ export async function checkPreMatch() {
     .value() as [PlayerConfigEntry, CurrentGameInfoDTO][];
 
   console.log("removing games already seen");
-  const newGames = _.reject(
-    playersInGame,
-    ([_player, game]) =>
-      _.chain(getState().gamesStarted)
-        .map((game) => game.matchId)
-        .some((candidate) => candidate === game.gameId)
-        .value(),
+  const newGames = _.reject(playersInGame, ([_player, game]) =>
+    _.chain(getState().gamesStarted)
+      .map((game) => game.matchId)
+      .some((candidate) => candidate === game.gameId)
+      .value(),
   );
 
   console.log("sending messages");

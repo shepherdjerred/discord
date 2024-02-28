@@ -25,7 +25,12 @@ async function matchToSvg(match: Match) {
 }
 
 function svgToPng(svg: string) {
-  const resvg = new Resvg(svg, { dpi: 600, shapeRendering: 2, textRendering: 2, imageRendering: 0 });
+  const resvg = new Resvg(svg, {
+    dpi: 600,
+    shapeRendering: 2,
+    textRendering: 2,
+    imageRendering: 0,
+  });
   const pngData = resvg.render();
   return pngData.asPng();
 }

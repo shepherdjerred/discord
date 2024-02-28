@@ -1,18 +1,18 @@
 {
   "recommendations": [
-        "astro-build.astro-vscode",
-        "earthly.earthfile-syntax-highlighting",
-        "tamasfe.even-better-toml",
-        "github.vscode-github-actions",
-        "esbenp.prettier-vscode",
-        "DavidAnson.vscode-markdownlint",
-        "ms-azuretools.vscode-docker",
-        "timonwong.shellcheck",
-        "mkhl.shfmt",
-        "redhat.vscode-yaml",
-        "arahata.linter-actionlint",
-        "dbaeumer.vscode-eslint",
-        "bradlc.vscode-tailwindcss",
-        "lightyen.tailwindcss-intellisense-twin",
-    ]
+    "astro-build.astro-vscode",
+    "earthly.earthfile-syntax-highlighting",
+    "tamasfe.even-better-toml",
+    "github.vscode-github-actions",
+    "esbenp.prettier-vscode",
+    "DavidAnson.vscode-markdownlint",
+    "ms-azuretools.vscode-docker",
+    "timonwong.shellcheck",
+    "mkhl.shfmt",
+    "redhat.vscode-yaml",
+    "arahata.linter-actionlint",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "lightyen.tailwindcss-intellisense-twin"
+  ]
 }

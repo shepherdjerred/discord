@@ -45,8 +45,9 @@ export function getPlayersInGame(players: PlayerConfig, state: State) {
       state.gamesStarted,
       (game) =>
         game.player.league.leagueAccount.accountId ===
-          player.league.leagueAccount.accountId,
-    ));
+        player.league.leagueAccount.accountId,
+    ),
+  );
 }
 
 export function getPlayersNotInGame(players: PlayerConfig, state: State) {
@@ -55,6 +56,7 @@ export function getPlayersNotInGame(players: PlayerConfig, state: State) {
       state.gamesStarted,
       (game) =>
         game.player.league.leagueAccount.accountId ===
-          player.league.leagueAccount.accountId,
-    ));
+        player.league.leagueAccount.accountId,
+    ),
+  );
 }

@@ -14,7 +14,10 @@ export function leaderboardToDiscordMessage(leaderboard: Leaderboard): string {
     .value();
 }
 
-function leaderboardEntryToDiscordMessage({ position, player }: LeaderboardEntry): string {
+function leaderboardEntryToDiscordMessage({
+  position,
+  player,
+}: LeaderboardEntry): string {
   let positionString = `#${position.toString()}`;
   // top 3 are better than everyone else
   if (position <= 3) {

@@ -6,16 +6,17 @@ import { CurrentGameInfoDTO } from "npm:twisted@1.55.0/dist/models-dto/index.js"
 import { findParticipant } from "../../api/index.ts";
 import { PlayerConfigEntry } from "@glitter-boys/data";
 
-export function createDiscordMessage([player, game]: [PlayerConfigEntry, CurrentGameInfoDTO]): string {
+export function createDiscordMessage([player, game]: [
+  PlayerConfigEntry,
+  CurrentGameInfoDTO,
+]): string {
   const participant = findParticipant(player, game.participants);
 
   if (participant === undefined) {
     throw new Error(
-      `unable to find participant ${JSON.stringify(player)}, ${
-        JSON.stringify(
-          game,
-        )
-      }`,
+      `unable to find participant ${JSON.stringify(player)}, ${JSON.stringify(
+        game,
+      )}`,
     );
   }
 

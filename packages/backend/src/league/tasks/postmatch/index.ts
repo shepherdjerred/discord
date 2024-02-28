@@ -70,11 +70,9 @@ async function createMatchObj(state: MatchState, match: MatchV5DTOs.MatchDto) {
 
   if (player == undefined) {
     throw new Error(
-      `unable to find player ${JSON.stringify(state)}, ${
-        JSON.stringify(
-          match,
-        )
-      }`,
+      `unable to find player ${JSON.stringify(state)}, ${JSON.stringify(
+        match,
+      )}`,
     );
   }
 
