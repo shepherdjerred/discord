@@ -1,11 +1,13 @@
 {
   "tasks": {
+    "run": "deno run -A --unstable src/index.ts",
     "test:update": "deno test -A --unstable -- --update"
   },
   "imports": {
     "@glitter-boys/data": "../data/src/index.ts"
   },
   "compilerOptions": {
+    "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   }
 }

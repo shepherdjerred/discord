@@ -5,11 +5,12 @@ import {
   VoiceBasedChannel,
   channelMention,
   userMention,
-} from "discord.js";
-import { shoukaku } from "./index.js";
-import client from "../discord/client.js";
-import { LoadType, Player, Track } from "shoukaku";
-import _ from "lodash";
+} from "npm:discord.js@14.14.1";
+import { shoukaku } from "./index.ts";
+import client from "../discord/client.ts";
+import { LoadType, Player, Track } from "https://esm.sh/shoukaku@4.0.1";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash@4.17.21";
 
 let state: State = { name: "init" };
 
@@ -39,33 +40,66 @@ const musicCommand = new SlashCommandBuilder()
     subcommand
       .setName("play")
       .setDescription("Play music")
-      .addStringOption((option) => option.setName("song").setDescription("The song to play").setRequired(true)),
+      .addStringOption((option) =>
+        option
+          .setName("song")
+          .setDescription("The song to play")
+          .setRequired(true)
+      )
   )
-  .addSubcommand((subcommand) => subcommand.setName("pause").setDescription("Pause music"))
-  .addSubcommand((subcommand) => subcommand.setName("resume").setDescription("Resume music"))
-  .addSubcommand((subcommand) => subcommand.setName("stop").setDescription("Stop music"))
-  .addSubcommand((subcommand) => subcommand.setName("skip").setDescription("Skip music"))
-  .addSubcommand((subcommand) => subcommand.setName("queue").setDescription("Show the music queue"))
-  .addSubcommand((subcommand) => subcommand.setName("clear").setDescription("Clear the music queue"))
-  .addSubcommand((subcommand) => subcommand.setName("shuffle").setDescription("Shuffle the music queue"))
+  .addSubcommand((subcommand) =>
+    subcommand.setName("pause").setDescription("Pause music")
+  )
+  .addSubcommand((subcommand) =>
+    subcommand.setName("resume").setDescription("Resume music")
+  )
+  .addSubcommand((subcommand) =>
+    subcommand.setName("stop").setDescription("Stop music")
+  )
+  .addSubcommand((subcommand) =>
+    subcommand.setName("skip").setDescription("Skip music")
+  )
+  .addSubcommand((subcommand) =>
+    subcommand.setName("queue").setDescription("Show the music queue")
+  )
+  .addSubcommand((subcommand) =>
+    subcommand.setName("clear").setDescription("Clear the music queue")
+  )
+  .addSubcommand((subcommand) =>
+    subcommand.setName("shuffle").setDescription("Shuffle the music queue")
+  )
   .addSubcommand((subcommand) =>
     subcommand
       .setName("volume")
       .setDescription("Set the volume of the music")
       .addIntegerOption((option) =>
-        option.setName("volume").setDescription("The volume to set").setRequired(true).setMinValue(0).setMaxValue(10),
-      ),
+        option
+          .setName("volume")
+          .setDescription("The volume to set")
+          .setRequired(true)
+          .setMinValue(0)
+          .setMaxValue(10)
+      )
   )
   .addSubcommand((subcommand) =>
     subcommand
       .setName("seek")
       .setDescription("Seek to a position in the music")
       .addIntegerOption((option) =>
-        option.setName("position").setDescription("The position to seek to in seconds").setRequired(true),
-      ),
+        option
+          .setName("position")
+          .setDescription("The position to seek to in seconds")
+          .setRequired(true)
+      )
   )
-  .addSubcommand((subcommand) => subcommand.setName("nowplaying").setDescription("Show the currently playing song"))
-  .addSubcommand((subcommand) => subcommand.setName("reset").setDescription("Reset the music filters"));
+  .addSubcommand((subcommand) =>
+    subcommand
+      .setName("nowplaying")
+      .setDescription("Show the currently playing song")
+  )
+  .addSubcommand((subcommand) =>
+    subcommand.setName("reset").setDescription("Reset the music filters")
+  );
 
 async function handleMusic(interaction: ChatInputCommandInteraction) {
   switch (interaction.options.getSubcommand()) {
@@ -113,23 +147,36 @@ async function handleMusic(interaction: ChatInputCommandInteraction) {
 async function handleResetMusic(interaction: ChatInputCommandInteraction) {
   if ("player" in state) {
     await state.player.clearFilters();
-    await interaction.reply(`${userMention(interaction.user.id)} reset filters.`);
+    await interaction.reply(
+      `${userMention(interaction.user.id)} reset filters.`
+    );
   } else {
-    await interaction.reply({ ephemeral: true, content: "The music bot isn't active." });
+    await interaction.reply({
+      ephemeral: true,
+      content: "The music bot isn't active.",
+    });
   }
 }
 
 async function handlePauseMusic(interaction: ChatInputCommandInteraction) {
   if (state.name === "active") {
     if (state.player.paused) {
-      await interaction.reply({ ephemeral: true, content: "The music is already paused." });
+      await interaction.reply({
+        ephemeral: true,
+        content: "The music is already paused.",
+      });
       return;
     } else {
       await state.player.setPaused(true);
-      await interaction.reply(`${userMention(interaction.user.id)} paused the music.`);
+      await interaction.reply(
+        `${userMention(interaction.user.id)} paused the music.`
+      );
     }
   } else {
-    await interaction.reply({ ephemeral: true, content: "Nothing is playing." });
+    await interaction.reply({
+      ephemeral: true,
+      content: "Nothing is playing.",
+    });
   }
 }
 
@@ -137,12 +184,20 @@ async function handleResumeMusic(interaction: ChatInputCommandInteraction) {
   if (state.name === "active") {
     if (state.player.paused) {
       await state.player.setPaused(false);
-      await interaction.reply(`${userMention(interaction.user.id)} resumed the music.`);
+      await interaction.reply(
+        `${userMention(interaction.user.id)} resumed the music.`
+      );
     } else {
-      await interaction.reply({ ephemeral: true, content: "The music is not paused." });
+      await interaction.reply({
+        ephemeral: true,
+        content: "The music is not paused.",
+      });
     }
   } else {
-    await interaction.reply({ ephemeral: true, content: "Nothing is playing." });
+    await interaction.reply({
+      ephemeral: true,
+      content: "Nothing is playing.",
+    });
   }
 }
 
@@ -155,9 +210,14 @@ async function handleStopMusic(interaction: ChatInputCommandInteraction) {
 
     state = { name: "init" };
 
-    await interaction.reply(`${userMention(interaction.user.id)} stopped the music.`);
+    await interaction.reply(
+      `${userMention(interaction.user.id)} stopped the music.`
+    );
   } else {
-    await interaction.reply({ ephemeral: true, content: "The music bot isn't active." });
+    await interaction.reply({
+      ephemeral: true,
+      content: "The music bot isn't active.",
+    });
   }
 }
 
@@ -165,16 +225,27 @@ async function handleSkipMusic(interaction: ChatInputCommandInteraction) {
   if (state.name === "active") {
     const currentCopy = state.currentSong;
     await state.player.stopTrack();
-    await interaction.reply(`${userMention(interaction.user.id)} skipped ${currentCopy.info.title}.`);
+    await interaction.reply(
+      `${userMention(interaction.user.id)} skipped ${currentCopy.info.title}.`
+    );
   } else {
-    await interaction.reply({ ephemeral: true, content: "Nothing is playing." });
+    await interaction.reply({
+      ephemeral: true,
+      content: "Nothing is playing.",
+    });
   }
 }
 
 async function handleQueueMusic(interaction: ChatInputCommandInteraction) {
   if ("queue" in state) {
-    const songs = state.queue.map((track) => `* ${track.info.title} by ${track.info.author} - ${track.info.uri}`);
-    await interaction.reply({ content: `Queue:\n${songs.join("\n")}`, ephemeral: true });
+    const songs = state.queue.map(
+      (track) =>
+        `* ${track.info.title} by ${track.info.author} - ${track.info.uri}`
+    );
+    await interaction.reply({
+      content: `Queue:\n${songs.join("\n")}`,
+      ephemeral: true,
+    });
   } else {
     await interaction.reply({ ephemeral: true, content: "Invalid state" });
     throw new Error("invalid state");
@@ -184,7 +255,9 @@ async function handleQueueMusic(interaction: ChatInputCommandInteraction) {
 async function handleClearMusic(interaction: ChatInputCommandInteraction) {
   if ("queue" in state) {
     state.queue = [];
-    await interaction.reply(`${userMention(interaction.user.id)} cleared the queue.`);
+    await interaction.reply(
+      `${userMention(interaction.user.id)} cleared the queue.`
+    );
   } else {
     await interaction.reply({ ephemeral: true, content: "Invalid state" });
     throw new Error("invalid state");
@@ -194,7 +267,9 @@ async function handleClearMusic(interaction: ChatInputCommandInteraction) {
 async function handleShuffleMusic(interaction: ChatInputCommandInteraction) {
   if ("queue" in state) {
     state.queue = _.shuffle(state.queue);
-    await interaction.reply(`${userMention(interaction.user.id)} shuffled the queue.`);
+    await interaction.reply(
+      `${userMention(interaction.user.id)} shuffled the queue.`
+    );
   } else {
     await interaction.reply({ ephemeral: true, content: "Invalid state" });
     throw new Error("invalid state");
@@ -205,9 +280,14 @@ async function handleVolumeMusic(interaction: ChatInputCommandInteraction) {
   const volume = interaction.options.getInteger("volume", true);
   if ("player" in state) {
     await state.player.setFilterVolume(volume);
-    await interaction.reply(`${userMention(interaction.user.id)} set volume to ${volume}%`);
+    await interaction.reply(
+      `${userMention(interaction.user.id)} set volume to ${volume}%`
+    );
   } else {
-    await interaction.reply({ ephemeral: true, content: "The music bot isn't active." });
+    await interaction.reply({
+      ephemeral: true,
+      content: "The music bot isn't active.",
+    });
   }
 }
 
@@ -215,9 +295,14 @@ async function handleSeekMusic(interaction: ChatInputCommandInteraction) {
   const position = interaction.options.getInteger("position", true);
   if (state.name === "active") {
     await state.player.seekTo(position * 1000);
-    await interaction.reply(`${userMention(interaction.user.id)} seeked to ${position} seconds.`);
+    await interaction.reply(
+      `${userMention(interaction.user.id)} seeked to ${position} seconds.`
+    );
   } else {
-    await interaction.reply({ ephemeral: true, content: "Nothing is playing." });
+    await interaction.reply({
+      ephemeral: true,
+      content: "Nothing is playing.",
+    });
   }
 }
 
@@ -228,11 +313,16 @@ async function handleNowPlayingMusic(interaction: ChatInputCommandInteraction) {
       ephemeral: true,
     });
   } else {
-    await interaction.reply({ ephemeral: true, content: "Nothing is playing." });
+    await interaction.reply({
+      ephemeral: true,
+      content: "Nothing is playing.",
+    });
   }
 }
 
-async function getVoiceChannel(interaction: ChatInputCommandInteraction): Promise<VoiceBasedChannel | undefined> {
+async function getVoiceChannel(
+  interaction: ChatInputCommandInteraction
+): Promise<VoiceBasedChannel | undefined> {
   const guildId = interaction.guildId;
   const memberId = interaction.user.id;
   if (!guildId) {
@@ -278,26 +368,41 @@ async function handlePlayMusic(interaction: ChatInputCommandInteraction) {
 
   const metadata = await findSong(song);
   if (!metadata) {
-    await interaction.reply({ ephemeral: true, content: `No track matches \`${song}\`` });
+    await interaction.reply({
+      ephemeral: true,
+      content: `No track matches \`${song}\``,
+    });
     return;
   }
 
   const playerChannel = await getVoiceChannel(interaction);
   if (!playerChannel) {
-    await interaction.reply({ ephemeral: true, content: "You must be in a voice channel to play music." });
+    await interaction.reply({
+      ephemeral: true,
+      content: "You must be in a voice channel to play music.",
+    });
     return;
   }
 
-  if ("musicChannel" in state && state.musicChannel?.id !== undefined && state.musicChannel.id !== playerChannel.id) {
+  if (
+    "musicChannel" in state &&
+    state.musicChannel?.id !== undefined &&
+    state.musicChannel.id !== playerChannel.id
+  ) {
     await interaction.reply({
       ephemeral: true,
-      content: `Music is already playing in ${channelMention(state.musicChannel.id)}`,
+      content: `Music is already playing in ${channelMention(
+        state.musicChannel.id
+      )}`,
     });
     return;
   }
 
   if (interaction.channel === null) {
-    await interaction.reply({ ephemeral: true, content: "Text channel is null" });
+    await interaction.reply({
+      ephemeral: true,
+      content: "Text channel is null",
+    });
     return;
   }
 
@@ -335,11 +440,13 @@ async function handlePlayMusic(interaction: ChatInputCommandInteraction) {
       track: metadata.encoded,
     });
 
-    await interaction.reply(`Now playing: ${metadata.info.title} by ${metadata.info.author} - ${metadata.info.uri}`);
+    await interaction.reply(
+      `Now playing: ${metadata.info.title} by ${metadata.info.author} - ${metadata.info.uri}`
+    );
   } else {
     state.queue.push(metadata);
     await interaction.reply(
-      `Added ${metadata.info.title} by ${metadata.info.author} - ${metadata.info.uri} to the queue.`,
+      `Added ${metadata.info.title} by ${metadata.info.author} - ${metadata.info.uri} to the queue.`
     );
   }
 }
@@ -367,7 +474,7 @@ function handleSongEnd() {
           console.error(`textChannel is undefined at the end of a song`);
         } else {
           void state.commandTextChannel.send(
-            `Now playing: ${next.info.title} by ${next.info.author} - ${next.info.uri}`,
+            `Now playing: ${next.info.title} by ${next.info.author} - ${next.info.uri}`
           );
         }
       }

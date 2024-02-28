@@ -1,4 +1,4 @@
-import { CurrentGameInfoDTO } from "npm:twisted@1.55.0/dist/models-dto/index.js";
+import { CurrentGameInfoDTO } from "npm:twisted@1.57.0/dist/models-dto/index.js";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import * as uuid from "https://esm.sh/uuid@9.0.1";

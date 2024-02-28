@@ -1,6 +1,10 @@
-import { Shoukaku, Connectors, NodeOption } from "shoukaku";
-import client from "../discord/client.js";
-import configuration from "../configuration.js";
+import {
+  Shoukaku,
+  Connectors,
+  NodeOption,
+} from "https://esm.sh/shoukaku@4.0.1";
+import client from "../discord/client.ts";
+import configuration from "../configuration.ts";
 
 export const nodes: NodeOption[] = [
   {
@@ -10,4 +14,8 @@ export const nodes: NodeOption[] = [
   },
 ];
 
-export const shoukaku = new Shoukaku(new Connectors.DiscordJS(client), nodes, {});
+export const shoukaku = new Shoukaku(
+  new Connectors.DiscordJS(client),
+  nodes,
+  {}
+);

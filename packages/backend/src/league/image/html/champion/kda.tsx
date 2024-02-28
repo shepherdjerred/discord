@@ -1,4 +1,5 @@
-import _ from "lodash";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash@4.17.21";
 import { palette } from "../../assets/colors.js";
 
 export function Kda({
@@ -12,9 +13,17 @@ export function Kda({
   assists: number;
   highlight: boolean;
 }) {
-  const kdaRatio = deaths === 0 ? kills + deaths : _.round((kills + assists) / deaths, 1);
+  const kdaRatio =
+    deaths === 0 ? kills + deaths : _.round((kills + assists) / deaths, 1);
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "30rem" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "30rem",
+      }}
+    >
       <span
         style={{ fontWeight: 700, color: highlight ? palette.gold[1] : "" }}
       >{`${kills} / ${deaths} / ${assists}`}</span>

@@ -2,21 +2,21 @@ import {
   CurrentGameInfoDTO,
   CurrentGameParticipantDTO,
   SpectatorNotAvailableDTO,
-} from "npm:twisted@1.55.0/dist/models-dto/index.js";
+} from "npm:twisted@1.57.0/dist/models-dto/index.js";
 import { z } from "https://esm.sh/zod@3.22.4";
 import { PlayerConfigEntry } from "@glitter-boys/data";
 import { api } from "./api.ts";
-import { Constants } from "npm:twisted@1.55.0";
+import { Constants } from "npm:twisted@1.57.0";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 
 export async function getCurrentSoloQueueGame(
-  player: PlayerConfigEntry,
+  player: PlayerConfigEntry
 ): Promise<undefined | CurrentGameInfoDTO> {
   try {
     const response = await api.Spectator.activeGame(
       player.league.leagueAccount.id,
-      Constants.Regions.AMERICA_NORTH,
+      Constants.Regions.AMERICA_NORTH
     );
     if (response instanceof SpectatorNotAvailableDTO) {
       return undefined;
@@ -39,12 +39,11 @@ export async function getCurrentSoloQueueGame(
 
 export function findParticipant(
   player: PlayerConfigEntry,
-  participants: CurrentGameParticipantDTO[],
+  participants: CurrentGameParticipantDTO[]
 ): CurrentGameParticipantDTO | undefined {
   return _.chain(participants)
     .filter(
-      (participant) =>
-        participant.summonerId === player.league.leagueAccount.id,
+      (participant) => participant.summonerId === player.league.leagueAccount.id
     )
     .first()
     .value();

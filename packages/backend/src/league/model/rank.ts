@@ -5,8 +5,8 @@ import { TierSchema } from "@glitter-boys/data";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { api } from "../api/api.ts";
-import { Constants } from "npm:twisted@1.55.0";
-import { SummonerLeagueDto } from "npm:twisted@1.55.0/dist/models-dto/index.js";
+import { Constants } from "npm:twisted@1.57.0";
+import { SummonerLeagueDto } from "npm:twisted@1.57.0/dist/models-dto/index.js";
 
 const solo = "RANKED_SOLO_5x5";
 const flex = "RANKED_TEAM_5x5";

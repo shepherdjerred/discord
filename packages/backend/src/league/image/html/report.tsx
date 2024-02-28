@@ -1,5 +1,6 @@
 import { Match, leaguePointsDelta, lpDiffToString } from "@glitter-boys/data";
-import _ from "lodash";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash@4.17.21";
 import "react";
 import { palette } from "../assets/colors.js";
 import { RankedBadge } from "./ranked/index.js";

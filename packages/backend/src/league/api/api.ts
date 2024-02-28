@@ -1,4 +1,4 @@
-import { LolApi } from "npm:twisted@1.55.0";
+import { LolApi } from "npm:twisted@1.57.0";
 import configuration from "../../configuration.ts";
 
 export const api = new LolApi({

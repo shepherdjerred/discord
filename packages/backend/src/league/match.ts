@@ -3,18 +3,18 @@ import { Player } from "@glitter-boys/data";
 import { parseTeam, Team } from "@glitter-boys/data";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import { MatchV5DTOs } from "npm:twisted@1.55.0/dist/models-dto/index.js";
+import { MatchV5DTOs } from "npm:twisted@1.57.0/dist/models-dto/index.js";
 import { createChampionObject } from "./champion.ts";
 
 export function createMatchObject(
   player: Player,
   dto: MatchV5DTOs.MatchDto,
-  lpChange: number,
+  lpChange: number
 ): Match {
   const playerParticipant = _.chain(dto.info.participants)
     .filter(
       (participant) =>
-        participant.puuid === player.config.league.leagueAccount.puuid,
+        participant.puuid === player.config.league.leagueAccount.puuid
     )
     .first()
     .value();
@@ -35,7 +35,7 @@ export function createMatchObject(
   const team = parseTeam(playerParticipant.teamId);
   if (team == undefined) {
     throw new Error(
-      `invalid team: ${JSON.stringify(playerParticipant.teamId)}`,
+      `invalid team: ${JSON.stringify(playerParticipant.teamId)}`
     );
   }
 

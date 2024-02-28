@@ -1,12 +1,23 @@
-import { Champion, Match, Player, Rank, invertTeam, parseQueueType } from "@glitter-boys/data";
+import {
+  Champion,
+  Match,
+  Player,
+  Rank,
+  invertTeam,
+  parseQueueType,
+} from "@glitter-boys/data";
 import { parseTeam } from "@glitter-boys/data";
-import _ from "lodash";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash@4.17.21";
 import { MatchV5DTOs } from "twisted/dist/models-dto/index.js";
 import { participantToChampion } from "./champion.js";
 import { match } from "ts-pattern";
 import assert from "assert";
 
-function findParticipant(puuid: string, participants: MatchV5DTOs.ParticipantDto[]): MatchV5DTOs.ParticipantDto {
+function findParticipant(
+  puuid: string,
+  participants: MatchV5DTOs.ParticipantDto[]
+): MatchV5DTOs.ParticipantDto {
   return _.chain(participants)
     .filter((participant) => participant.puuid === puuid)
     .first()
@@ -40,9 +51,12 @@ export function toMatch(
   player: Player,
   matchDto: MatchV5DTOs.MatchDto,
   rankBeforeMatch: Rank | undefined,
-  rankAfterMatch: Rank,
+  rankAfterMatch: Rank
 ): Match {
-  const participant = findParticipant(player.config.league.leagueAccount.puuid, matchDto.info.participants);
+  const participant = findParticipant(
+    player.config.league.leagueAccount.puuid,
+    matchDto.info.participants
+  );
   const champion = participantToChampion(participant);
   const team = parseTeam(participant.teamId);
   const teams = getTeams(matchDto.info.participants);

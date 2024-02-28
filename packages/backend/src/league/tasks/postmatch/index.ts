@@ -1,7 +1,7 @@
-import { Constants } from "npm:twisted@1.55.0";
+import { Constants } from "npm:twisted@1.57.0";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import { MatchV5DTOs } from "npm:twisted@1.55.0/dist/models-dto/index.js";
+import { MatchV5DTOs } from "npm:twisted@1.57.0/dist/models-dto/index.js";
 import { z } from "https://esm.sh/zod@3.22.4";
 import { api } from "../../api/api.ts";
 import {

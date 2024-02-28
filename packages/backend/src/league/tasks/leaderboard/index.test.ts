@@ -1,9 +1,18 @@
 import { Division, Player, Rank, Tier } from "@glitter-boys/data";
 import { describe, it, expect } from "vitest";
 import { toLeaderboard } from "./index.js";
-import _ from "lodash";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash@4.17.21";
 
-const createRank = ({ division, tier, lp }: { division: Division; tier: Tier; lp: number }): Rank => ({
+const createRank = ({
+  division,
+  tier,
+  lp,
+}: {
+  division: Division;
+  tier: Tier;
+  lp: number;
+}): Rank => ({
   division,
   tier,
   lp,
@@ -11,7 +20,13 @@ const createRank = ({ division, tier, lp }: { division: Division; tier: Tier; lp
   losses: 10,
 });
 
-const createPlayer = ({ name, currentRank }: { name: string; currentRank: Rank }): Player => ({
+const createPlayer = ({
+  name,
+  currentRank,
+}: {
+  name: string;
+  currentRank: Rank;
+}): Player => ({
   config: {
     name,
     league: {

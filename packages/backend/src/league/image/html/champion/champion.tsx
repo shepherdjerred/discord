@@ -1,7 +1,8 @@
 import "react";
 import { renderItems } from "./item.js";
 import { palette } from "../../assets/colors.js";
-import _ from "lodash";
+// @deno-types="npm:@types/lodash"
+import _ from "npm:lodash@4.17.21";
 import { Champion } from "@glitter-boys/data";
 import { summoner } from "../../../dataDragon/summoner.js";
 import { latestVersion } from "../../../dataDragon/version.js";
