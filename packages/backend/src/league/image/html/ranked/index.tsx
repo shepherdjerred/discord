@@ -1,4 +1,4 @@
-import "react";
+import "https://esm.sh/react@18.2.0";
 import {
   Rank,
   Tier,
@@ -6,49 +6,48 @@ import {
   wasDemoted,
   wasPromoted,
 } from "@glitter-boys/data";
-import { readFile } from "fs/promises";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import { palette } from "../../assets/colors.js";
+import { palette } from "../../assets/colors.ts";
 
 const images: Record<Tier, string> = {
-  iron: await readFile(
+  iron: await Deno.readFile(
     new URL("assets/Rank=Iron.png", import.meta.url),
     "base64"
   ),
-  bronze: await readFile(
+  bronze: await Deno.readFile(
     new URL("assets/Rank=Bronze.png", import.meta.url),
     "base64"
   ),
-  silver: await readFile(
+  silver: await Deno.readFile(
     new URL("assets/Rank=Silver.png", import.meta.url),
     "base64"
   ),
-  gold: await readFile(
+  gold: await Deno.readFile(
     new URL("assets/Rank=Gold.png", import.meta.url),
     "base64"
   ),
-  platinum: await readFile(
+  platinum: await Deno.readFile(
     new URL("assets/Rank=Platinum.png", import.meta.url),
     "base64"
   ),
-  emerald: await readFile(
+  emerald: await Deno.readFile(
     new URL("assets/Rank=Emerald.png", import.meta.url),
     "base64"
   ),
-  diamond: await readFile(
+  diamond: await Deno.readFile(
     new URL("assets/Rank=Diamond.png", import.meta.url),
     "base64"
   ),
-  master: await readFile(
+  master: await Deno.readFile(
     new URL("assets/Rank=Master.png", import.meta.url),
     "base64"
   ),
-  grandmaster: await readFile(
+  grandmaster: await Deno.readFile(
     new URL("assets/Rank=Grandmaster.png", import.meta.url),
     "base64"
   ),
-  challenger: await readFile(
+  challenger: await Deno.readFile(
     new URL("assets/Rank=Challenger.png", import.meta.url),
     "base64"
   ),

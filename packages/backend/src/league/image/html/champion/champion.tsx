@@ -1,19 +1,24 @@
-import "react";
-import { renderItems } from "./item.js";
-import { palette } from "../../assets/colors.js";
+import "https://esm.sh/react@18.2.0";
+import { renderItems } from "./item.tsx";
+import { palette } from "../../assets/colors.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { Champion } from "@glitter-boys/data";
-import { summoner } from "../../../dataDragon/summoner.js";
-import { latestVersion } from "../../../dataDragon/version.js";
-import { CreepScore } from "./creepScore.js";
-import { Gold } from "./gold.js";
-import { Damage } from "./damage.js";
-import { Kda } from "./kda.js";
-import { Names } from "./names.js";
-import { Lane } from "../lane/index.js";
+import { summoner } from "../../../dataDragon/summoner.ts";
+import { latestVersion } from "../../../dataDragon/version.ts";
+import { CreepScore } from "./creepScore.tsx";
+import { Gold } from "./gold.tsx";
+import { Damage } from "./damage.tsx";
+import { Kda } from "./kda.tsx";
+import { Names } from "./names.tsx";
+import { Lane } from "../lane/index.tsx";
 
-export function renderChampion(champion: Champion, highlight: boolean, durationInMinutes: number, damageMax: number) {
+export function renderChampion(
+  champion: Champion,
+  highlight: boolean,
+  durationInMinutes: number,
+  damageMax: number
+) {
   const items = renderItems(champion.items, champion.visionScore);
 
   const damagePercent = _.round((champion.damage / damageMax) * 100);
@@ -34,7 +39,10 @@ export function renderChampion(champion: Champion, highlight: boolean, durationI
         src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/spell/${name}.png`}
         width="59"
         height="59"
-        style={{ backgroundColor: palette.blue[5], border: `1px solid ${palette.gold.bright}` }}
+        style={{
+          backgroundColor: palette.blue[5],
+          border: `1px solid ${palette.gold.bright}`,
+        }}
       />
     );
   });
@@ -59,20 +67,38 @@ export function renderChampion(champion: Champion, highlight: boolean, durationI
         }}
       >
         <Lane lane={champion.lane} />
-        <span style={{ fontWeight: 700, width: "10rem" }}>{champion.level}</span>
+        <span style={{ fontWeight: 700, width: "10rem" }}>
+          {champion.level}
+        </span>
       </div>
 
-      <Names championName={champion.championName} summonerName={champion.summonerName} highlight={highlight} />
+      <Names
+        championName={champion.championName}
+        summonerName={champion.summonerName}
+        highlight={highlight}
+      />
 
       <div style={{ display: "flex", gap: "3rem" }}>
         <div style={{ display: "flex", flexDirection: "column" }}>{summs}</div>
         <div style={{ display: "flex", flexDirection: "row" }}>{items}</div>
       </div>
 
-      <Kda kills={champion.kills} deaths={champion.deaths} assists={champion.assists} highlight={highlight} />
-      <Damage value={champion.damage} percent={damagePercent} highlight={highlight} />
+      <Kda
+        kills={champion.kills}
+        deaths={champion.deaths}
+        assists={champion.assists}
+        highlight={highlight}
+      />
+      <Damage
+        value={champion.damage}
+        percent={damagePercent}
+        highlight={highlight}
+      />
       <Gold value={champion.gold} durationInMinutes={durationInMinutes} />
-      <CreepScore value={champion.creepScore} durationInMinutes={durationInMinutes} />
+      <CreepScore
+        value={champion.creepScore}
+        durationInMinutes={durationInMinutes}
+      />
     </div>
   );
 }

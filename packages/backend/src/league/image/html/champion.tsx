@@ -6,6 +6,7 @@ import _ from "npm:lodash@4.17.21";
 import { laneToString } from "@glitter-boys/data";
 // import summoner from "../assets/summoner.json" assert { type: "json" };
 import { Champion } from "@glitter-boys/data";
+import { summoner } from "../../dataDragon/summoner.ts";
 
 export function renderChampion(
   champion: Champion,

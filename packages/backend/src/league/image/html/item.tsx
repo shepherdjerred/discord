@@ -1,7 +1,6 @@
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import React from "https://esm.sh/react@18.2.0";
-import { currentPatch } from "../../api/index.ts";
 import { palette } from "../assets/colors.ts";
 
 const dimension = 120;

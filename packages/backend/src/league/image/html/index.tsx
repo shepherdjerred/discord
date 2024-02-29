@@ -4,9 +4,8 @@ import satori from "https://esm.sh/satori@0.10.11";
 import { Resvg } from "npm:@resvg/resvg-js@2.6.0";
 import React from "https://esm.sh/react@18.2.0";
 import { loadFonts } from "../assets/index.ts";
-import { palette } from "../assets/colors.ts";
-import { renderTeam } from "./team.tsx";
-import { lpDiffToString, Match } from "@glitter-boys/data";
+import { Match } from "@glitter-boys/data";
+import { Report } from "./report.tsx";
 
 export async function matchToImage(match: Match) {
   const svg = await matchToSvg(match);

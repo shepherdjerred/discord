@@ -1,8 +1,8 @@
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import "react";
-import { palette } from "../../assets/colors.js";
-import { latestVersion } from "../../../dataDragon/version.js";
+import "https://esm.sh/react@18.2.0";
+import { palette } from "../../assets/colors.ts";
+import { latestVersion } from "../../../dataDragon/version.ts";
 
 const dimension = 120;
 

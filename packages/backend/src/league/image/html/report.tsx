@@ -1,16 +1,18 @@
 import { Match, leaguePointsDelta, lpDiffToString } from "@glitter-boys/data";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import "react";
-import { palette } from "../assets/colors.js";
-import { RankedBadge } from "./ranked/index.js";
-import { renderTeam } from "./team.js";
+import "https://esm.sh/react@18.2.0";
+import { palette } from "../assets/colors.ts";
+import { RankedBadge } from "./ranked/index.tsx";
+import { renderTeam } from "./team.tsx";
 
 export function Report({ match }: { match: Match }) {
   const minutes = _.round(match.durationInSeconds / 60);
 
   if (!match.teams.red || !match.teams.blue) {
-    throw new Error(`Match must have both teams: ${JSON.stringify(match.teams)}`);
+    throw new Error(
+      `Match must have both teams: ${JSON.stringify(match.teams)}`
+    );
   }
 
   return (
@@ -54,8 +56,16 @@ export function Report({ match }: { match: Match }) {
               alignSelf: "flex-start",
             }}
           >
-            <span style={{ color: palette.gold[4] }}>{match.player.outcome}</span>
-            <div style={{ fontSize: "6rem", display: "flex", marginBottom: "1rem" }}>
+            <span style={{ color: palette.gold[4] }}>
+              {match.player.outcome}
+            </span>
+            <div
+              style={{
+                fontSize: "6rem",
+                display: "flex",
+                marginBottom: "1rem",
+              }}
+            >
               {minutes}min {match.durationInSeconds % 60}s
             </div>
             <div
@@ -68,17 +78,42 @@ export function Report({ match }: { match: Match }) {
               }}
             >
               <span>
-                {lpDiffToString(leaguePointsDelta(match.player.rankBeforeMatch, match.player.rankAfterMatch))}
+                {lpDiffToString(
+                  leaguePointsDelta(
+                    match.player.rankBeforeMatch,
+                    match.player.rankAfterMatch
+                  )
+                )}
               </span>
               <span>Wins: {match.player.wins}</span>
               <span>Losses: {match.player.losses}</span>
             </div>
           </div>
-          <RankedBadge oldRank={match.player.rankBeforeMatch} newRank={match.player.rankAfterMatch} />
+          <RankedBadge
+            oldRank={match.player.rankBeforeMatch}
+            newRank={match.player.rankAfterMatch}
+          />
         </div>
-        <div style={{ width: "100%", display: "flex", gap: "6rem", flexDirection: "column" }}>
-          {renderTeam(match.teams.blue, "blue", match.player.champion.championName, match.durationInSeconds / 60)}
-          {renderTeam(match.teams.red, "red", match.player.champion.championName, match.durationInSeconds / 60)}
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            gap: "6rem",
+            flexDirection: "column",
+          }}
+        >
+          {renderTeam(
+            match.teams.blue,
+            "blue",
+            match.player.champion.championName,
+            match.durationInSeconds / 60
+          )}
+          {renderTeam(
+            match.teams.red,
+            "red",
+            match.player.champion.championName,
+            match.durationInSeconds / 60
+          )}
         </div>
       </div>
     </div>

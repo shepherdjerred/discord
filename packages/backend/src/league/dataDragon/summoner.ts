@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { latestVersion } from "./version.js";
+import { z } from "https://esm.sh/zod@3.22.4";
+import { latestVersion } from "./version.ts";
 
 // schema created by https://transform.tools/json-to-zod
 export type Summoner = z.infer<typeof SummonerSchema>;
@@ -39,10 +39,14 @@ const SummonerSchema = z.object({
         h: z.number(),
       }),
       resource: z.string(),
-    }),
+    })
   ),
 });
 
 export const summoner = SummonerSchema.parse(
-  await (await fetch(`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/summoner.json`)).json(),
+  await (
+    await fetch(
+      `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/summoner.json`
+    )
+  ).json()
 );
