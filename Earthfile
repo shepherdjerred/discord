@@ -3,6 +3,7 @@ VERSION 0.8
 ci:
   BUILD +check
   BUILD +build
+  BUILD +image
 
 build:
   BUILD ./packages/frontend+build

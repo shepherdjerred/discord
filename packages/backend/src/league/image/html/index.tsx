@@ -23,7 +23,7 @@ export async function matchToSvg(match: Match) {
   return svg;
 }
 
-function svgToPng(svg: string) {
+export function svgToPng(svg: string) {
   const resvg = new Resvg(svg, {
     dpi: 600,
     shapeRendering: 2,
