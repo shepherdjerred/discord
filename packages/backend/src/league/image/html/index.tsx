@@ -13,7 +13,7 @@ export async function matchToImage(match: Match) {
   return png;
 }
 
-async function matchToSvg(match: Match) {
+export async function matchToSvg(match: Match) {
   const fonts = await loadFonts();
   const svg = await satori(<Report match={match} />, {
     width: 4760,

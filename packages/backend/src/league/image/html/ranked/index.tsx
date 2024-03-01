@@ -10,37 +10,63 @@ import {
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { palette } from "../../assets/colors.ts";
+import { encodeBase64 } from "https://deno.land/std@0.218.2/encoding/base64.ts";
 
 const images: Record<Tier, string> = {
-  iron: (
-    await Deno.readFile(new URL("assets/Rank=Iron.png", import.meta.url))
+  iron: encodeBase64(
+    (
+      await Deno.readFile(new URL("assets/Rank=Iron.png", import.meta.url))
+    ).toString()
   ).toString(),
-  bronze: (
-    await Deno.readFile(new URL("assets/Rank=Bronze.png", import.meta.url))
+  bronze: encodeBase64(
+    (
+      await Deno.readFile(new URL("assets/Rank=Bronze.png", import.meta.url))
+    ).toString()
   ).toString(),
-  silver: (
-    await Deno.readFile(new URL("assets/Rank=Silver.png", import.meta.url))
+  silver: encodeBase64(
+    (
+      await Deno.readFile(new URL("assets/Rank=Silver.png", import.meta.url))
+    ).toString()
   ).toString(),
-  gold: (
-    await Deno.readFile(new URL("assets/Rank=Gold.png", import.meta.url))
+  gold: encodeBase64(
+    (
+      await Deno.readFile(new URL("assets/Rank=Gold.png", import.meta.url))
+    ).toString()
   ).toString(),
-  platinum: (
-    await Deno.readFile(new URL("assets/Rank=Platinum.png", import.meta.url))
+
+  platinum: encodeBase64(
+    (
+      await Deno.readFile(new URL("assets/Rank=Platinum.png", import.meta.url))
+    ).toString()
   ).toString(),
-  emerald: (
-    await Deno.readFile(new URL("assets/Rank=Emerald.png", import.meta.url))
+  emerald: encodeBase64(
+    (
+      await Deno.readFile(new URL("assets/Rank=Emerald.png", import.meta.url))
+    ).toString()
   ).toString(),
-  diamond: (
-    await Deno.readFile(new URL("assets/Rank=Diamond.png", import.meta.url))
+  diamond: encodeBase64(
+    (
+      await Deno.readFile(new URL("assets/Rank=Diamond.png", import.meta.url))
+    ).toString()
   ).toString(),
-  master: (
-    await Deno.readFile(new URL("assets/Rank=Master.png", import.meta.url))
+  master: encodeBase64(
+    (
+      await Deno.readFile(new URL("assets/Rank=Master.png", import.meta.url))
+    ).toString()
   ).toString(),
-  grandmaster: (
-    await Deno.readFile(new URL("assets/Rank=Grandmaster.png", import.meta.url))
+  grandmaster: encodeBase64(
+    (
+      await Deno.readFile(
+        new URL("assets/Rank=Grandmaster.png", import.meta.url)
+      )
+    ).toString()
   ).toString(),
-  challenger: (
-    await Deno.readFile(new URL("assets/Rank=Challenger.png", import.meta.url))
+  challenger: encodeBase64(
+    (
+      await Deno.readFile(
+        new URL("assets/Rank=Challenger.png", import.meta.url)
+      )
+    ).toString()
   ).toString(),
 };
 
@@ -91,8 +117,6 @@ export function RankedBadge({
             <img
               src={`data:image/png;base64,${badge}`}
               style={{ width: "24rem" }}
-              width="60"
-              height="60"
             />
             <span style={{ position: "relative", left: "-8rem", top: "-2rem" }}>
               {divisionToString(newRank.division)}

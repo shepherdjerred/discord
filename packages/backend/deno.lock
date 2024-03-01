@@ -719,6 +719,7 @@
     }
   },
   "redirects": {
+    "https://deno.land/std/encoding/base64.ts": "https://deno.land/std@0.218.2/encoding/base64.ts",
     "https://esm.sh/@aws-sdk/client-s3": "https://esm.sh/@aws-sdk/client-s3@3.461.0",
     "https://esm.sh/v128/@types/react@~18.2/index.d.ts": "https://esm.sh/v128/@types/react@18.2.38/index.d.ts"
   },
@@ -881,6 +882,8 @@
     "https://deno.land/std@0.218.0/assert/unimplemented.ts": "47ca67d1c6dc53abd0bd729b71a31e0825fc452dbcd4fde4ca06789d5644e7fd",
     "https://deno.land/std@0.218.0/assert/unreachable.ts": "3670816a4ab3214349acb6730e3e6f5299021234657eefe05b48092f3848c270",
     "https://deno.land/std@0.218.0/fmt/colors.ts": "d239d84620b921ea520125d778947881f62c50e78deef2657073840b8af9559a",
+    "https://deno.land/std@0.218.2/encoding/_util.ts": "beacef316c1255da9bc8e95afb1fa56ed69baef919c88dc06ae6cb7a6103d376",
+    "https://deno.land/std@0.218.2/encoding/base64.ts": "b0fe5f1c55571dc9f091abc7d4830482f2f67ab4308c9c1b57071e770b7dcc74",
     "https://deno.land/std@0.84.0/_util/assert.ts": "2f868145a042a11d5ad0a3c748dcf580add8a0dbc0e876eaa0026303a5488f58",
     "https://deno.land/std@0.84.0/_util/os.ts": "e282950a0eaa96760c0cf11e7463e66babd15ec9157d4c9ed49cc0925686f6a7",
     "https://deno.land/std@0.84.0/path/_constants.ts": "1247fee4a79b70c89f23499691ef169b41b6ccf01887a0abd131009c5581b853",

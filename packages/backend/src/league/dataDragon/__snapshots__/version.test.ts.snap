@@ -1,3 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`dataDragon > should be able to get version 1`] = `"13.23.1"`;

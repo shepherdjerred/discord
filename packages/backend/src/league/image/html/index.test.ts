@@ -1,4 +1,4 @@
-import { matchToImage } from "./index.tsx";
+import { matchToSvg } from "./index.tsx";
 import { MatchV5DTOs } from "npm:twisted@1.57.0/dist/models-dto/index.js";
 import { assertSnapshot } from "https://deno.land/std@0.208.0/testing/snapshot.ts";
 import { toMatch } from "../../model/match.ts";
@@ -35,6 +35,6 @@ Deno.test("image matches", async (t) => {
     { division: 4, tier: "gold", lp: 11, wins: 10, losses: 20 },
     { division: 1, tier: "gold", lp: 4, wins: 50, losses: 30 }
   );
-  const result = await matchToImage(matchObj);
+  const result = await matchToSvg(matchObj);
   assertSnapshot(t, result);
 });
