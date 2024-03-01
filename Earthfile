@@ -22,8 +22,7 @@ prepare:
 
 image:
   ARG version=latest
-  FROM +build.backend
-  WORKDIR /workspace/packages/backend
-  ENTRYPOINT node dist/index.js
-  SAVE IMAGE glitter/backend:latest
+  FROM ./packages/backend+build
+  ENTRYPOINT deno run -A --unstable-ffi src/index.ts
+  SAVE IMAGE glitter-boys:latest
   SAVE IMAGE --push ghcr.io/shepherdjerred/glitter-boys:$version

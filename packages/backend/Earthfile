@@ -17,4 +17,3 @@ build:
   FROM +deps
   # TODO: check this
   # RUN deno install npm:@resvg/resvg-js-linux-x64-gnu
-  SAVE IMAGE glitter/backend:latest
