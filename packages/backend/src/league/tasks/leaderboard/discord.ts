@@ -5,7 +5,6 @@ import {
   Leaderboard,
   LeaderboardEntry,
   PlayerConfigEntry,
-  lpDiffToString,
   rankToString,
 } from "@glitter-boys/data";
 import configuration from "../../../configuration.ts";

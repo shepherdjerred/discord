@@ -2,9 +2,14 @@
   "version": "3",
   "packages": {
     "specifiers": {
+      "npm:@types/lodash": "npm:@types/lodash@4.14.202",
       "npm:lodash@4.17.21": "npm:lodash@4.17.21"
     },
     "npm": {
+      "@types/lodash@4.14.202": {
+        "integrity": "sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==",
+        "dependencies": {}
+      },
       "lodash@4.17.21": {
         "integrity": "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==",
         "dependencies": {}

@@ -1,4 +1,3 @@
-import { userMention } from "npm:discord.js@14.14.1";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { getChampionName } from "npm:twisted@1.57.0/dist/constants/champions.js";
