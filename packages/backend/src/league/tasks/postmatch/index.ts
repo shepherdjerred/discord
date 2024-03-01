@@ -4,19 +4,17 @@ import _ from "npm:lodash@4.17.21";
 import { MatchV5DTOs } from "npm:twisted@1.57.0/dist/models-dto/index.js";
 import { z } from "https://esm.sh/zod@3.22.4";
 import { api } from "../../api/api.ts";
-import {
-  AttachmentBuilder,
-  EmbedBuilder,
-  userMention,
-} from "npm:discord.js@14.14.1";
+import { AttachmentBuilder, EmbedBuilder } from "npm:discord.js@14.14.1";
 import { matchToImage } from "../../image/html/index.tsx";
-import { Match, MatchState, rankToLeaguePoints } from "@glitter-boys/data";
+import { Match, MatchState } from "@glitter-boys/data";
 import { send } from "../../discord/channel.ts";
 import { s3 } from "../../s3.ts";
 import { PutObjectCommand } from "https://esm.sh/@aws-sdk/client-s3";
 import configuration from "../../../configuration.ts";
 import { getPlayer } from "../../model/player.ts";
 import { getState, setState } from "../../model/state.ts";
+import { toMatch } from "../../model/match.ts";
+import { assert } from "https://deno.land/std@0.218.0/assert/mod.ts";
 
 async function checkMatch(game: MatchState) {
   try {

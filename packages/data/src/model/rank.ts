@@ -55,7 +55,7 @@ export function wasPromoted(
   previous: Rank | undefined,
   current: Rank
 ): boolean {
-  if (previous == undefined) {
+  if (previous === undefined) {
     return false;
   }
 
@@ -66,6 +66,10 @@ export function wasPromoted(
 
   if (previousTier < currentTier) {
     return true;
+  }
+
+  if (previousDivision === undefined || currentDivision === undefined) {
+    return false;
   }
 
   if (previousTier == currentTier && previousDivision > currentDivision) {

@@ -11,7 +11,8 @@ import { s3 } from "../../s3.ts";
 import { getPlayerConfigs } from "../../playerConfig.ts";
 import { format } from "https://esm.sh/date-fns@2.30.0";
 import { send } from "../../discord/channel.ts";
-import { leaderboardToDiscordMessage } from "./discord.ts";
+import { leaderboardToDiscordMessage, setKing } from "./discord.ts";
+import { Leaderboard } from "@glitter-boys/data";
 
 const link = "https://glitter-boys.com/leaderboard/";
 

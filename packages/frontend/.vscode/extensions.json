@@ -1,9 +1,0 @@
-{
-  "recommendations": [
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "earthly.earthfile-syntax-highlighting",
-    "tamasfe.even-better-toml",
-    "bradlc.vscode-tailwindcss"
-  ]
-}

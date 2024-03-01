@@ -1,5 +1,4 @@
-import { describe, expect, test } from "vitest";
-import { latestVersion } from "./version.js";
+import { latestVersion } from "./version.ts";
 
 describe("dataDragon", () => {
   test("should be able to get version", () => {

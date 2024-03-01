@@ -1,3 +1,4 @@
+import React from "https://esm.sh/react@18.2.0";
 import { Match, leaguePointsDelta, lpDiffToString } from "@glitter-boys/data";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";

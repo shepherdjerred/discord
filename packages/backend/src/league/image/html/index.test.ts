@@ -1,7 +1,7 @@
 import { matchToSvg, svgToPng } from "./index.tsx";
 import { PlayerConfigEntry } from "@glitter-boys/data";
 import { Player } from "@glitter-boys/data";
-import exampleMatch from "./match.json" assert { type: "json" };
+// import exampleMatch from "./match.json" assert { type: "json" };
 import { MatchV5DTOs } from "npm:twisted@1.57.0/dist/models-dto/index.js";
 import { createMatchObject } from "../../match.ts";
 import { assertSnapshot } from "https://deno.land/std@0.208.0/testing/snapshot.ts";

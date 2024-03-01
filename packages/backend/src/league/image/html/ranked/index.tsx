@@ -1,3 +1,4 @@
+import React from "https://esm.sh/react@18.2.0";
 import "https://esm.sh/react@18.2.0";
 import {
   Rank,
@@ -11,46 +12,36 @@ import _ from "npm:lodash@4.17.21";
 import { palette } from "../../assets/colors.ts";
 
 const images: Record<Tier, string> = {
-  iron: await Deno.readFile(
-    new URL("assets/Rank=Iron.png", import.meta.url),
-    "base64"
-  ),
-  bronze: await Deno.readFile(
-    new URL("assets/Rank=Bronze.png", import.meta.url),
-    "base64"
-  ),
-  silver: await Deno.readFile(
-    new URL("assets/Rank=Silver.png", import.meta.url),
-    "base64"
-  ),
-  gold: await Deno.readFile(
-    new URL("assets/Rank=Gold.png", import.meta.url),
-    "base64"
-  ),
-  platinum: await Deno.readFile(
-    new URL("assets/Rank=Platinum.png", import.meta.url),
-    "base64"
-  ),
-  emerald: await Deno.readFile(
-    new URL("assets/Rank=Emerald.png", import.meta.url),
-    "base64"
-  ),
-  diamond: await Deno.readFile(
-    new URL("assets/Rank=Diamond.png", import.meta.url),
-    "base64"
-  ),
-  master: await Deno.readFile(
-    new URL("assets/Rank=Master.png", import.meta.url),
-    "base64"
-  ),
-  grandmaster: await Deno.readFile(
-    new URL("assets/Rank=Grandmaster.png", import.meta.url),
-    "base64"
-  ),
-  challenger: await Deno.readFile(
-    new URL("assets/Rank=Challenger.png", import.meta.url),
-    "base64"
-  ),
+  iron: (
+    await Deno.readFile(new URL("assets/Rank=Iron.png", import.meta.url))
+  ).toString(),
+  bronze: (
+    await Deno.readFile(new URL("assets/Rank=Bronze.png", import.meta.url))
+  ).toString(),
+  silver: (
+    await Deno.readFile(new URL("assets/Rank=Silver.png", import.meta.url))
+  ).toString(),
+  gold: (
+    await Deno.readFile(new URL("assets/Rank=Gold.png", import.meta.url))
+  ).toString(),
+  platinum: (
+    await Deno.readFile(new URL("assets/Rank=Platinum.png", import.meta.url))
+  ).toString(),
+  emerald: (
+    await Deno.readFile(new URL("assets/Rank=Emerald.png", import.meta.url))
+  ).toString(),
+  diamond: (
+    await Deno.readFile(new URL("assets/Rank=Diamond.png", import.meta.url))
+  ).toString(),
+  master: (
+    await Deno.readFile(new URL("assets/Rank=Master.png", import.meta.url))
+  ).toString(),
+  grandmaster: (
+    await Deno.readFile(new URL("assets/Rank=Grandmaster.png", import.meta.url))
+  ).toString(),
+  challenger: (
+    await Deno.readFile(new URL("assets/Rank=Challenger.png", import.meta.url))
+  ).toString(),
 };
 
 export function RankedBadge({

@@ -1,6 +1,6 @@
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import { palette } from "../../assets/colors.js";
+import { palette } from "../../assets/colors.ts";
 
 export function Kda({
   kills,

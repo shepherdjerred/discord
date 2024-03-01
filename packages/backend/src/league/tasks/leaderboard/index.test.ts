@@ -1,6 +1,5 @@
 import { Division, Player, Rank, Tier } from "@glitter-boys/data";
-import { describe, it, expect } from "vitest";
-import { toLeaderboard } from "./index.js";
+import { toLeaderboard } from "./index.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 

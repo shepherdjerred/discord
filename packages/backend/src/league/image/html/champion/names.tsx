@@ -1,4 +1,4 @@
-import { palette } from "../../assets/colors.js";
+import { palette } from "../../assets/colors.ts";
 
 export function Names({
   summonerName,

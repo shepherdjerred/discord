@@ -1,5 +1,4 @@
-import { describe, expect, test } from "vitest";
-import { summoner } from "./summoner.js";
+import { summoner } from "./summoner.ts";
 
 describe("dataDragon", () => {
   test("should be able to get champion data", () => {

@@ -26,12 +26,14 @@ export function getRank(
   queue: string
 ): Rank | undefined {
   const entry = getDto(dto, queue);
-
   if (entry == undefined) {
     return undefined;
   }
 
   const division = parseDivision(entry.rank);
+  if (division == undefined) {
+    return undefined;
+  }
 
   return {
     division,

@@ -2,13 +2,14 @@
 import _ from "npm:lodash@4.17.21";
 import React from "https://esm.sh/react@18.2.0";
 import { palette } from "../assets/colors.ts";
+import { latestVersion } from "../../dataDragon/version.ts";
 
 const dimension = 120;
 
 export function renderItem(item: number) {
   return (
     <img
-      src={`https://ddragon.leagueoflegends.com/cdn/${currentPatch}/img/item/${item.toString()}.png`}
+      src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/item/${item.toString()}.png`}
       style={{
         backgroundColor: palette.blue[5],
         border: `1px solid ${palette.gold.bright}`,
