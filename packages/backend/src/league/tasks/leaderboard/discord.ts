@@ -27,9 +27,11 @@ function leaderboardEntryToDiscordMessage({
     positionString = bold(positionString);
   }
 
-  return `${positionString}: ${userMention(
-    player.config.discordAccount.id
-  )} ${bold(rankToString(player.ranks.solo))}`;
+  return `${positionString}: ${
+    userMention(
+      player.config.discordAccount.id,
+    )
+  } ${bold(rankToString(player.ranks.solo))}`;
 }
 
 export async function setKing(king: PlayerConfigEntry) {

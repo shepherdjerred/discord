@@ -7,7 +7,7 @@ const versions = z
   .parse(
     await (
       await fetch("https://ddragon.leagueoflegends.com/api/versions.json")
-    ).json()
+    ).json(),
   );
 
 export const latestVersion = _.first(versions) as string;

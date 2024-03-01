@@ -4,17 +4,17 @@ import { parseTeam, Team } from "@glitter-boys/data";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { MatchV5DTOs } from "npm:twisted@1.57.0/dist/models-dto/index.js";
-import { createChampionObject } from "./champion.ts";
+import { createChampionObject } from "./model/champion.ts";
 
 export function createMatchObject(
   player: Player,
   dto: MatchV5DTOs.MatchDto,
-  lpChange: number
+  lpChange: number,
 ): Match {
   const playerParticipant = _.chain(dto.info.participants)
     .filter(
       (participant) =>
-        participant.puuid === player.config.league.leagueAccount.puuid
+        participant.puuid === player.config.league.leagueAccount.puuid,
     )
     .first()
     .value();
@@ -35,7 +35,7 @@ export function createMatchObject(
   const team = parseTeam(playerParticipant.teamId);
   if (team == undefined) {
     throw new Error(
-      `invalid team: ${JSON.stringify(playerParticipant.teamId)}`
+      `invalid team: ${JSON.stringify(playerParticipant.teamId)}`,
     );
   }
 
@@ -62,10 +62,10 @@ export function createMatchObject(
     player: {
       playerConfig: player.config,
       leaguePointsDelta: lpChange,
-      tournamentWins:
-        player.currentRank.wins - player.config.league.initialRank.wins,
-      tournamentLosses:
-        player.currentRank.losses - player.config.league.initialRank.losses,
+      tournamentWins: player.currentRank.wins -
+        player.config.league.initialRank.wins,
+      tournamentLosses: player.currentRank.losses -
+        player.config.league.initialRank.losses,
       champion: createChampionObject(playerParticipant),
       outcome,
       team,

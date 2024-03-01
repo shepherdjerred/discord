@@ -1,4 +1,4 @@
-import { matchToSvg, svgToPng } from "./index.tsx";
+import { matchToSvg } from "./index.tsx";
 import { MatchV5DTOs } from "npm:twisted@1.57.0/dist/models-dto/index.js";
 import { assertSnapshot } from "https://deno.land/std@0.208.0/testing/snapshot.ts";
 import { toMatch } from "../../model/match.ts";
@@ -7,7 +7,7 @@ const testdataPath = new URL("testdata/match.json", import.meta.url);
 
 Deno.test("image matches", async (t) => {
   const exampleMatch = JSON.parse(
-    (await Deno.readTextFile(testdataPath)).toString()
+    (await Deno.readTextFile(testdataPath)).toString(),
   ) as MatchV5DTOs.MatchDto;
 
   const matchObj = toMatch(
@@ -33,7 +33,7 @@ Deno.test("image matches", async (t) => {
     },
     exampleMatch,
     { division: 4, tier: "gold", lp: 11, wins: 10, losses: 20 },
-    { division: 1, tier: "gold", lp: 4, wins: 50, losses: 30 }
+    { division: 1, tier: "gold", lp: 4, wins: 50, losses: 30 },
   );
   const svg = await matchToSvg(matchObj);
   assertSnapshot(t, svg);

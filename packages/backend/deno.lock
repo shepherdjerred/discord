@@ -738,7 +738,8 @@
   "redirects": {
     "https://deno.land/std/encoding/base64.ts": "https://deno.land/std@0.218.2/encoding/base64.ts",
     "https://esm.sh/@aws-sdk/client-s3": "https://esm.sh/@aws-sdk/client-s3@3.461.0",
-    "https://esm.sh/v128/@types/react@~18.2/index.d.ts": "https://esm.sh/v128/@types/react@18.2.38/index.d.ts"
+    "https://esm.sh/v128/@types/react@~18.2/index.d.ts": "https://esm.sh/v128/@types/react@18.2.38/index.d.ts",
+    "https://esm.sh/v135/@types/uuid@~9.0/index.d.ts": "https://esm.sh/v135/@types/uuid@9.0.7/index.d.ts"
   },
   "remote": {
     "https://deno.land/std@0.176.0/_util/asserts.ts": "178dfc49a464aee693a7e285567b3d0b555dc805ff490505a8aae34f9cfb1462",

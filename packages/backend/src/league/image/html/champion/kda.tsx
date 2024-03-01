@@ -13,8 +13,9 @@ export function Kda({
   assists: number;
   highlight: boolean;
 }) {
-  const kdaRatio =
-    deaths === 0 ? kills + deaths : _.round((kills + assists) / deaths, 1);
+  const kdaRatio = deaths === 0
+    ? kills + deaths
+    : _.round((kills + assists) / deaths, 1);
   return (
     <div
       style={{
@@ -26,7 +27,9 @@ export function Kda({
     >
       <span
         style={{ fontWeight: 700, color: highlight ? palette.gold[1] : "" }}
-      >{`${kills} / ${deaths} / ${assists}`}</span>
+      >
+        {`${kills} / ${deaths} / ${assists}`}
+      </span>
       <span>{kdaRatio} KDA</span>
     </div>
   );

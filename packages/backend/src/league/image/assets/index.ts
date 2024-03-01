@@ -13,7 +13,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.title,
       data: await Deno.readFile(
-        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Light.ttf`
+        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Light.ttf`,
       ),
       weight: 300,
       style: "normal",
@@ -21,7 +21,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.title,
       data: await Deno.readFile(
-        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-LightItalic.ttf`
+        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-LightItalic.ttf`,
       ),
       weight: 300,
       style: "italic",
@@ -29,7 +29,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.title,
       data: await Deno.readFile(
-        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Regular.ttf`
+        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Regular.ttf`,
       ),
       weight: 400,
       style: "normal",
@@ -37,7 +37,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.title,
       data: await Deno.readFile(
-        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Italic.ttf`
+        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Italic.ttf`,
       ),
       weight: 400,
       style: "italic",
@@ -45,7 +45,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.title,
       data: await Deno.readFile(
-        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Medium.ttf`
+        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Medium.ttf`,
       ),
       weight: 500,
       style: "normal",
@@ -53,7 +53,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.title,
       data: await Deno.readFile(
-        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-MediumItalic.ttf`
+        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-MediumItalic.ttf`,
       ),
       weight: 500,
       style: "italic",
@@ -61,7 +61,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.title,
       data: await Deno.readFile(
-        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Bold.ttf`
+        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Bold.ttf`,
       ),
       weight: 700,
       style: "normal",
@@ -69,7 +69,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.title,
       data: await Deno.readFile(
-        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-BoldItalic.ttf`
+        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-BoldItalic.ttf`,
       ),
       weight: 700,
       style: "italic",
@@ -77,7 +77,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.title,
       data: await Deno.readFile(
-        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Heavy.ttf`
+        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-Heavy.ttf`,
       ),
       weight: 800,
       style: "normal",
@@ -85,7 +85,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.title,
       data: await Deno.readFile(
-        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-HeavyItalic.ttf`
+        `${fontPath}/BeaufortForLoL-TTF/BeaufortforLOL-HeavyItalic.ttf`,
       ),
       weight: 800,
       style: "italic",
@@ -93,7 +93,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.body,
       data: await Deno.readFile(
-        `${fontPath}/Spiegel-TTF/Spiegel_TT_Regular.ttf`
+        `${fontPath}/Spiegel-TTF/Spiegel_TT_Regular.ttf`,
       ),
       weight: 400,
       style: "normal",
@@ -101,7 +101,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.body,
       data: await Deno.readFile(
-        `${fontPath}/Spiegel-TTF/Spiegel_TT_Regular_Italic.ttf`
+        `${fontPath}/Spiegel-TTF/Spiegel_TT_Regular_Italic.ttf`,
       ),
       weight: 400,
       style: "italic",
@@ -109,7 +109,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.body,
       data: await Deno.readFile(
-        `${fontPath}/Spiegel-TTF/Spiegel_TT_SemiBold.ttf`
+        `${fontPath}/Spiegel-TTF/Spiegel_TT_SemiBold.ttf`,
       ),
       weight: 500,
       style: "normal",
@@ -117,7 +117,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.body,
       data: await Deno.readFile(
-        `${fontPath}/Spiegel-TTF/Spiegel_TT_SemiBold_Italic.ttf`
+        `${fontPath}/Spiegel-TTF/Spiegel_TT_SemiBold_Italic.ttf`,
       ),
       weight: 500,
       style: "italic",
@@ -131,7 +131,7 @@ export async function loadFonts(): Promise<Font[]> {
     {
       name: font.body,
       data: await Deno.readFile(
-        `${fontPath}/Spiegel-TTF/Spiegel_TT_Bold_Italic.ttf`
+        `${fontPath}/Spiegel-TTF/Spiegel_TT_Bold_Italic.ttf`,
       ),
       weight: 700,
       style: "italic",

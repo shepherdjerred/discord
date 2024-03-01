@@ -73,15 +73,19 @@ function getCurrentPick(teams: PartialTeams): TeamName | undefined {
 }
 
 function printTeam(team: Team | PartialTeam) {
-  return `${userMention(team.captain)}\n${team.members
-    .map((member) => userMention(member))
-    .join("\n")}`;
+  return `${userMention(team.captain)}\n${
+    team.members
+      .map((member) => userMention(member))
+      .join("\n")
+  }`;
 }
 
 function printTeams(teams: Teams | PartialTeams) {
-  return `Red Team:\n${printTeam(teams.red)}\n\nBlue Team:\n${printTeam(
-    teams.blue
-  )}`;
+  return `Red Team:\n${printTeam(teams.red)}\n\nBlue Team:\n${
+    printTeam(
+      teams.blue,
+    )
+  }`;
 }
 
 function printPool(players: string[]) {
@@ -283,7 +287,7 @@ async function handlePoolLeave(interaction: ChatInputCommandInteraction) {
   }
 
   state.players = state.players.filter(
-    (player) => player !== interaction.user.id
+    (player) => player !== interaction.user.id,
   );
   state = { name: "pool", host: state.host, players: state.players };
   return await interaction.reply({
@@ -313,9 +317,11 @@ async function handleInit(interaction: ChatInputCommandInteraction) {
     players: [interaction.user.id],
   };
   await interaction.reply({
-    content: `${userMention(
-      state.host
-    )} has initialized a new customs match. Use \`/customs pool join\` to join.`,
+    content: `${
+      userMention(
+        state.host,
+      )
+    } has initialized a new customs match. Use \`/customs pool join\` to join.`,
   });
 }
 
@@ -345,11 +351,15 @@ async function handlePoolJoin(interaction: ChatInputCommandInteraction) {
       players: state.players,
     };
     await interaction.reply({
-      content: `${userMention(
-        interaction.user.id
-      )} joined the player pool. The player pool is now full. ${userMention(
-        state.host
-      )} should now pick team captains with \`/customs captain random\` or \`/customs captain set\`.`,
+      content: `${
+        userMention(
+          interaction.user.id,
+        )
+      } joined the player pool. The player pool is now full. ${
+        userMention(
+          state.host,
+        )
+      } should now pick team captains with \`/customs captain random\` or \`/customs captain set\`.`,
     });
   } else {
     await interaction.reply({
@@ -438,20 +448,28 @@ async function handleTeamPick(interaction: ChatInputCommandInteraction) {
   if (nextTurn === undefined) {
     state = { name: "ready", host: state.host, teams: state.teams as Teams };
     return await interaction.reply({
-      content: `${userMention(
-        user.id
-      )} has been picked for the ${turn} team. Teams are now complete. Use \`/customs start\` to start the match.`,
+      content: `${
+        userMention(
+          user.id,
+        )
+      } has been picked for the ${turn} team. Teams are now complete. Use \`/customs start\` to start the match.`,
     });
   } else {
     const pickingCaptain = state.teams[nextTurn].captain;
     return await interaction.reply({
-      content: `${userMention(
-        user.id
-      )} has been picked for the ${turn} team. It's now ${userMention(
-        pickingCaptain
-      )}'s turn. Pick a member with \`/customs team pick\` The following players are up for draft: ${printPool(
-        state.players
-      )}`,
+      content: `${
+        userMention(
+          user.id,
+        )
+      } has been picked for the ${turn} team. It's now ${
+        userMention(
+          pickingCaptain,
+        )
+      }'s turn. Pick a member with \`/customs team pick\` The following players are up for draft: ${
+        printPool(
+          state.players,
+        )
+      }`,
     });
   }
 }
@@ -535,13 +553,19 @@ async function handleCaptainRandom(interaction: ChatInputCommandInteraction) {
   }
   const captain = state.teams[firstPick].captain;
   await interaction.reply({
-    content: `Team captains have been randomly picked. Red: ${userMention(
-      red
-    )}, Blue: ${userMention(blue)}. Drafting has begun. ${userMention(
-      captain
-    )} gets first pick. Use \`/customs team pick\` to choose teammates. The following players are up for draft: ${printPool(
-      state.players
-    )}`,
+    content: `Team captains have been randomly picked. Red: ${
+      userMention(
+        red,
+      )
+    }, Blue: ${userMention(blue)}. Drafting has begun. ${
+      userMention(
+        captain,
+      )
+    } gets first pick. Use \`/customs team pick\` to choose teammates. The following players are up for draft: ${
+      printPool(
+        state.players,
+      )
+    }`,
     ephemeral: true,
   });
 }
@@ -611,13 +635,19 @@ async function handleCaptainSet(interaction: ChatInputCommandInteraction) {
   }
   const captain = state.teams[firstPick].captain;
   await interaction.reply({
-    content: `Team captains have been randomly picked. Red: ${userMention(
-      red.id
-    )}, Blue: ${userMention(blue.id)}. Drafting has begun. ${userMention(
-      captain
-    )} gets first pick. Use \`/customs team pick\` to choose teammates. The following players are up for draft: ${printPool(
-      state.players
-    )}`,
+    content: `Team captains have been randomly picked. Red: ${
+      userMention(
+        red.id,
+      )
+    }, Blue: ${userMention(blue.id)}. Drafting has begun. ${
+      userMention(
+        captain,
+      )
+    } gets first pick. Use \`/customs team pick\` to choose teammates. The following players are up for draft: ${
+      printPool(
+        state.players,
+      )
+    }`,
     ephemeral: true,
   });
 }

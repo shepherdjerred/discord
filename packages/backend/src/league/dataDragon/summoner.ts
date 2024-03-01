@@ -39,14 +39,14 @@ const SummonerSchema = z.object({
         h: z.number(),
       }),
       resource: z.string(),
-    })
+    }),
   ),
 });
 
 export const summoner = SummonerSchema.parse(
   await (
     await fetch(
-      `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/summoner.json`
+      `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/summoner.json`,
     )
-  ).json()
+  ).json(),
 );
