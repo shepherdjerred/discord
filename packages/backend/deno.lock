@@ -5,6 +5,7 @@
       "npm:@resvg/resvg-js@2.6.0": "npm:@resvg/resvg-js@2.6.0",
       "npm:@types/lodash": "npm:@types/lodash@4.14.202",
       "npm:@types/node": "npm:@types/node@18.16.19",
+      "npm:date-fns@2.30.0": "npm:date-fns@2.30.0",
       "npm:discord.js@14.14.1": "npm:discord.js@14.14.1",
       "npm:lodash@4.17.21": "npm:lodash@4.17.21",
       "npm:reflect-metadata@0.2.1": "npm:reflect-metadata@0.2.1",
@@ -12,6 +13,12 @@
       "npm:typeorm@0.3.20": "npm:typeorm@0.3.20"
     },
     "npm": {
+      "@babel/runtime@7.23.4": {
+        "integrity": "sha512-2Yv65nlWnWlSpe3fXEyX5i7fx5kIKo4Qbcj+hMO0odwaneFjfXw5fdum+4yL20O0QiaHpia0cYQ9xpNMqrBwHg==",
+        "dependencies": {
+          "regenerator-runtime": "regenerator-runtime@0.14.0"
+        }
+      },
       "@discordjs/builders@1.7.0": {
         "integrity": "sha512-GDtbKMkg433cOZur8Dv6c25EHxduNIBsxeHrsRoIM8+AwmEZ8r0tEpckx/sHwTLwQPOF3e2JWloZh9ofCaMfAw==",
         "dependencies": {
@@ -308,6 +315,12 @@
           "which": "which@2.0.2"
         }
       },
+      "date-fns@2.30.0": {
+        "integrity": "sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==",
+        "dependencies": {
+          "@babel/runtime": "@babel/runtime@7.23.4"
+        }
+      },
       "dayjs@1.11.10": {
         "integrity": "sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==",
         "dependencies": {}
@@ -528,6 +541,10 @@
       },
       "reflect-metadata@0.2.1": {
         "integrity": "sha512-i5lLI6iw9AU3Uu4szRNPPEkomnkjRTaVt9hy/bn5g/oSzekBSMeLZblcjP74AW0vBabqERLLIrz+gR8QYR54Tw==",
+        "dependencies": {}
+      },
+      "regenerator-runtime@0.14.0": {
+        "integrity": "sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==",
         "dependencies": {}
       },
       "require-directory@2.1.1": {

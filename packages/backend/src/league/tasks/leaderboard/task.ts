@@ -9,7 +9,7 @@ import {
 import configuration from "../../../configuration.ts";
 import { s3 } from "../../s3.ts";
 import { getPlayerConfigs } from "../../playerConfig.ts";
-import { format } from "https://esm.sh/date-fns@2.30.0";
+import { format } from "npm:date-fns@2.30.0";
 import { send } from "../../discord/channel.ts";
 import { leaderboardToDiscordMessage, setKing } from "./discord.ts";
 import { Leaderboard } from "@glitter-boys/data";

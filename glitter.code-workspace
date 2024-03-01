@@ -53,6 +53,16 @@
         "name": "https://localhost:4321",
         "request": "launch",
         "url": "https://localhost:4321"
+      },
+      {
+        "request": "launch",
+        "name": "Update Leaderboard",
+        "type": "node",
+        "program": "${workspaceFolder}/src/league/tasks/leaderboard/oneshot.ts",
+        "cwd": "${workspaceFolder}",
+        "runtimeExecutable": "/Users/jerred/.local/share/mise/shims/deno",
+        "runtimeArgs": ["run", "--unstable", "--inspect-wait", "--allow-all"],
+        "attachSimplePort": 9229
       }
     ]
   }
