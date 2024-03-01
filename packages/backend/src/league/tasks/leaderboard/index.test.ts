@@ -2,6 +2,7 @@ import { Division, Player, Rank, Tier } from "@glitter-boys/data";
 import { toLeaderboard } from "./index.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
+import { assertSnapshot } from "https://deno.land/std@0.208.0/testing/snapshot.ts";
 
 const createRank = ({
   division,
@@ -45,41 +46,38 @@ const createPlayer = ({
   },
 });
 
-describe("Leaderboard", () => {
-  it("should return a correct leaderboard", () => {
-    const players: Player[] = _.shuffle([
-      createPlayer({
-        name: "top of the leaderboard",
-        currentRank: createRank({ division: 1, tier: "challenger", lp: 100 }),
-      }),
-      createPlayer({
-        name: "bottom of the leaderboard",
-        currentRank: createRank({ division: 4, tier: "iron", lp: 0 }),
-      }),
-      createPlayer({
-        name: "positive",
-        currentRank: createRank({ division: 3, tier: "silver", lp: 50 }),
-      }),
-      createPlayer({
-        name: "negative",
-        currentRank: createRank({ division: 2, tier: "bronze", lp: 50 }),
-      }),
-      createPlayer({
-        name: "no change",
-        currentRank: createRank({ division: 3, tier: "silver", lp: 50 }),
-      }),
-      createPlayer({
-        name: "tied with next player",
-        currentRank: createRank({ division: 1, tier: "silver", lp: 50 }),
-      }),
-      createPlayer({
-        name: "tied with previous player",
-        currentRank: createRank({ division: 3, tier: "silver", lp: 50 }),
-      }),
-    ]);
+Deno.test("should return a correct leaderboard", (t) => {
+  const players: Player[] = _.shuffle([
+    createPlayer({
+      name: "top of the leaderboard",
+      currentRank: createRank({ division: 1, tier: "challenger", lp: 100 }),
+    }),
+    createPlayer({
+      name: "bottom of the leaderboard",
+      currentRank: createRank({ division: 4, tier: "iron", lp: 0 }),
+    }),
+    createPlayer({
+      name: "positive",
+      currentRank: createRank({ division: 3, tier: "silver", lp: 50 }),
+    }),
+    createPlayer({
+      name: "negative",
+      currentRank: createRank({ division: 2, tier: "bronze", lp: 50 }),
+    }),
+    createPlayer({
+      name: "no change",
+      currentRank: createRank({ division: 3, tier: "silver", lp: 50 }),
+    }),
+    createPlayer({
+      name: "tied with next player",
+      currentRank: createRank({ division: 1, tier: "silver", lp: 50 }),
+    }),
+    createPlayer({
+      name: "tied with previous player",
+      currentRank: createRank({ division: 3, tier: "silver", lp: 50 }),
+    }),
+  ]);
 
-    expect(toLeaderboard(players)).toMatchSnapshot({
-      date: expect.any(Date) as unknown,
-    });
-  });
+  // TODO date matcher
+  assertSnapshot(t, toLeaderboard(players));
 });

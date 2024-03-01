@@ -91,6 +91,8 @@ export function RankedBadge({
             <img
               src={`data:image/png;base64,${badge}`}
               style={{ width: "24rem" }}
+              width="60"
+              height="60"
             />
             <span style={{ position: "relative", left: "-8rem", top: "-2rem" }}>
               {divisionToString(newRank.division)}

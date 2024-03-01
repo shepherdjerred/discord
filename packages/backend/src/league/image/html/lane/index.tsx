@@ -33,6 +33,8 @@ export function Lane({ lane }: { lane: Lane | undefined }) {
       <img
         src={`data:image/png;base64,${images[lane || "unknown"]}`}
         style={{ width: "8rem" }}
+        width="60"
+        height="60"
       />
     </span>
   );
