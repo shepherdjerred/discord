@@ -3,6 +3,7 @@ import { handleKarma } from "../karma/commands.ts";
 import "./rest.ts";
 import client from "./client.ts";
 import { handleCustoms } from "../customs/commands.ts";
+import { handleMusic } from "../music/commands.ts";
 
 client.on(Events.InteractionCreate, async (interaction) => {
   try {
@@ -14,7 +15,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
         await handleKarma(interaction);
         break;
       case "music":
-        // await handleMusic(interaction);
+        await handleMusic(interaction);
         break;
       case "customs":
         await handleCustoms(interaction);
