@@ -21,6 +21,12 @@ export function parseQueueType(input: number): QueueType | undefined {
     .otherwise(() => undefined);
 }
 
+export type MatchPlayer = z.infer<typeof MatchPlayerSchema>;
+export const MatchPlayerSchema = z.strictObject({
+  player: PlayerConfigEntrySchema,
+  rank: RankSchema.optional(),
+});
+
 export type MatchState = z.infer<typeof MatchStateSchema>;
 export const MatchStateSchema = z.strictObject({
   // a way to uniquely identify this entry
@@ -30,9 +36,8 @@ export const MatchStateSchema = z.strictObject({
   added: z.string().pipe(z.coerce.date()),
   // the match id from the Riot API
   matchId: z.number(),
-  player: PlayerConfigEntrySchema,
-  rank: RankSchema.optional(),
   queue: QueueTypeSchema,
+  players: z.array(MatchPlayerSchema),
 });
 
 export type State = z.infer<typeof StateSchema>;
@@ -41,23 +46,23 @@ export const StateSchema = z.strictObject({
 });
 
 export function getPlayersInGame(players: PlayerConfig, state: State) {
+  const playersInGame = _.flatMap(state.gamesStarted, (game) => game.players);
   return _.filter(players, (player) =>
     _.some(
-      state.gamesStarted,
-      (game) =>
-        game.player.league.leagueAccount.accountId ===
-        player.league.leagueAccount.accountId
-    )
-  );
+      playersInGame,
+      (matchPlayer) =>
+        matchPlayer.player.league.leagueAccount.accountId ===
+          player.league.leagueAccount.accountId,
+    ));
 }
 
 export function getPlayersNotInGame(players: PlayerConfig, state: State) {
+  const playersInGame = _.flatMap(state.gamesStarted, (game) => game.players);
   return _.reject(players, (player) =>
     _.some(
-      state.gamesStarted,
-      (game) =>
-        game.player.league.leagueAccount.accountId ===
-        player.league.leagueAccount.accountId
-    )
-  );
+      playersInGame,
+      (matchPlayer) =>
+        matchPlayer.player.league.leagueAccount.accountId ===
+          player.league.leagueAccount.accountId,
+    ));
 }

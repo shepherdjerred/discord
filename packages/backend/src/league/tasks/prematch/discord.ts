@@ -5,28 +5,38 @@ import { CurrentGameInfoDTO } from "npm:twisted@1.57.0/dist/models-dto/index.js"
 import { findParticipant } from "../../api/index.ts";
 import { PlayerConfigEntry } from "@glitter-boys/data";
 
-export function createDiscordMessage([player, game]: [
-  PlayerConfigEntry,
+export function createDiscordMessage([players, game]: [
+  PlayerConfigEntry[],
   CurrentGameInfoDTO,
 ]): string {
-  const participant = findParticipant(player, game.participants);
+  const participants = players.map((player) => {
+    const participant = findParticipant(player, game.participants);
+    if (participant === undefined) {
+      throw new Error(
+        `unable to find participants: ${JSON.stringify(participants)}, ${
+          JSON.stringify(
+            game,
+          )
+        }`,
+      );
+    }
+    return { player, participant };
+  });
 
-  if (participant === undefined) {
-    throw new Error(
-      `unable to find participant ${JSON.stringify(player)}, ${
-        JSON.stringify(
-          game,
-        )
-      }`,
-    );
+  let type = "solo";
+  if (participants.length === 2) {
+    type = "duo";
   }
 
   // TODO: call API to get proper champion name
-  const championName = getChampionName(participant.championId);
+  const messages = _.map(participants, (participant) => {
+    const championName = getChampionName(participant.participant.championId);
+    return `${participant.player.name} started a ${type} queue game as ${
+      _.startCase(
+        championName.replaceAll("_", " ").toLowerCase(),
+      )
+    }`;
+  });
 
-  return `${player.name} started a solo queue game as ${
-    _.startCase(
-      championName.replaceAll("_", " ").toLowerCase(),
-    )
-  }`;
+  return messages.join("\n");
 }

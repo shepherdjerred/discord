@@ -4,6 +4,7 @@ import _ from "npm:lodash@4.17.21";
 import * as uuid from "https://esm.sh/uuid@9.0.1";
 import {
   getPlayersNotInGame,
+  MatchPlayer,
   type MatchState,
   PlayerConfigEntry,
 } from "@glitter-boys/data";
@@ -42,23 +43,37 @@ export async function checkPreMatch() {
         .value(),
   );
 
+  // we want to send one message per game
+  // this means that players will be grouped up if they're in the same game
+
+  // first, we need to determine the unique list of games
+  // next, we need to get the rank for each player
+
   console.log("sending messages");
   await Promise.all(
     _.chain(newGames)
-      .map(async ([player, game]) => {
-        const message = createDiscordMessage([player, game]);
+      .groupBy(([_player, game]) => game.gameId)
+      .map(async (games) => {
+        const players = _.map(games, ([player, _game]) => player);
+        const game = games[0][1];
+
+        const message = createDiscordMessage([players, game]);
         await send(message);
 
-        const currentRank = await getRanks(player);
+        const playersWithRank = await Promise.all(
+          _.map(players, async (player): Promise<MatchPlayer> => {
+            const rank = await getRanks(player);
+            // TODO: use the correct ranked based on this being on solo or duo queue
+            return { player, rank: rank.solo };
+          }),
+        );
 
         console.log("creating new state entries");
         const entry: MatchState = {
           added: new Date(game.gameStartTime),
           matchId: game.gameId,
           uuid: uuid.v4(),
-          player,
-          // TODO: use the correct ranked based on this being on solo or duo queue
-          rank: currentRank.solo,
+          players: playersWithRank,
           queue: "solo",
         };
 
@@ -67,7 +82,6 @@ export async function checkPreMatch() {
           ...getState(),
           gamesStarted: _.concat(getState().gamesStarted, entry),
         });
-      })
-      .value(),
+      }).value(),
   );
 }

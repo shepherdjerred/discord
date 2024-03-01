@@ -44,7 +44,23 @@
     "deno.codeLens.implementations": true,
     "deno.codeLens.references": true,
     "deno.codeLens.referencesAllFunctions": true,
-    "deno.codeLens.test": true
+    "deno.codeLens.test": true,
+    "deno.suggest.imports.autoDiscover": true,
+    "[typescript]": {
+      "editor.defaultFormatter": "denoland.vscode-deno"
+    }
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "type": "deno",
+        "command": "compile",
+        "args": ["--output", "glittr-boys", "src/index.ts"],
+        "problemMatcher": ["$deno"],
+        "label": "deno: compile"
+      }
+    ]
   },
   "launch": {
     "configurations": [
@@ -60,7 +76,7 @@
         "type": "node",
         "program": "${workspaceFolder}/src/league/tasks/leaderboard/oneshot.ts",
         "cwd": "${workspaceFolder}",
-        "runtimeExecutable": "/Users/jerred/.local/share/mise/shims/deno",
+        "runtimeExecutable": "deno",
         "runtimeArgs": ["run", "--unstable", "--inspect-wait", "--allow-all"],
         "attachSimplePort": 9229
       }
