@@ -39,15 +39,13 @@ pipeline {
         GITHUB_USERNAME = "shepherdjerred"
         GITHUB_TOKEN = credentials('GITHUB_TOKEN')
         EARTHLY_TOKEN = credentials('EARTHLY_TOKEN')
-        EARTHLY_SATELLITE = credentials('lamport')
-        EARTHLY_ORG = "sjerred"
     }
 
     stages {
         stage('Build') {
             steps {
               sh 'echo $GITHUB_TOKEN | docker login ghcr.io -u GITHUB_USERNAME --password-stdin'
-              sh 'earthly --ci --push +ci';
+              sh 'earthly --sat=lamport --org=sjerred --ci --push +ci';
             }
         }
     }
