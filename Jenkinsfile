@@ -39,7 +39,7 @@ pipeline {
         GITHUB_USERNAME = "shepherdjerred"
         GITHUB_TOKEN = credentials('GITHUB_TOKEN')
         EARTHLY_TOKEN = credentials('EARTHLY_TOKEN')
-        EARTHLY_SATELLITE credentials('lamport')
+        EARTHLY_SATELLITE = credentials('lamport')
         EARTHLY_ORG = "sjerred"
     }
 
