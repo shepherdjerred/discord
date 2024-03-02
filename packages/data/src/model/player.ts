@@ -1,5 +1,5 @@
 import { z } from "https://esm.sh/zod@3.22.4";
-import { RanksSchema, RankSchema } from "./rank.ts";
+import { RankSchema, RanksSchema } from "./rank.ts";
 import { PlayerConfigEntrySchema } from "./playerConfigEntry.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
@@ -21,7 +21,7 @@ export const PlayerWithSoloQueueRankSchema = PlayerSchema.extend({
 });
 
 export function filterPlayersWithSoloQueueRank(
-  players: Player[]
+  players: Player[],
 ): PlayerWithSoloQueueRank[] {
   return _.chain(players)
     .flatMap((player) =>
@@ -31,7 +31,7 @@ export function filterPlayersWithSoloQueueRank(
 }
 
 export function sortPlayersBySoloQueueRank(
-  players: Player[]
+  players: Player[],
 ): PlayerWithSoloQueueRank[] {
   const playersWithSoloQueueRank = filterPlayersWithSoloQueueRank(players);
   return _.chain(playersWithSoloQueueRank)

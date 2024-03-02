@@ -737,6 +737,7 @@
   },
   "redirects": {
     "https://deno.land/std/encoding/base64.ts": "https://deno.land/std@0.218.2/encoding/base64.ts",
+    "https://deno.land/x/sentry/index.mjs": "https://deno.land/x/sentry@7.104.0/index.mjs",
     "https://esm.sh/@aws-sdk/client-s3": "https://esm.sh/@aws-sdk/client-s3@3.461.0",
     "https://esm.sh/v128/@types/react@~18.2/index.d.ts": "https://esm.sh/v128/@types/react@18.2.38/index.d.ts",
     "https://esm.sh/v135/@types/uuid@~9.0/index.d.ts": "https://esm.sh/v135/@types/uuid@9.0.7/index.d.ts"
@@ -932,6 +933,7 @@
     "https://deno.land/x/plug@1.0.1/mod.ts": "5dec80ee7a3a325be45c03439558531bce7707ac118f4376cebbd6740ff24bfb",
     "https://deno.land/x/plug@1.0.1/types.ts": "d8eb738fc6ed883e6abf77093442c2f0b71af9090f15c7613621d4039e410ee1",
     "https://deno.land/x/plug@1.0.1/util.ts": "5ba8127b9adc36e070b9e22971fb8106869eea1741f452a87b4861e574f13481",
+    "https://deno.land/x/sentry@7.104.0/index.mjs": "06b1fe822805a562e2c09dd91310145295472238883ee9c1bdbe7cf43a0fdcd7",
     "https://deno.land/x/sqlite3@0.10.0/deno.json": "23a6c0d74415633fa61af1170cbc711b43876ea6ff7b9bcb65d66b658eae4c6e",
     "https://deno.land/x/sqlite3@0.10.0/deps.ts": "f6035f0884a730c0d55b0cdce68846f13bbfc14e8afbf0b3cd4f12a52b4107b7",
     "https://deno.land/x/sqlite3@0.10.0/mod.ts": "d41b8b30e1b20b537ef4d78cae98d90f6bd65c727b64aa1a18bffbb28f7d6ec3",

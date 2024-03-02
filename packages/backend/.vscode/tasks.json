@@ -21,7 +21,7 @@
       "args": ["--watch"],
       "problemMatcher": ["$deno-lint"],
       "group": "none",
-      "label": "deno: test",
+      "label": "deno: lin",
       "presentation": {
         "reveal": "always",
         "panel": "new"
@@ -31,11 +31,17 @@
     },
     {
       "type": "deno",
-      "command": "check",
-      "args": ["./src/index.ts"],
+      "command": "task",
+      "args": ["check:watch"],
       "problemMatcher": ["$deno"],
       "group": "none",
-      "label": "deno: check"
+      "label": "deno: check",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "runOptions": { "runOn": "folderOpen" },
+      "isBackground": true
     }
   ]
 }

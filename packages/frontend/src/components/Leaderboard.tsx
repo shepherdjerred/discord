@@ -4,25 +4,25 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
-  useReactTable,
-  type SortingState,
   getSortedRowModel,
+  type SortingState,
+  useReactTable,
 } from "@tanstack/react-table";
 import {
   type Leaderboard,
-  LeaderboardSchema,
   type LeaderboardEntry,
-  rankToString,
-  wasPromoted,
-  wasDemoted,
-  rankToSimpleString,
-  rankToLeaguePoints,
+  LeaderboardSchema,
   type PlayerWithSoloQueueRank,
+  rankToLeaguePoints,
+  rankToSimpleString,
+  rankToString,
+  wasDemoted,
+  wasPromoted,
 } from "@glitter-boys/data";
-import { P, match } from "ts-pattern";
+import { match, P } from "ts-pattern";
 import _ from "lodash";
 import { addDays, formatDistance, isWithinInterval } from "date-fns";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import classnames from "classnames";
 import { ChartComponent } from "./Chart";
 
@@ -241,9 +241,11 @@ export function LeaderboardComponent() {
           )
         ) {
           return [
-            `${entry.current.player.config.name} was promoted: ${rankToSimpleString(
-              entry.previous.player.ranks.solo,
-            )} -> ${rankToSimpleString(entry.current.player.ranks.solo)}`,
+            `${entry.current.player.config.name} was promoted: ${
+              rankToSimpleString(
+                entry.previous.player.ranks.solo,
+              )
+            } -> ${rankToSimpleString(entry.current.player.ranks.solo)}`,
           ];
         } else {
           return [];
@@ -260,9 +262,11 @@ export function LeaderboardComponent() {
           )
         ) {
           return [
-            `${entry.current.player.config.name} was demoted: ${rankToSimpleString(
-              entry.previous.player.ranks.solo,
-            )} -> ${rankToSimpleString(entry.current.player.ranks.solo)}`,
+            `${entry.current.player.config.name} was demoted: ${
+              rankToSimpleString(
+                entry.previous.player.ranks.solo,
+              )
+            } -> ${rankToSimpleString(entry.current.player.ranks.solo)}`,
           ];
         } else {
           return [];
@@ -303,12 +307,11 @@ export function LeaderboardComponent() {
           <hgroup className="">
             <h1 className="text-3xl">Tournament Leaderboard</h1>
             <p>
-              Updated{" "}
-              {currentLeaderboard?.date !== undefined
+              Updated {currentLeaderboard?.date !== undefined
                 ? formatDistance(currentLeaderboard.date, now)
-                : ""}{" "}
-              ago. Next update in {formatDistance(now, next)}. Competition lasts
-              until the end of Season 14 Split 1.
+                : ""} ago. Next update in{" "}
+              {formatDistance(now, next)}. Competition lasts until the end of
+              Season 14 Split 1.
               <br />
               Prize: $200
             </p>

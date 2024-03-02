@@ -30,7 +30,7 @@ export const OldLeaderboardSchema = z.strictObject({
 });
 
 export function convertOldLeaderboard(
-  oldLeaderboard: OldLeaderboard
+  oldLeaderboard: OldLeaderboard,
 ): Leaderboard {
   return {
     date: oldLeaderboard.date,

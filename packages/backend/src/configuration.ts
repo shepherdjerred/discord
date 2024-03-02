@@ -4,6 +4,13 @@ import env from "https://esm.sh/env-var@7.4.1";
 dotenv.config();
 
 export default {
+  version: env.get("VERSION").required().asString(),
+  environment: env.get("ENVIRONMENT").default("dev").asEnum([
+    "dev",
+    "beta",
+    "prod",
+  ]),
+  sentryDsn: env.get("SENTRY_DSN").required().asString(),
   port: env.get("PORT").asPortNumber(),
   discordToken: env.get("DISCORD_TOKEN").required().asString(),
   applicationId: env.get("APPLICATION_ID").required().asString(),

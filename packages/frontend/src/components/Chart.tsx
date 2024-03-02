@@ -1,22 +1,22 @@
 import * as React from "react";
 
 import {
-  LeaderboardSchema,
-  type LeaderboardEntry,
-  type Leaderboard,
-  OldLeaderboardSchema,
   convertOldLeaderboard,
+  type Leaderboard,
+  type LeaderboardEntry,
+  LeaderboardSchema,
+  OldLeaderboardSchema,
 } from "@glitter-boys/data";
 import _ from "lodash";
-import { useState, useEffect } from "react";
-import { scaleTime, type ScaleInput, type D3Scale } from "@visx/scale";
+import { useEffect, useState } from "react";
+import { type D3Scale, type ScaleInput, scaleTime } from "@visx/scale";
 import * as allCurves from "@visx/curve";
 import { Group } from "@visx/group";
 import { LinePath } from "@visx/shape";
 import { extent } from "d3-array";
 import { timeFormat } from "d3-time-format";
 import { Axis, Orientation } from "@visx/axis";
-import { scaleUtc, scaleLinear, coerceNumber } from "@visx/scale";
+import { coerceNumber, scaleLinear, scaleUtc } from "@visx/scale";
 
 const width = 300;
 const svgHeight = 300;
@@ -47,7 +47,9 @@ export function ChartComponent() {
   for (let d = firstDay; d <= new Date(); d.setDate(d.getDate() + 1)) {
     // skip today
     // issue with timezones
-    if (d.toISOString().split("T")[0] === new Date().toISOString().split("T")[0]) {
+    if (
+      d.toISOString().split("T")[0] === new Date().toISOString().split("T")[0]
+    ) {
       continue;
     }
 
@@ -84,7 +86,9 @@ export function ChartComponent() {
       const leaderboards = await Promise.all(
         _.map(dates, async (date): Promise<Leaderboard | undefined> => {
           try {
-            const json = await (await fetch(`https://prod.bucket.glitter-boys.com/leaderboards/${date}.json`)).json();
+            const json = await (await fetch(
+              `https://prod.bucket.glitter-boys.com/leaderboards/${date}.json`,
+            )).json();
             const result = LeaderboardSchema.safeParse(json);
             if (result.success) {
               return result.data;
@@ -104,7 +108,9 @@ export function ChartComponent() {
         }),
       );
 
-      setLeaderboards(leaderboards.filter((x): x is Leaderboard => x !== undefined));
+      setLeaderboards(
+        leaderboards.filter((x): x is Leaderboard => x !== undefined),
+      );
     })();
   }, []);
 

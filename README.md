@@ -2,12 +2,14 @@
 
 [![CI](https://github.com/shepherdjerred/glitter-boys/actions/workflows/ci.yml/badge.svg)](https://github.com/shepherdjerred/glitter-boys/actions/workflows/ci.yml)
 
-This repository contains projects related to a Discord server that I share with my friends.
+This repository contains projects related to a Discord server that I share with
+my friends.
 
 It contains several projects:
 
 - A bot that allows you to give "karma" to other users
-- A bot that posts when friends enters matches of League of Legends complete with post-match reports and leaderboards posted to Discord
+- A bot that posts when friends enters matches of League of Legends complete
+  with post-match reports and leaderboards posted to Discord
 - A front-end that contains documentation and a leaderboard
 - A small website for sharing knowledge and hosting events
 - A bot that plays music in Discord
@@ -20,7 +22,8 @@ It contains several projects:
 
 ![Post-match report when someone finishes a game](./assets/postmatch.png)
 
-> After a match is complete, an inline post-match report image is posted to Discord.
+> After a match is complete, an inline post-match report image is posted to
+> Discord.
 
 [![The leaderboard site](./assets/leaderboard_site.png)](https://glitter-boys.com/leaderboard/)
 

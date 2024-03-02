@@ -5,6 +5,6 @@
     "verbatimModuleSyntax": true,
     "emitDecoratorMetadata": true,
     "declarationMap": true,
-    "declaration": true,
-  },
+    "declaration": true
+  }
 }

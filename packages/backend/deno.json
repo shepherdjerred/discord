@@ -1,6 +1,7 @@
 {
   "tasks": {
-    "compile": "deno compile --output glitter-boys src/index.ts",
+    "check": "deno check src/index.ts",
+    "check:watch": "deno run -A https://deno.land/x/denon/denon.ts check",
     "run": "deno run -A --unstable-ffi src/index.ts",
     "test:update": "deno test -A --unstable-ffi -- --update"
   },
