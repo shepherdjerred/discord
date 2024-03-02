@@ -59,7 +59,8 @@ async function createMatchObj(state: MatchState, match: MatchV5DTOs.MatchDto) {
   const player = _.chain(match.info.participants)
     .filter(
       (participant) =>
-        participant.puuid === state.player.league.leagueAccount.puuid,
+        participant.puuid ===
+          state.players[0].player.league.leagueAccount.puuid,
     )
     .first()
     .value();
@@ -72,13 +73,18 @@ async function createMatchObj(state: MatchState, match: MatchV5DTOs.MatchDto) {
     );
   }
 
-  const fullPlayer = await getPlayer(state.player);
+  const fullPlayer = await getPlayer(state.players[0].player);
 
   // it should be impossible for this to be undefined after a game
   assert(fullPlayer.ranks.solo != undefined);
 
   // TODO use correct rank
-  return toMatch(fullPlayer, match, state.rank, fullPlayer.ranks.solo);
+  return toMatch(
+    fullPlayer,
+    match,
+    state.players[0].rank,
+    fullPlayer.ranks.solo,
+  );
 }
 
 export async function checkPostMatch() {

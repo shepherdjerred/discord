@@ -21,7 +21,7 @@
       "args": ["--watch"],
       "problemMatcher": ["$deno-lint"],
       "group": "none",
-      "label": "deno: lin",
+      "label": "deno: lint",
       "presentation": {
         "reveal": "always",
         "panel": "new"
