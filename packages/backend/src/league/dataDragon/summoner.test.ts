@@ -1,6 +1,6 @@
 import { summoner } from "./summoner.ts";
-import { assertSnapshot } from "https://deno.land/std@0.208.0/testing/snapshot.ts";
+import { assertSnapshot } from "https://deno.land/std@0.218.2/testing/snapshot.ts";
 
-Deno.test("should be able to get champion data", (t) => {
-  assertSnapshot(t, summoner);
+Deno.test("should be able to get champion data", async (t) => {
+  await assertSnapshot(t, summoner);
 });

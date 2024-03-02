@@ -2,7 +2,7 @@ import { Division, Player, Rank, Tier } from "@glitter-boys/data";
 import { toLeaderboard } from "./index.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import { assertSnapshot } from "https://deno.land/std@0.208.0/testing/snapshot.ts";
+import { assertSnapshot } from "https://deno.land/std@0.218.2/testing/snapshot.ts";
 
 const createRank = ({
   division,
@@ -46,7 +46,7 @@ const createPlayer = ({
   },
 });
 
-Deno.test("should return a correct leaderboard", (t) => {
+Deno.test("should return a correct leaderboard", async (t) => {
   const players: Player[] = _.shuffle([
     createPlayer({
       name: "top of the leaderboard",
@@ -79,5 +79,5 @@ Deno.test("should return a correct leaderboard", (t) => {
   ]);
 
   // TODO date matcher
-  assertSnapshot(t, toLeaderboard(players));
+  await assertSnapshot(t, toLeaderboard(players));
 });
