@@ -50,18 +50,6 @@
       "editor.defaultFormatter": "denoland.vscode-deno"
     }
   },
-  "tasks": {
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "type": "deno",
-        "command": "compile",
-        "args": ["--output", "glittr-boys", "src/index.ts"],
-        "problemMatcher": ["$deno"],
-        "label": "deno: compile"
-      }
-    ]
-  },
   "launch": {
     "configurations": [
       {
@@ -69,16 +57,6 @@
         "name": "https://localhost:4321",
         "request": "launch",
         "url": "https://localhost:4321"
-      },
-      {
-        "request": "launch",
-        "name": "Update Leaderboard",
-        "type": "node",
-        "program": "${workspaceFolder}/src/league/tasks/leaderboard/oneshot.ts",
-        "cwd": "${workspaceFolder}",
-        "runtimeExecutable": "deno",
-        "runtimeArgs": ["run", "--unstable", "--inspect-wait", "--allow-all"],
-        "attachSimplePort": 9229
       }
     ]
   }

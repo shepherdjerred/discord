@@ -1,4 +1,5 @@
 import { palette } from "../../assets/colors.ts";
+import React from "https://esm.sh/react@18.2.0";
 
 export function Damage({
   value,

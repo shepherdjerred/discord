@@ -4,7 +4,7 @@ import { parseTeam, Team } from "@glitter-boys/data";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { MatchV5DTOs } from "npm:twisted@1.57.0/dist/models-dto/index.js";
-import { createChampionObject } from "./model/champion.ts";
+import { participantToChampion } from "./model/champion.ts";
 
 export function createMatchObject(
   player: Player,
@@ -39,11 +39,11 @@ export function createMatchObject(
     );
   }
 
-  const lane = createChampionObject(playerParticipant).lane;
+  const lane = participantToChampion(playerParticipant).lane;
 
   const teams = {
-    blue: _.map(dto.info.participants.slice(0, 5), createChampionObject),
-    red: _.map(dto.info.participants.slice(5, 10), createChampionObject),
+    blue: _.map(dto.info.participants.slice(0, 5), participantToChampion),
+    red: _.map(dto.info.participants.slice(5, 10), participantToChampion),
   };
 
   let otherTeam: Team;

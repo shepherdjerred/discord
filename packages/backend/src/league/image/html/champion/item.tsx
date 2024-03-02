@@ -3,6 +3,7 @@ import _ from "npm:lodash@4.17.21";
 import "https://esm.sh/react@18.2.0";
 import { palette } from "../../assets/colors.ts";
 import { latestVersion } from "../../../dataDragon/version.ts";
+import React from "https://esm.sh/react@18.2.0";
 
 const dimension = 120;
 

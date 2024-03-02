@@ -1,6 +1,7 @@
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { palette } from "../../assets/colors.ts";
+import React from "https://esm.sh/react@18.2.0";
 
 export function Kda({
   kills,
@@ -13,9 +14,8 @@ export function Kda({
   assists: number;
   highlight: boolean;
 }) {
-  const kdaRatio = deaths === 0
-    ? kills + deaths
-    : _.round((kills + assists) / deaths, 1);
+  const kdaRatio =
+    deaths === 0 ? kills + deaths : _.round((kills + assists) / deaths, 1);
   return (
     <div
       style={{

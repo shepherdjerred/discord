@@ -1,3 +1,4 @@
+import React from "https://esm.sh/react@18.2.0";
 import { palette } from "../../assets/colors.ts";
 
 export function Names({

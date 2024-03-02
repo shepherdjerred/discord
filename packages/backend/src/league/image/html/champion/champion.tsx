@@ -12,12 +12,13 @@ import { Damage } from "./damage.tsx";
 import { Kda } from "./kda.tsx";
 import { Names } from "./names.tsx";
 import { Lane } from "../lane/index.tsx";
+import React from "https://esm.sh/react@18.2.0";
 
 export function renderChampion(
   champion: Champion,
   highlight: boolean,
   durationInMinutes: number,
-  damageMax: number,
+  damageMax: number
 ) {
   const items = renderItems(champion.items, champion.visionScore);
 
