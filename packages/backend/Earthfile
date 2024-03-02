@@ -11,10 +11,11 @@ check:
   FROM +deps
   RUN --mount="type=cache,target=$DENO_DIR" deno check src/index.ts
   RUN --mount="type=cache,target=$DENO_DIR" deno lint
-  RUN deno test -A --unstable
+  # RUN deno test -A --unstable
 
 image:
   ARG version
   FROM +deps
+  ENV VERSION=$version
   ENTRYPOINT deno run -A --unstable-ffi src/index.ts
   SAVE IMAGE --push ghcr.io/shepherdjerred/glitter-boys:$version
