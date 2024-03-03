@@ -45,7 +45,7 @@ pipeline {
         stage('Build') {
             steps {
               sh 'echo $GITHUB_TOKEN | docker login ghcr.io -u GITHUB_USERNAME --password-stdin'
-              sh 'earthly --sat=lamport --org=sjerred --ci --push +ci --version=$GIT_COMMIT';
+              sh 'earthly --sat=lamport --org=sjerred --ci --push +ci --EARTHLY_GIT_HASH=$GIT_COMMIT --version=1.1.$BUILD_NUMBER';
             }
         }
     }

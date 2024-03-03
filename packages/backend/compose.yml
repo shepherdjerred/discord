@@ -9,7 +9,7 @@ services:
   glitter-boys:
     depends_on:
       - lavalink
-    image: ghcr.io/shepherdjerred/glitter-boys:dev
+    image: ghcr.io/shepherdjerred/glitter-boys:1.0.0
     volumes:
       - ./.env:/workspace/packages/backend/.env
       - ./players.json:/workspace/packages/backend/players.json
