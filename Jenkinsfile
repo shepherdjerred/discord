@@ -44,6 +44,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+              sh 'ls -la *'
+              sh 'la -la .git'
               sh 'echo $GITHUB_TOKEN | docker login ghcr.io -u GITHUB_USERNAME --password-stdin'
               sh 'earthly --sat=lamport --org=sjerred --ci --push +ci --version=1.1.$BUILD_NUMBER';
             }
