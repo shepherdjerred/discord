@@ -15,6 +15,7 @@ snapshot[`should return a correct leaderboard 1`] = `
               accountId: "test",
               id: "test",
               puuid: "test",
+              region: "AMERICA_NORTH",
             },
           },
           name: "top of the leaderboard",
@@ -50,6 +51,7 @@ snapshot[`should return a correct leaderboard 1`] = `
               accountId: "test",
               id: "test",
               puuid: "test",
+              region: "AMERICA_NORTH",
             },
           },
           name: "tied with next player",
@@ -85,9 +87,10 @@ snapshot[`should return a correct leaderboard 1`] = `
               accountId: "test",
               id: "test",
               puuid: "test",
+              region: "AMERICA_NORTH",
             },
           },
-          name: "tied with previous player",
+          name: "no change",
         },
         ranks: {
           flex: {
@@ -120,6 +123,7 @@ snapshot[`should return a correct leaderboard 1`] = `
               accountId: "test",
               id: "test",
               puuid: "test",
+              region: "AMERICA_NORTH",
             },
           },
           name: "positive",
@@ -155,9 +159,10 @@ snapshot[`should return a correct leaderboard 1`] = `
               accountId: "test",
               id: "test",
               puuid: "test",
+              region: "AMERICA_NORTH",
             },
           },
-          name: "no change",
+          name: "tied with previous player",
         },
         ranks: {
           flex: {
@@ -190,6 +195,7 @@ snapshot[`should return a correct leaderboard 1`] = `
               accountId: "test",
               id: "test",
               puuid: "test",
+              region: "AMERICA_NORTH",
             },
           },
           name: "negative",
@@ -225,6 +231,7 @@ snapshot[`should return a correct leaderboard 1`] = `
               accountId: "test",
               id: "test",
               puuid: "test",
+              region: "AMERICA_NORTH",
             },
           },
           name: "bottom of the leaderboard",
@@ -249,6 +256,6 @@ snapshot[`should return a correct leaderboard 1`] = `
       position: 7,
     },
   ],
-  date: 2024-03-02T20:23:08.211Z,
+  date: 2024-03-03T03:18:23.806Z,
 }
 `;

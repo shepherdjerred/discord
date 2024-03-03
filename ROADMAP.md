@@ -1,7 +1,5 @@
 ## General
 
-- detect duos
-- add support for flex
 - save extra match statistics, like LP gained
 
 ## Post-match

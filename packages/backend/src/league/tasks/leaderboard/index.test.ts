@@ -34,6 +34,7 @@ const createPlayer = ({
         id: "test",
         puuid: "test",
         accountId: "test",
+        region: "AMERICA_NORTH",
       },
     },
     discordAccount: {

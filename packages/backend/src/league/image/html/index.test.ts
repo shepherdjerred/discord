@@ -20,6 +20,7 @@ Deno.test("image matches", async (t) => {
               "XtEsV464OFaO3c0_q9REa6wYF0HpC2LK4laLnyM7WhfAVeuDz9biieJ5ZRD049AUCBjLjyBeeezTaw",
             accountId: "accountId",
             id: "id",
+            region: "AMERICA_NORTH",
           },
         },
         discordAccount: {

@@ -3,6 +3,7 @@ import * as Sentry from "https://deno.land/x/sentry/index.mjs";
 Sentry.init({
   dsn: configuration.sentryDsn,
   environment: configuration.environment,
+  release: configuration.gitSha,
 });
 
 import "./db/index.ts";
