@@ -6,7 +6,7 @@ import { z } from "https://esm.sh/zod@3.22.4";
 import { api } from "../../api/api.ts";
 import { AttachmentBuilder, EmbedBuilder } from "npm:discord.js@14.14.1";
 import { matchToImage } from "../../image/html/index.tsx";
-import { Match, MatchState } from "@glitter-boys/data";
+import { CompletedMatch, LoadingScreenState } from "@glitter-boys/data";
 import { send } from "../../discord/channel.ts";
 import { s3 } from "../../s3.ts";
 import { PutObjectCommand } from "https://esm.sh/@aws-sdk/client-s3";
@@ -16,7 +16,7 @@ import { getState, setState } from "../../model/state.ts";
 import { toMatch } from "../../model/match.ts";
 import { assert } from "https://deno.land/std@0.218.0/assert/mod.ts";
 
-async function checkMatch(game: MatchState) {
+async function checkMatch(game: LoadingScreenState) {
   try {
     const response = await api.MatchV5.get(
       `NA1_${game.matchId}`,
@@ -47,7 +47,7 @@ async function saveMatch(match: MatchV5DTOs.MatchDto) {
 }
 
 async function getImage(
-  match: Match,
+  match: CompletedMatch,
 ): Promise<[AttachmentBuilder, EmbedBuilder]> {
   const image = await matchToImage(match);
   const attachment = new AttachmentBuilder(image).setName("match.png");
@@ -55,7 +55,10 @@ async function getImage(
   return [attachment, embed];
 }
 
-async function createMatchObj(state: MatchState, match: MatchV5DTOs.MatchDto) {
+async function createMatchObj(
+  state: LoadingScreenState,
+  match: MatchV5DTOs.MatchDto,
+) {
   const player = _.chain(match.info.participants)
     .filter(
       (participant) =>
@@ -97,7 +100,7 @@ export async function checkPostMatch() {
   const finishedGames = _.chain(state.gamesStarted)
     .zip(games)
     .filter(([_game, match]) => match != undefined)
-    .value() as [MatchState, MatchV5DTOs.MatchDto][];
+    .value() as [LoadingScreenState, MatchV5DTOs.MatchDto][];
 
   // TODO: send duo queue message
   console.log("sending messages");

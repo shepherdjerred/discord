@@ -4,25 +4,22 @@ import {
   SpectatorNotAvailableDTO,
 } from "npm:twisted@1.57.0/dist/models-dto/index.js";
 import { z } from "https://esm.sh/zod@3.22.4";
-import { PlayerConfigEntry, soloQueueConfigId } from "@glitter-boys/data";
+import { PlayerConfigEntry } from "@glitter-boys/data";
 import { api } from "./api.ts";
 import { Constants } from "npm:twisted@1.57.0";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 
-export async function getCurrentSoloQueueGame(
+export async function getCurrentGame(
   player: PlayerConfigEntry,
 ): Promise<undefined | CurrentGameInfoDTO> {
   try {
     const response = await api.Spectator.activeGame(
       player.league.leagueAccount.id,
-      Constants.Regions.AMERICA_NORTH,
+      Constants.Regions[player.league.leagueAccount.region],
     );
     if (response instanceof SpectatorNotAvailableDTO) {
       return undefined;
-    }
-    if (response.response.gameQueueConfigId === soloQueueConfigId) {
-      return response.response;
     }
   } catch (e) {
     const result = z.object({ status: z.number() }).safeParse(e);

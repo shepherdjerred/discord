@@ -1,11 +1,11 @@
-import { State } from "@glitter-boys/data";
+import { ApplicationState } from "@glitter-boys/data";
 
-let state: State = { gamesStarted: [] };
+let state: ApplicationState = { gamesStarted: [] };
 
-export function getState(): State {
+export function getState(): ApplicationState {
   return state;
 }
 
-export function setState(newState: State) {
+export function setState(newState: ApplicationState) {
   state = newState;
 }

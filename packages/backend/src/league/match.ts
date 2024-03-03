@@ -1,4 +1,4 @@
-import { Match } from "@glitter-boys/data";
+import { CompletedMatch } from "@glitter-boys/data";
 import { Player } from "@glitter-boys/data";
 import { parseTeam, Team } from "@glitter-boys/data";
 // @deno-types="npm:@types/lodash"
@@ -10,7 +10,7 @@ export function createMatchObject(
   player: Player,
   dto: MatchV5DTOs.MatchDto,
   lpChange: number,
-): Match {
+): CompletedMatch {
   const playerParticipant = _.chain(dto.info.participants)
     .filter(
       (participant) =>

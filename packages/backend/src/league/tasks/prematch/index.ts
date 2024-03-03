@@ -4,16 +4,17 @@ import _ from "npm:lodash@4.17.21";
 import * as uuid from "https://esm.sh/uuid@9.0.1";
 import {
   getPlayersNotInGame,
-  MatchPlayer,
-  type MatchState,
+  LoadingScreenPlayer,
+  type LoadingScreenState,
+  parseQueueType,
   PlayerConfigEntry,
 } from "@glitter-boys/data";
-import { getCurrentSoloQueueGame } from "../../api/index.ts";
 import { createDiscordMessage } from "./discord.ts";
 import { send } from "../../discord/channel.ts";
 import { getRanks } from "../../model/rank.ts";
 import { getPlayerConfigs } from "../../playerConfig.ts";
 import { getState, setState } from "../../model/state.ts";
+import { getCurrentGame } from "../../api/index.ts";
 
 export async function checkPreMatch() {
   const players = await getPlayerConfigs();
@@ -22,9 +23,8 @@ export async function checkPreMatch() {
   const playersNotInGame = getPlayersNotInGame(players, getState());
 
   console.log("calling spectator API");
-  // TODO: also get flex games
   const playerStatus = await Promise.all(
-    _.map(playersNotInGame, getCurrentSoloQueueGame),
+    _.map(playersNotInGame, getCurrentGame),
   );
 
   console.log("filtering players not in game");
@@ -43,12 +43,6 @@ export async function checkPreMatch() {
         .value(),
   );
 
-  // we want to send one message per game
-  // this means that players will be grouped up if they're in the same game
-
-  // first, we need to determine the unique list of games
-  // next, we need to get the rank for each player
-
   console.log("sending messages");
   await Promise.all(
     _.chain(newGames)
@@ -57,25 +51,37 @@ export async function checkPreMatch() {
         const players = _.map(games, ([player, _game]) => player);
         const game = games[0][1];
 
-        const message = createDiscordMessage([players, game]);
-        await send(message);
+        const queueType = parseQueueType(game.gameQueueConfigId);
+        if (queueType === undefined) {
+          console.error("unknown queue type", game.gameQueueConfigId);
+          return;
+        }
 
+        // record the rank of each player before the game
         const playersWithRank = await Promise.all(
-          _.map(players, async (player): Promise<MatchPlayer> => {
+          _.map(players, async (player): Promise<LoadingScreenPlayer> => {
             const rank = await getRanks(player);
-            // TODO: use the correct ranked based on this being on solo or duo queue
-            return { player, rank: rank.solo };
+            if (queueType === "solo") {
+              return { player, rank: rank.solo };
+            } else if (queueType === "flex") {
+              return { player, rank: rank.flex };
+            } else {
+              return { player, rank: undefined };
+            }
           }),
         );
 
         console.log("creating new state entries");
-        const entry: MatchState = {
+        const entry: LoadingScreenState = {
           added: new Date(game.gameStartTime),
           matchId: game.gameId,
           uuid: uuid.v4(),
           players: playersWithRank,
-          queue: "solo",
+          queue: queueType,
         };
+
+        const message = createDiscordMessage(players, game, queueType);
+        await send(message);
 
         console.log("saving state");
         setState({

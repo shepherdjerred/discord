@@ -4,16 +4,16 @@ import satori from "https://esm.sh/satori@0.10.11";
 import { Resvg } from "npm:@resvg/resvg-js@2.6.0";
 import React from "https://esm.sh/react@18.2.0";
 import { loadFonts } from "../assets/index.ts";
-import { Match } from "@glitter-boys/data";
+import { CompletedMatch } from "@glitter-boys/data";
 import { Report } from "./report.tsx";
 
-export async function matchToImage(match: Match) {
+export async function matchToImage(match: CompletedMatch) {
   const svg = await matchToSvg(match);
   const png = svgToPng(svg);
   return png;
 }
 
-export async function matchToSvg(match: Match) {
+export async function matchToSvg(match: CompletedMatch) {
   const fonts = await loadFonts();
   const svg = await satori(<Report match={match} />, {
     width: 4760,

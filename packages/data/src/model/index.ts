@@ -8,7 +8,6 @@ export * from "./leaguePoints.ts";
 export * from "./match.ts";
 export * from "./player.ts";
 export * from "./playerConfig.ts";
-export * from "./playerConfigEntry.ts";
 export * from "./rank.ts";
 export * from "./relativeRanking.ts";
 export * from "./roster.ts";

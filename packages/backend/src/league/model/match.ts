@@ -1,7 +1,7 @@
 import {
   Champion,
+  CompletedMatch,
   invertTeam,
-  Match,
   parseQueueType,
   Player,
   Rank,
@@ -52,7 +52,7 @@ export function toMatch(
   matchDto: MatchV5DTOs.MatchDto,
   rankBeforeMatch: Rank | undefined,
   rankAfterMatch: Rank,
-): Match {
+): CompletedMatch {
   const participant = findParticipant(
     player.config.league.leagueAccount.puuid,
     matchDto.info.participants,
