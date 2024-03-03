@@ -20,6 +20,8 @@ export async function getCurrentGame(
     );
     if (response instanceof SpectatorNotAvailableDTO) {
       return undefined;
+    } else {
+      return response.response;
     }
   } catch (e) {
     const result = z.object({ status: z.number() }).safeParse(e);
@@ -31,7 +33,6 @@ export async function getCurrentGame(
     }
     throw e;
   }
-  return undefined;
 }
 
 export function findParticipant(

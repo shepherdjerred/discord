@@ -33,7 +33,7 @@ export const LoadingScreenStateSchema = z.strictObject({
   added: z.string().pipe(z.coerce.date()),
   // the match id from the Riot API
   matchId: z.number(),
-  queue: QueueTypeSchema,
+  queue: QueueTypeSchema.optional(),
   players: z.array(LoadingScreenPlayerSchema),
 });
 

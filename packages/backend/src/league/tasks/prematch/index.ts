@@ -52,10 +52,6 @@ export async function checkPreMatch() {
         const game = games[0][1];
 
         const queueType = parseQueueType(game.gameQueueConfigId);
-        if (queueType === undefined) {
-          console.error("unknown queue type", game.gameQueueConfigId);
-          return;
-        }
 
         // record the rank of each player before the game
         const playersWithRank = await Promise.all(

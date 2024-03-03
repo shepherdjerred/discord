@@ -1,7 +1,7 @@
 VERSION 0.8
 
 ci:
-
+  ARG version=$VERSION
   BUILD +check
   BUILD +build
   BUILD ./packages/backend+image --version=$version
