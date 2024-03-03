@@ -25,11 +25,11 @@ sqlite:
   SAVE ARTIFACT libsqlite3.so
 
 image:
-  ARG EARTHLY_GIT_HASH
+  ARG EARTHLY_GIT_SHORT_HASH
   ARG --required version
   FROM +deps
   ENV VERSION=$version
-  ENV GIT_SHA=$EARTHLY_GIT_HASH
+  ENV GIT_SHA=$EARTHLY_GIT_SHORT_HASH
 
   ENV DENO_SQLITE_PATH=/workspace/packages/backend/libsqlite3.so
   COPY +sqlite/libsqlite3.so /workspace/packages/backend/libsqlite3.so

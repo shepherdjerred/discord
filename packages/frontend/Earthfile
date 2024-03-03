@@ -24,15 +24,15 @@ wrangler:
   RUN npm install -g wrangler
 
 deploy:
-  ARG EARTHLY_GIT_HASH
+  ARG EARTHLY_GIT_SHORT_HASH
   ARG EARTHLY_GIT_BRANCH
   ARG --required stage
   FROM +wrangler
   COPY +build/dist dist
   IF [ $stage = "prod" ]
-    RUN --secret=CLOUDFLARE_ACCOUNT_ID --secret=CLOUDFLARE_API_TOKEN wrangler pages deploy dist --project-name=glitter-boys --branch=$EARTHLY_GIT_BRANCH --commit-hash=$EARTHLY_GIT_HASH
+    RUN --secret=CLOUDFLARE_ACCOUNT_ID --secret=CLOUDFLARE_API_TOKEN wrangler pages deploy dist --project-name=glitter-boys --branch=$EARTHLY_GIT_BRANCH --commit-hash=$EARTHLY_GIT_SHORT_HASH
   ELSE IF [ $stage = "beta" ]
-    RUN --secret=CLOUDFLARE_ACCOUNT_ID --secret=CLOUDFLARE_API_TOKEN wrangler pages deploy dist --project-name=glitter-boys --branch=$EARTHLY_GIT_BRANCH\-beta --commit-hash=$EARTHLY_GIT_HASH
+    RUN --secret=CLOUDFLARE_ACCOUNT_ID --secret=CLOUDFLARE_API_TOKEN wrangler pages deploy dist --project-name=glitter-boys --branch=$EARTHLY_GIT_BRANCH\-beta --commit-hash=$EARTHLY_GIT_SHORT_HASH
   ELSE
     RUN false
   END
