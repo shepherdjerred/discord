@@ -25,8 +25,7 @@ sqlite:
   SAVE ARTIFACT libsqlite3.so
 
 image:
-  ARG EARTHLY_GIT_SHORT_HASH
-  ARG git_sha=$EARTHLY_GIT_SHORT_HASH
+  ARG --required git_sha
   ARG --required version
   FROM +deps
   ENV VERSION=$version
