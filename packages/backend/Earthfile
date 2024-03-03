@@ -26,10 +26,11 @@ sqlite:
 
 image:
   ARG EARTHLY_GIT_SHORT_HASH
+  ARG git_sha=$EARTHLY_GIT_SHORT_HASH
   ARG --required version
   FROM +deps
   ENV VERSION=$version
-  ENV GIT_SHA=$EARTHLY_GIT_SHORT_HASH
+  ENV GIT_SHA=$git_sha
 
   ENV DENO_SQLITE_PATH=/workspace/packages/backend/libsqlite3.so
   COPY +sqlite/libsqlite3.so /workspace/packages/backend/libsqlite3.so
@@ -37,7 +38,7 @@ image:
   ENTRYPOINT deno run -A --unstable-ffi src/index.ts
   HEALTHCHECK  --interval=30s --timeout=5s --start-period=5s --retries=3 CMD deno run -A /workspace/packages/backend/src/health.ts || exit 1
   SAVE IMAGE --push ghcr.io/shepherdjerred/glitter-boys:$version
-  SAVE IMAGE --push ghcr.io/shepherdjerred/glitter-boys:$GIT_SHA
+  SAVE IMAGE --push ghcr.io/shepherdjerred/glitter-boys:$git_sha
 
 up:
   LOCALLY

@@ -1,10 +1,12 @@
 VERSION 0.8
 
 ci:
-  ARG version=$VERSION
+  ARG EARTHLY_GIT_SHORT_HASH
+  ARG git_sha=$EARTHLY_GIT_SHORT_HASH
+  ARG --required version
   BUILD +check
   BUILD +build
-  BUILD ./packages/backend+image --version=$version
+  BUILD ./packages/backend+image --version=$version --git_sha=$git_sha
 
 build:
   BUILD ./packages/frontend+build
