@@ -90,7 +90,7 @@ snapshot[`should return a correct leaderboard 1`] = `
               region: "AMERICA_NORTH",
             },
           },
-          name: "no change",
+          name: "tied with previous player",
         },
         ranks: {
           flex: {
@@ -126,7 +126,7 @@ snapshot[`should return a correct leaderboard 1`] = `
               region: "AMERICA_NORTH",
             },
           },
-          name: "tied with previous player",
+          name: "positive",
         },
         ranks: {
           flex: {
@@ -162,7 +162,7 @@ snapshot[`should return a correct leaderboard 1`] = `
               region: "AMERICA_NORTH",
             },
           },
-          name: "positive",
+          name: "no change",
         },
         ranks: {
           flex: {
@@ -256,6 +256,6 @@ snapshot[`should return a correct leaderboard 1`] = `
       position: 7,
     },
   ],
-  date: 2024-03-04T00:29:35.641Z,
+  date: 2024-03-04T00:43:45.059Z,
 }
 `;
