@@ -7,5 +7,6 @@ export function getState(): ApplicationState {
 }
 
 export function setState(newState: ApplicationState) {
+  console.log("new state: ", newState);
   state = newState;
 }

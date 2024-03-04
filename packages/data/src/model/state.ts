@@ -6,7 +6,7 @@ import { match } from "https://esm.sh/ts-pattern@5.0.5";
 import { PlayerConfig, PlayerConfigEntrySchema } from "./playerConfig.ts";
 
 export type QueueType = z.infer<typeof QueueTypeSchema>;
-export const QueueTypeSchema = z.enum(["solo", "flex", "aram"]);
+export const QueueTypeSchema = z.enum(["solo", "flex", "aram", "urf"]);
 
 // from https://static.developer.riotgames.com/docs/lol/queues.json
 export function parseQueueType(input: number): QueueType | undefined {
@@ -15,6 +15,7 @@ export function parseQueueType(input: number): QueueType | undefined {
     .with(420, () => "solo")
     .with(440, () => "flex")
     .with(450, () => "aram")
+    .with(1900, () => "urf")
     .otherwise(() => undefined);
 }
 

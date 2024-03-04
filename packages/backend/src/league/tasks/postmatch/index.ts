@@ -5,5 +5,11 @@ import { checkMatch, checkPostMatchInternal, saveMatch } from "./internal.ts";
 
 export async function checkPostMatch() {
   const state = getState();
-  return await checkPostMatchInternal(state, saveMatch, checkMatch, send, getPlayer);
+  return await checkPostMatchInternal(
+    state,
+    saveMatch,
+    checkMatch,
+    send,
+    getPlayer,
+  );
 }

@@ -22,7 +22,6 @@ import {
 import { s3 } from "../../s3.ts";
 import { PutObjectCommand } from "https://esm.sh/@aws-sdk/client-s3";
 import configuration from "../../../configuration.ts";
-import { getPlayer } from "../../model/player.ts";
 import { getState, setState } from "../../model/state.ts";
 import { toMatch } from "../../model/match.ts";
 import { assert } from "https://deno.land/std@0.218.0/assert/mod.ts";
