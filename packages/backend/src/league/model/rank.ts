@@ -45,6 +45,7 @@ export function getRank(
 }
 
 export async function getRanks(player: PlayerConfigEntry): Promise<Ranks> {
+  // TODO: get region from player
   const response = await api.League.bySummoner(
     player.league.leagueAccount.id,
     Constants.Regions.AMERICA_NORTH,
