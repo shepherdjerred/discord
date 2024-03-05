@@ -1,12 +1,14 @@
 import { z } from "https://esm.sh/zod@3.22.4";
 import { PlayerWithSoloQueueRankSchema } from "./player.ts";
 import { rankToLeaguePoints } from "./leaguePoints.ts";
+import { GlitterTierSchema } from "./glitterTier.ts";
 
 export type LeaderboardEntry = z.infer<typeof LeaderboardEntrySchema>;
 export const LeaderboardEntrySchema = z.strictObject({
   player: PlayerWithSoloQueueRankSchema,
   position: z.number().nonnegative(),
   leaguePoints: z.number(),
+  tier: GlitterTierSchema.optional(),
 });
 
 export type Leaderboard = z.infer<typeof LeaderboardSchema>;
@@ -37,6 +39,7 @@ export function convertOldLeaderboard(
     contents: oldLeaderboard.contents.map((entry) => ({
       player: entry.player,
       position: entry.position,
+      tier: entry.player.config.tier,
       leaguePoints: rankToLeaguePoints(entry.player.ranks.solo),
     })),
   };
