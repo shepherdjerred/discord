@@ -5,6 +5,7 @@ await emptyDir("./dist");
 await build({
   entryPoints: ["./src/index.ts"],
   outDir: "./dist",
+  test: false,
   shims: {
     deno: true,
   },

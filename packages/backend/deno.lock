@@ -737,6 +737,7 @@
   },
   "redirects": {
     "https://deno.land/std/encoding/base64.ts": "https://deno.land/std@0.218.2/encoding/base64.ts",
+    "https://deno.land/x/dnt/mod.ts": "https://deno.land/x/dnt@0.40.0/mod.ts",
     "https://deno.land/x/sentry/index.mjs": "https://deno.land/x/sentry@7.104.0/index.mjs",
     "https://esm.sh/@aws-sdk/client-s3": "https://esm.sh/@aws-sdk/client-s3@3.461.0",
     "https://esm.sh/v128/@types/react@~18.2/index.d.ts": "https://esm.sh/v128/@types/react@18.2.38/index.d.ts",
