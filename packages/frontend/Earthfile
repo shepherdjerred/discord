@@ -1,4 +1,5 @@
 VERSION 0.8
+PROJECT sjerred/glitter-boys
 
 node:
   FROM node:lts
