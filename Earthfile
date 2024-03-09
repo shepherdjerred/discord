@@ -1,4 +1,5 @@
 VERSION 0.8
+FROM ubuntu:jammy
 
 ci:
   ARG EARTHLY_CI
