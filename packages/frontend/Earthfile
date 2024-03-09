@@ -26,6 +26,7 @@ wrangler:
 
 deploy:
   ARG EARTHLY_GIT_SHORT_HASH
+  ARG git_sha=$EARTHLY_GIT_SHORT_HASH
   ARG EARTHLY_GIT_BRANCH
   ARG --required stage
   FROM +wrangler
