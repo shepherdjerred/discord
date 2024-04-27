@@ -1,5 +1,5 @@
-import { Division, Player, Rank, Tier } from "@glitter-boys/data";
-import { toLeaderboard } from "./index.ts";
+import { Division, Player, Rank, Tier } from "../../../../../data/src/mod.ts";
+import { toLeaderboard } from "./mod.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { assertSnapshot } from "https://deno.land/std@0.218.2/testing/snapshot.ts";

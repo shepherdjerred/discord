@@ -1,4 +1,4 @@
-import { matchToSvg } from "./index.tsx";
+import { matchToSvg } from "./mod.tsx";
 import { MatchV5DTOs } from "npm:twisted@1.57.0/dist/models-dto/index.js";
 import { assertSnapshot } from "https://deno.land/std@0.218.2/testing/snapshot.ts";
 import { toMatch } from "../../model/match.ts";

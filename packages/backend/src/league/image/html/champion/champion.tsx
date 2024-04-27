@@ -3,7 +3,7 @@ import { renderItems } from "./item.tsx";
 import { palette } from "../../assets/colors.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import { Champion } from "@glitter-boys/data";
+import { Champion } from "../../../../../../data/src/mod.ts";
 import { summoner } from "../../../dataDragon/summoner.ts";
 import { latestVersion } from "../../../dataDragon/version.ts";
 import { CreepScore } from "./creepScore.tsx";
@@ -11,7 +11,7 @@ import { Gold } from "./gold.tsx";
 import { Damage } from "./damage.tsx";
 import { Kda } from "./kda.tsx";
 import { Names } from "./names.tsx";
-import { Lane } from "../lane/index.tsx";
+import { Lane } from "../lane/mod.tsx";
 import React from "https://esm.sh/react@18.2.0";
 
 export function renderChampion(

@@ -15,7 +15,7 @@ export const RankSchema = z.strictObject({
 });
 
 export type Ranks = z.infer<typeof RanksSchema>;
-export const RanksSchema = z.object({
+export const RanksSchema = z.strictObject({
   solo: RankSchema.optional(),
   flex: RankSchema.optional(),
 });

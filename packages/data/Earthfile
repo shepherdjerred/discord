@@ -26,5 +26,5 @@ src:
 
 check:
   FROM +src
-  RUN deno check src/index.ts
+  RUN deno check src/mod.ts
   RUN deno lint

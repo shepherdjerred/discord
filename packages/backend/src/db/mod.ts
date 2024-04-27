@@ -1,6 +1,6 @@
 // required for type orm
 import "npm:reflect-metadata@0.2.1";
-import sqlite3 from "./shim/index.ts";
+import sqlite3 from "./shim/mod.ts";
 import { DataSource } from "npm:typeorm@0.3.20";
 import {
   Karma,
@@ -8,7 +8,7 @@ import {
   KarmaGiven,
   KarmaReceived,
   Person,
-} from "./karma/index.ts";
+} from "./karma/mod.ts";
 import configuration from "../configuration.ts";
 
 export const dataSource = new DataSource({

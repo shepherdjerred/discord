@@ -6,7 +6,7 @@ import {
   type LeaderboardEntry,
   LeaderboardSchema,
   OldLeaderboardSchema,
-} from "@glitter-boys/data";
+} from "../../../data/src/mod.ts";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { type D3Scale, type ScaleInput, scaleTime } from "@visx/scale";

@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "check": "deno check src/index.ts",
+    "check": "deno check src/mod.ts",
     "check:watch": "deno run -A https://deno.land/x/denon/denon.ts check",
     "build": "deno run -A build.ts",
     "test:update": "deno test -A --unstable-ffi -- --update"

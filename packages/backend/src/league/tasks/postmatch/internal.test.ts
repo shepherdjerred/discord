@@ -3,7 +3,7 @@ import {
   ApplicationState,
   Player,
   PlayerConfigEntry,
-} from "../../../../../data/src/model/index.ts";
+} from "../../../../../data/src/model/mod.ts";
 import { send } from "../../discord/channel.ts";
 import { checkPostMatchInternal } from "./internal.ts";
 import { assertSnapshot } from "https://deno.land/std@0.218.2/testing/snapshot.ts";

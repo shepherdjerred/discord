@@ -3,9 +3,9 @@ import { renderItems } from "./item.tsx";
 import { palette } from "../assets/colors.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import { laneToString } from "@glitter-boys/data";
+import { laneToString } from "../../../../../data/src/mod.ts";
 // import summoner from "../assets/summoner.json" assert { type: "json" };
-import { Champion } from "@glitter-boys/data";
+import { Champion } from "../../../../../data/src/mod.ts";
 import { summoner } from "../../dataDragon/summoner.ts";
 
 export function renderChampion(

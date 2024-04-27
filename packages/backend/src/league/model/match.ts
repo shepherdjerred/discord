@@ -5,8 +5,8 @@ import {
   parseQueueType,
   Player,
   Rank,
-} from "@glitter-boys/data";
-import { parseTeam } from "@glitter-boys/data";
+} from "../../../../data/src/mod.ts";
+import { parseTeam } from "../../../../data/src/mod.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { MatchV5DTOs } from "npm:twisted@1.57.0/dist/models-dto/index.js";

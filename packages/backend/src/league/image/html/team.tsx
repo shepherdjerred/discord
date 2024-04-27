@@ -3,9 +3,9 @@ import { renderChampion } from "./champion.tsx";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { palette } from "../assets/colors.ts";
-import { font } from "../assets/index.ts";
-import { Roster } from "@glitter-boys/data";
-import { Team } from "@glitter-boys/data";
+import { font } from "../assets/mod.ts";
+import { Roster } from "../../../../../data/src/mod.ts";
+import { Team } from "../../../../../data/src/mod.ts";
 
 export function renderTeam(
   team: Roster,

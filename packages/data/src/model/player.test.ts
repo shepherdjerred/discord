@@ -1,5 +1,5 @@
 import { assertSnapshot } from "https://deno.land/std@0.218.2/testing/snapshot.ts";
-import { PlayerConfigSchema } from "./index.ts";
+import { PlayerConfigSchema } from "./mod.ts";
 
 Deno.test("beta", async (t) => {
   const testdataPath = new URL("testdata/players.beta.json", import.meta.url);

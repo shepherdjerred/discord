@@ -8,13 +8,13 @@ import {
   type LoadingScreenState,
   parseQueueType,
   PlayerConfigEntry,
-} from "@glitter-boys/data";
+} from "../../../../../data/src/mod.ts";
 import { createDiscordMessage } from "./discord.ts";
 import { send } from "../../discord/channel.ts";
 import { getRanks } from "../../model/rank.ts";
 import { getPlayerConfigs } from "../../playerConfig.ts";
 import { getState, setState } from "../../model/state.ts";
-import { getCurrentGame } from "../../api/index.ts";
+import { getCurrentGame } from "../../api/mod.ts";
 
 export async function checkPreMatch() {
   const players = await getPlayerConfigs();

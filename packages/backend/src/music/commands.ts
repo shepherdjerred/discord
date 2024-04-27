@@ -6,7 +6,7 @@ import {
   userMention,
   VoiceBasedChannel,
 } from "npm:discord.js@14.14.1";
-import { shoukaku } from "./index.ts";
+import { shoukaku } from "./mod.ts";
 import client from "../discord/client.ts";
 import { LoadType, Player, Track } from "https://esm.sh/shoukaku@4.0.1";
 // @deno-types="npm:@types/lodash"

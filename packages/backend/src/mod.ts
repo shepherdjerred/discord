@@ -6,10 +6,10 @@ Sentry.init({
   release: configuration.gitSha,
 });
 
-import "./db/index.ts";
-import "./discord/index.ts";
+import "./db/mod.ts";
+import "./discord/mod.ts";
 import { startCronJobs } from "./league/cron.ts";
-import "./server/index.ts";
+import "./server/mod.ts";
 import configuration from "./configuration.ts";
 
 startCronJobs();

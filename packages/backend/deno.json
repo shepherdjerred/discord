@@ -1,12 +1,12 @@
 {
   "tasks": {
-    "check": "deno check src/index.ts",
+    "check": "deno check src/mod.ts",
     "check:watch": "deno run -A https://deno.land/x/denon/denon.ts check",
-    "run": "deno run -A --unstable-ffi src/index.ts",
+    "run": "deno run -A --unstable-ffi src/mod.ts",
     "test:update": "deno test -A --unstable-ffi -- --update"
   },
   "imports": {
-    "@glitter-boys/data": "../data/src/index.ts"
+    "@glitter-boys/data": "../data/src/mod.ts"
   },
   "compilerOptions": {
     "experimentalDecorators": true,

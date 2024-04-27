@@ -1,5 +1,5 @@
-import { Champion } from "@glitter-boys/data";
-import { parseLane } from "@glitter-boys/data";
+import { Champion } from "../../../../data/src/mod.ts";
+import { parseLane } from "../../../../data/src/mod.ts";
 import { MatchV5DTOs } from "npm:twisted@1.57.0/dist/models-dto/index.js";
 
 export function participantToChampion(

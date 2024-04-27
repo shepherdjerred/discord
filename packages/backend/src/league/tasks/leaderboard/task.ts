@@ -1,6 +1,6 @@
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import { toLeaderboard } from "./index.ts";
+import { toLeaderboard } from "./mod.ts";
 import { getPlayer } from "../../model/player.ts";
 import {
   CopyObjectCommand,
@@ -12,7 +12,7 @@ import { getPlayerConfigs } from "../../playerConfig.ts";
 import { format } from "npm:date-fns@2.30.0";
 import { send } from "../../discord/channel.ts";
 import { leaderboardToDiscordMessage, setKing } from "./discord.ts";
-import { Leaderboard } from "@glitter-boys/data";
+import { Leaderboard } from "../../../../../data/src/mod.ts";
 
 const link = "https://glitter-boys.com/leaderboard/";
 

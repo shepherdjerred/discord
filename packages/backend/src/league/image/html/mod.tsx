@@ -3,8 +3,8 @@ import _ from "npm:lodash@4.17.21";
 import satori from "https://esm.sh/satori@0.10.11";
 import { Resvg } from "npm:@resvg/resvg-js@2.6.0";
 import React from "https://esm.sh/react@18.2.0";
-import { loadFonts } from "../assets/index.ts";
-import { CompletedMatch } from "@glitter-boys/data";
+import { loadFonts } from "../assets/mod.ts";
+import { CompletedMatch } from "../../../../../data/src/mod.ts";
 import { Report } from "./report.tsx";
 
 export async function matchToImage(match: CompletedMatch) {

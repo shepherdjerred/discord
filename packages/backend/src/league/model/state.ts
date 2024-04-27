@@ -1,4 +1,4 @@
-import { ApplicationState } from "@glitter-boys/data";
+import { ApplicationState } from "../../../../data/src/mod.ts";
 
 let state: ApplicationState = { gamesStarted: [] };
 

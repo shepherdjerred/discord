@@ -1,3 +1,3 @@
-import { checkPreMatch } from "./index.ts";
+import { checkPreMatch } from "./mod.ts";
 
 await checkPreMatch();

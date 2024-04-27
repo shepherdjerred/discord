@@ -1,9 +1,4 @@
-import {
-  Karma,
-  KarmaCounts,
-  KarmaReceived,
-  Person,
-} from "../db/karma/index.ts";
+import { Karma, KarmaCounts, KarmaReceived, Person } from "../db/karma/mod.ts";
 import {
   bold,
   type ChatInputCommandInteraction,
@@ -13,7 +8,7 @@ import {
   time,
   userMention,
 } from "npm:discord.js@14.14.1";
-import { dataSource } from "../db/index.ts";
+import { dataSource } from "../db/mod.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import client from "../discord/client.ts";

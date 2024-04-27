@@ -11,14 +11,14 @@ import {
   MessageCreateOptions,
   MessagePayload,
 } from "npm:discord.js@14.14.1";
-import { matchToImage } from "../../image/html/index.tsx";
+import { matchToImage } from "../../image/html/mod.tsx";
 import {
   ApplicationState,
   CompletedMatch,
   LoadingScreenState,
   Player,
   PlayerConfigEntry,
-} from "@glitter-boys/data";
+} from "../../../../../data/src/mod.ts";
 import { s3 } from "../../s3.ts";
 import { PutObjectCommand } from "https://esm.sh/@aws-sdk/client-s3";
 import configuration from "../../../configuration.ts";

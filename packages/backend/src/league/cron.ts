@@ -1,8 +1,8 @@
 import { CronJob } from "https://esm.sh/cron@3.1.6";
 import { postLeaderboardMessage } from "./tasks/leaderboard/task.ts";
-import { checkPreMatch } from "./tasks/prematch/index.ts";
+import { checkPreMatch } from "./tasks/prematch/mod.ts";
 import { logErrors } from "./util.ts";
-import { checkPostMatch } from "./tasks/postmatch/index.ts";
+import { checkPostMatch } from "./tasks/postmatch/mod.ts";
 
 export function startCronJobs() {
   // post leaderboard update once a day mon-fri at noon

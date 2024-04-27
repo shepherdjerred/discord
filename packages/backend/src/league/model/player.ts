@@ -1,5 +1,5 @@
-import { Player } from "@glitter-boys/data";
-import { PlayerConfigEntry } from "@glitter-boys/data";
+import { Player } from "../../../../data/src/mod.ts";
+import { PlayerConfigEntry } from "../../../../data/src/mod.ts";
 import { getRanks } from "./rank.ts";
 
 export async function getPlayer(

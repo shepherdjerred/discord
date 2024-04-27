@@ -6,7 +6,7 @@ import {
   LeaderboardEntry,
   PlayerConfigEntry,
   rankToString,
-} from "@glitter-boys/data";
+} from "../../../../../data/src/mod.ts";
 import configuration from "../../../configuration.ts";
 import client from "../../../discord/client.ts";
 

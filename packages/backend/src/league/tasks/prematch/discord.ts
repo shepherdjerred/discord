@@ -2,9 +2,9 @@
 import _ from "npm:lodash@4.17.21";
 import { getChampionName } from "npm:twisted@1.57.0/dist/constants/champions.js";
 import { CurrentGameInfoDTO } from "npm:twisted@1.57.0/dist/models-dto/index.js";
-import { findParticipant } from "../../api/index.ts";
-import { PlayerConfigEntry } from "@glitter-boys/data";
-import { QueueType } from "@glitter-boys/data";
+import { findParticipant } from "../../api/mod.ts";
+import { PlayerConfigEntry } from "../../../../../data/src/mod.ts";
+import { QueueType } from "../../../../../data/src/mod.ts";
 
 export function createDiscordMessage(
   players: PlayerConfigEntry[],

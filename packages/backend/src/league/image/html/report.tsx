@@ -3,12 +3,12 @@ import {
   CompletedMatch,
   leaguePointsDelta,
   lpDiffToString,
-} from "@glitter-boys/data";
+} from "../../../../../data/src/mod.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import "https://esm.sh/react@18.2.0";
 import { palette } from "../assets/colors.ts";
-import { RankedBadge } from "./ranked/index.tsx";
+import { RankedBadge } from "./ranked/mod.tsx";
 import { renderTeam } from "./team.tsx";
 
 export function Report({ match }: { match: CompletedMatch }) {

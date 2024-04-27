@@ -18,7 +18,7 @@ import {
   rankToString,
   wasDemoted,
   wasPromoted,
-} from "@glitter-boys/data";
+} from "../../../data/src/mod.ts";
 import { match, P } from "ts-pattern";
 import _ from "lodash";
 import { addDays, formatDistance, isWithinInterval } from "date-fns";
