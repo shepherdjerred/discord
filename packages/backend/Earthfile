@@ -36,8 +36,8 @@ image:
 
   ENTRYPOINT deno run -A --unstable-ffi src/index.ts
   HEALTHCHECK  --interval=30s --timeout=5s --start-period=5s --retries=3 CMD deno run -A /workspace/packages/backend/src/health.ts || exit 1
-  SAVE IMAGE --push ghcr.io/shepherdjerred/glitter-boys:$version
-  SAVE IMAGE --push ghcr.io/shepherdjerred/glitter-boys:$git_sha
+  SAVE IMAGE --push ghcr.io/shepherdjerred/discord:$version
+  SAVE IMAGE --push ghcr.io/shepherdjerred/discord:$git_sha
 
 up:
   LOCALLY

@@ -4,14 +4,14 @@ import { renderChampion } from "./champion.tsx";
 import _ from "npm:lodash@4.17.21";
 import { palette } from "../assets/colors.ts";
 import { font } from "../assets/index.ts";
-import { Roster } from "@glitter-boys/data";
-import { Team } from "@glitter-boys/data";
+import { Roster } from "@discord/data";
+import { Team } from "@discord/data";
 
 export function renderTeam(
   team: Roster,
   side: Team,
   highlight: string,
-  durationInMinutes: number,
+  durationInMinutes: number
 ) {
   const teamKills = _.sumBy(team, (champion) => champion.kills);
   const teamDeaths = _.sumBy(team, (champion) => champion.deaths);
@@ -46,8 +46,9 @@ export function renderTeam(
           champion,
           champion.championName === highlight,
           durationInMinutes,
-          mostDamage,
-        ))}
+          mostDamage
+        )
+      )}
     </div>
   );
 }

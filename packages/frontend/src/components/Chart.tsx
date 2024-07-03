@@ -6,7 +6,7 @@ import {
   type LeaderboardEntry,
   LeaderboardSchema,
   OldLeaderboardSchema,
-} from "@glitter-boys/data";
+} from "@discord/data";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { type D3Scale, type ScaleInput, scaleTime } from "@visx/scale";
@@ -87,7 +87,7 @@ export function ChartComponent() {
         _.map(dates, async (date): Promise<Leaderboard | undefined> => {
           try {
             const json = await (await fetch(
-              `https://prod.bucket.glitter-boys.com/leaderboards/${date}.json`,
+              `https://prod.bucket.discord.com/leaderboards/${date}.json`,
             )).json();
             const result = LeaderboardSchema.safeParse(json);
             if (result.success) {

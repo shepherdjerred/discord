@@ -6,7 +6,7 @@ export default defineConfig({
   integrations: [react()],
   vite: {
     optimizeDeps: {
-      exclude: ["@glitter-boys/backend"],
+      exclude: ["@discord/backend"],
     },
   },
 });

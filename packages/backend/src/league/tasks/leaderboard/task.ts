@@ -12,9 +12,9 @@ import { getPlayerConfigs } from "../../playerConfig.ts";
 import { format } from "npm:date-fns@2.30.0";
 import { send } from "../../discord/channel.ts";
 import { leaderboardToDiscordMessage, setKing } from "./discord.ts";
-import { Leaderboard } from "@glitter-boys/data";
+import { Leaderboard } from "@discord/data";
 
-const link = "https://glitter-boys.com/leaderboard/";
+const link = "https://discord.com/leaderboard/";
 
 async function uploadLeaderboard(leaderboard: Leaderboard) {
   const copyCommand = new CopyObjectCommand({

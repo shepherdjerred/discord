@@ -10,7 +10,7 @@ await build({
     deno: true,
   },
   package: {
-    name: "@glitter-boys/data",
+    name: "@discord/data",
     version: Deno.args[0],
   },
 });

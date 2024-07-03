@@ -1,6 +1,6 @@
-# Glitter Boys
+# Discord
 
-[![CI](https://github.com/shepherdjerred/glitter-boys/actions/workflows/ci.yml/badge.svg)](https://github.com/shepherdjerred/glitter-boys/actions/workflows/ci.yml)
+[![CI](https://github.com/shepherdjerred/discord/actions/workflows/ci.yml/badge.svg)](https://github.com/shepherdjerred/discord/actions/workflows/ci.yml)
 
 This repository contains projects related to a Discord server that I share with
 my friends.
@@ -25,7 +25,7 @@ It contains several projects:
 > After a match is complete, an inline post-match report image is posted to
 > Discord.
 
-[![The leaderboard site](./assets/leaderboard_site.png)](https://glitter-boys.com/leaderboard/)
+[The leaderboard site](./assets/leaderboard_site.png)
 
 > The leaderboard site shows the status of competitions with sorting.
 

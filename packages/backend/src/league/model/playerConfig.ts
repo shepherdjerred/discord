@@ -1,4 +1,4 @@
-import { PlayerConfig, PlayerConfigSchema } from "@glitter-boys/data";
+import { PlayerConfig, PlayerConfigSchema } from "@discord/data";
 
 const file = new URL("../../../players.json", import.meta.url);
 

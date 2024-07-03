@@ -8,7 +8,7 @@ import {
   type LoadingScreenState,
   parseQueueType,
   PlayerConfigEntry,
-} from "@glitter-boys/data";
+} from "@discord/data";
 import { createDiscordMessage } from "./discord.ts";
 import { send } from "../../discord/channel.ts";
 import { getRanks } from "../../model/rank.ts";
@@ -24,7 +24,7 @@ export async function checkPreMatch() {
 
   console.log("calling spectator API");
   const playerStatus = await Promise.all(
-    _.map(playersNotInGame, getCurrentGame),
+    _.map(playersNotInGame, getCurrentGame)
   );
 
   console.log("filtering players not in game");
@@ -34,13 +34,11 @@ export async function checkPreMatch() {
     .value() as [PlayerConfigEntry, CurrentGameInfoDTO][];
 
   console.log("removing games already seen");
-  const newGames = _.reject(
-    playersInGame,
-    ([_player, game]) =>
-      _.chain(getState().gamesStarted)
-        .map((game) => game.matchId)
-        .some((candidate) => candidate === game.gameId)
-        .value(),
+  const newGames = _.reject(playersInGame, ([_player, game]) =>
+    _.chain(getState().gamesStarted)
+      .map((game) => game.matchId)
+      .some((candidate) => candidate === game.gameId)
+      .value()
   );
 
   console.log("sending messages");
@@ -64,7 +62,7 @@ export async function checkPreMatch() {
             } else {
               return { player, rank: undefined };
             }
-          }),
+          })
         );
 
         console.log("creating new state entries");
@@ -84,6 +82,7 @@ export async function checkPreMatch() {
           ...getState(),
           gamesStarted: _.concat(getState().gamesStarted, entry),
         });
-      }).value(),
+      })
+      .value()
   );
 }

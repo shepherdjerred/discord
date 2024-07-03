@@ -1,4 +1,4 @@
-import { ApplicationState } from "@glitter-boys/data";
+import { ApplicationState } from "@discord/data";
 
 let state: ApplicationState = { gamesStarted: [] };
 

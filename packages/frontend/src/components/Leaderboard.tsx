@@ -18,7 +18,7 @@ import {
   rankToString,
   wasDemoted,
   wasPromoted,
-} from "@glitter-boys/data";
+} from "@discord/data";
 import { match, P } from "ts-pattern";
 import _ from "lodash";
 import { addDays, formatDistance, isWithinInterval } from "date-fns";
@@ -198,13 +198,13 @@ export function LeaderboardComponent() {
   useEffect(() => {
     (async () => {
       let result = await fetch(
-        "https://prod.bucket.glitter-boys.com/leaderboard.json",
+        "https://prod.bucket.discord.com/leaderboard.json",
       );
       const currentLeaderboard = LeaderboardSchema.parse(await result.json());
       setCurrentLeaderboard(currentLeaderboard);
 
       result = await fetch(
-        "https://prod.bucket.glitter-boys.com/previous.json",
+        "https://prod.bucket.discord.com/previous.json",
       );
       const previousJson = await result.json();
       const parseStatus = LeaderboardSchema.safeParse(previousJson);

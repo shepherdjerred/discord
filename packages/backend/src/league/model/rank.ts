@@ -1,7 +1,7 @@
-import { parseDivision, Ranks } from "@glitter-boys/data";
-import { PlayerConfigEntry } from "@glitter-boys/data";
-import { Rank } from "@glitter-boys/data";
-import { TierSchema } from "@glitter-boys/data";
+import { parseDivision, Ranks } from "@discord/data";
+import { PlayerConfigEntry } from "@discord/data";
+import { Rank } from "@discord/data";
+import { TierSchema } from "@discord/data";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { api } from "../api/api.ts";
@@ -13,7 +13,7 @@ const flex = "RANKED_TEAM_5x5";
 
 export function getDto(
   dto: SummonerLeagueDto[],
-  queue: string,
+  queue: string
 ): SummonerLeagueDto | undefined {
   return _.chain(dto)
     .filter((entry) => entry.queueType === queue)
@@ -23,7 +23,7 @@ export function getDto(
 
 export function getRank(
   dto: SummonerLeagueDto[],
-  queue: string,
+  queue: string
 ): Rank | undefined {
   const entry = getDto(dto, queue);
   if (entry == undefined) {
@@ -48,7 +48,7 @@ export async function getRanks(player: PlayerConfigEntry): Promise<Ranks> {
   // TODO: get region from player
   const response = await api.League.bySummoner(
     player.league.leagueAccount.id,
-    Constants.Regions.AMERICA_NORTH,
+    Constants.Regions.AMERICA_NORTH
   );
 
   return {

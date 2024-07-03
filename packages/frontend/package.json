@@ -15,7 +15,7 @@
     "@astrojs/mdx": "^2.1.1",
     "@astrojs/sitemap": "^3.0.5",
     "@astrojs/tailwind": "^5.1.0",
-    "@glitter-boys/data": "../data/dist/esm/",
+    "@discord/data": "../data/dist/esm/",
     "@tailwindcss/typography": "^0.5.10",
     "@tanstack/react-table": "^8.12.0",
     "@visx/axis": "^3.8.0",

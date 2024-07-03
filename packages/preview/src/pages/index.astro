@@ -1,8 +1,8 @@
 ---
-import { Report } from "@glitter-boys/backend/dist/league/image/html/report";
+import { Report } from "@discord/backend/dist/league/image/html/report";
 import { readFile } from "node:fs/promises";
 import { type MatchV5DTOs } from "twisted/dist/models-dto/index.js";
-import { toMatch } from "@glitter-boys/backend/dist/league/model/match";
+import { toMatch } from "@discord/backend/dist/league/model/match";
 
 const testdataPath = new URL("testdata/match.json", import.meta.url);
 

@@ -3,7 +3,7 @@ import {
   Player,
   rankToLeaguePoints,
   sortPlayersBySoloQueueRank,
-} from "@glitter-boys/data";
+} from "@discord/data";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 

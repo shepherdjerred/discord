@@ -6,7 +6,7 @@
     "test:update": "deno test -A --unstable-ffi -- --update"
   },
   "imports": {
-    "@glitter-boys/data": "../data/src/index.ts"
+    "@discord/data": "../data/src/index.ts"
   },
   "compilerOptions": {
     "experimentalDecorators": true,

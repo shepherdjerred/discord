@@ -18,7 +18,7 @@ import {
   LoadingScreenState,
   Player,
   PlayerConfigEntry,
-} from "@glitter-boys/data";
+} from "@discord/data";
 import { s3 } from "../../s3.ts";
 import { PutObjectCommand } from "https://esm.sh/@aws-sdk/client-s3";
 import configuration from "../../../configuration.ts";
@@ -31,7 +31,7 @@ export async function checkMatch(game: LoadingScreenState) {
     // TODO: get region from player
     const response = await api.MatchV5.get(
       `NA1_${game.matchId}`,
-      Constants.RegionGroups.AMERICAS,
+      Constants.RegionGroups.AMERICAS
     );
     return response.response;
   } catch (e) {
@@ -58,7 +58,7 @@ export async function saveMatch(match: MatchV5DTOs.MatchDto) {
 }
 
 async function getImage(
-  match: CompletedMatch,
+  match: CompletedMatch
 ): Promise<[AttachmentBuilder, EmbedBuilder]> {
   const image = await matchToImage(match);
   const attachment = new AttachmentBuilder(image).setName("match.png");
@@ -69,22 +69,19 @@ async function getImage(
 async function createMatchObj(
   state: LoadingScreenState,
   match: MatchV5DTOs.MatchDto,
-  getPlayerFn: (playerConfig: PlayerConfigEntry) => Promise<Player>,
+  getPlayerFn: (playerConfig: PlayerConfigEntry) => Promise<Player>
 ) {
   const player = _.chain(match.info.participants)
     .filter(
       (participant) =>
-        participant.puuid ===
-          state.players[0].player.league.leagueAccount.puuid,
+        participant.puuid === state.players[0].player.league.leagueAccount.puuid
     )
     .first()
     .value();
 
   if (player == undefined) {
     throw new Error(
-      `unable to find player ${JSON.stringify(state)}, ${
-        JSON.stringify(match)
-      }`,
+      `unable to find player ${JSON.stringify(state)}, ${JSON.stringify(match)}`
     );
   }
 
@@ -98,7 +95,7 @@ async function createMatchObj(
     fullPlayer,
     match,
     state.players[0].rank,
-    fullPlayer.ranks.solo,
+    fullPlayer.ranks.solo
   );
 }
 
@@ -106,12 +103,12 @@ export async function checkPostMatchInternal(
   state: ApplicationState,
   saveFn: (match: MatchV5DTOs.MatchDto) => Promise<void>,
   checkFn: (
-    game: LoadingScreenState,
+    game: LoadingScreenState
   ) => Promise<MatchV5DTOs.MatchDto | undefined>,
   sendFn: (
-    message: string | MessagePayload | MessageCreateOptions,
+    message: string | MessagePayload | MessageCreateOptions
   ) => Promise<Message<true> | Message<false>>,
-  getPlayerFn: (playerConfig: PlayerConfigEntry) => Promise<Player>,
+  getPlayerFn: (playerConfig: PlayerConfigEntry) => Promise<Player>
 ) {
   console.log("checking match api");
   const games = await Promise.all(_.map(state.gamesStarted, checkFn));
@@ -138,7 +135,7 @@ export async function checkPostMatchInternal(
       const newMatches = _.differenceBy(
         newState.gamesStarted,
         _.map(finishedGames, (game) => game[0]),
-        (state) => state.uuid,
+        (state) => state.uuid
       );
 
       console.log("saving state files");
@@ -146,6 +143,6 @@ export async function checkPostMatchInternal(
         ...state,
         gamesStarted: newMatches,
       });
-    }),
+    })
   );
 }

@@ -1,4 +1,4 @@
-import { Division, Player, Rank, Tier } from "@glitter-boys/data";
+import { Division, Player, Rank, Tier } from "@discord/data";
 import { toLeaderboard } from "./index.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";

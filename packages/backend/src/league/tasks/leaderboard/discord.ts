@@ -6,7 +6,7 @@ import {
   LeaderboardEntry,
   PlayerConfigEntry,
   rankToString,
-} from "@glitter-boys/data";
+} from "@discord/data";
 import configuration from "../../../configuration.ts";
 import client from "../../../discord/client.ts";
 
@@ -27,11 +27,9 @@ function leaderboardEntryToDiscordMessage({
     positionString = bold(positionString);
   }
 
-  return `${positionString}: ${
-    userMention(
-      player.config.discordAccount.id,
-    )
-  } ${bold(rankToString(player.ranks.solo))}`;
+  return `${positionString}: ${userMention(
+    player.config.discordAccount.id
+  )} ${bold(rankToString(player.ranks.solo))}`;
 }
 
 export async function setKing(king: PlayerConfigEntry) {

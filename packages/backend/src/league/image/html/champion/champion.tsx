@@ -3,7 +3,7 @@ import { renderItems } from "./item.tsx";
 import { palette } from "../../assets/colors.ts";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
-import { Champion } from "@glitter-boys/data";
+import { Champion } from "@discord/data";
 import { summoner } from "../../../dataDragon/summoner.ts";
 import { latestVersion } from "../../../dataDragon/version.ts";
 import { CreepScore } from "./creepScore.tsx";
@@ -18,7 +18,7 @@ export function renderChampion(
   champion: Champion,
   highlight: boolean,
   durationInMinutes: number,
-  damageMax: number,
+  damageMax: number
 ) {
   const items = renderItems(champion.items, champion.visionScore);
 

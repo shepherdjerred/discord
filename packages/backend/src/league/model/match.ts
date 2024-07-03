@@ -5,8 +5,8 @@ import {
   parseQueueType,
   Player,
   Rank,
-} from "@glitter-boys/data";
-import { parseTeam } from "@glitter-boys/data";
+} from "@discord/data";
+import { parseTeam } from "@discord/data";
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash@4.17.21";
 import { MatchV5DTOs } from "npm:twisted@1.57.0/dist/models-dto/index.js";
@@ -16,7 +16,7 @@ import { assert } from "https://deno.land/std@0.218.0/assert/mod.ts";
 
 function findParticipant(
   puuid: string,
-  participants: MatchV5DTOs.ParticipantDto[],
+  participants: MatchV5DTOs.ParticipantDto[]
 ): MatchV5DTOs.ParticipantDto {
   return _.chain(participants)
     .filter((participant) => participant.puuid === puuid)
@@ -51,11 +51,11 @@ export function toMatch(
   player: Player,
   matchDto: MatchV5DTOs.MatchDto,
   rankBeforeMatch: Rank | undefined,
-  rankAfterMatch: Rank,
+  rankAfterMatch: Rank
 ): CompletedMatch {
   const participant = findParticipant(
     player.config.league.leagueAccount.puuid,
-    matchDto.info.participants,
+    matchDto.info.participants
   );
   const champion = participantToChampion(participant);
   const team = parseTeam(participant.teamId);
