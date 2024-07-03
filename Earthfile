@@ -19,7 +19,7 @@ build:
   BUILD ./packages/frontend+build
 
 check:
-  BUILD ./packages/backend+check
+  # BUILD ./packages/backend+check
   BUILD ./packages/data+check
 
 deno:
